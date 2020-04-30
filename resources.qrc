@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/resources">
-        <file>icons/heart.png</file>
+        <file>icons/koi.svg</file>
+        <file>icons/koi_tray.svg</file>
+        <file>icons/koi_tray.png</file>
+        <file>icons/koi.png</file>
     </qresource>
 </RCC>

@@ -11,18 +11,18 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KThemeScheduler</string>
+   <string>Koi</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/resources/icons/heart.png</normaloff>:/resources/icons/heart.png</iconset>
+    <normaloff>:/resources/icons/koi.svg</normaloff>:/resources/icons/koi.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -166,7 +166,7 @@
           <item>
            <widget class="QCheckBox" name="startupCheckBox">
             <property name="text">
-             <string>Start KThemeScheduler on system startup.</string>
+             <string>Start Koi on system startup</string>
             </property>
            </widget>
           </item>
@@ -202,8 +202,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>200</width>
-             <height>564</height>
+             <width>401</width>
+             <height>582</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -580,7 +580,7 @@
      <x>0</x>
      <y>0</y>
      <width>450</width>
-     <height>23</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -614,11 +614,11 @@
   </widget>
   <action name="actionQuit">
    <property name="icon">
-    <iconset theme="window-close-symbolic">
+    <iconset theme="window-close">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -626,11 +626,11 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset theme="help-about-symbolic">
+    <iconset theme="help-contextual">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
    <property name="shortcut">
     <string>?</string>
@@ -642,7 +642,7 @@
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Hide</string>
+    <string>&amp;Hide</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
@@ -654,7 +654,7 @@
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Preferences</string>
+    <string>&amp;Preferences</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>

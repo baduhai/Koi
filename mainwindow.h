@@ -8,8 +8,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class QSystemTrayIcon;
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -51,6 +49,8 @@ private slots:
     void on_wallCheckBox_stateChanged(int arg1);
 
     void on_actionAbout_triggered();
+
+    void on_actionHide_triggered();
 
 private:
     Ui::MainWindow *ui;

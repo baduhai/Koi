@@ -1,19 +1,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "about.h"
+
 #include <QSystemTrayIcon>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    // Show system tray on startup
     trayIcon = new QSystemTrayIcon(this);
-    this->trayIcon->setIcon(QIcon(":/resources/icons/heart.png"));
+    this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon
     this->trayIcon->setVisible(true);
     auto trayMenu = this->createMenu();
-    this->trayIcon->setContextMenu(trayMenu);
+    this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+    // Show window on startup
     ui->setupUi(this);
+    ui->mainStack->setCurrentIndex(0); // Always start window on main view
 }
 
 MainWindow::~MainWindow()
@@ -21,48 +25,56 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QMenu* MainWindow::createMenu()
+QMenu* MainWindow::createMenu() // Define context menu items - Right click to show context menu
 {
-  auto actionMenuQuit = new QAction("&Quit", this);
-  connect(actionMenuQuit, &QAction::triggered, qApp, &QCoreApplication::quit);
+    auto actionMenuQuit = new QAction("&Quit", this);
+    connect(actionMenuQuit, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-  auto actionMenuPrefs = new QAction("&Preferences", this);
+    auto actionMenuDark = new QAction("&Dark", this);
 
-  auto actionMenuDark = new QAction("Switch to &Dark", this);
+    auto actionMenuLight = new QAction("&Light", this);
 
-  auto actionMenuLight = new QAction("Switch to &Light", this);
+    auto trayMenu = new QMenu(this);
+    trayMenu->addAction(actionMenuLight);
+    trayMenu->addAction(actionMenuDark);
+    trayMenu->addAction(actionMenuQuit);
 
-  auto trayMenu = new QMenu(this);
-  trayMenu->addAction(actionMenuLight);
-  trayMenu->addAction(actionMenuDark);
-  trayMenu->addAction(actionMenuPrefs);
-  trayMenu->addAction(actionMenuQuit);
-
-  return trayMenu;
+    return trayMenu;
 }
 
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason_)
 {
-  switch (reason_) {
-  case QSystemTrayIcon::Trigger:
-    this->trayIcon->showMessage("Hello", "You clicked me!");
-    break;
-  default:
-    ;
-  }
+    switch (reason_)
+    {
+        case QSystemTrayIcon::Trigger: // Left-click to toggle window visibility
+            if (this->isVisible() == 1)
+            {
+                this->setVisible(0);
+            }
+            else
+            {
+                this->setVisible(1);
+            }
+            break;
+        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
+            this->trayIcon->showMessage("Hello", "You middle-clicked me!"); // Must implement toggle
+            break;
+        default:
+            break;
+    }
 }
 
-void MainWindow::on_prefsBtn_clicked()
+void MainWindow::on_prefsBtn_clicked() // Preferences button
 {
     ui->mainStack->setCurrentIndex(1);
 }
 
-void MainWindow::on_backBtn_clicked()
+void MainWindow::on_backBtn_clicked() // Back button in preferences view
 {
     ui->mainStack->setCurrentIndex(0);
 }
 
-void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled)
+void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style checkbox logic
 {
     if (ui->styleCheckBox->checkState() == Qt::Unchecked)
     {
@@ -87,7 +99,7 @@ void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled)
 
 }
 
-void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled)
+void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled) // Color scheme checkbox logic
 {
     if (ui->colorCheckBox->checkState() == Qt::Unchecked)
     {
@@ -105,7 +117,7 @@ void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled)
     }
 }
 
-void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled)
+void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme checkbox logic
 {
     if (ui->iconCheckBox->checkState() == Qt::Unchecked)
     {
@@ -123,7 +135,7 @@ void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled)
     }
 }
 
-void MainWindow::on_cursorCheckBox_stateChanged(int cursorEnabled)
+void MainWindow::on_cursorCheckBox_stateChanged(int cursorEnabled) // Cursor theme checkbox logic
 {
     if (ui->cursorCheckBox->checkState() == Qt::Unchecked)
     {
@@ -141,7 +153,7 @@ void MainWindow::on_cursorCheckBox_stateChanged(int cursorEnabled)
     }
 }
 
-void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnlabled)
+void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnlabled) // GTK theme checkbox logic
 {
     if (ui->gtkCheckBox->checkState() == Qt::Unchecked)
     {
@@ -159,7 +171,7 @@ void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnlabled)
     }
 }
 
-void MainWindow::on_wallCheckBox_stateChanged(int arg1)
+void MainWindow::on_wallCheckBox_stateChanged(int wallEnabled) // Wallpaper checkbox logic
 {
     if (ui->wallCheckBox->checkState() == Qt::Unchecked)
     {
@@ -177,13 +189,15 @@ void MainWindow::on_wallCheckBox_stateChanged(int arg1)
     }
 }
 
-void MainWindow::on_applyBtn_clicked()
+void MainWindow::on_applyBtn_clicked() // Apply button on preferences view
 {
+    // Must implement saving settings
     ui->mainStack->setCurrentIndex(0);
 }
 
-void MainWindow::on_cancelBtn_clicked()
+void MainWindow::on_cancelBtn_clicked() // Cancel button on preferences view
 {
+    // Must implements not saving settings
     ui->mainStack->setCurrentIndex(0);
 }
 
@@ -247,5 +261,11 @@ void MainWindow::on_actionPrefs_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
+    auto* about = new About(this);
+    about->open();
+}
 
+void MainWindow::on_actionHide_triggered()
+{
+    this->setVisible(0);
 }
