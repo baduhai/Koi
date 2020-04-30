@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +17,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+public slots:
+    void iconActivated(QSystemTrayIcon::ActivationReason);
 
 private slots:
     void on_prefsBtn_clicked();
@@ -46,8 +50,12 @@ private slots:
 
     void on_wallCheckBox_stateChanged(int arg1);
 
+    void on_actionAbout_triggered();
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon * trayIcon;
+    QMenu* trayIconMenu;
+    QMenu* createMenu();
 };
 #endif // MAINWINDOW_H

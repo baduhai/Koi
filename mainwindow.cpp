@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "about.h"
 #include <QSystemTrayIcon>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -9,12 +10,46 @@ MainWindow::MainWindow(QWidget *parent)
     trayIcon = new QSystemTrayIcon(this);
     this->trayIcon->setIcon(QIcon(":/resources/icons/heart.png"));
     this->trayIcon->setVisible(true);
+    auto trayMenu = this->createMenu();
+    this->trayIcon->setContextMenu(trayMenu);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
     ui->setupUi(this);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+QMenu* MainWindow::createMenu()
+{
+  auto actionMenuQuit = new QAction("&Quit", this);
+  connect(actionMenuQuit, &QAction::triggered, qApp, &QCoreApplication::quit);
+
+  auto actionMenuPrefs = new QAction("&Preferences", this);
+
+  auto actionMenuDark = new QAction("Switch to &Dark", this);
+
+  auto actionMenuLight = new QAction("Switch to &Light", this);
+
+  auto trayMenu = new QMenu(this);
+  trayMenu->addAction(actionMenuLight);
+  trayMenu->addAction(actionMenuDark);
+  trayMenu->addAction(actionMenuPrefs);
+  trayMenu->addAction(actionMenuQuit);
+
+  return trayMenu;
+}
+
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason_)
+{
+  switch (reason_) {
+  case QSystemTrayIcon::Trigger:
+    this->trayIcon->showMessage("Hello", "You clicked me!");
+    break;
+  default:
+    ;
+  }
 }
 
 void MainWindow::on_prefsBtn_clicked()
@@ -35,6 +70,8 @@ void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled)
         ui->lightStyle->setEnabled(0);
         ui->darkDropStyle->setEnabled(0);
         ui->lightDropStyle->setEnabled(0);
+        ui->colorCheckBox->setEnabled(1);
+        ui->iconCheckBox->setEnabled(1);
     }
     else
     {
@@ -42,6 +79,10 @@ void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled)
         ui->lightStyle->setEnabled(1);
         ui->darkDropStyle->setEnabled(1);
         ui->lightDropStyle->setEnabled(1);
+        ui->colorCheckBox->setChecked(0);
+        ui->colorCheckBox->setEnabled(0);
+        ui->iconCheckBox->setChecked(0);
+        ui->iconCheckBox->setEnabled(0);
     }
 
 }
@@ -202,4 +243,9 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::on_actionPrefs_triggered()
 {
     ui->mainStack->setCurrentIndex(1);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+
 }

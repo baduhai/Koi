@@ -126,7 +126,8 @@
              <string>Preferences</string>
             </property>
             <property name="icon">
-             <iconset theme="preferences-other-symbolic"/>
+             <iconset theme="preferences-other-symbolic">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -200,8 +201,8 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-84</y>
-             <width>398</width>
+             <y>0</y>
+             <width>200</width>
              <height>564</height>
             </rect>
            </property>
@@ -549,7 +550,8 @@
              <string>Apply</string>
             </property>
             <property name="icon">
-             <iconset theme="dialog-apply"/>
+             <iconset theme="dialog-apply">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -559,7 +561,8 @@
              <string>Cancel</string>
             </property>
             <property name="icon">
-             <iconset theme="dialog-cancel"/>
+             <iconset theme="dialog-cancel">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -582,25 +585,25 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionPrefs"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
-     <string>Window</string>
+     <string>&amp;Window</string>
     </property>
     <addaction name="actionHide"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
@@ -611,7 +614,8 @@
   </widget>
   <action name="actionQuit">
    <property name="icon">
-    <iconset theme="window-close-symbolic"/>
+    <iconset theme="window-close-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Quit</string>
@@ -622,7 +626,8 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset theme="help-about-symbolic"/>
+    <iconset theme="help-about-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -633,7 +638,8 @@
   </action>
   <action name="actionHide">
    <property name="icon">
-    <iconset theme="window-minimize-symbolic"/>
+    <iconset theme="window-minimize-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Hide</string>
@@ -644,7 +650,8 @@
   </action>
   <action name="actionPrefs">
    <property name="icon">
-    <iconset theme="preferences-other-symbolic"/>
+    <iconset theme="preferences-other-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Preferences</string>
