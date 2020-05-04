@@ -1,6 +1,8 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
+#include "license.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -17,6 +19,8 @@ public:
 
 private slots:
     void on_closeBtn_clicked();
+
+    void on_licenseBtn_clicked();
 
 private:
     Ui::About *ui;
