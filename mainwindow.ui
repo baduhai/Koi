@@ -188,6 +188,10 @@
             <property name="text">
              <string>Back</string>
             </property>
+            <property name="icon">
+             <iconset theme="draw-arrow-back">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
            </widget>
           </item>
          </layout>
@@ -201,9 +205,9 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>0</y>
+             <y>-30</y>
              <width>401</width>
-             <height>582</height>
+             <height>488</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -367,59 +371,6 @@
              </layout>
             </item>
             <item row="3" column="0" colspan="2">
-             <layout class="QVBoxLayout" name="cursorTheme">
-              <item>
-               <widget class="QCheckBox" name="cursorCheckBox">
-                <property name="text">
-                 <string>Cursor Theme</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_9">
-                <item>
-                 <widget class="QLabel" name="lightCursor">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Light:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="darkCursor">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Dark:</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_10">
-                <item>
-                 <widget class="QComboBox" name="lightDropCursor">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="darkDropCursor">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item row="4" column="0" colspan="2">
              <layout class="QVBoxLayout" name="gtkTheme">
               <item>
                <widget class="QCheckBox" name="gtkCheckBox">
@@ -472,7 +423,7 @@
               </item>
              </layout>
             </item>
-            <item row="5" column="0" colspan="2">
+            <item row="4" column="0" colspan="2">
              <layout class="QVBoxLayout" name="wallpaper">
               <item>
                <widget class="QCheckBox" name="wallCheckBox">
@@ -508,16 +459,34 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_14">
                 <item>
-                 <widget class="QComboBox" name="lightDropWall">
+                 <widget class="QPushButton" name="lightWallBtn">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Select...</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="darkDropWall">
+                 <widget class="QPushButton" name="darkWallBtn">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Select...</string>
                   </property>
                  </widget>
                 </item>
@@ -531,6 +500,17 @@
         </item>
         <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="refreshBtn">
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
           <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">

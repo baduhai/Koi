@@ -1,8 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "about.h"
+#include "utils.h"
+
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QDir>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +26,8 @@ public slots:
     void iconActivated(QSystemTrayIcon::ActivationReason);
 
 private slots:
+    void refreshDirs();
+
     void on_prefsBtn_clicked();
 
     void on_backBtn_clicked();
@@ -29,8 +37,6 @@ private slots:
     void on_colorCheckBox_stateChanged(int arg1);
 
     void on_iconCheckBox_stateChanged(int arg1);
-
-    void on_cursorCheckBox_stateChanged(int arg1);
 
     void on_gtkCheckBox_stateChanged(int arg1);
 
@@ -51,6 +57,14 @@ private slots:
     void on_actionAbout_triggered();
 
     void on_actionHide_triggered();
+
+    void on_refreshBtn_clicked();
+
+    void on_lightWallBtn_clicked();
+
+    void on_darkWallBtn_clicked();
+
+    void on_startupCheckBox_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

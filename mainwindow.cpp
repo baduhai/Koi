@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "about.h"
 
-#include <QSystemTrayIcon>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,18 +13,22 @@ MainWindow::MainWindow(QWidget *parent)
     auto trayMenu = this->createMenu();
     this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+    // Initialise program settings
+    QSettings settings("baduhai", "Koi");
     // Show window on startup
     ui->setupUi(this);
     ui->mainStack->setCurrentIndex(0); // Always start window on main view
+    refreshDirs(); // Refresh theme list on startup
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    this->setVisible(0);
 }
 
 QMenu* MainWindow::createMenu() // Define context menu items - Right click to show context menu
 {
+    // Tray actions
     auto actionMenuQuit = new QAction("&Quit", this);
     connect(actionMenuQuit, &QAction::triggered, qApp, &QCoreApplication::quit);
 
@@ -34,6 +36,7 @@ QMenu* MainWindow::createMenu() // Define context menu items - Right click to sh
 
     auto actionMenuLight = new QAction("&Light", this);
 
+    // Build tray items
     auto trayMenu = new QMenu(this);
     trayMenu->addAction(actionMenuLight);
     trayMenu->addAction(actionMenuDark);
@@ -42,9 +45,9 @@ QMenu* MainWindow::createMenu() // Define context menu items - Right click to sh
     return trayMenu;
 }
 
-void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason_)
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason_)
+    switch (reason)
     {
         case QSystemTrayIcon::Trigger: // Left-click to toggle window visibility
             if (this->isVisible() == 1)
@@ -62,6 +65,36 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason_)
         default:
             break;
     }
+}
+
+void MainWindow::refreshDirs()
+{
+    Utils utils;
+    // Refresh plasma styles
+    QStringList plasmaStyles = utils.getPlasmaStyles();
+    ui->lightDropStyle->clear();
+    ui->lightDropStyle->addItems(plasmaStyles);
+    ui->darkDropStyle->clear();
+    ui->darkDropStyle->addItems(plasmaStyles);
+    // Refresh color schemes
+    QStringList colorSchemes = utils.getColorSchemes();
+    ui->lightDropColor->clear();
+    ui->lightDropColor->addItems(colorSchemes);
+    ui->darkDropColor->clear();
+    ui->darkDropColor->addItems(colorSchemes);
+    // Refresh icon themes
+    QStringList iconThemes = utils.getIconThemes();
+    ui->lightDropIcon->clear();
+    ui->lightDropIcon->addItems(iconThemes);
+    ui-> darkDropIcon->clear();
+    ui-> darkDropIcon->addItems(iconThemes);
+    // Refresh curosr themes
+    // Refresh gtk themes
+    QStringList gtkThemes = utils.getGtkThemes();
+    ui->lightDropGtk->clear();
+    ui->lightDropGtk->addItems(gtkThemes);
+    ui->darkDropGtk->clear();
+    ui->darkDropGtk->addItems(gtkThemes);
 }
 
 void MainWindow::on_prefsBtn_clicked() // Preferences button
@@ -135,24 +168,6 @@ void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme che
     }
 }
 
-void MainWindow::on_cursorCheckBox_stateChanged(int cursorEnabled) // Cursor theme checkbox logic
-{
-    if (ui->cursorCheckBox->checkState() == Qt::Unchecked)
-    {
-        ui->darkCursor->setEnabled(0);
-        ui->lightCursor->setEnabled(0);
-        ui->darkDropCursor->setEnabled(0);
-        ui->lightDropCursor->setEnabled(0);
-    }
-    else
-    {
-        ui->darkCursor->setEnabled(1);
-        ui->lightCursor->setEnabled(1);
-        ui->darkDropCursor->setEnabled(1);
-        ui->lightDropCursor->setEnabled(1);
-    }
-}
-
 void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnlabled) // GTK theme checkbox logic
 {
     if (ui->gtkCheckBox->checkState() == Qt::Unchecked)
@@ -177,15 +192,15 @@ void MainWindow::on_wallCheckBox_stateChanged(int wallEnabled) // Wallpaper chec
     {
         ui->darkWall->setEnabled(0);
         ui->lightWall->setEnabled(0);
-        ui->darkDropWall->setEnabled(0);
-        ui->lightDropWall->setEnabled(0);
+        ui->darkWallBtn->setEnabled(0);
+        ui->lightWallBtn->setEnabled(0);
     }
     else
     {
         ui->darkWall->setEnabled(1);
         ui->lightWall->setEnabled(1);
-        ui->darkDropWall->setEnabled(1);
-        ui->lightDropWall->setEnabled(1);
+        ui->darkWallBtn->setEnabled(1);
+        ui->lightWallBtn->setEnabled(1);
     }
 }
 
@@ -249,23 +264,52 @@ void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun)
 
 }
 
-void MainWindow::on_actionQuit_triggered()
+void MainWindow::on_actionQuit_triggered() // Quit app
 {
     QApplication::quit();
 }
 
-void MainWindow::on_actionPrefs_triggered()
+void MainWindow::on_actionPrefs_triggered() // Set preferences
 {
+    refreshDirs();
     ui->mainStack->setCurrentIndex(1);
 }
 
-void MainWindow::on_actionAbout_triggered()
+void MainWindow::on_actionAbout_triggered() // Open about dialog
 {
     auto* about = new About(this);
     about->open();
 }
 
-void MainWindow::on_actionHide_triggered()
+void MainWindow::on_actionHide_triggered() // Hide to tray
 {
     this->setVisible(0);
+}
+
+void MainWindow::on_refreshBtn_clicked() // Refresh dirs contents
+{
+    refreshDirs();
+}
+
+void MainWindow::on_lightWallBtn_clicked()
+{
+    QString lightWall = QFileDialog::getOpenFileName(this, tr("Select Image"), QDir::homePath() + "/Pictures", tr("Images(*.png *.jpg *.jpeg *.bmp)"));
+    QFileInfo lw(lightWall);
+    QString lightWallName = lw.fileName();
+    ui->lightWallBtn->setText(lightWallName);
+    ui->lightWallBtn->setToolTip(lightWall);
+}
+
+void MainWindow::on_darkWallBtn_clicked()
+{
+    QString darkWall = QFileDialog::getOpenFileName(this, tr("Select Image"), QDir::homePath() + "/Pictures", tr("Images(*.png *.jpg *.jpeg *.bmp)"));
+    QFileInfo dw(darkWall);
+    QString darkWallName = dw.fileName();
+    ui->darkWallBtn->setText(darkWallName);
+    ui->darkWallBtn->setToolTip(darkWall);
+}
+
+void MainWindow::on_startupCheckBox_stateChanged(int startupOtp)
+{
+
 }
