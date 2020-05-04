@@ -4,5 +4,6 @@
         <file>icons/koi_tray.svg</file>
         <file>icons/koi_tray.png</file>
         <file>icons/koi.png</file>
+        <file>LICENSE</file>
     </qresource>
 </RCC>

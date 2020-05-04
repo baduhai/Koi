@@ -17,15 +17,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     about.cpp \
+    license.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    utils.cpp
 
 HEADERS += \
     about.h \
-    mainwindow.h
+    license.h \
+    mainwindow.h \
+    utils.h
 
 FORMS += \
     about.ui \
+    license.ui \
     mainwindow.ui
 
 # Default rules for deployment.
