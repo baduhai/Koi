@@ -35,13 +35,8 @@ Use the [AppImage]().
 
 #### Build from source
 
-*Instructions here*
+*Instructions here.*
 
 ### License
 
 [**LGPL**](LICENSE)
-
-
-
----
-
