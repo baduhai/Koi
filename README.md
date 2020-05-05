@@ -21,7 +21,9 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 ### Screenshots
 
-*Screenshots here*
+<img src="screenshots/main_page.png" alt="main" style="zoom: 67%;" /><img src="screenshots/settings_page.png" alt="settings" style="zoom:67%;" />
+
+
 
 ### Get Koi
 
@@ -40,3 +42,8 @@ Use the [AppImage]().
 ### License
 
 [**LGPL**](LICENSE)
+
+
+
+---
+
