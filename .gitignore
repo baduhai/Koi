@@ -1,2 +1,4 @@
 build
+src/build
 *.user
+*.autosave
