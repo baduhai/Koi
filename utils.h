@@ -12,6 +12,8 @@ class Utils
 public:
     Utils();
 
+    QSettings *settings;
+
     QStringList getPlasmaStyles(void);
 
     QStringList getColorSchemes(void);
@@ -22,8 +24,35 @@ public:
 
     QStringList getGtkThemes(void);
 
-private:
+    void startupCreate();
 
+    void startupDelete();
+
+    void goLight();
+
+    void goDark();
+
+    void goLightStyle();
+
+    void goDarkStyle();
+
+    void goLightColors();
+
+    void goDarkColors();
+
+    void goLightIcons();
+
+    void goDarkIcons();
+
+    void goLightGtk();
+
+    void goDarkGtk();
+
+    void goLightWall();
+
+    void goDarkWall();
+
+private:
 
 };
 

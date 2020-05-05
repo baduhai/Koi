@@ -5,7 +5,11 @@ Utils::Utils()
 
 }
 
-QStringList Utils::getPlasmaStyles(void)
+// Light/Dark management
+
+
+// Get stuff
+QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 {
     QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/look-and-feel");
     QDir stylesSystemDir("/usr/share/plasma/look-and-feel");
@@ -15,8 +19,7 @@ QStringList Utils::getPlasmaStyles(void)
     plasmaStyles.removeFirst();
     return plasmaStyles;
 }
-
-QStringList Utils::getColorSchemes(void)
+QStringList Utils::getColorSchemes(void) // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
     QDir colorsSystemDir("/usr/share/color-schemes");
@@ -28,8 +31,7 @@ QStringList Utils::getColorSchemes(void)
     colorSchemes.removeFirst();
     return colorSchemes;
 }
-
-QStringList Utils::getIconThemes(void)
+QStringList Utils::getIconThemes(void) // Get all available icont themes
 {
     QDir iconsOldLocalDir(QDir::homePath() + "/.icons");
     QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
@@ -40,14 +42,7 @@ QStringList Utils::getIconThemes(void)
     iconThemes.removeFirst();
     return iconThemes;
 }
-
-QStringList Utils::getCursorThemes(void)
-{
-    QStringList cursorThemes;
-    return cursorThemes;
-}
-
-QStringList Utils::getGtkThemes(void)
+QStringList Utils::getGtkThemes(void) // Get all available gtk themes
 {
     QDir gtkLocalDir(QDir::homePath() + "/.themes");
     QDir gtkSystemDir("/usr/share/themes");
@@ -56,4 +51,14 @@ QStringList Utils::getGtkThemes(void)
     gtkThemes.removeFirst();
     gtkThemes.removeFirst();
     return gtkThemes;
+}
+
+// Manage koi start on system startup
+void Utils::startupCreate() // Create .desktop file in ~/.config/startup
+{
+    // Do stuff
+}
+void Utils::startupDelete() // Remove .desktop file from ~/.config/startup
+{
+    // Do stuff
 }

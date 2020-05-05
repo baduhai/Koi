@@ -23,10 +23,15 @@ public:
     ~MainWindow();
 
 public slots:
-    void iconActivated(QSystemTrayIcon::ActivationReason);
 
 private slots:
     void refreshDirs();
+
+    void loadPrefs();
+
+    void savePrefs();
+
+    void iconActivated(QSystemTrayIcon::ActivationReason);
 
     void on_prefsBtn_clicked();
 
@@ -66,10 +71,49 @@ private slots:
 
     void on_startupCheckBox_stateChanged(int arg1);
 
+    void on_lightDropStyle_currentIndexChanged(const QString &arg1);
+
+    void on_darkDropStyle_currentIndexChanged(const QString &arg1);
+
+    void on_lightDropColor_currentIndexChanged(const QString &arg1);
+
+    void on_darkDropColor_currentIndexChanged(const QString &arg1);
+
+    void on_lightDropGtk_currentIndexChanged(const QString &arg1);
+
+    void on_darkDropGtk_currentIndexChanged(const QString &arg1);
+
+    void on_lightDropIcon_currentIndexChanged(const QString &arg1);
+
+    void on_darkDropIcon_currentIndexChanged(const QString &arg1);
+
+    void on_actionRefresh_triggered();
+
+    void on_timeEditLight_userTimeChanged(const QTime &time);
+
+    void on_timeEditDark_userTimeChanged(const QTime &time);
+
 private:
     Ui::MainWindow *ui;
-    QSystemTrayIcon * trayIcon;
-    QMenu* trayIconMenu;
+    QSystemTrayIcon* trayIcon;
+    QMenu* trayMenu;
     QMenu* createMenu();
+    QString scheduleType;
+    QString lightWall;
+    QString darkWall;
+    QString lightGtk;
+    QString darkGtk;
+    QString lightIcon;
+    QString darkIcon;
+    QString lightColor;
+    QString darkColor;
+    QString lightStyle;
+    QString darkStyle;
+    QString lightTime;
+    QString darkTime;
+    Utils utils;
+
+protected:
+
 };
 #endif // MAINWINDOW_H

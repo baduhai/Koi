@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -30,6 +30,9 @@
          <layout class="QHBoxLayout" name="radioBtns">
           <item>
            <widget class="QRadioButton" name="scheduleRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Schedule</string>
             </property>
@@ -40,6 +43,9 @@
           </item>
           <item>
            <widget class="QRadioButton" name="sunRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Sunset/Sunrise</string>
             </property>
@@ -77,13 +83,20 @@
          <layout class="QHBoxLayout" name="lightTime">
           <item>
            <widget class="QLabel" name="lightTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Light:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTimeEdit" name="timeEditLight"/>
+           <widget class="QTimeEdit" name="lightTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -137,13 +150,20 @@
          <layout class="QHBoxLayout" name="darkTime">
           <item>
            <widget class="QLabel" name="darkTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Dark:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTimeEdit" name="timeEditDark"/>
+           <widget class="QTimeEdit" name="darkTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -153,7 +173,7 @@
            <string>Automatic</string>
           </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -205,8 +225,8 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-30</y>
-             <width>401</width>
+             <y>0</y>
+             <width>210</width>
              <height>488</height>
             </rect>
            </property>
@@ -215,6 +235,9 @@
              <layout class="QVBoxLayout" name="plasmaStyle">
               <item>
                <widget class="QCheckBox" name="styleCheckBox">
+                <property name="toolTip">
+                 <string>This option supersedes Color Scheme and Icon Theme</string>
+                </property>
                 <property name="text">
                  <string>Plasma Style</string>
                 </property>
@@ -374,6 +397,9 @@
              <layout class="QVBoxLayout" name="gtkTheme">
               <item>
                <widget class="QCheckBox" name="gtkCheckBox">
+                <property name="toolTip">
+                 <string>If you would like for GTK apps to follow the QT Color Scheme, do not enable this option</string>
+                </property>
                 <property name="text">
                  <string>GTK Theme</string>
                 </property>
@@ -574,6 +600,7 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="actionPrefs"/>
+    <addaction name="actionRefresh"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -638,6 +665,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="icon">
+    <iconset theme="view-refresh">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>
