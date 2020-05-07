@@ -39,7 +39,7 @@ Lastest Koi version:
 
 AUR package planned.
 
-<--! Install it from the AUR. [koi](https://aur.archlinux.org) or [koi-git](https://aur.archlinux.org). -->
+[//]: # "Install it from the AUR. [koi](https://aur.archlinux.org) or [koi-git](https://aur.archlinux.org)."
 
 #### Other Distros
 
@@ -48,16 +48,12 @@ Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releas
 #### Build from source
 
 1. `git clone https://github.com/baduhai/Koi.git`
-
 2. `cd Koi`
-
 3. `mkdir build`
-
-4. `qmake ../src/koi.pro`
-
-5. `make`
-
-6. `make install` - requires root privileges.
+4. `cd build`
+5. `qmake ../src/koi.pro`
+6. `make`
+7. `make install` - requires root privileges.
 
 ### References
 
