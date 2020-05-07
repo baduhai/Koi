@@ -1,4 +1,4 @@
-<p align="center"><img src="src/icons/koi.svg" alt="Koi" width="128" height="128"></p>
+<p align="center"><img src="src/resources/icons/koi.svg" alt="Koi" width="128" height="128"></p>
 
 <h1 align="center">Koi</h1> 
 
@@ -12,12 +12,20 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 - Change light and dark presets based on time.
 - Change light and dark presets based on sunset and sunrise.
-- Change Plasma Style.
-- Change QT Colour Scheme.
-- Change Icon Theme.
-- Change GTK Theme.
-- Change Wallpaper.
+- Change Plasma style.
+- Change QT colour scheme.
+- Change Icon theme.
+- Change GTK theme.
+- Change wallpaper.
 - Hide application to system tray.
+
+#### Planned features
+
+- Multi-monitor support for wallpaper setting.
+- Change Kate scheme.
+- Change Atom theme.
+
+Want Koi to support changing themes for another application? Open a [feature request]()!
 
 ### Screenshots
 
@@ -25,17 +33,40 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 ### Get Koi
 
+Lastest Koi version: 
+
 #### Arch Linux
 
-Install it from the [AUR](https://aur.archlinux.org).
+AUR package planned.
+
+<--! Install it from the AUR. [koi](https://aur.archlinux.org) or [koi-git](https://aur.archlinux.org). -->
 
 #### Other Distros
 
-Use the [AppImage]().
+Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releases) page.
 
 #### Build from source
 
-*Instructions here.*
+1. `git clone https://github.com/baduhai/Koi.git`
+
+2. `cd Koi`
+
+3. `mkdir build`
+
+4. `qmake ../src/koi.pro`
+
+5. `make`
+
+6. `make install` - requires root privileges.
+
+### References
+
+The following is a list of software that I used as reference or inspiration for writing Koi.
+
+- [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
+- [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
+- [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt colour scheme.
+- [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
 
 ### License
 
