@@ -14,7 +14,7 @@
    <string>Koi</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../resources/resources.qrc">
     <normaloff>:/resources/icons/koi.svg</normaloff>:/resources/icons/koi.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -681,7 +681,7 @@
   </action>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

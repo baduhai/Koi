@@ -1,14 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+// Headers
 #include "about.h"
 #include "utils.h"
-
+//Qt libs
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <QDir>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -1,6 +1,6 @@
 #ifndef LICENSE_H
 #define LICENSE_H
-
+// Qt libs
 #include <QDialog>
 
 namespace Ui {

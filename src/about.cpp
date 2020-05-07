@@ -1,4 +1,4 @@
-#include "about.h"
+#include "headers/about.h"
 #include "ui_about.h"
 
 About::About(QWidget *parent) :

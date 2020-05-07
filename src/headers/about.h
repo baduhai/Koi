@@ -1,8 +1,8 @@
 #ifndef ABOUT_H
 #define ABOUT_H
-
+// Headers
 #include "license.h"
-
+//Qt libs
 #include <QDialog>
 
 namespace Ui {

@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "headers/utils.h"
 
 Utils::Utils()
 {
@@ -51,6 +51,12 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
     gtkThemes.removeFirst();
     gtkThemes.removeFirst();
     return gtkThemes;
+}
+
+// Manage switching themes functions
+void Utils::timeLoopLight()
+{
+
 }
 
 // Manage koi start on system startup

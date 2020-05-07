@@ -1,11 +1,12 @@
 #ifndef UTILS_H
 #define UTILS_H
-
+//Qt libs
 #include <QStringList>
 #include <QDir>
 #include <QProcess>
-#include <QFileDialog>
 #include <QSettings>
+#include <QTime>
+#include <QTimer>
 
 class Utils
 {
@@ -27,6 +28,10 @@ public:
     void startupCreate();
 
     void startupDelete();
+
+    void timeLoopLight();
+
+    void timeLoopDark();
 
     void goLight();
 
@@ -53,7 +58,10 @@ public:
     void goDarkWall();
 
 private:
-
+    QTime now;
+    QTime lightTime;
+    QTime darkTime;
+    QTimer *timer;
 };
 
 #endif // UTILS_H
