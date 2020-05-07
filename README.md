@@ -37,13 +37,15 @@ Lastest Koi version:
 
 #### Arch Linux
 
-AUR package planned.
+AUR packages planned.
 
 [//]: # "Install it from the AUR. [koi](https://aur.archlinux.org) or [koi-git](https://aur.archlinux.org)."
 
 #### Other Distros
 
-Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releases) page.
+AppImage planned.
+
+[//]: # "Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releases) page."
 
 #### Build from source
 
