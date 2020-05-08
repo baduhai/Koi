@@ -6,14 +6,12 @@
 
 Koi is a program designed to provide the KDE Plasma Desktop functionality to automatically switch between light and dark themes.​
 
-
-
 ### Features
 
-- Change light and dark presets based on time.
-- Change light and dark presets based on sunset and sunrise.
+- Toggle between light and dark presets based on time.
+- Toggle between light and dark presets based on sunset and sunrise.
 - Change Plasma style.
-- Change QT colour scheme.
+- Change Qt colour scheme.
 - Change Icon theme.
 - Change GTK theme.
 - Change wallpaper.
@@ -21,7 +19,6 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 #### Planned features
 
-- Multi-monitor support for wallpaper setting.
 - Change Kate scheme.
 - Change Atom theme.
 
@@ -65,6 +62,7 @@ The following is a list of software that I used as reference or inspiration for 
 - [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
 - [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt colour scheme.
 - [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
+- [This blog post from Zren](https://zren.github.io/2020/04/28/how-to-change-plasma-icon-theme-in-the-terminal) - For teaching me how to set the icon theme.
 
 ### License
 

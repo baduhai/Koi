@@ -11,8 +11,8 @@ Utils::Utils()
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 {
-    QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/look-and-feel");
-    QDir stylesSystemDir("/usr/share/plasma/look-and-feel");
+    QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
+    QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
     QStringList plasmaStyles = stylesLocalDir.entryList(QDir::Dirs) + stylesSystemDir.entryList(QDir::Dirs);
     plasmaStyles.removeDuplicates();
     plasmaStyles.removeFirst();
@@ -58,13 +58,7 @@ void Utils::timeLoopLight()
 {
 
 }
+void Utils::goLightWall()
+{
 
-// Manage koi start on system startup
-void Utils::startupCreate() // Create .desktop file in ~/.config/startup
-{
-    // Do stuff
-}
-void Utils::startupDelete() // Remove .desktop file from ~/.config/startup
-{
-    // Do stuff
 }

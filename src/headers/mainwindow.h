@@ -36,6 +36,8 @@ private slots:
 
     void on_backBtn_clicked();
 
+    void on_applyBtn_clicked();
+
     void on_styleCheckBox_stateChanged(int arg1);
 
     void on_colorCheckBox_stateChanged(int arg1);
@@ -44,9 +46,7 @@ private slots:
 
     void on_gtkCheckBox_stateChanged(int arg1);
 
-    void on_applyBtn_clicked();
-
-    void on_cancelBtn_clicked();
+    void on_wallCheckBox_stateChanged(int arg1);
 
     void on_autoCheckBox_stateChanged(int arg1);
 
@@ -55,8 +55,6 @@ private slots:
     void on_actionQuit_triggered();
 
     void on_actionPrefs_triggered();
-
-    void on_wallCheckBox_stateChanged(int arg1);
 
     void on_actionAbout_triggered();
 
@@ -67,8 +65,6 @@ private slots:
     void on_lightWallBtn_clicked();
 
     void on_darkWallBtn_clicked();
-
-    void on_startupCheckBox_stateChanged(int arg1);
 
     void on_lightDropStyle_currentIndexChanged(const QString &arg1);
 
@@ -88,9 +84,11 @@ private slots:
 
     void on_actionRefresh_triggered();
 
-    void on_timeEditLight_userTimeChanged(const QTime &time);
+    void on_lightTimeEdit_userTimeChanged(const QTime &time);
 
-    void on_timeEditDark_userTimeChanged(const QTime &time);
+    void on_darkTimeEdit_userTimeChanged(const QTime &time);
+
+    void on_lightBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -98,16 +96,16 @@ private:
     QMenu* trayMenu;
     QMenu* createMenu();
     QString scheduleType;
-    QString lightWall;
-    QString darkWall;
-    QString lightGtk;
-    QString darkGtk;
-    QString lightIcon;
-    QString darkIcon;
-    QString lightColor;
-    QString darkColor;
     QString lightStyle;
     QString darkStyle;
+    QString lightColor;
+    QString darkColor;
+    QString lightIcon;
+    QString darkIcon;
+    QString lightGtk;
+    QString darkGtk;
+    QString lightWall;
+    QString darkWall;
     QString lightTime;
     QString darkTime;
     Utils utils;

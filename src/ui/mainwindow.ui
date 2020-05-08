@@ -22,102 +22,10 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="4" column="0">
-         <layout class="QHBoxLayout" name="radioBtns">
-          <item>
-           <widget class="QRadioButton" name="scheduleRadioBtn">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Schedule</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="sunRadioBtn">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Sunset/Sunrise</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="7" column="0">
-         <spacer name="bottomVerSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>78</width>
-            <height>164</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="0">
-         <spacer name="topVerSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>165</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="5" column="0">
-         <layout class="QHBoxLayout" name="lightTime">
-          <item>
-           <widget class="QLabel" name="lightTimeLabel">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Light:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTimeEdit" name="lightTimeEdit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="lightDarkBtns">
-          <item>
-           <widget class="QPushButton" name="lightBtn">
-            <property name="text">
-             <string>Light</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="darkBtn">
-            <property name="text">
-             <string>Dark</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="topSettings">
           <item>
@@ -146,6 +54,108 @@
           </item>
          </layout>
         </item>
+        <item row="7" column="0">
+         <spacer name="bottomVerSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>78</width>
+            <height>164</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0">
+         <layout class="QHBoxLayout" name="radioBtns">
+          <item>
+           <widget class="QRadioButton" name="scheduleRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Schedule</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="sunRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Sunset/Sunrise</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="5" column="0">
+         <layout class="QHBoxLayout" name="lightTime">
+          <item>
+           <widget class="QLabel" name="lightTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Light:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTimeEdit" name="lightTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="autoCheckBox">
+          <property name="text">
+           <string>Automatic</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="lightDarkBtns">
+          <item>
+           <widget class="QPushButton" name="lightBtn">
+            <property name="text">
+             <string>Light</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="darkBtn">
+            <property name="text">
+             <string>Dark</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <spacer name="topVerSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>165</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="6" column="0">
          <layout class="QHBoxLayout" name="darkTime">
           <item>
@@ -167,29 +177,12 @@
           </item>
          </layout>
         </item>
-        <item row="3" column="0">
-         <widget class="QCheckBox" name="autoCheckBox">
-          <property name="text">
-           <string>Automatic</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="settingsPage">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QCheckBox" name="startupCheckBox">
-            <property name="text">
-             <string>Start Koi on system startup</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
@@ -216,6 +209,45 @@
           </item>
          </layout>
         </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="refreshBtn">
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-refresh">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="applyBtn">
+            <property name="text">
+             <string>Apply</string>
+            </property>
+            <property name="icon">
+             <iconset theme="dialog-apply">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item row="1" column="0">
          <widget class="QScrollArea" name="scrollArea">
           <property name="widgetResizable">
@@ -226,7 +258,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>210</width>
+             <width>401</width>
              <height>488</height>
             </rect>
            </property>
@@ -523,56 +555,6 @@
            </layout>
           </widget>
          </widget>
-        </item>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QPushButton" name="refreshBtn">
-            <property name="text">
-             <string>Refresh</string>
-            </property>
-            <property name="icon">
-             <iconset theme="view-refresh">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="applyBtn">
-            <property name="text">
-             <string>Apply</string>
-            </property>
-            <property name="icon">
-             <iconset theme="dialog-apply">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="cancelBtn">
-            <property name="text">
-             <string>Cancel</string>
-            </property>
-            <property name="icon">
-             <iconset theme="dialog-cancel">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </item>
        </layout>
       </widget>

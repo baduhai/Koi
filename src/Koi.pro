@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui dbus
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,13 +20,15 @@ SOURCES += \
     license.cpp \
     main.cpp \
     mainwindow.cpp \
-    utils.cpp
+    utils.cpp \
+    wallpaper.cpp
 
 HEADERS += \
     headers/about.h \
     headers/license.h \
     headers/mainwindow.h \
-    headers/utils.h
+    headers/utils.h \
+    headers/wallpaper.h
 
 FORMS += \
     ui/about.ui \

@@ -25,10 +25,6 @@ public:
 
     QStringList getGtkThemes(void);
 
-    void startupCreate();
-
-    void startupDelete();
-
     void timeLoopLight();
 
     void timeLoopDark();

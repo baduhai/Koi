@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     // utils.settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
     ui->setupUi(this);
     ui->mainStack->setCurrentIndex(0); // Always start window on main view
+    refreshDirs();
     loadPrefs(); // Load prefs on startup
 }
 MainWindow::~MainWindow()
@@ -71,70 +72,6 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
 }
 
 // Independent funtions
-void MainWindow::savePrefs()
-{
-    // Logic for Plasma Style, Color Scheme & Icon Theme enabling
-    if (ui->styleCheckBox->isChecked() == 0)
-    {
-        utils.settings->setValue("PlasmaStyle/enabled", false);
-        if (ui->colorCheckBox->isChecked() == 0)
-        {
-            utils.settings->setValue("ColorScheme/enabled", false);
-        }
-        else
-        {
-            utils.settings->setValue("ColorScheme/enabled", true);
-        }
-        if (ui->iconCheckBox->isChecked() == 0)
-        {
-            utils.settings->setValue("IconTheme/enabled", false);
-        }
-        else
-        {
-            utils.settings->setValue("IconTheme/enabled", true);
-        }
-    }
-    else
-    {
-        utils.settings->setValue("PlasmaStyle/enabled", true);
-        utils.settings->setValue("ColorScheme/enabled", false);
-        utils.settings->setValue("IconTheme/enabled", false);
-    }
-    // Plasma Style, Color Scheme and Icon Theme saving prefs
-    utils.settings->setValue("PlasmaStyle/light", lightStyle);
-    utils.settings->setValue("PlasmaStyle/dark", darkStyle);
-    utils.settings->setValue("ColorScheme/light", lightColor);
-    utils.settings->setValue("ColorScheme/dark", darkColor);
-    utils.settings->setValue("IconTheme/light", lightIcon);
-    utils.settings->setValue("IconTheme/dark", darkIcon);
-
-    // GTK theme enabling
-    if (ui->gtkCheckBox->isChecked() == 0)
-    {
-        utils.settings->setValue("GTKTheme/enabled", false);
-    }
-    else
-    {
-        utils.settings->setValue("GTKTheme/enabled", true);
-    }
-    // GTK theme saving prefs
-    utils.settings->setValue("GTKTheme/light", lightGtk);
-    utils.settings->setValue("GTKTheme/dark", darkGtk);
-
-    // Wallpaper enabling
-    if (ui->wallCheckBox->isChecked() == 0)
-    {
-        utils.settings->setValue("Wallpaper/enabled", false);
-    }
-    else
-    {
-        utils.settings->setValue("Wallpaper/enabled", true);
-    }
-    // Wallpaper saving prefs
-    utils.settings->setValue("Wallpaper/light", lightWall);
-    utils.settings->setValue("Wallpaper/dark", darkWall);
-    utils.settings->sync();
-}
 void MainWindow::loadPrefs()
 {
     // Load scheduling prefs
@@ -157,9 +94,7 @@ void MainWindow::loadPrefs()
     ui->lightTimeEdit->setTime(utils.settings->value("time-light").toTime());
     ui->darkTimeEdit->setTime(utils.settings->value("time-dark").toTime());
 
-    // Load startup pref
-
-    // Load Plasma Style prefs
+    // Load Plasma style prefs
     if (utils.settings->value("PlasmaStyle/enabled").toBool())
     {
         ui->styleCheckBox->setChecked(true);
@@ -168,10 +103,10 @@ void MainWindow::loadPrefs()
     {
         ui->styleCheckBox->setChecked(false);
     }
-    ui->lightDropStyle->setCurrentText(utils.settings->value("PlasmaStyle/light").toString());
-    ui->darkDropStyle->setCurrentText(utils.settings->value("PlasmaStyle/dark").toString());
+    ui->lightDropStyle->setCurrentText(utils.settings->value("PlasmaStyle/dark").toString());
+    ui->darkDropStyle->setCurrentText(utils.settings->value("PlasmaTheming/dark").toString());
 
-    // Load Color Scheme prefs
+    // Load color scheme prefs
     if (utils.settings->value("ColorScheme/enabled").toBool())
     {
         ui->colorCheckBox->setChecked(true);
@@ -183,7 +118,7 @@ void MainWindow::loadPrefs()
     ui->lightDropColor->setCurrentText(utils.settings->value("ColorScheme/light").toString());
     ui->darkDropColor->setCurrentText(utils.settings->value("ColorScheme/dark").toString());
 
-    //Load Icon Theme prefs
+    // Load icon theme prefs
     if (utils.settings->value("IconTheme/enabled").toBool())
     {
         ui->iconCheckBox->setChecked(true);
@@ -237,6 +172,74 @@ void MainWindow::loadPrefs()
         ui->darkWallBtn->setText(darkWallBtnText);
     }
 }
+void MainWindow::savePrefs()
+{
+    // Plasma Style enabling
+    if (ui->styleCheckBox->isChecked() == 0)
+    {
+        utils.settings->setValue("PlasmaStyle/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("PlasmaStyle/enabled", true);
+    }
+    // Plasma Style saving prefs
+    utils.settings->setValue("PlasmaStyle/light", lightStyle);
+    utils.settings->setValue("PlasmaStyle/dark", darkStyle);
+
+    // Color scheme enabling
+    if (ui->colorCheckBox->isChecked() == 0)
+    {
+        utils.settings->setValue("ColorScheme/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("ColorScheme/enabled", true);
+    }
+    // Color scheme saving prefs
+    utils.settings->setValue("ColorScheme/light", lightColor);
+    utils.settings->setValue("ColorScheme/dark", darkColor);
+
+    // Icon theme enabling
+    if (ui->iconCheckBox->checkState() == 0)
+    {
+        utils.settings->setValue("IconTheme/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("IconTheme/enabled", true);
+    }
+    // Icon theme saving prefs
+    utils.settings->setValue("IconTheme/light", lightIcon);
+    utils.settings->setValue("IconTheme/dark", darkIcon);
+
+    // GTK theme enabling
+    if (ui->gtkCheckBox->isChecked() == 0)
+    {
+        utils.settings->setValue("GTKTheme/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("GTKTheme/enabled", true);
+    }
+    // GTK theme saving prefs
+    utils.settings->setValue("GTKTheme/light", lightGtk);
+    utils.settings->setValue("GTKTheme/dark", darkGtk);
+
+    // Wallpaper enabling
+    if (ui->wallCheckBox->isChecked() == 0)
+    {
+        utils.settings->setValue("Wallpaper/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("Wallpaper/enabled", true);
+    }
+    // Wallpaper saving prefs
+    utils.settings->setValue("Wallpaper/light", lightWall);
+    utils.settings->setValue("Wallpaper/dark", darkWall);
+    utils.settings->sync();
+}
 void MainWindow::refreshDirs() // Refresh function to find new themes
 {
     // Refresh plasma styles
@@ -263,6 +266,7 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
     ui->lightDropGtk->addItems(gtkThemes);
     ui->darkDropGtk->clear();
     ui->darkDropGtk->addItems(gtkThemes);
+    loadPrefs();
 }
 
 // Funtionality of buttons - Related to program navigation, interaction and saving settings
@@ -275,24 +279,16 @@ void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferen
      * the wallpapers, the wallpaper preferences would be set as empty strings, and not stay
      * the same, as is expected behaviour. Unsure why this fixes said bug... ¯\_(ツ)_/¯
      */
-    refreshDirs();
     loadPrefs();
     ui->mainStack->setCurrentIndex(1);
 }
-void MainWindow::on_backBtn_clicked() // Back button in preferences view - Check of settings have been saved and asks
+void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must setup cheking if prefs saved
 {
-    // Must implement checking if prefs are saved
-    // Big if stantement cause I don't know how to do it in a better way
     ui->mainStack->setCurrentIndex(0);
 }
-void MainWindow::on_applyBtn_clicked() // Apply button on preferences view - Saves settings
+void MainWindow::on_applyBtn_clicked()
 {
     savePrefs();
-    ui->mainStack->setCurrentIndex(0);
-}
-void MainWindow::on_cancelBtn_clicked() // Cancel button on preferences view - Does not save settings
-{
-    ui->mainStack->setCurrentIndex(0);
 }
 void MainWindow::on_refreshBtn_clicked() // Refresh dirs contents
 {
@@ -309,8 +305,6 @@ void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style
         ui->lightStyle->setEnabled(0);
         ui->darkDropStyle->setEnabled(0);
         ui->lightDropStyle->setEnabled(0);
-        ui->colorCheckBox->setEnabled(1);
-        ui->iconCheckBox->setEnabled(1);
     }
     else
     {
@@ -318,20 +312,8 @@ void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style
         ui->lightStyle->setEnabled(1);
         ui->darkDropStyle->setEnabled(1);
         ui->lightDropStyle->setEnabled(1);
-        ui->colorCheckBox->setChecked(0);
-        ui->colorCheckBox->setEnabled(0);
-        ui->iconCheckBox->setChecked(0);
-        ui->iconCheckBox->setEnabled(0);
     }
 
-}
-void MainWindow::on_lightDropStyle_currentIndexChanged(const QString &lightStyleUN) // Set light plasma style
-{
-    lightStyle = lightStyleUN;
-}
-void MainWindow::on_darkDropStyle_currentIndexChanged(const QString &darkStyleUN) // Set dark plasma style
-{
-    darkStyle = darkStyleUN;
 }
 void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled) // Color scheme checkbox logic
 {
@@ -350,14 +332,6 @@ void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled) // Color scheme
         ui->lightDropColor->setEnabled(1);
     }
 }
-void MainWindow::on_lightDropColor_currentIndexChanged(const QString &lightColorUN) // Set light color scheme
-{
-    lightColor = lightColorUN;
-}
-void MainWindow::on_darkDropColor_currentIndexChanged(const QString &darkColorUN) // Set dark color scheme
-{
-    darkColor = darkColorUN;
-}
 void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme checkbox logic
 {
     if (ui->iconCheckBox->checkState() == 0)
@@ -374,6 +348,22 @@ void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme che
         ui->darkDropIcon->setEnabled(1);
         ui->lightDropIcon->setEnabled(1);
     }
+}
+void MainWindow::on_lightDropStyle_currentIndexChanged(const QString &lightStyleUN) // Set light plasma style
+{
+    lightStyle = lightStyleUN;
+}
+void MainWindow::on_darkDropStyle_currentIndexChanged(const QString &darkStyleUN) // Set dark plasma style
+{
+    darkStyle = darkStyleUN;
+}
+void MainWindow::on_lightDropColor_currentIndexChanged(const QString &lightColorUN) // Set light color scheme
+{
+    lightColor = lightColorUN;
+}
+void MainWindow::on_darkDropColor_currentIndexChanged(const QString &darkColorUN) // Set dark color scheme
+{
+    darkColor = darkColorUN;
 }
 void MainWindow::on_lightDropIcon_currentIndexChanged(const QString &lightIconUN) // Set light icon theme
 {
@@ -452,6 +442,7 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
         ui->lightTimeEdit->setEnabled(0);
         ui->darkTimeEdit->setEnabled(0);
         utils.settings->setValue("schedule", false);
+        utils.settings->sync();
     }
     else
     {
@@ -470,6 +461,7 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
             ui->darkTimeEdit->setEnabled(0);
         }
         utils.settings->setValue("schedule", true);
+        utils.settings->sync();
     }
 }
 void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between manual schedule, and sun schedule
@@ -482,6 +474,7 @@ void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between
         ui->darkTimeEdit->setEnabled(1);
         scheduleType = "time";
         utils.settings->setValue("schedule-type", scheduleType);
+        utils.settings->sync();
     }
     else
     {
@@ -491,29 +484,21 @@ void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between
         ui->darkTimeEdit->setEnabled(0);
         scheduleType = "sun";
         utils.settings->setValue("schedule-type", scheduleType);
+        utils.settings->sync();
     }
 
 }
-void MainWindow::on_timeEditLight_userTimeChanged(const QTime &time) // Set light time
+void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set light time
 {
     lightTime = time.toString();
     utils.settings->setValue("time-light", lightTime);
+    utils.settings->sync();
 }
-void MainWindow::on_timeEditDark_userTimeChanged(const QTime &time) // Set dark time
+void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark time
 {
     darkTime = time.toString();
     utils.settings->setValue("time-dark", darkTime);
-}
-void MainWindow::on_startupCheckBox_stateChanged(int startupOtp) // Option to start koi on system startup
-{
-    if (ui->startupCheckBox->isChecked() == 0)
-    {
-        utils.startupDelete();
-    }
-    else
-    {
-        utils.startupCreate();
-    }
+    utils.settings->sync();
 }
 
 // Menubar actions
@@ -539,3 +524,10 @@ void MainWindow::on_actionRefresh_triggered() // Refresh dirs
     on_refreshBtn_clicked();
 }
 
+
+
+
+void MainWindow::on_lightBtn_clicked()
+{
+
+}
