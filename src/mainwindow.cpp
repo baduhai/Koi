@@ -553,7 +553,6 @@ void MainWindow::on_lightBtn_clicked()
 {
     utils.goLight();
 }
-
 void MainWindow::on_darkBtn_clicked()
 {
     utils.goDark();
