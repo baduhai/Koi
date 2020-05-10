@@ -12,9 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     trayMenu = this->createMenu();
     this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
-    // Settings preperties used globally
-    utils.settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
-    // utils.settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
+    utils.initialiseSettings();
     ui->setupUi(this);
     ui->mainStack->setCurrentIndex(0); // Always start window on main view
     refreshDirs();
@@ -66,6 +64,16 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
 // Independent funtions
 void MainWindow::loadPrefs()
 {
+    // Load startup prefs
+    if (utils.settings->value("start-hidden").toBool())
+    {
+        ui->hiddenCheckBox->setChecked(true);
+    }
+    else
+    {
+        ui->hiddenCheckBox->setChecked(false);
+    }
+
     // Load scheduling prefs
     if (utils.settings->value("schedule").toBool())
     {
@@ -503,6 +511,17 @@ void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark 
     utils.settings->setValue("time-dark", darkTime);
     utils.settings->sync();
 }
+void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
+{
+    if (ui->hiddenCheckBox->checkState() == 0)
+    {
+        utils.settings->setValue("start-hidden", false);
+    }
+    else
+    {
+        utils.settings->setValue("start-hidden", true);
+    }
+}
 
 // Menubar actions
 void MainWindow::on_actionQuit_triggered() // Quit app
@@ -539,3 +558,5 @@ void MainWindow::on_darkBtn_clicked()
 {
     utils.goDark();
 }
+
+

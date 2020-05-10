@@ -5,8 +5,12 @@ Utils::Utils()
 
 }
 
-// Light/Dark management
-
+// Global settings stuff
+void Utils::initialiseSettings()
+{
+    settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
+    // settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
+}
 
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles

@@ -94,6 +94,8 @@ private slots:
 
     void on_darkBtn_clicked();
 
+    void on_hiddenCheckBox_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon* trayIcon;

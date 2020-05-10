@@ -18,6 +18,8 @@ public:
 
     QSettings *settings;
 
+    void initialiseSettings();
+
     QStringList getPlasmaStyles(void);
 
     QStringList getColorSchemes(void);
