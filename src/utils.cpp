@@ -60,5 +60,8 @@ void Utils::timeLoopLight()
 }
 void Utils::goLightWall()
 {
-
+    if (settings->value("Wallpaper/enabled").toBool())
+    {
+        wallpaper.setWallpaper(settings->value("Wallpaper/light").toString());
+    }
 }

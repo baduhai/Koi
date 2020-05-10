@@ -529,5 +529,5 @@ void MainWindow::on_actionRefresh_triggered() // Refresh dirs
 
 void MainWindow::on_lightBtn_clicked()
 {
-
+    utils.goLightWall();
 }

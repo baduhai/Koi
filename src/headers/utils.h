@@ -1,5 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
+// Headers
+#include "wallpaper.h"
 //Qt libs
 #include <QStringList>
 #include <QDir>
@@ -54,6 +56,7 @@ public:
     void goDarkWall();
 
 private:
+    Wallpaper wallpaper;
     QTime now;
     QTime lightTime;
     QTime darkTime;
