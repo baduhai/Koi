@@ -273,6 +273,7 @@ void MainWindow::toggleVisibility()
     if (this->isVisible() == 0)
     {
         this->setVisible(1);
+        this->activateWindow();
     }
     else
     {
