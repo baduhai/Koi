@@ -30,6 +30,8 @@ private slots:
 
     void savePrefs();
 
+    void toggleVisibility();
+
     void iconActivated(QSystemTrayIcon::ActivationReason);
 
     void on_prefsBtn_clicked();
@@ -89,6 +91,8 @@ private slots:
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
 
     void on_lightBtn_clicked();
+
+    void on_darkBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

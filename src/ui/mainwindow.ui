@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -430,7 +430,7 @@
               <item>
                <widget class="QCheckBox" name="gtkCheckBox">
                 <property name="toolTip">
-                 <string>If you would like for GTK apps to follow the QT Color Scheme, do not enable this option</string>
+                 <string>GTK applications must be restarted for changes to take effect.</string>
                 </property>
                 <property name="text">
                  <string>GTK Theme</string>

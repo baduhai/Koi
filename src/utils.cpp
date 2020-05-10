@@ -58,10 +58,47 @@ void Utils::timeLoopLight()
 {
 
 }
+void Utils::goLight()
+{
+    goLightGtk();
+    goLightWall();
+}
+void Utils::goDark()
+{
+    goDarkGtk();
+    goDarkWall();
+}
+void Utils::goLightGtk()
+{
+    if (settings->value("GTKTheme/enabled").toBool())
+    {
+        gtk.setGtk(settings->value("GTKTheme/light").toString());
+    }
+}
+void Utils::goDarkGtk()
+{
+    if (settings->value("GTKTheme/enabled").toBool())
+    {
+        gtk.setGtk(settings->value("GTKTheme/dark").toString());
+    }
+}
 void Utils::goLightWall()
 {
     if (settings->value("Wallpaper/enabled").toBool())
     {
-        wallpaper.setWallpaper(settings->value("Wallpaper/light").toString());
+        if (!settings->value("Wallpaper/light").isNull()){
+            wallpaper.setWallpaper(settings->value("Wallpaper/light").toString());
+        }
+    }
+}
+
+void Utils::goDarkWall()
+{
+    if (settings->value("Wallpaper/enabled").toBool())
+    {
+        if (!settings->value("Wallpaper/dark").isNull())
+        {
+            wallpaper.setWallpaper(settings->value("Wallpaper/dark").toString());
+        }
     }
 }

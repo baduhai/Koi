@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     about.cpp \
+    gtk.cpp \
     license.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
     wallpaper.cpp
 
 HEADERS += \
+    headers/gtk.h \
     headers/about.h \
     headers/license.h \
     headers/mainwindow.h \

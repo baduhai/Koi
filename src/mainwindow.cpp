@@ -12,9 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     trayMenu = this->createMenu();
     this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
-    // Annoying things that QSettings needs
-    QCoreApplication::setOrganizationName("baduhai");
-    QCoreApplication::setApplicationName("Koi");
+    // Settings preperties used globally
     utils.settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
     // utils.settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
     ui->setupUi(this);
@@ -34,14 +32,15 @@ QMenu* MainWindow::createMenu() // Define context menu items for SysTray - R-cli
     auto actionMenuQuit = new QAction("&Quit", this); // Quit app
     connect(actionMenuQuit, &QAction::triggered, qApp, &QCoreApplication::quit);
     auto actionMenuLight = new QAction("&Light", this); // Switch to light
-    // Must write fuction to switch to  light
+    //connect(actionMenuLight, &QAction::triggered, utils, &Utils::goLight); //Doesn't work.
     auto actionMenuDark = new QAction("&Dark", this); //Switch to dark
-    // Must write fuction to switch to dark
+    //connect(actionMenuDark, &QAction::triggered, utils, &Utils::goDark); //Doesn't work.
 
     // Build tray items
     auto trayMenu = new QMenu(this);
     trayMenu->addAction(actionMenuLight);
     trayMenu->addAction(actionMenuDark);
+    trayMenu->addSeparator();
     trayMenu->addAction(actionMenuQuit);
     return trayMenu;
 }
@@ -50,14 +49,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
     switch (reason)
     {
         case QSystemTrayIcon::Trigger: // Left-click to toggle window visibility
-            if (this->isVisible() == 0)
-            {
-                this->setVisible(1);
-            }
-            else
-            {
-                this->setVisible(0);
-            }
+            toggleVisibility();
             break;
 
         case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
@@ -267,6 +259,17 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
     ui->darkDropGtk->clear();
     ui->darkDropGtk->addItems(gtkThemes);
     loadPrefs();
+}
+void MainWindow::toggleVisibility()
+{
+    if (this->isVisible() == 0)
+    {
+        this->setVisible(1);
+    }
+    else
+    {
+        this->setVisible(0);
+    }
 }
 
 // Funtionality of buttons - Related to program navigation, interaction and saving settings
@@ -529,5 +532,10 @@ void MainWindow::on_actionRefresh_triggered() // Refresh dirs
 
 void MainWindow::on_lightBtn_clicked()
 {
-    utils.goLightWall();
+    utils.goLight();
+}
+
+void MainWindow::on_darkBtn_clicked()
+{
+    utils.goDark();
 }

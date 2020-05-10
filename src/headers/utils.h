@@ -1,8 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 // Headers
+#include "gtk.h"
 #include "wallpaper.h"
-//Qt libs
+// Qt libs
 #include <QStringList>
 #include <QDir>
 #include <QProcess>
@@ -56,6 +57,7 @@ public:
     void goDarkWall();
 
 private:
+    Gtk gtk;
     Wallpaper wallpaper;
     QTime now;
     QTime lightTime;
