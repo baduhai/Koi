@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QtDBus>
-#include <QDBusInterface>
 
 class Wallpaper
 {
@@ -14,7 +13,7 @@ public:
 
 private:
     QDBusConnection *bus;
-    QDBusInterface *plasma;
+    QDBusInterface *interface;
 };
 
 #endif // WALLPAPER_H
