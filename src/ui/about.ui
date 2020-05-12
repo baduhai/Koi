@@ -103,7 +103,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="aboutTab">
       <attribute name="title">
@@ -221,12 +221,32 @@ text-align: left;</string>
        <string>Libraries</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>KF Version</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="qtVerLabel">
          <property name="text">
           <string notr="true">Qt Version</string>
          </property>
         </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>465</width>
+           <height>126</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

@@ -1,10 +1,12 @@
 #ifndef UTILS_H
 #define UTILS_H
 // Headers
+#include "plasmastyle.h"
+#include "colorscheme.h"
 #include "gtk.h"
 #include "wallpaper.h"
+#include "icons.h"
 // Qt libs
-#include <QStringList>
 #include <QDir>
 #include <QProcess>
 #include <QSettings>
@@ -24,11 +26,15 @@ public:
 
     QStringList getColorSchemes(void);
 
+    QStringList getColorSchemesPath(void);
+
     QStringList getIconThemes(void);
 
     QStringList getCursorThemes(void);
 
     QStringList getGtkThemes(void);
+
+    void notify(QString notifySummary, QString notifyBody, int timeoutms);
 
     void timeLoopLight();
 
@@ -59,8 +65,13 @@ public:
     void goDarkWall();
 
 private:
+    PlasmaStyle plasmastyle;
+    ColorScheme colorscheme;
+    Icons icons;
     Gtk gtk;
     Wallpaper wallpaper;
+    QDBusConnection *bus;
+    QDBusInterface *notifyInterface;
     QTime now;
     QTime lightTime;
     QTime darkTime;

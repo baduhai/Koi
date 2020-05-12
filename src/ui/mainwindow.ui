@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -93,6 +93,13 @@
         </item>
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="topSettings">
+          <item>
+           <widget class="QCheckBox" name="hiddenCheckBox">
+            <property name="text">
+             <string>Start Koi hidden</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
@@ -184,9 +191,15 @@
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QCheckBox" name="hiddenCheckBox">
+           <widget class="QCheckBox" name="notifyCheckBox">
+            <property name="toolTip">
+             <string>If this option is enabled, Koi will notify you when themes change.</string>
+            </property>
             <property name="text">
-             <string>Start Koi hidden</string>
+             <string>Enable Notifications</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -218,17 +231,6 @@
         </item>
         <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QPushButton" name="refreshBtn">
-            <property name="text">
-             <string>Refresh</string>
-            </property>
-            <property name="icon">
-             <iconset theme="view-refresh">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
           <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
@@ -589,7 +591,6 @@
      <string>&amp;Edit</string>
     </property>
     <addaction name="actionPrefs"/>
-    <addaction name="actionRefresh"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -654,18 +655,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="actionRefresh">
-   <property name="icon">
-    <iconset theme="view-refresh">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-   <property name="text">
-    <string>Refresh</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>

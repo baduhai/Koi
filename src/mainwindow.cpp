@@ -64,6 +64,15 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
 // Independent funtions
 void MainWindow::loadPrefs()
 {
+    // Load notify prefs
+    if (utils.settings->value("notify", true).toBool())
+    {
+        ui->notifyCheckBox->setChecked(true);
+    }
+    else
+    {
+        ui->notifyCheckBox->setChecked(false);
+    }
     // Load startup prefs
     if (utils.settings->value("start-hidden").toBool())
     {
@@ -103,8 +112,8 @@ void MainWindow::loadPrefs()
     {
         ui->styleCheckBox->setChecked(false);
     }
-    ui->lightDropStyle->setCurrentText(utils.settings->value("PlasmaStyle/dark").toString());
-    ui->darkDropStyle->setCurrentText(utils.settings->value("PlasmaTheming/dark").toString());
+    ui->lightDropStyle->setCurrentText(utils.settings->value("PlasmaStyle/light").toString());
+    ui->darkDropStyle->setCurrentText(utils.settings->value("PlasmaStyle/dark").toString());
 
     // Load color scheme prefs
     if (utils.settings->value("ColorScheme/enabled").toBool())
@@ -115,8 +124,12 @@ void MainWindow::loadPrefs()
     {
         ui->colorCheckBox->setChecked(false);
     }
-    ui->lightDropColor->setCurrentText(utils.settings->value("ColorScheme/light").toString());
-    ui->darkDropColor->setCurrentText(utils.settings->value("ColorScheme/dark").toString());
+    QFileInfo lightColorsPref(utils.settings->value("ColorScheme/light").toString());
+    QFileInfo darkColorsPref(utils.settings->value("ColorScheme/dark").toString());
+    QString lightColorsPrefString = lightColorsPref.baseName();
+    QString darkColorsPrefString = darkColorsPref.baseName();
+    ui->lightDropColor->setCurrentText(lightColorsPrefString);
+    ui->darkDropColor->setCurrentText(darkColorsPrefString);
 
     // Load icon theme prefs
     if (utils.settings->value("IconTheme/enabled").toBool())
@@ -302,11 +315,19 @@ void MainWindow::on_applyBtn_clicked()
 {
     savePrefs();
 }
-void MainWindow::on_refreshBtn_clicked() // Refresh dirs contents
+void MainWindow::on_lightBtn_clicked()
+{
+    utils.goLight();
+}
+void MainWindow::on_darkBtn_clicked()
+{
+    utils.goDark();
+}
+/*void MainWindow::on_refreshBtn_clicked() // Refresh dirs contents
 {
     loadPrefs();
     refreshDirs();
-}
+}*/
 
 // Editing options
 void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style checkbox logic
@@ -371,11 +392,13 @@ void MainWindow::on_darkDropStyle_currentIndexChanged(const QString &darkStyleUN
 }
 void MainWindow::on_lightDropColor_currentIndexChanged(const QString &lightColorUN) // Set light color scheme
 {
-    lightColor = lightColorUN;
+    QStringList colorSchemesPaths = utils.getColorSchemesPath();
+    lightColor = colorSchemesPaths.at(ui->lightDropColor->currentIndex());
 }
 void MainWindow::on_darkDropColor_currentIndexChanged(const QString &darkColorUN) // Set dark color scheme
 {
-    darkColor = darkColorUN;
+    QStringList colorSchemesPaths = utils.getColorSchemesPath();
+    darkColor = colorSchemesPaths.at(ui->darkDropColor->currentIndex());
 }
 void MainWindow::on_lightDropIcon_currentIndexChanged(const QString &lightIconUN) // Set light icon theme
 {
@@ -523,6 +546,17 @@ void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
         utils.settings->setValue("start-hidden", true);
     }
 }
+void MainWindow::on_notifyCheckBox_stateChanged(int notifyEnabled)
+{
+    if (ui->notifyCheckBox->checkState() == 0)
+    {
+        utils.settings->setValue("notify", false);
+    }
+    else
+    {
+        utils.settings->setValue("notify", true);
+    }
+}
 
 // Menubar actions
 void MainWindow::on_actionQuit_triggered() // Quit app
@@ -542,21 +576,16 @@ void MainWindow::on_actionHide_triggered() // Hide to tray
 {
     this->setVisible(0);
 }
-void MainWindow::on_actionRefresh_triggered() // Refresh dirs
+/*void MainWindow::on_actionRefresh_triggered() // Refresh dirs
 {
     on_refreshBtn_clicked();
-}
+}*/
 
 
 
 
-void MainWindow::on_lightBtn_clicked()
-{
-    utils.goLight();
-}
-void MainWindow::on_darkBtn_clicked()
-{
-    utils.goDark();
-}
+
+
+
 
 

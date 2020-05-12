@@ -62,7 +62,7 @@ private slots:
 
     void on_actionHide_triggered();
 
-    void on_refreshBtn_clicked();
+    //void on_refreshBtn_clicked();
 
     void on_lightWallBtn_clicked();
 
@@ -84,7 +84,7 @@ private slots:
 
     void on_darkDropIcon_currentIndexChanged(const QString &arg1);
 
-    void on_actionRefresh_triggered();
+    //void on_actionRefresh_triggered();
 
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
 
@@ -95,6 +95,8 @@ private slots:
     void on_darkBtn_clicked();
 
     void on_hiddenCheckBox_stateChanged(int arg1);
+
+    void on_notifyCheckBox_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

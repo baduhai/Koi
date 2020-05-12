@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QtDBus>
+#include <QFileInfo>
 
 class Gtk
 {

@@ -1,4 +1,4 @@
-QT       += core gui dbus
+QT       += core gui dbus KConfigCore
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,18 +17,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     about.cpp \
+    colorscheme.cpp \
     gtk.cpp \
+    icons.cpp \
     license.cpp \
     main.cpp \
     mainwindow.cpp \
+    plasmastyle.cpp \
     utils.cpp \
     wallpaper.cpp
 
 HEADERS += \
+    headers/colorscheme.h \
     headers/gtk.h \
     headers/about.h \
+    headers/icons.h \
     headers/license.h \
     headers/mainwindow.h \
+    headers/plasmastyle.h \
     headers/utils.h \
     headers/wallpaper.h
 

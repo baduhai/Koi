@@ -11,12 +11,12 @@ About::About(QWidget *parent) :
     QString pgrmVersion = "Version ";
     QApplication::setApplicationVersion("0.1");
     ui->verLabel->setText(pgrmVersion + QApplication::applicationVersion());
-    QString qtVersion1 = "<ul><li>Qt ";
-    QString qtVersionNum = qVersion();
-    QString qtVersion2 = "</li></ul>";
-    QString qtVersion = qtVersion1 + qtVersionNum + qtVersion2;
+    QString qtVersion = "<ul><li>Qt ";
+            qtVersion += qVersion();
+            qtVersion += "</li></ul>";
     ui->qtVerLabel->setText(qtVersion);
     ui->qtVerLabel->setTextFormat(Qt::RichText);
+    QString kfVersion = "<ul><li>KDE Framworks ";
     ui->tabWidget->setCurrentIndex(0);
 }
 

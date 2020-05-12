@@ -12,6 +12,22 @@ void Utils::initialiseSettings()
     // settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 }
 
+// Miscelaneous functions
+void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms = 5000) // Push notification through DBus
+{
+    bus = new QDBusConnection(QDBusConnection::sessionBus());
+    notifyInterface = new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", *bus);
+    QString app_name = "Koi"; // What program is the notification coming from?
+    uint replaces_id = 0; // Not sure what this is. Think it has something to do with pid.
+    QString app_icon; // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
+    QString summary = notifySummary; // Title of notification.
+    QString body = notifyBody; // Notification body.
+    QStringList actions; // No idea how to use.
+    QVariantMap hints; // No idea how to use.
+    int timeout = timeoutms; // Notification timeout, there's no way to assume system has a default timeout unfortunately.
+    notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+}
+
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 {
@@ -21,19 +37,58 @@ QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
     plasmaStyles.removeDuplicates();
     plasmaStyles.removeFirst();
     plasmaStyles.removeFirst();
+    plasmaStyles.append("breeze");
     return plasmaStyles;
 }
 QStringList Utils::getColorSchemes(void) // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    QDir colorsSystemDir("/usr/share/color-schemes");
     colorsLocalDir.setNameFilters(QStringList()<<"*.colors");
+    colorsLocalDir.setFilter(QDir::Files);
+    colorsLocalDir.setSorting(QDir::Name);
+    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
+    QStringList colorSchemesLocalNames;
+    for (int i = 0; i < colorSchemesLocal.size(); i++)
+    {
+        colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
+    }
+    QDir colorsSystemDir("/usr/share/color-schemes");
     colorsSystemDir.setNameFilters(QStringList()<<"*.colors");
-    QStringList colorSchemes = colorsLocalDir.entryList() + colorsSystemDir.entryList();
-    colorSchemes.removeDuplicates();
-    colorSchemes.removeFirst();
-    colorSchemes.removeFirst();
-    return colorSchemes;
+    colorsSystemDir.setFilter(QDir::Files);
+    colorsSystemDir.setSorting(QDir::Name);
+    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
+    QStringList colorSchemesSystemNames;
+    for (int i = 0; i < colorSchemesSystem.size(); i++)
+    {
+        colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
+    }
+    QStringList colorSchemesNames = colorSchemesSystemNames+ colorSchemesLocalNames;
+    return colorSchemesNames;
+}
+QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
+{
+    QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
+    colorsLocalDir.setNameFilters(QStringList()<<"*.colors");
+    colorsLocalDir.setFilter(QDir::Files);
+    colorsLocalDir.setSorting(QDir::Name);
+    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
+    QStringList colorSchemesLocalPath;
+    for (int i = 0; i < colorSchemesLocal.size(); i++)
+    {
+        colorSchemesLocalPath.append(colorSchemesLocal.at(i).absoluteFilePath());
+    }
+    QDir colorsSystemDir("/usr/share/color-schemes");
+    colorsSystemDir.setNameFilters(QStringList()<<"*.colors");
+    colorsSystemDir.setFilter(QDir::Files);
+    colorsSystemDir.setSorting(QDir::Name);
+    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
+    QStringList colorSchemesSystemPath;
+    for (int i = 0; i < colorSchemesSystem.size(); i++)
+    {
+        colorSchemesSystemPath.append(colorSchemesSystem.at(i).absoluteFilePath());
+    }
+    QStringList colorSchemesPath = colorSchemesSystemPath + colorSchemesLocalPath;
+    return colorSchemesPath;
 }
 QStringList Utils::getIconThemes(void) // Get all available icont themes
 {
@@ -64,13 +119,84 @@ void Utils::timeLoopLight()
 }
 void Utils::goLight()
 {
+    goLightStyle();
+    goLightColors();
+    goLightIcons();
     goLightGtk();
     goLightWall();
+    if (settings->value("notify", true).toBool())
+    {
+        notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
+    }
+
 }
 void Utils::goDark()
 {
+    goDarkStyle();
+    goDarkColors();
+    goDarkIcons();
     goDarkGtk();
     goDarkWall();
+    if (settings->value("notify", true).toBool())
+    {
+        notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
+    }
+}
+void Utils::goLightStyle()
+{
+    if (settings->value("PlasmaStyle/enabled").toBool())
+    {
+        if (settings->value("PlasmaStyle/light") == "breeze") // Breeze style is set differently from others
+        {
+            plasmastyle.setPlasmaStyleBreeze();
+        }
+        else
+        {
+            plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/light").toString());
+        }
+    }
+}
+void Utils::goDarkStyle()
+{
+    if (settings->value("PlasmaStyle/enabled").toBool())
+    {
+        if (settings->value("PlasmaStyle/dark") == "breeze") // Breeze style is set differently from others
+        {
+            plasmastyle.setPlasmaStyleBreeze();
+        }
+        else
+        {
+            plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/dark").toString());
+        }
+    }
+}
+void Utils::goLightColors()
+{
+    if (settings->value("ColorScheme/enabled").toBool())
+    {
+        colorscheme.setColorScheme(settings->value("ColorScheme/light").toString());
+    }
+}
+void Utils::goDarkColors()
+{
+    if (settings->value("ColorScheme/enabled").toBool())
+    {
+        colorscheme.setColorScheme(settings->value("ColorScheme/dark").toString());
+    }
+}
+void Utils::goLightIcons()
+{
+    if (settings->value("IconTheme/enabled").toBool())
+    {
+        icons.setIcons(settings->value("IconTheme/light").toString());
+    }
+}
+void Utils::goDarkIcons()
+{
+    if (settings->value("IconTheme/enabled").toBool())
+    {
+        icons.setIcons(settings->value("IconTheme/dark").toString());
+    }
 }
 void Utils::goLightGtk()
 {
@@ -95,7 +221,6 @@ void Utils::goLightWall()
         }
     }
 }
-
 void Utils::goDarkWall()
 {
     if (settings->value("Wallpaper/enabled").toBool())
