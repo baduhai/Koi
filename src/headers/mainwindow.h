@@ -98,6 +98,8 @@ private slots:
 
     void on_notifyCheckBox_stateChanged(int arg1);
 
+    int prefsSaved();
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon* trayIcon;

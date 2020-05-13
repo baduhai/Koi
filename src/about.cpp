@@ -1,6 +1,9 @@
 #include "headers/about.h"
 #include "ui_about.h"
 
+#include <QUrl>
+#include <QDesktopServices>
+
 About::About(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::About)
@@ -34,4 +37,9 @@ void About::on_licenseBtn_clicked()
 {
     auto* licence = new License(this);
     licence->open();
+}
+
+void About::on_wWebsiteBtn_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/baduhai", QUrl::TolerantMode));
 }

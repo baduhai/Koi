@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -146,8 +146,14 @@
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="toolTip">
+             <string>Planned feature</string>
+            </property>
             <property name="text">
              <string>Sunset/Sunrise</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -267,7 +273,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>401</width>
+             <width>210</width>
              <height>488</height>
             </rect>
            </property>

@@ -27,6 +27,71 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms = 50
     int timeout = timeoutms; // Notification timeout, there's no way to assume system has a default timeout unfortunately.
     notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
+void Utils::startupTimeCheck() // Check if switching is needed based on time.
+{
+    QTime lightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
+    QTime darkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
+    QTime now = QTime::currentTime();
+    if (now < lightTime && now < darkTime)
+    {
+        QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
+        goDark();
+    }
+    else if (now == lightTime) // Highly unlikely
+    {
+        QTest::qWait(1000);
+        goLight();
+    }
+    else if (now > lightTime && now < darkTime)
+    {
+        QTest::qWait(1000);
+        goLight();
+    }
+    else if (now == darkTime) // Highly unlikely
+    {
+        QTest::qWait(1000);
+        goDark();
+    }
+    else
+    {
+        QTest::qWait(1000);
+        goDark();
+    }
+}
+void Utils::timerToLight()
+{
+    lightTimer = new QTimer;
+    lightTimer->setSingleShot(1);
+    connect(lightTimer, &QTimer::timeout, this, &Utils::goLight);
+    QTime setLightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
+    if (QTime::currentTime() >= setLightTime)
+    {
+        int toNextLight = (setLightTime.msecsTo(QTime::currentTime()) + setLightTime.msecsSinceStartOfDay());
+        lightTimer->start(toNextLight);
+    }
+    else
+    {
+        int toNextLight = (QTime::currentTime().msecsTo(setLightTime));
+        lightTimer->start(toNextLight);
+    }
+}
+void Utils::timerToDark()
+{
+    darkTimer = new QTimer;
+    darkTimer->setSingleShot(1);
+    connect(darkTimer, &QTimer::timeout, this, &Utils::goDark);
+    QTime setDarkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
+    if (QTime::currentTime() >= setDarkTime)
+    {
+        int toNextDark = (setDarkTime.msecsTo(QTime::currentTime()) + setDarkTime.msecsSinceStartOfDay());
+        darkTimer->start(toNextDark);
+    }
+    else
+    {
+        int toNextDark = (QTime::currentTime().msecsTo(setDarkTime));
+        darkTimer->start(toNextDark);
+    }
+}
 
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
@@ -113,18 +178,19 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
 }
 
 // Manage switching themes functions
-void Utils::timeLoopLight()
-{
-
-}
 void Utils::goLight()
 {
+    if (darkTimer->isActive())
+    {
+        darkTimer->stop();
+    }
+    //timerToDark();
     goLightStyle();
     goLightColors();
     goLightIcons();
     goLightGtk();
     goLightWall();
-    if (settings->value("notify", true).toBool())
+    if (settings->value("notify").toBool())
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
@@ -132,12 +198,18 @@ void Utils::goLight()
 }
 void Utils::goDark()
 {
+    if (lightTimer->isActive())
+    {
+        lightTimer->stop();
+    }
+    darkTimer->stop();
+    timerToLight();
     goDarkStyle();
     goDarkColors();
     goDarkIcons();
     goDarkGtk();
     goDarkWall();
-    if (settings->value("notify", true).toBool())
+    if (settings->value("notify").toBool())
     {
         notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }

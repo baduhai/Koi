@@ -1,4 +1,4 @@
-QT       += core gui dbus KConfigCore
+QT       += core gui dbus testlib KConfigCore
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -36,7 +36,7 @@ HEADERS += \
     headers/mainwindow.h \
     headers/plasmastyle.h \
     headers/utils.h \
-    headers/wallpaper.h
+    headers/wallpaper.h \
 
 FORMS += \
     ui/about.ui \

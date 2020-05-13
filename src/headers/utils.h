@@ -7,61 +7,46 @@
 #include "wallpaper.h"
 #include "icons.h"
 // Qt libs
+#include <QtGlobal>
+#include <QObject>
 #include <QDir>
 #include <QProcess>
 #include <QSettings>
-#include <QTime>
+#include <QDateTime>
 #include <QTimer>
+#include <QTest>
 
-class Utils
+class Utils : public QObject
 {
 public:
     Utils();
 
     QSettings *settings;
-
     void initialiseSettings();
 
     QStringList getPlasmaStyles(void);
-
     QStringList getColorSchemes(void);
-
     QStringList getColorSchemesPath(void);
-
     QStringList getIconThemes(void);
-
     QStringList getCursorThemes(void);
-
     QStringList getGtkThemes(void);
 
     void notify(QString notifySummary, QString notifyBody, int timeoutms);
-
-    void timeLoopLight();
-
-    void timeLoopDark();
+    void startupTimeCheck();
+    void timerToLight();
+    void timerToDark();
 
     void goLight();
-
     void goDark();
-
     void goLightStyle();
-
     void goDarkStyle();
-
     void goLightColors();
-
     void goDarkColors();
-
     void goLightIcons();
-
     void goDarkIcons();
-
     void goLightGtk();
-
     void goDarkGtk();
-
     void goLightWall();
-
     void goDarkWall();
 
 private:
@@ -70,12 +55,12 @@ private:
     Icons icons;
     Gtk gtk;
     Wallpaper wallpaper;
+
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;
     QTime now;
-    QTime lightTime;
-    QTime darkTime;
-    QTimer *timer;
+    QTimer *lightTimer;
+    QTimer *darkTimer;
 };
 
 #endif // UTILS_H

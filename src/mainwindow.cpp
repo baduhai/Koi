@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainStack->setCurrentIndex(0); // Always start window on main view
     refreshDirs();
     loadPrefs(); // Load prefs on startup
+    utils.startupTimeCheck(); // Switch themes on startup
 }
 MainWindow::~MainWindow()
 {
@@ -51,7 +52,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
             break;
 
         case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
-            this->trayIcon->showMessage("Hello", "You middle-clicked me!"); // Must implement toggle
+            utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
             break;
 
         // Must understand tray better - Why can't right click be part of switch statement?
@@ -61,7 +62,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
     }
 }
 
-// Independent funtions
+// Independent functions
 void MainWindow::loadPrefs()
 {
     // Load notify prefs
@@ -293,6 +294,70 @@ void MainWindow::toggleVisibility()
         this->setVisible(0);
     }
 }
+int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other way. Maybe an array?
+{
+    if (ui->styleCheckBox->isChecked() != utils.settings->value("PlasmaStyle/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightStyle != utils.settings->value("PlasmaStyle/light").toString())
+    {
+        return 0;
+    }
+    if (darkStyle != utils.settings->value("PlasmaStyle/dark").toString())
+    {
+        return 0;
+    }
+    if (ui->colorCheckBox->isChecked() != utils.settings->value("ColorScheme/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightColor != utils.settings->value("ColorScheme/light").toString())
+    {
+        return 0;
+    }
+    if (darkColor != utils.settings->value("ColorScheme/dark").toString())
+    {
+        return 0;
+    }
+    if (ui->iconCheckBox->isChecked() != utils.settings->value("IconTheme/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightIcon != utils.settings->value("IconTheme/light").toString())
+    {
+        return 0;
+    }
+    if (darkIcon != utils.settings->value("IconTheme/dark").toString())
+    {
+        return 0;
+    }
+    if (ui->gtkCheckBox->isChecked() != utils.settings->value("GTKTheme/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightGtk != utils.settings->value("GTKTheme/light").toString())
+    {
+        return 0;
+    }
+    if (darkGtk != utils.settings->value("GTKTheme/dark").toString())
+    {
+        return 0;
+    }
+    if (ui->wallCheckBox->isChecked() != utils.settings->value("Wallpaper/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightWall != utils.settings->value("Wallpaper/light").toString())
+    {
+        return 0;
+    }
+    if (darkWall != utils.settings->value("Wallpaper/dark").toString())
+    {
+        return 0;
+    }
+    return 1;
+}
 
 // Funtionality of buttons - Related to program navigation, interaction and saving settings
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
@@ -309,7 +374,15 @@ void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferen
 }
 void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must setup cheking if prefs saved
 {
-    ui->mainStack->setCurrentIndex(0);
+    if (prefsSaved())
+    {
+        ui->mainStack->setCurrentIndex(0);
+    }
+    else
+    {
+        utils.notify("Settings not saved", "The changed settings were not saved.", 5000);
+        ui->mainStack->setCurrentIndex(0);
+    }
 }
 void MainWindow::on_applyBtn_clicked()
 {
@@ -471,7 +544,7 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
     if (ui->autoCheckBox->checkState() == 0)
     {
         ui->scheduleRadioBtn->setEnabled(0);
-        ui->sunRadioBtn->setEnabled(0);
+        //ui->sunRadioBtn->setEnabled(0);
         ui->lightTimeLabel->setEnabled(0);
         ui->darkTimeLabel->setEnabled(0);
         ui->lightTimeEdit->setEnabled(0);
@@ -483,7 +556,7 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
     {
 
         ui->scheduleRadioBtn->setEnabled(1);
-        ui->sunRadioBtn->setEnabled(1);
+        //ui->sunRadioBtn->setEnabled(1);
         ui->lightTimeLabel->setEnabled(1);
         ui->darkTimeLabel->setEnabled(1);
         ui->lightTimeEdit->setEnabled(1);

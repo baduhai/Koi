@@ -22,6 +22,8 @@ private slots:
 
     void on_licenseBtn_clicked();
 
+    void on_wWebsiteBtn_clicked();
+
 private:
     Ui::About *ui;
 };
