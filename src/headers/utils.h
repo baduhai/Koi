@@ -59,8 +59,8 @@ private:
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;
     QTime now;
-    QTimer *lightTimer;
-    QTimer *darkTimer;
+    QTimer *lightTimer = new QTimer();
+    QTimer *darkTimer = new QTimer();
 };
 
 #endif // UTILS_H

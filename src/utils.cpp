@@ -60,7 +60,7 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 }
 void Utils::timerToLight()
 {
-    lightTimer = new QTimer;
+    // QTimer *lightTimer = new QTimer(this);
     lightTimer->setSingleShot(1);
     connect(lightTimer, &QTimer::timeout, this, &Utils::goLight);
     QTime setLightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
@@ -77,7 +77,7 @@ void Utils::timerToLight()
 }
 void Utils::timerToDark()
 {
-    darkTimer = new QTimer;
+    // QTimer *darkTimer = new QTimer(this);
     darkTimer->setSingleShot(1);
     connect(darkTimer, &QTimer::timeout, this, &Utils::goDark);
     QTime setDarkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
