@@ -64,13 +64,23 @@ AppImage planned.
 
 ### References
 
-The following is a list of software that I used as reference or inspiration for writing Koi.
+The following is a list of resources that I used as reference or inspiration for writing Koi.
 
 - [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
 - [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
 - [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt colour scheme.
 - [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
 - [This blog post from Zren](https://zren.github.io/2020/04/28/how-to-change-plasma-icon-theme-in-the-terminal) - For teaching me how to set the icon theme.
+
+### Contributors
+
+<table style="width=50%">
+	<tr>
+		<td align="center">
+			<a href="https://github.com/jandreski"><img src="https://avatars3.githubusercontent.com/u/47537097?s=460&v=4" width="40px;" alt=""/><sub><b>Jakov Andreski</b></sub></a>
+		</td>
+	</tr>
+</table>
 
 ### License
 
