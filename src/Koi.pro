@@ -54,11 +54,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     resources/resources.qrc
 
-# Installation management
+# Managing what make install does
 target.path = /usr/bin/
 desktop.path = /usr/share/applications/
 desktop.files += koi.desktop
 icons.path = /usr/share/icons/hicolor/scalable/apps/
 icons.files += resources/icons/koi.svg\
                resources/icons/koi_tray.svg
-INSTALLS += target desktop
+INSTALLS += target desktop icons
