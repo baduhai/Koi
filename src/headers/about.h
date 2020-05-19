@@ -4,6 +4,8 @@
 #include "license.h"
 // Qt libs
 #include <QDialog>
+//KF5 libs
+#include <KCoreAddons>
 
 namespace Ui {
 class About;
@@ -19,9 +21,7 @@ public:
 
 private slots:
     void on_closeBtn_clicked();
-
     void on_licenseBtn_clicked();
-
     void on_wWebsiteBtn_clicked();
 
 private:

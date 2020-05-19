@@ -9,6 +9,7 @@ About::About(QWidget *parent) :
     ui(new Ui::About)
 {
     ui->setupUi(this);
+    this->setFixedSize(505, 330);
     QApplication::setApplicationName("Koi");
     ui->titleLabel->setText(QApplication::applicationName());
     QString pgrmVersion = "Version ";
@@ -19,7 +20,19 @@ About::About(QWidget *parent) :
             qtVersion += "</li></ul>";
     ui->qtVerLabel->setText(qtVersion);
     ui->qtVerLabel->setTextFormat(Qt::RichText);
-    QString kfVersion = "<ul><li>KDE Framworks ";
+    QString kfVersion = "<ul><li>KDE Frameworks ";
+            kfVersion += KCoreAddons::versionString();
+            kfVersion += "</li></ul>";
+    ui->kf5Version->setText(kfVersion);
+    ui->kf5Version->setTextFormat(Qt::RichText);
+    QString bosmaLabel = "<ul><li><a href=\"https://github.com/Bosma/Scheduler\">Bosma Scheduler</a></li></ul>";
+    ui->bosmaLib->setText(bosmaLabel);
+    ui->bosmaLib->setTextFormat(Qt::RichText);
+    ui->bosmaLib->setOpenExternalLinks(1);
+    QString ctplLabel = "<ul><li><a href=\"https://github.com/vit-vit/CTPL\">CTPL</a></li></ul>";
+    ui->ctpLib->setText(ctplLabel);
+    ui->ctpLib->setTextFormat(Qt::RichText);
+    ui->ctpLib->setOpenExternalLinks(1);
     ui->tabWidget->setCurrentIndex(0);
 }
 

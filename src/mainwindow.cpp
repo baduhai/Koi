@@ -1,13 +1,14 @@
 #include "headers/mainwindow.h"
 #include "ui_mainwindow.h"
 
+Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     trayIcon = new QSystemTrayIcon(this);
-    this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon
+    this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
     this->trayIcon->setVisible(true);
     trayMenu = this->createMenu();
     this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
@@ -17,29 +18,47 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainStack->setCurrentIndex(0); // Always start window on main view
     refreshDirs();
     loadPrefs(); // Load prefs on startup
-    utils.startupTimeCheck(); // Switch themes on startup
+    if (utils.settings->value("schedule").toBool())
+    {
+        utils.startupTimeCheck(); // Switch themes on startup
+        scheduleLight();
+        scheduleDark();
+    }
+    ui->resMsg->hide();
+    auto actionRes = new QAction("Restart", this);
+    actionRes->setIcon(QIcon::fromTheme("view-refresh"));
+    connect(actionRes, &QAction::triggered, this, &MainWindow::on_actionRestart_triggered);
+    ui->resMsg->addAction(actionRes);
 }
 MainWindow::~MainWindow()
 {
     this->setVisible(0);
 }
 
+// Override window managing events
+void MainWindow::closeEvent(QCloseEvent *event) { // Overide close event
+    event->ignore();
+    toggleVisibility();
+}
+
 // SysTray related functionality
 QMenu* MainWindow::createMenu() // Define context menu items for SysTray - R-click to show context menu
 {
-    // Tray actions
+    // Tray action menu
     auto actionMenuQuit = new QAction("&Quit", this); // Quit app
-    connect(actionMenuQuit, &QAction::triggered, qApp, &QCoreApplication::quit);
+    connect(actionMenuQuit, &QAction::triggered, this, &QCoreApplication::quit);
     auto actionMenuLight = new QAction("&Light", this); // Switch to light
-    //connect(actionMenuLight, &QAction::triggered, utils, &Utils::goLight); //Doesn't work.
+    connect(actionMenuLight, &QAction::triggered, this, &MainWindow::on_lightBtn_clicked); //Doesn't work.
     auto actionMenuDark = new QAction("&Dark", this); //Switch to dark
-    //connect(actionMenuDark, &QAction::triggered, utils, &Utils::goDark); //Doesn't work.
+    connect(actionMenuDark, &QAction::triggered, this, &MainWindow::on_darkBtn_clicked); //Doesn't work.
+    auto actionMenuToggle = new QAction("&Toggle Window", this);
+    connect(actionMenuToggle, &QAction::triggered, this, &MainWindow::toggleVisibility);
 
     // Build tray items
     auto trayMenu = new QMenu(this);
+    trayMenu->addAction(actionMenuToggle);
     trayMenu->addAction(actionMenuLight);
     trayMenu->addAction(actionMenuDark);
-    trayMenu->addSeparator();
     trayMenu->addAction(actionMenuQuit);
     return trayMenu;
 }
@@ -51,9 +70,9 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
             toggleVisibility();
             break;
 
-        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
-            utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
-            break;
+//        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
+//            utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
+//            break;
 
         // Must understand tray better - Why can't right click be part of switch statement?
 
@@ -358,6 +377,24 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
     }
     return 1;
 }
+void MainWindow::scheduleLight()
+{
+    int lightCronMin = QTime::fromString(utils.settings->value("time-light").toString()).minute();
+    int lightCronHr = QTime::fromString(utils.settings->value("time-light").toString()).hour();
+    std::string lightCron = std::to_string(lightCronMin) + " " + std::to_string(lightCronHr) + " * * *";
+    s.cron(lightCron, [this] () {
+        utils.goLight();
+    });
+}
+void MainWindow::scheduleDark()
+{
+    int darkCronMin = QTime::fromString(utils.settings->value("time-dark").toString()).minute();
+    int darkCronHr = QTime::fromString(utils.settings->value("time-dark").toString()).hour();
+    std::string darkCron = std::to_string(darkCronMin) + " " + std::to_string(darkCronHr) + " * * *";
+    s.cron(darkCron, [this] () {
+        utils.goDark();
+    });
+}
 
 // Funtionality of buttons - Related to program navigation, interaction and saving settings
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
@@ -380,8 +417,29 @@ void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must 
     }
     else
     {
-        utils.notify("Settings not saved", "The changed settings were not saved.", 5000);
-        ui->mainStack->setCurrentIndex(0);
+        QMessageBox applyConfs; // Verify if user wants to save settings
+        applyConfs.setWindowTitle("Save Settings — Koi");
+        applyConfs.setText("You have unsaved changes, would you like to save or discard them?");
+        applyConfs.setIcon(QMessageBox::Warning);
+        applyConfs.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        applyConfs.setDefaultButton(QMessageBox::Save);
+        int ret = applyConfs.exec();
+        switch (ret) {
+            case QMessageBox::Save: // Save and change stack
+                savePrefs();
+                ui->mainStack->setCurrentIndex(0);
+                break;
+            case QMessageBox::Discard: // Change stack
+                ui->mainStack->setCurrentIndex(0);
+                lightWall = utils.settings->value("Wallpaper/light").toString();
+                darkWall = utils.settings->value("Wallpaper/dark").toString();
+                loadPrefs();
+                break;
+            case QMessageBox::Cancel: // Do nothin
+                break;
+            default:
+                break;
+        }
     }
 }
 void MainWindow::on_applyBtn_clicked()
@@ -551,6 +609,9 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
         ui->darkTimeEdit->setEnabled(0);
         utils.settings->setValue("schedule", false);
         utils.settings->sync();
+        ui->resMsg->setText(tr("To disable automatic mode , Koi must be restarded."));
+        ui->resMsg->setMessageType(KMessageWidget::Warning);
+        ui->resMsg->animatedShow();
     }
     else
     {
@@ -570,6 +631,9 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
         }
         utils.settings->setValue("schedule", true);
         utils.settings->sync();
+        ui->resMsg->setText(tr("To enable automatic mode, Koi must be restarded."));
+        ui->resMsg->setMessageType(KMessageWidget::Warning);
+        ui->resMsg->animatedShow();
     }
 }
 void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between manual schedule, and sun schedule
@@ -601,15 +665,22 @@ void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set ligh
     lightTime = time.toString();
     utils.settings->setValue("time-light", lightTime);
     utils.settings->sync();
+    ui->resMsg->setText(tr("Koi must be restarded for new times to be used."));
+    ui->resMsg->setMessageType(KMessageWidget::Warning);
+    ui->resMsg->animatedShow();
 }
 void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark time
 {
     darkTime = time.toString();
     utils.settings->setValue("time-dark", darkTime);
     utils.settings->sync();
+    ui->resMsg->setText(tr("Koi must be restarded for new times to be used."));
+    ui->resMsg->setMessageType(KMessageWidget::Warning);
+    ui->resMsg->animatedShow();
 }
 void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
 {
+    ui->resMsg->animatedShow();
     if (ui->hiddenCheckBox->checkState() == 0)
     {
         utils.settings->setValue("start-hidden", false);
@@ -653,6 +724,12 @@ void MainWindow::on_actionHide_triggered() // Hide to tray
 {
     on_refreshBtn_clicked();
 }*/
+void MainWindow::on_actionRestart_triggered()
+{
+    QProcess::startDetached(QApplication::applicationFilePath());
+    exit(12);
+}
+
 
 
 

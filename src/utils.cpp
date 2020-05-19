@@ -8,12 +8,12 @@ Utils::Utils()
 // Global settings stuff
 void Utils::initialiseSettings()
 {
-    settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
-    // settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
+    //settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
+    settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 }
 
 // Miscelaneous functions
-void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms = 5000) // Push notification through DBus
+void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
     bus = new QDBusConnection(QDBusConnection::sessionBus());
     notifyInterface = new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", *bus);
@@ -56,40 +56,6 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
     {
         QTest::qWait(1000);
         goDark();
-    }
-}
-void Utils::timerToLight()
-{
-    // QTimer *lightTimer = new QTimer(this);
-    lightTimer->setSingleShot(1);
-    connect(lightTimer, &QTimer::timeout, this, &Utils::goLight);
-    QTime setLightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
-    if (QTime::currentTime() >= setLightTime)
-    {
-        int toNextLight = (setLightTime.msecsTo(QTime::currentTime()) + setLightTime.msecsSinceStartOfDay());
-        lightTimer->start(toNextLight);
-    }
-    else
-    {
-        int toNextLight = (QTime::currentTime().msecsTo(setLightTime));
-        lightTimer->start(toNextLight);
-    }
-}
-void Utils::timerToDark()
-{
-    // QTimer *darkTimer = new QTimer(this);
-    darkTimer->setSingleShot(1);
-    connect(darkTimer, &QTimer::timeout, this, &Utils::goDark);
-    QTime setDarkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
-    if (QTime::currentTime() >= setDarkTime)
-    {
-        int toNextDark = (setDarkTime.msecsTo(QTime::currentTime()) + setDarkTime.msecsSinceStartOfDay());
-        darkTimer->start(toNextDark);
-    }
-    else
-    {
-        int toNextDark = (QTime::currentTime().msecsTo(setDarkTime));
-        darkTimer->start(toNextDark);
     }
 }
 
@@ -180,11 +146,6 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
 // Manage switching themes functions
 void Utils::goLight()
 {
-    if (darkTimer->isActive())
-    {
-        darkTimer->stop();
-    }
-    //timerToDark();
     goLightStyle();
     goLightColors();
     goLightIcons();
@@ -198,12 +159,6 @@ void Utils::goLight()
 }
 void Utils::goDark()
 {
-    if (lightTimer->isActive())
-    {
-        lightTimer->stop();
-    }
-    darkTimer->stop();
-    timerToLight();
     goDarkStyle();
     goDarkColors();
     goDarkIcons();
@@ -291,6 +246,10 @@ void Utils::goLightWall()
         if (!settings->value("Wallpaper/light").isNull()){
             wallpaper.setWallpaper(settings->value("Wallpaper/light").toString());
         }
+        else
+        {
+            notify("Error setting Wallpaper", "Koi tried to change your wallpaper, but no wallpaper fie was selected", 0);
+        }
     }
 }
 void Utils::goDarkWall()
@@ -300,6 +259,10 @@ void Utils::goDarkWall()
         if (!settings->value("Wallpaper/dark").isNull())
         {
             wallpaper.setWallpaper(settings->value("Wallpaper/dark").toString());
+        }
+        else
+        {
+            notify("Error setting Wallpaper", "Koi tried to change your wallpaper, but no wallpaper file was selected", 0);
         }
     }
 }

@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-// Headers
+//Headers
 #include "about.h"
 #include "utils.h"
 //Qt libs
@@ -8,6 +8,10 @@
 #include <QFileInfo>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QMessageBox>
+#include <QCloseEvent>
+//Other libs
+#include "libs/Scheduler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,81 +28,57 @@ public:
 public slots:
 
 private slots:
-    void refreshDirs();
-
-    void loadPrefs();
-
-    void savePrefs();
-
-    void toggleVisibility();
+    void closeEvent(QCloseEvent *event);
 
     void iconActivated(QSystemTrayIcon::ActivationReason);
 
+    void refreshDirs();
+    void loadPrefs();
+    void savePrefs();
+    void toggleVisibility();
+    int prefsSaved();
+    void scheduleLight();
+    void scheduleDark();
+
     void on_prefsBtn_clicked();
-
     void on_backBtn_clicked();
-
     void on_applyBtn_clicked();
+    void on_lightBtn_clicked();
+    void on_darkBtn_clicked();
+    //void on_refreshBtn_clicked();
 
     void on_styleCheckBox_stateChanged(int arg1);
-
     void on_colorCheckBox_stateChanged(int arg1);
-
     void on_iconCheckBox_stateChanged(int arg1);
-
     void on_gtkCheckBox_stateChanged(int arg1);
-
     void on_wallCheckBox_stateChanged(int arg1);
-
     void on_autoCheckBox_stateChanged(int arg1);
-
     void on_scheduleRadioBtn_toggled(bool checked);
 
     void on_actionQuit_triggered();
-
     void on_actionPrefs_triggered();
-
     void on_actionAbout_triggered();
-
     void on_actionHide_triggered();
-
-    //void on_refreshBtn_clicked();
-
-    void on_lightWallBtn_clicked();
-
-    void on_darkWallBtn_clicked();
-
-    void on_lightDropStyle_currentIndexChanged(const QString &arg1);
-
-    void on_darkDropStyle_currentIndexChanged(const QString &arg1);
-
-    void on_lightDropColor_currentIndexChanged(const QString &arg1);
-
-    void on_darkDropColor_currentIndexChanged(const QString &arg1);
-
-    void on_lightDropGtk_currentIndexChanged(const QString &arg1);
-
-    void on_darkDropGtk_currentIndexChanged(const QString &arg1);
-
-    void on_lightDropIcon_currentIndexChanged(const QString &arg1);
-
-    void on_darkDropIcon_currentIndexChanged(const QString &arg1);
-
     //void on_actionRefresh_triggered();
 
+    void on_lightWallBtn_clicked();
+    void on_darkWallBtn_clicked();
+    void on_lightDropStyle_currentIndexChanged(const QString &arg1);
+    void on_darkDropStyle_currentIndexChanged(const QString &arg1);
+    void on_lightDropColor_currentIndexChanged(const QString &arg1);
+    void on_darkDropColor_currentIndexChanged(const QString &arg1);
+    void on_lightDropGtk_currentIndexChanged(const QString &arg1);
+    void on_darkDropGtk_currentIndexChanged(const QString &arg1);
+    void on_lightDropIcon_currentIndexChanged(const QString &arg1);
+    void on_darkDropIcon_currentIndexChanged(const QString &arg1);
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
-
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
-
-    void on_lightBtn_clicked();
-
-    void on_darkBtn_clicked();
-
     void on_hiddenCheckBox_stateChanged(int arg1);
-
     void on_notifyCheckBox_stateChanged(int arg1);
 
-    int prefsSaved();
+
+
+    void on_actionRestart_triggered();
 
 private:
     Ui::MainWindow *ui;

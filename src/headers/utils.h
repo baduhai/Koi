@@ -18,6 +18,8 @@
 
 class Utils : public QObject
 {
+    Q_OBJECT
+
 public:
     Utils();
 
@@ -31,10 +33,8 @@ public:
     QStringList getCursorThemes(void);
     QStringList getGtkThemes(void);
 
-    void notify(QString notifySummary, QString notifyBody, int timeoutms);
+    void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
-    void timerToLight();
-    void timerToDark();
 
     void goLight();
     void goDark();
@@ -58,9 +58,6 @@ private:
 
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;
-    QTime now;
-    QTimer *lightTimer = new QTimer();
-    QTimer *darkTimer = new QTimer();
 };
 
 #endif // UTILS_H

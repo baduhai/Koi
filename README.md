@@ -18,11 +18,12 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 #### Planned features
 
-- Toggle between light and dark presets based on sunset and sunrise.
-- Change Kate schema.
-- Change Atom theme.
+- [ ] Toggle between light and dark presets based on sunset and sunrise.
+- [ ] Middle-click tray icon to toggle theme.
+- [ ] Change Kate schema.
+- [ ] Change Atom theme.
 
-Want Koi to support changing themes for another application? Open a [feature request]()!
+Want Koi to support changing themes for another application? Open a [feature request!](https://github.com/baduhai/Koi/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=%5BREQUEST%5D)
 
 ### Screenshots
 
@@ -40,6 +41,13 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 Lastest Koi version: 0.1.0 [beta]
 
+#### Dependencies
+
+- Qt ()
+- Plasma ()
+- KDE Frameworks 5 ()
+- qmake () [build dependency]
+
 #### Arch Linux
 
 AUR packages planned.
@@ -55,16 +63,24 @@ AppImage planned.
 #### Build from source
 
 1. `git clone https://github.com/baduhai/Koi.git`
+
 2. `cd Koi`
+
 3. `mkdir build`
+
 4. `cd build`
+
 5. `qmake ../src/koi.pro`
+
 6. `make`
+
 7. `make install` - requires root privileges.
+
+These instructions also apply to building the latest release version of Koi. Instead of cloning the repository, download and extract the latest *Source Code* archive, from then follow step 2 and beyond.
 
 ### References
 
-The following is a list of resources that I used as reference or inspiration for writing Koi.
+The following is a list of resources that I used as reference and inspiration for writing Koi.
 
 - [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
 - [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
@@ -74,13 +90,14 @@ The following is a list of resources that I used as reference or inspiration for
 
 ### Contributors
 
-<table style="width=50%">
+<table style="width=100%">
 	<tr>
 		<td align="center">
 			<a href="https://github.com/jandreski"><img src="https://avatars3.githubusercontent.com/u/47537097?s=460&v=4" width="40px;" alt=""/><sub><b>Jakov Andreski</b></sub></a>
 		</td>
 	</tr>
 </table>
+
 
 ### License
 
