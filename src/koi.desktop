@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Utilities;System
+Comment=Switch between light and dark.
+Exec=/usr/bin/Koi
+Icon=koi
+Name=Koi
+StartupNotify=true
+StartupWMClass=Koi
+Terminal=0
+Type=Application
