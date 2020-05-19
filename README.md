@@ -62,9 +62,7 @@ AUR packages planned.
 
 #### Other Distros
 
-AppImage planned.
-
-[//]: # "Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releases) page."
+Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releases) page.
 
 #### Build from source
 
