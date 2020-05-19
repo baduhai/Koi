@@ -6,6 +6,8 @@
 
 Koi is a program designed to provide the KDE Plasma Desktop functionality to automatically switch between light and dark themes. Koi is under active development, and while it is stable enough to use daily, expect bugs. Koi is designed to be used with Plasma, and while some features may function under different desktop environments, they are unlikely to work and untested.
 
+**Disclaimer:** Koi was written as a project to practice Qt by a novice programmer,  expect code to be written sloppily.
+
 ### Features
 
 - Toggle between light and dark presets based on time.
@@ -19,7 +21,6 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 #### Planned features
 
 - [ ] Toggle between light and dark presets based on sunset and sunrise.
-- [ ] Middle-click tray icon to toggle theme.
 - [ ] Change Kate schema.
 - [ ] Change Atom theme.
 
@@ -33,9 +34,9 @@ Want Koi to support changing themes for another application? Open a [feature req
 
 Koi is designed to be very simple to use. When you first open Koi, settings for the light and dark presets will be empty, all you need to do is select which themes you'd like for Koi to manage and select your desired themes by clicking the *Preferences* button. 
 
-If you would like that Koi switch between your light and dark settings automatically, you can select this option in the main page of the program, and choose between following a user set schedule, or at sunrise and sunset(planned feature). To switch between light and dark manually right click the tray icon and select the desired preset, or do so from Koi's main window.
+If you would like that Koi switch between your light and dark settings automatically, you can select this option in the main page of the program, and choose between following a user set schedule, or at sunrise and sunset (planned feature). To switch between light and dark manually right click the tray icon and select the desired preset, or do so from Koi's main window.
 
-In order to have Koi start at login, you can do so with the Plasma System Settings. Simply navigate to *Startup and Shutdown* > *Autostart*, and select *Add Program...*. If you are to do this, I recommend that you also check the option to start Koi hidden, so not to be annoyed Koi popping up every time you start your system.
+In order to have Koi start at login, you can do so with the Plasma System Settings. Simply navigate to *Startup and Shutdown* > *Autostart*, and select *Add Program...*. If you are to do this, I recommend that you also check the option to start Koi hidden, so not to be annoyed by Koi popping up every time you start your system.
 
 ### Get Koi
 
@@ -43,10 +44,15 @@ Lastest Koi version: 0.1.0 [beta]
 
 #### Dependencies
 
-- Qt ()
-- Plasma ()
-- KDE Frameworks 5 ()
-- qmake () [build dependency]
+- Qt
+
+- Plasma
+
+- KDE Frameworks
+
+- qmake [build dependency]
+
+Koi targets the latest version of the above deps. As of writing this file, these are; Qt 5.14.2, KDE Plasma 5.18.5, KDE Frameworks 5.70 and qmake 3.1.
 
 #### Arch Linux
 
