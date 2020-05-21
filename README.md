@@ -63,7 +63,7 @@ AUR packages planned.
 
 #### Other Distros
 
-Find the latest AppImage in the [Releases](https://github.com/baduhai/Koi/releases) page.
+Support for AppImage dropped. Considering Flatpak.
 
 #### Build from source
 
