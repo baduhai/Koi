@@ -13,7 +13,7 @@ About::About(QWidget *parent) :
     QApplication::setApplicationName("Koi");
     ui->titleLabel->setText(QApplication::applicationName());
     QString pgrmVersion = "Version ";
-    QApplication::setApplicationVersion("0.1");
+    QApplication::setApplicationVersion("0.1.1");
     ui->verLabel->setText(pgrmVersion + QApplication::applicationVersion());
     QString qtVersion = "<ul><li>Qt ";
             qtVersion += qVersion();
