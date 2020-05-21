@@ -23,6 +23,7 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 - [ ] Toggle between light and dark presets based on sunset and sunrise.
 - [ ] Change Kate schema.
 - [ ] Change Atom theme.
+- [ ] Rewrite of scheduling system.
 
 Want Koi to support changing themes for another application? Open a [feature request!](https://github.com/baduhai/Koi/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=%5BREQUEST%5D)
 
