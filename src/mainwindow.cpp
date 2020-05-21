@@ -381,6 +381,12 @@ void MainWindow::scheduleLight()
 {
     int lightCronMin = QTime::fromString(utils.settings->value("time-light").toString()).minute();
     int lightCronHr = QTime::fromString(utils.settings->value("time-light").toString()).hour();
+    if (lightCronMin <= 0) {
+        lightCronMin = 0;
+    }
+    if (lightCronHr <= 0) {
+        lightCronHr = 0;
+    }
     std::string lightCron = std::to_string(lightCronMin) + " " + std::to_string(lightCronHr) + " * * *";
     s.cron(lightCron, [this] () {
         utils.goLight();
@@ -390,6 +396,12 @@ void MainWindow::scheduleDark()
 {
     int darkCronMin = QTime::fromString(utils.settings->value("time-dark").toString()).minute();
     int darkCronHr = QTime::fromString(utils.settings->value("time-dark").toString()).hour();
+    if (darkCronMin <= 0) {
+        darkCronMin = 0;
+    }
+    if (darkCronHr <= 0) {
+        darkCronHr = 0;
+    }
     std::string darkCron = std::to_string(darkCronMin) + " " + std::to_string(darkCronHr) + " * * *";
     s.cron(darkCron, [this] () {
         utils.goDark();
