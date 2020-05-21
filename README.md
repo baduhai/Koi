@@ -41,7 +41,7 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ### Get Koi
 
-Lastest Koi version: 0.1.0 [beta]
+Lastest Koi version: 0.1.1 [beta]
 
 #### Dependencies
 
