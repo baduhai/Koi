@@ -57,7 +57,7 @@ Koi targets the latest version of the above deps. As of writing this file, these
 
 #### Arch Linux
 
-Install it from the AUR. [koi](https://aur.archlinux.org/packages/koi/).
+Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 
 #### Other Distros
 
