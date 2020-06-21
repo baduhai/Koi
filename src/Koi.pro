@@ -1,4 +1,4 @@
-QT       += core gui dbus testlib KCoreAddons KWidgetsAddons KConfigCore
+QT       += core gui dbus testlib network KCoreAddons KWidgetsAddons KConfigCore
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
