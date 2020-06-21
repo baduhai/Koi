@@ -41,7 +41,7 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ### Get Koi
 
-Lastest Koi version: 0.1.0 [beta]
+Lastest Koi version: 0.1.1 [beta]
 
 #### Dependencies
 
@@ -57,9 +57,7 @@ Koi targets the latest version of the above deps. As of writing this file, these
 
 #### Arch Linux
 
-AUR packages planned.
-
-[//]: # "Install it from the AUR. [koi](https://aur.archlinux.org) or [koi-git](https://aur.archlinux.org)."
+Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 
 #### Other Distros
 
