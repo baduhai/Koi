@@ -4,14 +4,13 @@
 Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     trayIcon = new QSystemTrayIcon(this);
     this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
     this->trayIcon->setVisible(true);
     trayMenu = this->createMenu();
-    this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
+    this->trayIcon->setContextMenu(trayMenu);                                         // Set tray context menu
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
     utils.initialiseSettings();
     ui->setupUi(this);
@@ -36,21 +35,22 @@ MainWindow::~MainWindow()
 }
 
 // Override window managing events
-void MainWindow::closeEvent(QCloseEvent *event) { // Overide close event
+void MainWindow::closeEvent(QCloseEvent *event)
+{ // Overide close event
     event->ignore();
     toggleVisibility();
 }
 
 // SysTray related functionality
-QMenu* MainWindow::createMenu() // Define context menu items for SysTray - R-click to show context menu
+QMenu *MainWindow::createMenu() // Define context menu items for SysTray - R-click to show context menu
 {
     // Tray action menu
     auto actionMenuQuit = new QAction("&Quit", this); // Quit app
     connect(actionMenuQuit, &QAction::triggered, this, &QCoreApplication::quit);
-    auto actionMenuLight = new QAction("&Light", this); // Switch to light
+    auto actionMenuLight = new QAction("&Light", this);                                    // Switch to light
     connect(actionMenuLight, &QAction::triggered, this, &MainWindow::on_lightBtn_clicked); //Doesn't work.
-    auto actionMenuDark = new QAction("&Dark", this); //Switch to dark
-    connect(actionMenuDark, &QAction::triggered, this, &MainWindow::on_darkBtn_clicked); //Doesn't work.
+    auto actionMenuDark = new QAction("&Dark", this);                                      //Switch to dark
+    connect(actionMenuDark, &QAction::triggered, this, &MainWindow::on_darkBtn_clicked);   //Doesn't work.
     auto actionMenuToggle = new QAction("&Toggle Window", this);
     connect(actionMenuToggle, &QAction::triggered, this, &MainWindow::toggleVisibility);
 
@@ -66,18 +66,18 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
 {
     switch (reason)
     {
-        case QSystemTrayIcon::Trigger: // Left-click to toggle window visibility
-            toggleVisibility();
-            break;
+    case QSystemTrayIcon::Trigger: // Left-click to toggle window visibility
+        toggleVisibility();
+        break;
 
-//        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
-//            utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
-//            break;
+        //        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
+        //            utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
+        //            break;
 
         // Must understand tray better - Why can't right click be part of switch statement?
 
-        default: // Need to understand switch statements better - Why is this required?
-            break;
+    default: // Need to understand switch statements better - Why is this required?
+        break;
     }
 }
 
@@ -175,6 +175,19 @@ void MainWindow::loadPrefs()
     ui->lightDropGtk->setCurrentText(utils.settings->value("GTKTheme/light").toString());
     ui->darkDropGtk->setCurrentText(utils.settings->value("GTKTheme/dark").toString());
 
+    // Load Kvantum Style theme prefs
+    if (utils.settings->value("KvantumStyle/enabled").toBool())
+    {
+        ui->kvantumStyleCheckBox->setChecked(true);
+    }
+    else
+    {
+        ui->kvantumStyleCheckBox->setChecked(false);
+    }
+    // sets the displayed text on the combo box of the kvantum style.
+    ui->lightDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/light").toString());
+    ui->darkDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/Dark").toString());
+
     // Load Wallpaper prefs
     if (utils.settings->value("Wallpaper/enabled").toBool())
     {
@@ -259,6 +272,19 @@ void MainWindow::savePrefs()
     utils.settings->setValue("GTKTheme/light", lightGtk);
     utils.settings->setValue("GTKTheme/dark", darkGtk);
 
+    // Kvantum Style enabling
+    if (ui->kvantumStyleCheckBox->isChecked() == 0)
+    {
+        utils.settings->setValue("KvantumStyle/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("KvantumStyle/enabled", true);
+    }
+    //Kvantum Style Theme saving Prefs
+    utils.settings->setValue("KvantumStyle/light", lightKvantumStyle);
+    utils.settings->setValue("KvantumStyle/dark", darkKvantumStyle);
+
     // Wallpaper enabling
     if (ui->wallCheckBox->isChecked() == 0)
     {
@@ -291,14 +317,20 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
     QStringList iconThemes = utils.getIconThemes();
     ui->lightDropIcon->clear();
     ui->lightDropIcon->addItems(iconThemes);
-    ui-> darkDropIcon->clear();
-    ui-> darkDropIcon->addItems(iconThemes);
+    ui->darkDropIcon->clear();
+    ui->darkDropIcon->addItems(iconThemes);
     // Refresh gtk themes
     QStringList gtkThemes = utils.getGtkThemes();
     ui->lightDropGtk->clear();
     ui->lightDropGtk->addItems(gtkThemes);
     ui->darkDropGtk->clear();
     ui->darkDropGtk->addItems(gtkThemes);
+    // Refresh Kvantum Style themes.
+    QStringList kvantumStyle = utils.getKvantumStyles();
+    ui->lightDropKvantumStyle->clear(); //clears everything from the kvantum drop down menu
+    ui->darkDropKvantumStyle->clear();
+    ui->lightDropKvantumStyle->addItems(kvantumStyle); //adds the new loaded kvantum styles
+    ui->darkDropKvantumStyle->addItems(kvantumStyle);
     loadPrefs();
 }
 void MainWindow::toggleVisibility()
@@ -363,6 +395,23 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
     {
         return 0;
     }
+    /*
+    for kvantum style to make sure the settings is applied upon exit
+    will try to change it to nested if statement as the drop down box is 
+    dependent on whether the check box is clicked 
+    */
+    if (ui->kvantumStyleCheckBox->isChecked() != utils.settings->value("KvantumStyle/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightKvantumStyle != utils.settings->value("KvantumStyle/light").toString())
+    {
+        return 0;
+    }
+    if (darkKvantumStyle != utils.settings->value("KvantumStyle/dark").toString())
+    {
+        return 0;
+    }
     if (ui->wallCheckBox->isChecked() != utils.settings->value("Wallpaper/enabled").toBool())
     {
         return 0;
@@ -381,14 +430,16 @@ void MainWindow::scheduleLight()
 {
     int lightCronMin = QTime::fromString(utils.settings->value("time-light").toString()).minute();
     int lightCronHr = QTime::fromString(utils.settings->value("time-light").toString()).hour();
-    if (lightCronMin <= 0) {
+    if (lightCronMin <= 0)
+    {
         lightCronMin = 0;
     }
-    if (lightCronHr <= 0) {
+    if (lightCronHr <= 0)
+    {
         lightCronHr = 0;
     }
     std::string lightCron = std::to_string(lightCronMin) + " " + std::to_string(lightCronHr) + " * * *";
-    s.cron(lightCron, [this] () {
+    s.cron(lightCron, [this]() {
         utils.goLight();
     });
 }
@@ -396,14 +447,16 @@ void MainWindow::scheduleDark()
 {
     int darkCronMin = QTime::fromString(utils.settings->value("time-dark").toString()).minute();
     int darkCronHr = QTime::fromString(utils.settings->value("time-dark").toString()).hour();
-    if (darkCronMin <= 0) {
+    if (darkCronMin <= 0)
+    {
         darkCronMin = 0;
     }
-    if (darkCronHr <= 0) {
+    if (darkCronHr <= 0)
+    {
         darkCronHr = 0;
     }
     std::string darkCron = std::to_string(darkCronMin) + " " + std::to_string(darkCronHr) + " * * *";
-    s.cron(darkCron, [this] () {
+    s.cron(darkCron, [this]() {
         utils.goDark();
     });
 }
@@ -436,21 +489,22 @@ void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must 
         applyConfs.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
         applyConfs.setDefaultButton(QMessageBox::Save);
         int ret = applyConfs.exec();
-        switch (ret) {
-            case QMessageBox::Save: // Save and change stack
-                savePrefs();
-                ui->mainStack->setCurrentIndex(0);
-                break;
-            case QMessageBox::Discard: // Change stack
-                ui->mainStack->setCurrentIndex(0);
-                lightWall = utils.settings->value("Wallpaper/light").toString();
-                darkWall = utils.settings->value("Wallpaper/dark").toString();
-                loadPrefs();
-                break;
-            case QMessageBox::Cancel: // Do nothin
-                break;
-            default:
-                break;
+        switch (ret)
+        {
+        case QMessageBox::Save: // Save and change stack
+            savePrefs();
+            ui->mainStack->setCurrentIndex(0);
+            break;
+        case QMessageBox::Discard: // Change stack
+            ui->mainStack->setCurrentIndex(0);
+            lightWall = utils.settings->value("Wallpaper/light").toString();
+            darkWall = utils.settings->value("Wallpaper/dark").toString();
+            loadPrefs();
+            break;
+        case QMessageBox::Cancel: // Do nothin  //probably dont need this case
+            break;
+        default:
+            break;
         }
     }
 }
@@ -489,7 +543,6 @@ void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style
         ui->darkDropStyle->setEnabled(1);
         ui->lightDropStyle->setEnabled(1);
     }
-
 }
 void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled) // Color scheme checkbox logic
 {
@@ -525,6 +578,23 @@ void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme che
         ui->lightDropIcon->setEnabled(1);
     }
 }
+void MainWindow::on_kvantumStyleCheckBox_stateChanged(int kvantumStyleEnabled) //kvantum theme checkbox logic used to perform an actioni after enabling the check box
+{
+    if (ui->kvantumStyleCheckBox->checkState() == 0)
+    {
+        ui->darkKvantumStyle->setEnabled(0);
+        ui->lightDropKvantumStyle->setEnabled(0);
+        ui->darkDropKvantumStyle->setEnabled(0);
+        ui->darkKvantumStyle->setEnabled(0);
+    }
+    else
+    {
+        ui->darkKvantumStyle->setEnabled(1);
+        ui->lightKvantumStyle->setEnabled(1);
+        ui->darkDropKvantumStyle->setEnabled(1);
+        ui->lightDropKvantumStyle->setEnabled(1);
+    }
+}
 void MainWindow::on_lightDropStyle_currentIndexChanged(const QString &lightStyleUN) // Set light plasma style
 {
     lightStyle = lightStyleUN;
@@ -551,7 +621,7 @@ void MainWindow::on_darkDropIcon_currentIndexChanged(const QString &darkIconUN) 
 {
     darkIcon = darkIconUN;
 }
-void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnlabled) // GTK theme checkbox logic
+void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnabled) // GTK theme checkbox logic
 {
     if (ui->gtkCheckBox->checkState() == 0)
     {
@@ -575,6 +645,14 @@ void MainWindow::on_lightDropGtk_currentIndexChanged(const QString &lightGtkUN) 
 void MainWindow::on_darkDropGtk_currentIndexChanged(const QString &darkGtkUN) // Set dark gtk theme
 {
     darkGtk = darkGtkUN;
+}
+void MainWindow::on_lightDropKvantumStyle_currentIndexChanged(const QString &lightKvantumStyleUN) //sets the kvantum style from the drop menu
+{
+    lightKvantumStyle = lightKvantumStyleUN;
+}
+void MainWindow::on_darkDropKvantumStyle_currentIndexChanged(const QString &darkKvantumStyleUN)
+{
+    darkKvantumStyle = darkKvantumStyleUN;
 }
 void MainWindow::on_wallCheckBox_stateChanged(int wallEnabled) // Wallpaper checkbox logic
 {
@@ -670,14 +748,13 @@ void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between
         utils.settings->setValue("schedule-type", scheduleType);
         utils.settings->sync();
     }
-
 }
 void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set light time
 {
     lightTime = time.toString();
     utils.settings->setValue("time-light", lightTime);
     utils.settings->sync();
-    ui->resMsg->setText(tr("Koi must be restarded for new times to be used."));
+    ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
@@ -686,7 +763,7 @@ void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark 
     darkTime = time.toString();
     utils.settings->setValue("time-dark", darkTime);
     utils.settings->sync();
-    ui->resMsg->setText(tr("Koi must be restarded for new times to be used."));
+    ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
@@ -725,7 +802,7 @@ void MainWindow::on_actionPrefs_triggered() // Set preferences
 }
 void MainWindow::on_actionAbout_triggered() // Open about dialog
 {
-    auto* about = new About(this);
+    auto *about = new About(this);
     about->open();
 }
 void MainWindow::on_actionHide_triggered() // Hide to tray
@@ -741,13 +818,3 @@ void MainWindow::on_actionRestart_triggered()
     QProcess::startDetached(QApplication::applicationFilePath());
     exit(12);
 }
-
-
-
-
-
-
-
-
-
-

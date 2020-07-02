@@ -6,6 +6,8 @@
 #include "gtk.h"
 #include "wallpaper.h"
 #include "icons.h"
+#include "kvantumstyle.h"
+
 // Qt libs
 #include <QtGlobal>
 #include <QObject>
@@ -32,6 +34,7 @@ public:
     QStringList getIconThemes(void);
     QStringList getCursorThemes(void);
     QStringList getGtkThemes(void);
+    QStringList getKvantumStyles(void);
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
@@ -46,6 +49,8 @@ public:
     void goDarkIcons();
     void goLightGtk();
     void goDarkGtk();
+    void goLightKvantumStyle();
+    void goDarkKvantumStyle();
     void goLightWall();
     void goDarkWall();
 
@@ -55,6 +60,7 @@ private:
     Icons icons;
     Gtk gtk;
     Wallpaper wallpaper;
+    KvantumStyle kvantumStyle;
 
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;

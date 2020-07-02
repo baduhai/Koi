@@ -22,7 +22,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -154,19 +154,6 @@
           </item>
          </layout>
         </item>
-        <item row="7" column="0">
-         <spacer name="bottomVerSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>78</width>
-            <height>164</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="1" column="0">
          <spacer name="topVerSpacer">
           <property name="orientation">
@@ -189,6 +176,19 @@
            <bool>false</bool>
           </property>
          </widget>
+        </item>
+        <item row="7" column="0">
+         <spacer name="bottomVerSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>78</width>
+            <height>164</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -272,9 +272,9 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>0</y>
-             <width>398</width>
-             <height>472</height>
+             <y>-129</y>
+             <width>401</width>
+             <height>626</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -496,7 +496,7 @@
               </item>
              </layout>
             </item>
-            <item row="4" column="0" colspan="2">
+            <item row="6" column="0" colspan="2">
              <layout class="QVBoxLayout" name="wallpaper">
               <item>
                <widget class="QCheckBox" name="wallCheckBox">
@@ -567,6 +567,51 @@
               </item>
              </layout>
             </item>
+            <item row="5" column="0" colspan="2">
+             <layout class="QVBoxLayout" name="kvantumStyle">
+              <item>
+               <widget class="QCheckBox" name="kvantumStyleCheckBox">
+                <property name="text">
+                 <string>Kvantum Style</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QLabel" name="lightKvantumStyle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Light:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="darkKvantumStyle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Dark:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <item>
+                 <widget class="QComboBox" name="lightDropKvantumStyle"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="darkDropKvantumStyle"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -586,7 +631,7 @@
      <x>0</x>
      <y>0</y>
      <width>450</width>
-     <height>23</height>
+     <height>32</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
