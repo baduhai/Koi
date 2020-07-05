@@ -14,7 +14,10 @@
 #include "libs/Scheduler.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+    class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -51,6 +54,7 @@ private slots:
     void on_colorCheckBox_stateChanged(int arg1);
     void on_iconCheckBox_stateChanged(int arg1);
     void on_gtkCheckBox_stateChanged(int arg1);
+    void on_kvantumStyleCheckBox_stateChanged(int arg1);
     void on_wallCheckBox_stateChanged(int arg1);
     void on_autoCheckBox_stateChanged(int arg1);
     void on_scheduleRadioBtn_toggled(bool checked);
@@ -71,20 +75,20 @@ private slots:
     void on_darkDropGtk_currentIndexChanged(const QString &arg1);
     void on_lightDropIcon_currentIndexChanged(const QString &arg1);
     void on_darkDropIcon_currentIndexChanged(const QString &arg1);
+    void on_lightDropKvantumStyle_currentIndexChanged(const QString &arg1);
+    void on_darkDropKvantumStyle_currentIndexChanged(const QString &arg1);
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
     void on_hiddenCheckBox_stateChanged(int arg1);
     void on_notifyCheckBox_stateChanged(int arg1);
 
-
-
     void on_actionRestart_triggered();
 
 private:
     Ui::MainWindow *ui;
-    QSystemTrayIcon* trayIcon;
-    QMenu* trayMenu;
-    QMenu* createMenu();
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayMenu;
+    QMenu *createMenu();
     QString scheduleType;
     QString lightStyle;
     QString darkStyle;
@@ -96,11 +100,12 @@ private:
     QString darkGtk;
     QString lightWall;
     QString darkWall;
+    QString lightKvantumStyle;
+    QString darkKvantumStyle;
     QString lightTime;
     QString darkTime;
     Utils utils;
 
 protected:
-
 };
 #endif // MAINWINDOW_H

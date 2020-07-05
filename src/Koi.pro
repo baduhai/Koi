@@ -25,7 +25,9 @@ SOURCES += \
     mainwindow.cpp \
     plasmastyle.cpp \
     utils.cpp \
-    wallpaper.cpp
+    wallpaper.cpp \
+    kvantumstyle.cpp \
+    
 
 HEADERS += \
     headers/colorscheme.h \
@@ -36,7 +38,8 @@ HEADERS += \
     headers/mainwindow.h \
     headers/plasmastyle.h \
     headers/utils.h \
-    headers/wallpaper.h \ \
+    headers/wallpaper.h \ 
+    headers/kvantumstyle.h \ \
     libs/Cron.h \
     libs/InterruptableSleep.h \
     libs/Scheduler.h

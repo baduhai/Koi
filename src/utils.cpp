@@ -142,14 +142,23 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
     gtkThemes.removeFirst();
     return gtkThemes;
 }
-
-// Manage switching themes functions
-void Utils::goLight()
+QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles 
 {
+    QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
+    QDir kvantumStyleSystemDir("/usr/share/Kvantum");
+    QStringList kvantumStyles = kvantumStyleLocalDir.entryList(QDir::Dirs) + kvantumStyleSystemDir.entryList(QDir::Dirs);
+    kvantumStyles.removeDuplicates();
+    kvantumStyles.removeFirst();
+    kvantumStyles.removeFirst();
+    return kvantumStyles;
+}
+// Manage switching themes functions
+void Utils::goLight() {
     goLightStyle();
     goLightColors();
     goLightIcons();
     goLightGtk();
+    goLightKvantumStyle();
     goLightWall();
     if (settings->value("notify").toBool())
     {
@@ -163,6 +172,7 @@ void Utils::goDark()
     goDarkColors();
     goDarkIcons();
     goDarkGtk();
+    goDarkKvantumStyle();
     goDarkWall();
     if (settings->value("notify").toBool())
     {
@@ -237,6 +247,20 @@ void Utils::goDarkGtk()
     if (settings->value("GTKTheme/enabled").toBool())
     {
         gtk.setGtk(settings->value("GTKTheme/dark").toString());
+    }
+}
+void Utils::goLightKvantumStyle()
+{
+    if(settings->value("KvantumStyle/enabled").toBool())
+    {
+        kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/light").toString());
+    }
+}
+void Utils::goDarkKvantumStyle()
+{
+    if(settings->value("KvantumStyle/enabled").toBool())
+    {
+        kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/dark").toString());
     }
 }
 void Utils::goLightWall()
