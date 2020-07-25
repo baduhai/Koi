@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "(gdb) Qmake Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/build/Koi",

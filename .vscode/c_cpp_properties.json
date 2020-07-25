@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "clang-x64",
+            "includePath": [
+                "${default}",
+                "/usr/include/qt/QtCore",
+                "/usr/include/qt",
+                "/usr/include/qt/QtWidgets",
+                "/usr/include/qt/QtNetwork",
+                "/usr/include/KF5/KCoreAddons",
+                "/usr/include/KF5/KConfigCore",
+                "/usr/include/qt/QtDBus",
+                "/usr/include/qt/QtTest",
+                "/usr/include/qt/QtGui",
+                "/usr/include/qt/QtGui",
+                "${workspaceFolder}/src/build",
+                "/usr/include/KF5/KWidgetsAddons"
+            ]
+        }
+    ],
+    "version": 4
+}
