@@ -2,7 +2,6 @@
 
 Utils::Utils()
 {
-
 }
 
 // Global settings stuff
@@ -17,14 +16,14 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 {
     bus = new QDBusConnection(QDBusConnection::sessionBus());
     notifyInterface = new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", *bus);
-    QString app_name = "Koi"; // What program is the notification coming from?
-    uint replaces_id = 0; // Not sure what this is. Think it has something to do with pid.
-    QString app_icon; // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
+    QString app_name = "Koi";        // What program is the notification coming from?
+    uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
+    QString app_icon;                // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
     QString summary = notifySummary; // Title of notification.
-    QString body = notifyBody; // Notification body.
-    QStringList actions; // No idea how to use.
-    QVariantMap hints; // No idea how to use.
-    int timeout = timeoutms; // Notification timeout, there's no way to assume system has a default timeout unfortunately.
+    QString body = notifyBody;       // Notification body.
+    QStringList actions;             // No idea how to use.
+    QVariantMap hints;               // No idea how to use.
+    int timeout = timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
     notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
 void Utils::startupTimeCheck() // Check if switching is needed based on time.
@@ -74,7 +73,7 @@ QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 QStringList Utils::getColorSchemes(void) // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList()<<"*.colors");
+    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
     colorsLocalDir.setFilter(QDir::Files);
     colorsLocalDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
@@ -84,7 +83,7 @@ QStringList Utils::getColorSchemes(void) // Get all available color schemes
         colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
     }
     QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList()<<"*.colors");
+    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
     colorsSystemDir.setFilter(QDir::Files);
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
@@ -93,13 +92,13 @@ QStringList Utils::getColorSchemes(void) // Get all available color schemes
     {
         colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
     }
-    QStringList colorSchemesNames = colorSchemesSystemNames+ colorSchemesLocalNames;
+    QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
     return colorSchemesNames;
 }
 QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList()<<"*.colors");
+    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
     colorsLocalDir.setFilter(QDir::Files);
     colorsLocalDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
@@ -109,7 +108,7 @@ QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
         colorSchemesLocalPath.append(colorSchemesLocal.at(i).absoluteFilePath());
     }
     QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList()<<"*.colors");
+    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
     colorsSystemDir.setFilter(QDir::Files);
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
@@ -142,7 +141,7 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
     gtkThemes.removeFirst();
     return gtkThemes;
 }
-QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles 
+QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
 {
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
@@ -153,18 +152,19 @@ QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
     return kvantumStyles;
 }
 // Manage switching themes functions
-void Utils::goLight() {
+void Utils::goLight()
+{
     goLightStyle();
     goLightColors();
     goLightIcons();
     goLightGtk();
     goLightKvantumStyle();
     goLightWall();
+    restartProcess();
     if (settings->value("notify").toBool())
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
-
 }
 void Utils::goDark()
 {
@@ -174,6 +174,7 @@ void Utils::goDark()
     goDarkGtk();
     goDarkKvantumStyle();
     goDarkWall();
+    restartProcess();
     if (settings->value("notify").toBool())
     {
         notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
@@ -251,14 +252,14 @@ void Utils::goDarkGtk()
 }
 void Utils::goLightKvantumStyle()
 {
-    if(settings->value("KvantumStyle/enabled").toBool())
+    if (settings->value("KvantumStyle/enabled").toBool())
     {
         kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/light").toString());
     }
 }
 void Utils::goDarkKvantumStyle()
 {
-    if(settings->value("KvantumStyle/enabled").toBool())
+    if (settings->value("KvantumStyle/enabled").toBool())
     {
         kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/dark").toString());
     }
@@ -267,7 +268,8 @@ void Utils::goLightWall()
 {
     if (settings->value("Wallpaper/enabled").toBool())
     {
-        if (!settings->value("Wallpaper/light").isNull()){
+        if (!settings->value("Wallpaper/light").isNull())
+        {
             wallpaper.setWallpaper(settings->value("Wallpaper/light").toString());
         }
         else
@@ -288,5 +290,23 @@ void Utils::goDarkWall()
         {
             notify("Error setting Wallpaper", "Koi tried to change your wallpaper, but no wallpaper file was selected", 0);
         }
+    }
+}
+/* this updates the style of both the plasma shell and latte dock if it is available 
+*/
+void Utils::restartProcess()
+{
+    if (settings->value("KvantumStyle/enabled").toBool())
+    {
+        killAllProcess = new QProcess;
+        QString killAll = "/usr/bin/killall"; //used to kill a process
+
+        kstart5Process = new QProcess;
+        QString kstart5 = "/usr/bin/kstart5";
+        QStringList plasmashell = {"plasmashell"};
+
+        killAllProcess->start(killAll, plasmashell);
+        kstart5Process->start(kstart5, plasmashell);
+
     }
 }

@@ -17,6 +17,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QTest>
+#include <QProcess>
 
 class Utils : public QObject
 {
@@ -53,6 +54,7 @@ public:
     void goDarkKvantumStyle();
     void goLightWall();
     void goDarkWall();
+    void restartProcess();
 
 private:
     PlasmaStyle plasmastyle;
@@ -64,6 +66,10 @@ private:
 
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;
+    QProcess *plasmaDesktopProcess;
+    QProcess *latteProcess;
+    QProcess *killAllProcess;
+    QProcess *kstart5Process;
 };
 
 #endif // UTILS_H
