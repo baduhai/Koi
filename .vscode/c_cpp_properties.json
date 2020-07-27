@@ -20,7 +20,8 @@
                 "/usr/include/qt/QtGui",
                 "/usr/include/qt/QtGui",
                 "${workspaceFolder}/src/build",
-                "/usr/include/KF5/KWidgetsAddons"
+                "/usr/include/KF5/KWidgetsAddons",
+                "${workspaceFolder}/src"
             ]
         }
     ],
