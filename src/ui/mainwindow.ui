@@ -272,9 +272,9 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-129</y>
+             <y>-155</y>
              <width>401</width>
-             <height>626</height>
+             <height>572</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -603,10 +603,18 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_15">
                 <item>
-                 <widget class="QComboBox" name="lightDropKvantumStyle"/>
+                 <widget class="QComboBox" name="lightDropKvantumStyle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="darkDropKvantumStyle"/>
+                 <widget class="QComboBox" name="darkDropKvantumStyle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -631,7 +639,7 @@
      <x>0</x>
      <y>0</y>
      <width>450</width>
-     <height>32</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
