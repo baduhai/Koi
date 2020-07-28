@@ -1,4 +1,5 @@
 #include "headers/utils.h"
+#include <kstandarddirs.h>
 
 Utils::Utils()
 {
@@ -8,9 +9,11 @@ Utils::Utils()
 // Global settings stuff
 void Utils::initialiseSettings()
 {
+    //fdfdfdf
     //settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
-    settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
+    settings = new QSettings(QDir::homePath() + "/.config/koiglobalrc", QSettings::IniFormat); // Setting config path and format
 }
+
 
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
