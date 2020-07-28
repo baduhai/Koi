@@ -33,6 +33,9 @@ int main(int argc, char *argv[])
         createDummyNetwork("koiDummyNetwork");
         Utils utils;
         utils.initialiseSettings();
+
+        LnfLogic logic;
+
         QApplication a(argc, argv);
         MainWindow w;
         if (utils.settings->value("start-hidden").toBool() == 0)

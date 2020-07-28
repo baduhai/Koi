@@ -1,5 +1,4 @@
 #include "headers/utils.h"
-#include <kstandarddirs.h>
 
 Utils::Utils()
 {

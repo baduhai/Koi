@@ -18,7 +18,9 @@
                 "/usr/include/qt/QtGui",
                 "/usr/include/KF5",
                 "/usr/include/KF5/KService",
-                "/usr/include/KF5/KI18n"
+                "/usr/include/KF5/KI18n",
+                "/usr/include/qt/QtNetwork",
+                "/usr/include/KF5/KWidgetsAddons"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

@@ -34,9 +34,8 @@
 #include <KAboutData>
 #include <KSharedConfig>
 #include <KLocalizedString>
-LnfLogic::LnfLogic(QObject *parent)
-    : QObject(parent),
-      m_themeName(QStringLiteral("org.kde.breeze.desktop")),
+LnfLogic::LnfLogic()
+      m_themeName(QStringLiteral("org.github.koi")),
       m_lnfListModel(new LnfListModel(this)),
       m_needsSave(false)
 {
@@ -45,6 +44,7 @@ LnfLogic::LnfLogic(QObject *parent)
 LnfLogic::~LnfLogic()
 {
 }
+
 void LnfLogic::createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author, const QString &email, const QString &license, const QString &website)
 {
     const QString metadataPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/metadata.desktop"));

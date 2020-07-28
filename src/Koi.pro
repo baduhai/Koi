@@ -1,4 +1,4 @@
-QT       += core gui dbus testlib network KCoreAddons KWidgetsAddons KConfigCore
+QT       += core gui dbus testlib network KCoreAddons KWidgetsAddons KConfigCore 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,6 +27,8 @@ SOURCES += \
     utils.cpp \
     wallpaper.cpp \
     kvantumstyle.cpp \
+    lnflistmodel.cpp \
+    lnflogic.cpp
     
 
 HEADERS += \
@@ -39,7 +41,9 @@ HEADERS += \
     headers/plasmastyle.h \
     headers/utils.h \
     headers/wallpaper.h \ 
-    headers/kvantumstyle.h \ \
+    headers/kvantumstyle.h \ 
+    headers/lnflistmodel.h \
+    headers/lnflogic.h \\
     libs/Cron.h \
     libs/InterruptableSleep.h \
     libs/Scheduler.h
