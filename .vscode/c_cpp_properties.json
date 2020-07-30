@@ -20,13 +20,17 @@
                 "/usr/include/KF5/KService",
                 "/usr/include/KF5/KI18n",
                 "/usr/include/qt/QtNetwork",
-                "/usr/include/KF5/KWidgetsAddons"
+                "/usr/include/KF5/KWidgetsAddons",
+                "/usr/include/KF5/KPackage/KPackage",
+                "/usr/include/qt/QtCore",
+                "/usr/include/qt/QtTest"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
             "cppStandard": "c++14",
-            "intelliSenseMode": "clang-x64"
+            "intelliSenseMode": "clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

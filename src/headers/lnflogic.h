@@ -1,7 +1,7 @@
 #ifndef LNFLOGIC_H
 #define LNFLOGIC_H
 #include <QAbstractListModel>
-#include <kpackage/package.h>
+#include <KPackage/Package>
 class LnfListModel;
 class LnfLogic : public QObject
 {
