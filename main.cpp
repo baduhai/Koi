@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
         Utils utils;
         utils.initialiseSettings();
 
-       // LnfLogic logic;
+        LnfLogic logic;
 
         QApplication a(argc, argv);
         MainWindow w;

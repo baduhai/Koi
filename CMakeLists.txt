@@ -31,8 +31,8 @@ set(koi_SRCS
     utils.cpp 
     wallpaper.cpp 
     kvantumstyle.cpp 
-   # lnflistmodel.cpp 
-   # lnflogic.cpp
+    lnflistmodel.cpp 
+    lnflogic.cpp
 )
 
 include(KDEInstallDirs)
@@ -41,6 +41,9 @@ include(ECMOptionalAddSubdirectory)
 include(ECMAddAppIcon)
 include(ECMInstallIcons)
 find_package(Threads)
+
+add_definitions(     -DQT_DEPRECATED_WARNINGS     
+    -DQT_USE_QSTRINGBUILDER   )
 
 find_package(Qt5 ${REQUIRED_QT_VERSION} COMPONENTS NO_MODULE REQUIRED Network DBus Gui Core Test)
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS CoreAddons WidgetsAddons Config  Package I18n Service)

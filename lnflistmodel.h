@@ -1,9 +1,11 @@
 /*
+ * LnfListModel
  * Copyright (C) 2016 Marco Martin <mart@kde.org>
  * Copyright (C) 2002 Karol Szwed <gallium@kde.org>
  * Copyright (C) 2002 Daniel Molkentin <molkentin@kde.org>
  * Copyright (C) 2007 Urs Wolfer <uwolfer @ kde.org>
  * Copyright (C) 2009 by Davide Bettio <davide.bettio@kdemail.net>
+
  * Portions Copyright (C) 2007 Paolo Capriotti <p.capriotti@gmail.com>
  * Portions Copyright (C) 2007 Ivan Cukic <ivan.cukic+kde@gmail.com>
  * Portions Copyright (C) 2008 by Petri Damsten <damu@iki.fi>
@@ -23,12 +25,16 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
+
 #ifndef LNFLISTMODEL_H
 #define LNFLISTMODEL_H
+
 #include <QAbstractItemView>
+
 namespace Plasma
 {
 }
+
 //Theme selector code by Andre Duffeck (modified to add package description)
 class ThemeInfo
 {
@@ -40,6 +46,7 @@ public:
     QString version;
     QString themeRoot;
 };
+
 class LnfListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -50,9 +57,12 @@ public:
            PackageAuthorRole = Qt::UserRole + 2,
            PackageVersionRole = Qt::UserRole + 3
          };
+
     explicit LnfListModel(QObject *parent = nullptr);
     ~LnfListModel() override;
+
     QHash<int, QByteArray> roleNames() const override;
+
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex indexOf(const QString &path) const;
@@ -62,11 +72,17 @@ public:
     {
         return rowCount();
     }
+
     Q_INVOKABLE QVariantMap get(int index) const;
+
 Q_SIGNALS:
     void countChanged();
+
 private:
     QHash<int, QByteArray> m_roleNames;
+
     QList<ThemeInfo> m_themes;
 };
+
+
 #endif

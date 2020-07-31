@@ -182,3 +182,4 @@ QModelIndex LnfListModel::indexOf(const QString &name) const
     return QModelIndex();
 }
 
+#include "moc_lnflistmodel.cpp"
