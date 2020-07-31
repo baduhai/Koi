@@ -1,4 +1,4 @@
-#include "headers/colorscheme.h"
+#include "colorscheme.h"
 
 ColorScheme::ColorScheme()
 {

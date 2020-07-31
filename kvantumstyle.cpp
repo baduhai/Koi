@@ -1,4 +1,4 @@
-#include "headers/kvantumstyle.h"
+#include "kvantumstyle.h"
 
 KvantumStyle::KvantumStyle()
 {

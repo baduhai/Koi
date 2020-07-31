@@ -1,4 +1,4 @@
-#include "headers/plasmastyle.h"
+#include "plasmastyle.h"
 
 PlasmaStyle::PlasmaStyle()
 {

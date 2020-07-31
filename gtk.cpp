@@ -1,4 +1,4 @@
-#include "headers/gtk.h"
+#include "gtk.h"
 
 Gtk::Gtk()
 {

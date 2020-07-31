@@ -12,7 +12,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 //Other libs
-#include "libs/Scheduler.h"
+#include "Scheduler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

@@ -23,7 +23,8 @@
                 "/usr/include/KF5/KWidgetsAddons",
                 "/usr/include/KF5/KPackage/KPackage",
                 "/usr/include/qt/QtCore",
-                "/usr/include/qt/QtTest"
+                "/usr/include/qt/QtTest",
+                "/usr/include/KF5/KService"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

@@ -1,4 +1,4 @@
-#include "headers/wallpaper.h"
+#include "wallpaper.h"
 
 Wallpaper::Wallpaper()
 {

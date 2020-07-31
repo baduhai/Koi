@@ -1,4 +1,4 @@
-#include "headers/icons.h"
+#include "icons.h"
 
 Icons::Icons()
 {

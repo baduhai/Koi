@@ -1,4 +1,4 @@
-#include "headers/license.h"
+#include "license.h"
 #include "ui_license.h"
 
 License::License(QWidget *parent) :
