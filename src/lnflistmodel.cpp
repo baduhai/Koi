@@ -63,6 +63,17 @@ QHash<int, QByteArray> LnfListModel::roleNames() const
     return m_roleNames;
 }
 
+bool LnfListModel::themeExists(const QString &name) const {
+    QListIterator<ThemeInfo> it(m_themes);
+    int i = -1 ;
+    while (it.hasNext()){
+        ++i;
+        if(it.next().package == name ){
+            return true;
+        }
+    }
+    return false;
+}
 void LnfListModel::clearThemeList()
 {
     m_themes.clear();
@@ -152,7 +163,7 @@ QVariant LnfListModel::data(const QModelIndex &index, int role) const
             return QVariant();
     }
 }
-
+// would not use this 
 QVariantMap LnfListModel::get(int row) const
 {
     QVariantMap item;

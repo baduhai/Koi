@@ -36,6 +36,7 @@ namespace Plasma
 }
 
 //Theme selector code by Andre Duffeck (modified to add package description)
+//not sure if i would need this 
 class ThemeInfo
 {
 public:
@@ -66,6 +67,7 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex indexOf(const QString &path) const;
+    bool themeExists(const QString &name) const;
     void reload();
     void clearThemeList();
     int count() const

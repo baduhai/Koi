@@ -39,9 +39,8 @@
 #include <KSharedConfig>
 #include <KLocalizedString>
 
-LnfLogic::LnfLogic(QObject *parent)
-    : QObject(parent),
-      m_themeName(QStringLiteral("org.kde.breeze.desktop")),
+LnfLogic::LnfLogic()
+    : m_themeName(QStringLiteral("org.kde.breeze.desktop")),
       m_lnfListModel(new LnfListModel(this)),
       m_needsSave(false)
 {
@@ -53,6 +52,7 @@ LnfLogic::~LnfLogic()
 }
 
 void LnfLogic::createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author, const QString &email, const QString &license, const QString &website)
+//would not need this as this gets the plasma layout and i just need the theme
 {
     const QString metadataPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/metadata.desktop"));
     KConfig c(metadataPath);
@@ -77,42 +77,48 @@ void LnfLogic::createNewTheme(const QString &pluginName, const QString &name, co
     m_lnfListModel->reload();
 }
 
+//would not need this as this gets the plasma layout and i just need the theme
 void LnfLogic::dumpPlasmaLayout(const QString &pluginName)
 {
     QDBusMessage message = QDBusMessage::createMethodCall("org.kde.plasmashell", "/PlasmaShell",
-                                                     "org.kde.PlasmaShell", "dumpCurrentLayoutJS");
+                                                          "org.kde.PlasmaShell", "dumpCurrentLayoutJS");
     QDBusPendingCall pcall = QDBusConnection::sessionBus().asyncCall(message);
 
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(pcall, this);
 
     QObject::connect(watcher, &QDBusPendingCallWatcher::finished,
                      this, [=](QDBusPendingCallWatcher *watcher) {
-        const QDBusMessage &msg = watcher->reply();
-        watcher->deleteLater();
-        if (watcher->isError()) {
-            emit messageRequested(ErrorLevel::Error, i18n("Cannot retrieve the current Plasma layout."));
-            return;
-        }
+                         const QDBusMessage &msg = watcher->reply();
+                         watcher->deleteLater();
+                         if (watcher->isError())
+                         {
+                             emit messageRequested(ErrorLevel::Error, i18n("Cannot retrieve the current Plasma layout."));
+                             return;
+                         }
 
-        const QString layout = msg.arguments().first().toString();
-        QDir themeDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName);
-        if (!themeDir.mkpath("contents/layouts")) {
-            qWarning() << "Impossible to create the layouts directory in the look and feel package";
-            emit messageRequested(ErrorLevel::Error, i18n("Impossible to create the layouts directory in the look and feel package"));
-            return;
-        }
+                         const QString layout = msg.arguments().first().toString();
+                         QDir themeDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName);
+                         if (!themeDir.mkpath("contents/layouts"))
+                         {
+                             qWarning() << "Impossible to create the layouts directory in the look and feel package";
+                             emit messageRequested(ErrorLevel::Error, i18n("Impossible to create the layouts directory in the look and feel package"));
+                             return;
+                         }
 
-        QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/contents/layouts/org.kde.plasma.desktop-layout.js"));
-        if (layoutFile.open(QIODevice::WriteOnly)) {
-            layoutFile.write(layout.toUtf8());
-            layoutFile.close();
-        } else {
-            qWarning() << "Impossible to write to org.kde.plasma.desktop-layout.js";
-            emit messageRequested(ErrorLevel::Error, i18n("Impossible to write to org.kde.plasma.desktop-layout.js"));
-            return;
-        }
-        emit messageRequested(ErrorLevel::Info, i18n("Plasma Layout successfully duplicated"));
-    });
+                         QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/contents/layouts/org.kde.plasma.desktop-layout.js"));
+                         if (layoutFile.open(QIODevice::WriteOnly))
+                         {
+                             layoutFile.write(layout.toUtf8());
+                             layoutFile.close();
+                         }
+                         else
+                         {
+                             qWarning() << "Impossible to write to org.kde.plasma.desktop-layout.js";
+                             emit messageRequested(ErrorLevel::Error, i18n("Impossible to write to org.kde.plasma.desktop-layout.js"));
+                             return;
+                         }
+                         emit messageRequested(ErrorLevel::Info, i18n("Plasma Layout successfully duplicated"));
+                     });
 }
 
 void LnfLogic::dumpDefaultsConfigFile(const QString &pluginName)
@@ -164,6 +170,7 @@ void LnfLogic::dumpDefaultsConfigFile(const QString &pluginName)
     emit messageRequested(ErrorLevel::Info, i18n("Defaults config file saved from your current setup"));
 }
 
+/* Use when asking the user to use the current style for the theme (light, dark */
 void LnfLogic::dumpCurrentPlasmaLayout()
 {
     dumpPlasmaLayout(m_themeName);
@@ -175,16 +182,19 @@ void LnfLogic::save()
     KConfigGroup cg(&c, "Desktop Entry");
 
     QHash<QString, QString>::const_iterator i;
-    for (i = m_tempMetadata.constBegin(); i != m_tempMetadata.constEnd(); ++i) {
+    for (i = m_tempMetadata.constBegin(); i != m_tempMetadata.constEnd(); ++i)
+    {
         cg.writeEntry(i.key(), i.value());
     }
     m_tempMetadata.clear();
     m_needsSave = false;
-    if (m_performLayoutDump) {
+    if (m_performLayoutDump)
+    {
         dumpCurrentPlasmaLayout();
         m_performLayoutDump = false;
     }
-    if (m_performDefaultsDump) {
+    if (m_performDefaultsDump)
+    {
         dumpDefaultsConfigFile(m_themeName);
         m_performDefaultsDump = false;
     }
@@ -216,9 +226,10 @@ QString LnfLogic::theme() const
     return m_themeName;
 }
 
-void LnfLogic::setTheme(const QString& theme)
+void LnfLogic::setTheme(const QString &theme)
 {
-    if (theme == m_themeName) {
+    if (theme == m_themeName)
+    {
         return;
     }
 
@@ -239,7 +250,8 @@ void LnfLogic::setTheme(const QString& theme)
 
 QString LnfLogic::name() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("Name"))) {
+    if (m_tempMetadata.contains(QStringLiteral("Name")))
+    {
         return m_tempMetadata.value(QStringLiteral("Name"));
     }
     return m_package.metadata().name();
@@ -247,7 +259,8 @@ QString LnfLogic::name() const
 
 void LnfLogic::setName(const QString &name)
 {
-    if (LnfLogic::name() == name) {
+    if (LnfLogic::name() == name)
+    {
         return;
     }
 
@@ -259,7 +272,8 @@ void LnfLogic::setName(const QString &name)
 
 QString LnfLogic::comment() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("Comment"))) {
+    if (m_tempMetadata.contains(QStringLiteral("Comment")))
+    {
         return m_tempMetadata.value(QStringLiteral("Comment"));
     }
     return m_package.metadata().description();
@@ -267,7 +281,8 @@ QString LnfLogic::comment() const
 
 void LnfLogic::setComment(const QString &comment)
 {
-    if (LnfLogic::comment() == comment) {
+    if (LnfLogic::comment() == comment)
+    {
         return;
     }
 
@@ -279,10 +294,12 @@ void LnfLogic::setComment(const QString &comment)
 
 QString LnfLogic::author() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Author"))) {
+    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Author")))
+    {
         return m_tempMetadata.value(QStringLiteral("X-KDE-PluginInfo-Author"));
     }
-    if (m_package.metadata().authors().isEmpty()) {
+    if (m_package.metadata().authors().isEmpty())
+    {
         return QString();
     }
     return m_package.metadata().authors().first().name();
@@ -290,7 +307,8 @@ QString LnfLogic::author() const
 
 void LnfLogic::setAuthor(const QString &author)
 {
-    if (LnfLogic::author() == author) {
+    if (LnfLogic::author() == author)
+    {
         return;
     }
 
@@ -302,10 +320,12 @@ void LnfLogic::setAuthor(const QString &author)
 
 QString LnfLogic::email() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Email"))) {
+    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Email")))
+    {
         return m_tempMetadata.value(QStringLiteral("X-KDE-PluginInfo-Email"));
     }
-    if (m_package.metadata().authors().isEmpty()) {
+    if (m_package.metadata().authors().isEmpty())
+    {
         return QString();
     }
     return m_package.metadata().authors().first().emailAddress();
@@ -313,7 +333,8 @@ QString LnfLogic::email() const
 
 void LnfLogic::setEmail(const QString &email)
 {
-    if (LnfLogic::email() == email) {
+    if (LnfLogic::email() == email)
+    {
         return;
     }
 
@@ -325,7 +346,8 @@ void LnfLogic::setEmail(const QString &email)
 
 QString LnfLogic::version() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Version"))) {
+    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Version")))
+    {
         return m_tempMetadata.value(QStringLiteral("X-KDE-PluginInfo-Version"));
     }
     return m_package.metadata().version();
@@ -333,7 +355,8 @@ QString LnfLogic::version() const
 
 void LnfLogic::setVersion(const QString &version)
 {
-    if (LnfLogic::version() == version) {
+    if (LnfLogic::version() == version)
+    {
         return;
     }
 
@@ -345,7 +368,8 @@ void LnfLogic::setVersion(const QString &version)
 
 QString LnfLogic::website() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Website"))) {
+    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-Website")))
+    {
         return m_tempMetadata.value(QStringLiteral("X-KDE-PluginInfo-Website"));
     }
     return m_package.metadata().website();
@@ -353,7 +377,8 @@ QString LnfLogic::website() const
 
 void LnfLogic::setWebsite(const QString &website)
 {
-    if (LnfLogic::website() == website) {
+    if (LnfLogic::website() == website)
+    {
         return;
     }
 
@@ -365,7 +390,8 @@ void LnfLogic::setWebsite(const QString &website)
 
 QString LnfLogic::license() const
 {
-    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-License"))) {
+    if (m_tempMetadata.contains(QStringLiteral("X-KDE-PluginInfo-License")))
+    {
         return m_tempMetadata.value(QStringLiteral("X-KDE-PluginInfo-License"));
     }
     return m_package.metadata().license();
@@ -373,7 +399,8 @@ QString LnfLogic::license() const
 
 void LnfLogic::setLicense(const QString &license)
 {
-    if (LnfLogic::license() == license) {
+    if (LnfLogic::license() == license)
+    {
         return;
     }
 
@@ -390,7 +417,8 @@ bool LnfLogic::performLayoutDump() const
 
 void LnfLogic::setPerformLayoutDump(bool dump)
 {
-    if (m_performLayoutDump == dump) {
+    if (m_performLayoutDump == dump)
+    {
         return;
     }
 
@@ -407,7 +435,8 @@ bool LnfLogic::performDefaultsDump() const
 
 void LnfLogic::setPerformDefaultsDump(bool dump)
 {
-    if (m_performDefaultsDump == dump) {
+    if (m_performDefaultsDump == dump)
+    {
         return;
     }
 
@@ -422,11 +451,13 @@ bool LnfLogic::needsSave()
     return m_needsSave;
 }
 
+//won't need these as i dont need the thumbnails till line 484
 QString LnfLogic::thumbnailPath() const
 {
     //don't fallback
     QString path = m_package.filePath("previews", QStringLiteral("preview.png"));
-    if (path.contains(m_package.path())) {
+    if (path.contains(m_package.path()))
+    {
         return path;
     }
 
@@ -435,23 +466,27 @@ QString LnfLogic::thumbnailPath() const
 
 void LnfLogic::processThumbnail(const QString &path)
 {
-    if (path.isEmpty()) {
+    if (path.isEmpty())
+    {
         return;
     }
 
     QDir themeDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % m_themeName);
-    if (!themeDir.mkpath("contents/previews")) {
+    if (!themeDir.mkpath("contents/previews"))
+    {
         qWarning() << "Impossible to create the layouts directory in the look and feel package";
     }
 
     QFile imageFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % m_themeName % QLatin1String("/contents/previews/preview.png"));
-    if (!imageFile.open(QIODevice::WriteOnly)) {
+    if (!imageFile.open(QIODevice::WriteOnly))
+    {
         qWarning() << "Impossible to write to the thumbnail file";
         return;
     }
 
     QImage image(QUrl(path).path());
-    if (image.isNull()) {
+    if (image.isNull())
+    {
         qWarning() << "invalid image";
         return;
     }
@@ -462,13 +497,15 @@ void LnfLogic::processThumbnail(const QString &path)
 
     //copy the fullscreen preview
     QFile fullScreenImageFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % m_themeName % QLatin1String("/contents/previews/fullscreenpreview.jpg"));
-    if (!fullScreenImageFile.open(QIODevice::WriteOnly)) {
+    if (!fullScreenImageFile.open(QIODevice::WriteOnly))
+    {
         qWarning() << "Impossible to write to the thumbnail file";
         return;
     }
 
     QImage fullScreenImage(QUrl(path).path());
-    if (fullScreenImage.isNull()) {
+    if (fullScreenImage.isNull())
+    {
         qWarning() << "invalid image";
         return;
     }
@@ -482,7 +519,7 @@ void LnfLogic::processThumbnail(const QString &path)
 QString LnfLogic::openFile()
 {
     return QFileDialog::getOpenFileName(nullptr,
-    i18n("Open Image"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation), i18n("Image Files (*.png *.jpg *.bmp)"));
+                                        i18n("Open Image"), QStandardPaths::writableLocation(QStandardPaths::HomeLocation), i18n("Image Files (*.png *.jpg *.bmp)"));
 }
 
 #include "moc_lnflogic.cpp"

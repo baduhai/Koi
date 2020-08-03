@@ -23,7 +23,6 @@
 #include <QAbstractListModel>
 #include <kpackage/package.h>
 
-
 class LnfListModel;
 
 class LnfLogic : public QObject
@@ -50,16 +49,19 @@ class LnfLogic : public QObject
     Q_PROPERTY(bool needsSave READ needsSave NOTIFY needsSaveChanged)
 
 public:
-    enum ErrorLevel {
+    enum ErrorLevel
+    {
         Info,
         Error
     };
     Q_ENUMS(ErrorLevel)
 
-    explicit LnfLogic(QObject *parent = nullptr);
+    LnfLogic();
     ~LnfLogic() override;
 
     LnfListModel *lnfList();
+
+    bool themeExists(const QString &plugin);
 
     void setTheme(const QString &theme);
     QString theme() const;
