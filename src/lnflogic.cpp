@@ -208,7 +208,7 @@ void LnfLogic::save()
 
 LnfListModel *LnfLogic::lnfList()
 {
-    return m_lnfListModel;
+    return  m_lnfListModel;
 }
 
 QString LnfLogic::themeFolder() const

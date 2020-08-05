@@ -46,6 +46,7 @@ public:
     QString author;
     QString version;
     QString themeRoot;
+    
 };
 
 class LnfListModel : public QAbstractListModel
@@ -75,6 +76,8 @@ public:
         return rowCount();
     }
 
+    QList<ThemeInfo> getThemes();
+
     Q_INVOKABLE QVariantMap get(int index) const;
 
 Q_SIGNALS:
@@ -82,7 +85,6 @@ Q_SIGNALS:
 
 private:
     QHash<int, QByteArray> m_roleNames;
-
     QList<ThemeInfo> m_themes;
 };
 

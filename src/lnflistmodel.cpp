@@ -193,4 +193,7 @@ QModelIndex LnfListModel::indexOf(const QString &name) const
     return QModelIndex();
 }
 
+QList<ThemeInfo> LnfListModel::getThemes(){
+    return m_themes;
+}
 #include "moc_lnflistmodel.cpp"

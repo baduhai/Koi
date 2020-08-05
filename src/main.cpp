@@ -17,7 +17,7 @@ bool isAlreadyRunning(QString netName)
 
 void createDummyNetwork(QString netName)
 {
-    QLocalServer* server = new QLocalServer;
+    QLocalServer *server = new QLocalServer;
     server->setSocketOptions(QLocalServer::WorldAccessOption);
     server->listen(netName);
 }
@@ -34,15 +34,33 @@ int main(int argc, char *argv[])
         Utils utils;
         utils.initialiseSettings();
 
-        LnfLogic logic;
-
-        QApplication a(argc, argv);
-        MainWindow w;
-        if (utils.settings->value("start-hidden").toBool() == 0)
+        LnfLogic logic{};
+        LnfListModel *themeList = logic.lnfList();
+        if (themeList->themeExists("Koi-Light") == false)
         {
-            w.show();
+            logic.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
-        return a.exec();
-    }
-}
 
+        if (themeList->themeExists("Koi-Dark") == false)
+        {
+            logic.createNewTheme("Koi-Dark","Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
+    
+        }
+            /* QList<ThemeInfo> logicThemes = logic.lnfList()->getThemes();
+
+        for ( ThemeInfo temp  : logicThemes)
+        {
+            if(temp.name == "Koi-Light"){
+                 
+            }
+        }  */
+
+            QApplication a(argc, argv);
+            MainWindow w;
+            if (utils.settings->value("start-hidden").toBool() == 0)
+            {
+                w.show();
+            }
+            return a.exec();
+        }
+    }
