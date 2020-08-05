@@ -162,9 +162,11 @@ void Utils::useGlobalTheme(QString themeName)
 }
 void Utils::goLight()
 {
+    goLightKvantumStyle(); //this should come before useGlobaltheme for it to update on the fly 
     useGlobalTheme("Koi-Light");
     goLightGtk();
     goLightWall();
+    
     if (settings->value("notify").toBool())
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
@@ -172,6 +174,7 @@ void Utils::goLight()
 }
 void Utils::goDark()
 {
+    goDarkKvantumStyle();//this should come before useGlobaltheme for it to update on the fly 
     useGlobalTheme("Koi-Dark");
     goDarkGtk();
     goDarkWall();
@@ -188,12 +191,28 @@ void Utils::goLightGtk()
     }
 }
 void Utils::goDarkGtk()
+
 {
     if (settings->value("GTKTheme/enabled").toBool())
     {
         gtk.setGtk(settings->value("GTKTheme/dark").toString());
     }
 }
+void Utils::goLightKvantumStyle()
+{
+    if(settings->value("KvantumStyle/enabled").toBool())
+    {
+        kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/light").toString());
+    }
+}
+void Utils::goDarkKvantumStyle()
+{
+    if(settings->value("KvantumStyle/enabled").toBool())
+    {
+        kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/dark").toString());
+    }
+}
+
 void Utils::goLightWall()
 {
     if (settings->value("Wallpaper/enabled").toBool())

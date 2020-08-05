@@ -38,17 +38,20 @@ public:
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
-    //this would be used for global theme 
+    //this would be used for global theme
     void useGlobalTheme(QString type);
     void goLight();
     void goDark();
     void goLightGtk();
     void goDarkGtk();
+    void goLightKvantumStyle();
+    void goDarkKvantumStyle();
     void goLightWall();
     void goDarkWall();
 
 private:
     Gtk gtk;
+    KvantumStyle kvantumStyle;
     Wallpaper wallpaper;
     QProcess *useGlobalProcess;
     QDBusConnection *bus;
