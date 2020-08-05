@@ -153,9 +153,16 @@ QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
     return kvantumStyles;
 }
 // Manage switching themes functions
+void Utils::useGlobalTheme(QString themeName)
+{
+    useGlobalProcess = new QProcess;
+    QString command = "lookandfeeltool";
+    QStringList arguments = {"-a ", themeName};
+    useGlobalProcess->start(command, arguments);
+}
 void Utils::goLight()
 {
-    globaltheme.setGlobalTheme("Koi-Light");
+    useGlobalTheme("Koi-Light");
     goLightGtk();
     goLightWall();
     if (settings->value("notify").toBool())
@@ -165,7 +172,7 @@ void Utils::goLight()
 }
 void Utils::goDark()
 {
-    globaltheme.setGlobalTheme("Koi-Dark");
+    useGlobalTheme("Koi-Dark");
     goDarkGtk();
     goDarkWall();
     if (settings->value("notify").toBool())
