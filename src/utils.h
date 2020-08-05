@@ -7,6 +7,7 @@
 #include "wallpaper.h"
 #include "icons.h"
 #include "kvantumstyle.h"
+#include "useglobal.h"
 
 // Qt libs
 #include <QtGlobal>
@@ -38,29 +39,19 @@ public:
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
-
+    //this would be used for global theme 
+    void useTheme(QString type);
     void goLight();
     void goDark();
-    void goLightStyle();
-    void goDarkStyle();
-    void goLightColors();
-    void goDarkColors();
-    void goLightIcons();
-    void goDarkIcons();
     void goLightGtk();
     void goDarkGtk();
-    void goLightKvantumStyle();
-    void goDarkKvantumStyle();
     void goLightWall();
     void goDarkWall();
 
 private:
-    PlasmaStyle plasmastyle;
-    ColorScheme colorscheme;
-    Icons icons;
     Gtk gtk;
     Wallpaper wallpaper;
-    KvantumStyle kvantumStyle;
+    UseGlobal globaltheme;
 
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;

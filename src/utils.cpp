@@ -2,7 +2,6 @@
 
 Utils::Utils()
 {
-
 }
 
 // Global settings stuff
@@ -13,20 +12,19 @@ void Utils::initialiseSettings()
     settings = new QSettings(QDir::homePath() + "/.config/koiglobalrc", QSettings::IniFormat); // Setting config path and format
 }
 
-
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
     bus = new QDBusConnection(QDBusConnection::sessionBus());
     notifyInterface = new QDBusInterface("org.freedesktop.Notifications", "/org/freedesktop/Notifications", "org.freedesktop.Notifications", *bus);
-    QString app_name = "Koi"; // What program is the notification coming from?
-    uint replaces_id = 0; // Not sure what this is. Think it has something to do with pid.
-    QString app_icon; // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
+    QString app_name = "Koi";        // What program is the notification coming from?
+    uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
+    QString app_icon;                // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
     QString summary = notifySummary; // Title of notification.
-    QString body = notifyBody; // Notification body.
-    QStringList actions; // No idea how to use.
-    QVariantMap hints; // No idea how to use.
-    int timeout = timeoutms; // Notification timeout, there's no way to assume system has a default timeout unfortunately.
+    QString body = notifyBody;       // Notification body.
+    QStringList actions;             // No idea how to use.
+    QVariantMap hints;               // No idea how to use.
+    int timeout = timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
     notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
 void Utils::startupTimeCheck() // Check if switching is needed based on time.
@@ -76,7 +74,7 @@ QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 QStringList Utils::getColorSchemes(void) // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList()<<"*.colors");
+    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
     colorsLocalDir.setFilter(QDir::Files);
     colorsLocalDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
@@ -86,7 +84,7 @@ QStringList Utils::getColorSchemes(void) // Get all available color schemes
         colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
     }
     QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList()<<"*.colors");
+    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
     colorsSystemDir.setFilter(QDir::Files);
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
@@ -95,13 +93,13 @@ QStringList Utils::getColorSchemes(void) // Get all available color schemes
     {
         colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
     }
-    QStringList colorSchemesNames = colorSchemesSystemNames+ colorSchemesLocalNames;
+    QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
     return colorSchemesNames;
 }
 QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList()<<"*.colors");
+    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
     colorsLocalDir.setFilter(QDir::Files);
     colorsLocalDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
@@ -111,7 +109,7 @@ QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
         colorSchemesLocalPath.append(colorSchemesLocal.at(i).absoluteFilePath());
     }
     QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList()<<"*.colors");
+    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
     colorsSystemDir.setFilter(QDir::Files);
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
@@ -144,7 +142,7 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
     gtkThemes.removeFirst();
     return gtkThemes;
 }
-QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles 
+QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
 {
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
@@ -155,86 +153,24 @@ QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
     return kvantumStyles;
 }
 // Manage switching themes functions
-void Utils::goLight() {
-    goLightStyle();
-    goLightColors();
-    goLightIcons();
+void Utils::goLight()
+{
+    globaltheme.setGlobalTheme("Koi-Light");
     goLightGtk();
-    goLightKvantumStyle();
     goLightWall();
     if (settings->value("notify").toBool())
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
-
 }
 void Utils::goDark()
 {
-    goDarkStyle();
-    goDarkColors();
-    goDarkIcons();
+    globaltheme.setGlobalTheme("Koi-Dark");
     goDarkGtk();
-    goDarkKvantumStyle();
     goDarkWall();
     if (settings->value("notify").toBool())
     {
         notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
-    }
-}
-void Utils::goLightStyle()
-{
-    if (settings->value("PlasmaStyle/enabled").toBool())
-    {
-        if (settings->value("PlasmaStyle/light") == "breeze") // Breeze style is set differently from others
-        {
-            plasmastyle.setPlasmaStyleBreeze();
-        }
-        else
-        {
-            plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/light").toString());
-        }
-    }
-}
-void Utils::goDarkStyle()
-{
-    if (settings->value("PlasmaStyle/enabled").toBool())
-    {
-        if (settings->value("PlasmaStyle/dark") == "breeze") // Breeze style is set differently from others
-        {
-            plasmastyle.setPlasmaStyleBreeze();
-        }
-        else
-        {
-            plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/dark").toString());
-        }
-    }
-}
-void Utils::goLightColors()
-{
-    if (settings->value("ColorScheme/enabled").toBool())
-    {
-        colorscheme.setColorScheme(settings->value("ColorScheme/light").toString());
-    }
-}
-void Utils::goDarkColors()
-{
-    if (settings->value("ColorScheme/enabled").toBool())
-    {
-        colorscheme.setColorScheme(settings->value("ColorScheme/dark").toString());
-    }
-}
-void Utils::goLightIcons()
-{
-    if (settings->value("IconTheme/enabled").toBool())
-    {
-        icons.setIcons(settings->value("IconTheme/light").toString());
-    }
-}
-void Utils::goDarkIcons()
-{
-    if (settings->value("IconTheme/enabled").toBool())
-    {
-        icons.setIcons(settings->value("IconTheme/dark").toString());
     }
 }
 void Utils::goLightGtk()
@@ -251,25 +187,12 @@ void Utils::goDarkGtk()
         gtk.setGtk(settings->value("GTKTheme/dark").toString());
     }
 }
-void Utils::goLightKvantumStyle()
-{
-    if(settings->value("KvantumStyle/enabled").toBool())
-    {
-        kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/light").toString());
-    }
-}
-void Utils::goDarkKvantumStyle()
-{
-    if(settings->value("KvantumStyle/enabled").toBool())
-    {
-        kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/dark").toString());
-    }
-}
 void Utils::goLightWall()
 {
     if (settings->value("Wallpaper/enabled").toBool())
     {
-        if (!settings->value("Wallpaper/light").isNull()){
+        if (!settings->value("Wallpaper/light").isNull())
+        {
             wallpaper.setWallpaper(settings->value("Wallpaper/light").toString());
         }
         else
