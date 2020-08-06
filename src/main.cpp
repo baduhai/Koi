@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
 
         LnfLogic logic{};
         LnfListModel *themeList = logic.lnfList();
-        if (themeList->themeExists("Koi-Light") == false)
+        if (!(themeList->themeExists("Koi-Light")))
         {
             logic.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
 
-        if (themeList->themeExists("Koi-Dark") == false)
+        if (!(themeList->themeExists("Koi-Dark")))
         {
             logic.createNewTheme("Koi-Dark","Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
     

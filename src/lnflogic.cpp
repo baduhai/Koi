@@ -123,6 +123,7 @@ void LnfLogic::dumpPlasmaLayout(const QString &pluginName)
 
 void LnfLogic::dumpDefaultsConfigFile(const QString &pluginName)
 {
+    //TODO add icons too the list
     //write the defaults file, read from kde config files and save to the defaultsrc
     KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
 
@@ -132,6 +133,13 @@ void LnfLogic::dumpDefaultsConfigFile(const QString &pluginName)
     //widget style
     KConfigGroup systemCG(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "KDE");
     defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry("widgetStyle", QStringLiteral("breeze")));
+
+    //icon style
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "Icons");
+    defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry("Theme", QStringLiteral("breeze")));
+
 
     //color scheme (TODO: create an in-place color scheme?)
     defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
@@ -170,6 +178,85 @@ void LnfLogic::dumpDefaultsConfigFile(const QString &pluginName)
     emit messageRequested(ErrorLevel::Info, i18n("Defaults config file saved from your current setup"));
 }
 
+
+void LnfLogic::writeToThemeConfigFile(const QString &pluginName, const QString &themeType){
+    QString koiPath = QDir::homePath() + "/.config/koirc";
+    //TODO add icons too the list
+    //write the defaults file, read from kde config files and save to the defaultsrc
+    KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
+
+    KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
+
+    //widget style
+    KConfigGroup systemCG(KSharedConfig::openConfig(koiPath), "KvantumStyle");
+    defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry(themeType, QStringLiteral("breeze")));
+
+    //icon style
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "IconTheme");
+    defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry(themeType, QStringLiteral("breeze")));
+
+
+    //color scheme (TODO: create an in-place color scheme?)
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "ColorScheme");
+    defaultsConfigGroup.writeEntry("ColorScheme", systemCG.readEntry(themeType, QStringLiteral("Breeze")));
+
+    //plasma theme
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "plasmarc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Theme");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "PlasmaStyle");
+    defaultsConfigGroup.writeEntry("name", systemCG.readEntry(themeType, QStringLiteral("default")));
+
+    //cursor theme
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kcminputrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Mouse");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "Mouse");
+    defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry(themeType, QStringLiteral("breeze_cursors")));
+
+
+    emit messageRequested(ErrorLevel::Info, i18n("Defaults config file saved from your current setup"));
+}
+
+    /* TODO  will add cursor,window-decorations later as i just want to add the already available optons for now
+     * This method is used for just writing settings from the config file to the
+     * theme defaults file ee */
+//void LnfLogic::writeToThemeConfigFile(const QString &pluginName,const QString &themeType,const QString &widgetStyle,const QString& color,const QString& icon,const QString& style){
+//    //the default file in theme look-and-feel folder
+//    //TODO remember to use koiglobalrc later
+//    //this creates the double header for the group
+//    KConfig themeDefaults(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
+//    KConfigGroup themeDefaultCG(&themeDefaults, "kdeglobals");
+//    themeDefaultCG = KConfigGroup(&themeDefaultCG , "KDE");
+//
+//    //this stores all the entries in a group
+//    //for widgetstyles like kvantum /oxygen etc .
+//    KConfigGroup entryCG(KSharedConfig::openConfig(configFile),"WidgetStyle");
+//    themeDefaultCG.writeEntry("widgetStyle",entryCG.readEntry(themeType,  QStringLiteral("Breeze")));
+//
+//    //icon style
+//   themeDefaultCG = KConfigGroup(&themeDefaults, "kdeglobals");
+//    themeDefaultCG = KConfigGroup(&themeDefaultCG, "Icons");
+//   entryCG = KConfigGroup(KSharedConfig::openConfig(configFile),"IconTheme");
+//    themeDefaultCG.writeEntry("Theme",entryCG.readEntry(icon,QStringLiteral("breeze")));
+//
+//    //TODO need to use only the name of the colors
+//    //colors
+//   themeDefaultCG = KConfigGroup(&themeDefaults, "kdeglobals");
+//    themeDefaultCG = KConfigGroup(&themeDefaultCG, "General");
+//   entryCG = KConfigGroup(KSharedConfig::openConfig(configFile),"ColorScheme");
+//    themeDefaultCG.writeEntry("ColorScheme",entryCG.readEntry(color,QStringLiteral("Breeze")));
+//
+//    //plasmastyle
+//    themeDefaultCG = KConfigGroup(&themeDefaults, "plasmarc");
+//    themeDefaultCG = KConfigGroup(&themeDefaultCG, "Theme");
+//    entryCG = KConfigGroup(KSharedConfig::openConfig(configFile),"PlasmaStyle");
+//    themeDefaultCG.writeEntry("name",entryCG.readEntry(style,QStringLiteral("Default")));
+//
+//}
 /* Use when asking the user to use the current style for the theme (light, dark */
 void LnfLogic::dumpCurrentPlasmaLayout()
 {

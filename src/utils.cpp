@@ -9,7 +9,8 @@ void Utils::initialiseSettings()
 {
     //fdfdfdf
     //settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
-    settings = new QSettings(QDir::homePath() + "/.config/koiglobalrc", QSettings::IniFormat); // Setting config path and format
+    //TODO switch to koiglobalrc because a file is already using koirc (Koirc)
+    settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 }
 
 // Miscelaneous functions
@@ -60,7 +61,7 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 }
 
 // Get stuff
-QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
+QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
     QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
     QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
@@ -71,7 +72,7 @@ QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
     plasmaStyles.append("breeze");
     return plasmaStyles;
 }
-QStringList Utils::getColorSchemes(void) // Get all available color schemes
+QStringList Utils::getColorSchemes() // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
     colorsLocalDir.setNameFilters(QStringList() << "*.colors");
@@ -96,7 +97,7 @@ QStringList Utils::getColorSchemes(void) // Get all available color schemes
     QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
     return colorSchemesNames;
 }
-QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
+QStringList Utils::getColorSchemesPath() // Get all available color schemes
 {
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
     colorsLocalDir.setNameFilters(QStringList() << "*.colors");
@@ -121,7 +122,7 @@ QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
     QStringList colorSchemesPath = colorSchemesSystemPath + colorSchemesLocalPath;
     return colorSchemesPath;
 }
-QStringList Utils::getIconThemes(void) // Get all available icont themes
+QStringList Utils::getIconThemes() // Get all available icont themes
 {
     QDir iconsOldLocalDir(QDir::homePath() + "/.icons");
     QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
@@ -132,7 +133,7 @@ QStringList Utils::getIconThemes(void) // Get all available icont themes
     iconThemes.removeFirst();
     return iconThemes;
 }
-QStringList Utils::getGtkThemes(void) // Get all available gtk themes
+QStringList Utils::getGtkThemes() // Get all available gtk themes
 {
     QDir gtkLocalDir(QDir::homePath() + "/.themes");
     QDir gtkSystemDir("/usr/share/themes");
@@ -142,7 +143,7 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
     gtkThemes.removeFirst();
     return gtkThemes;
 }
-QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
+QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 {
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
@@ -157,7 +158,7 @@ void Utils::useGlobalTheme(QString themeName)
 {
     useGlobalProcess = new QProcess;
     QString command = "lookandfeeltool";
-    QStringList arguments = {"-a ", themeName};
+    QStringList arguments = {"-a", std::move(themeName)};
     useGlobalProcess->start(command, arguments);
 }
 void Utils::goLight()

@@ -25,16 +25,15 @@ class Utils : public QObject
 public:
     Utils();
 
-    QSettings *settings;
+    QSettings *settings{};
     void initialiseSettings();
 
-    QStringList getPlasmaStyles(void);
-    QStringList getColorSchemes(void);
-    QStringList getColorSchemesPath(void);
-    QStringList getIconThemes(void);
-    QStringList getCursorThemes(void);
-    QStringList getGtkThemes(void);
-    QStringList getKvantumStyles(void);
+    QStringList getPlasmaStyles();
+    QStringList getColorSchemes();
+    QStringList getColorSchemesPath();
+    QStringList getIconThemes();
+    QStringList getGtkThemes();
+    QStringList getKvantumStyles();
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
@@ -53,9 +52,9 @@ private:
     Gtk gtk;
     KvantumStyle kvantumStyle;
     Wallpaper wallpaper;
-    QProcess *useGlobalProcess;
-    QDBusConnection *bus;
-    QDBusInterface *notifyInterface;
+    QProcess *useGlobalProcess{};
+    QDBusConnection *bus{};
+    QDBusInterface *notifyInterface{};
 };
 
 #endif // UTILS_H

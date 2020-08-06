@@ -298,6 +298,12 @@ void MainWindow::savePrefs()
     utils.settings->setValue("Wallpaper/light", lightWall);
     utils.settings->setValue("Wallpaper/dark", darkWall);
     utils.settings->sync();
+
+    //this would write to the actual lookand feel folder of the theme
+    //TODO implement implement widgetstyle
+    LnfLogic logic{};
+    logic.writeToThemeConfigFile("Koi-Light", "light");
+    logic.writeToThemeConfigFile("Koi-Dark", "dark");
 }
 void MainWindow::refreshDirs() // Refresh function to find new themes
 {
@@ -605,13 +611,11 @@ void MainWindow::on_darkDropStyle_currentIndexChanged(const QString &darkStyleUN
 }
 void MainWindow::on_lightDropColor_currentIndexChanged(const QString &lightColorUN) // Set light color scheme
 {
-    QStringList colorSchemesPaths = utils.getColorSchemesPath();
-    lightColor = colorSchemesPaths.at(ui->lightDropColor->currentIndex());
+    lightColor = lightColorUN;
 }
 void MainWindow::on_darkDropColor_currentIndexChanged(const QString &darkColorUN) // Set dark color scheme
 {
-    QStringList colorSchemesPaths = utils.getColorSchemesPath();
-    darkColor = colorSchemesPaths.at(ui->darkDropColor->currentIndex());
+    darkColor = darkColorUN;
 }
 void MainWindow::on_lightDropIcon_currentIndexChanged(const QString &lightIconUN) // Set light icon theme
 {

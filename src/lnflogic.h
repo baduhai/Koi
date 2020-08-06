@@ -102,11 +102,12 @@ public:
 
     bool needsSave();
 
+    //dont need q_invokable as it is for qml
     Q_INVOKABLE void save();
     Q_INVOKABLE void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author, const QString &email, const QString &license, const QString &website);
     Q_INVOKABLE void processThumbnail(const QString &path);
     Q_INVOKABLE QString openFile();
-
+    void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);
     void dumpCurrentPlasmaLayout();
     void dumpDefaultsConfigFile(const QString &pluginName);
 
@@ -122,8 +123,8 @@ Q_SIGNALS:
     void websiteChanged();
     void licenseChanged();
     void performLayoutDumpChanged();
-    void performDefaultsDumpChanged();
 
+    void performDefaultsDumpChanged();
 private:
     QString m_themeName;
     KPackage::Package m_package;
@@ -131,6 +132,8 @@ private:
     QHash<QString, QString> m_tempMetadata;
     bool m_performLayoutDump : 1;
     bool m_performDefaultsDump : 1;
+
+
     bool m_needsSave;
 };
 
