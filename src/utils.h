@@ -31,10 +31,11 @@ public:
     QStringList getPlasmaStyles();
     QStringList getColorSchemes();
     QStringList getColorSchemesPath();
+    QStringList getCursorThemes();
     QStringList getIconThemes();
     QStringList getGtkThemes();
-    QStringList getKvantumStyles();
 
+    QStringList getKvantumStyles();
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
     //this would be used for global theme
@@ -46,17 +47,16 @@ public:
     void goLightKvantumStyle();
     void goDarkKvantumStyle();
     void goLightWall();
-    void goDarkWall();
 
+    void goDarkWall();
 private:
     Gtk gtk;
     KvantumStyle kvantumStyle;
     Wallpaper wallpaper;
     QProcess *useGlobalProcess{};
     QDBusConnection *bus{};
-    QDBusInterface *notifyInterface{};
 
-    QStringList getCursorThemes();
+    QDBusInterface *notifyInterface{};
 };
 
 #endif // UTILS_H

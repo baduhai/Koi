@@ -45,45 +45,69 @@ private slots:
     void scheduleLight();
     void scheduleDark();
 
+    //Main Page
+
     void on_prefsBtn_clicked();
-    void on_backBtn_clicked();
-    void on_advancedPageBtn_clicked();
-    void on_advancedPageBackBtn_clicked();
-    void on_advancedPageHomeBtn_clicked();
-    void on_applyBtn_clicked();
     void on_lightBtn_clicked();
-
     void on_darkBtn_clicked();
-    //void on_refreshBtn_clicked();
-    void on_styleCheckBox_stateChanged(int arg1);
-    void on_colorCheckBox_stateChanged(int arg1);
-    void on_iconCheckBox_stateChanged(int arg1);
-    void on_gtkCheckBox_stateChanged(int arg1);
-    void on_kvantumStyleCheckBox_stateChanged(int arg1);
-    void on_wallCheckBox_stateChanged(int arg1);
 
-    void on_autoCheckBox_stateChanged(int arg1);
-    void on_scheduleRadioBtn_toggled(bool checked);
-    void on_actionQuit_triggered();
-    void on_actionPrefs_triggered();
-    void on_actionAbout_triggered();
+    //Settings page 1
 
-    void on_actionHide_triggered();
-    //void on_actionRefresh_triggered();
-    void on_lightWallBtn_clicked();
-    void on_darkWallBtn_clicked();
+    //Plasma Buttons
     void on_lightDropStyle_currentIndexChanged(const QString &arg1);
     void on_darkDropStyle_currentIndexChanged(const QString &arg1);
+    void on_styleCheckBox_stateChanged(int arg1);
+
+    //Color Scheme Buttons
+    void on_colorCheckBox_stateChanged(int arg1);
     void on_lightDropColor_currentIndexChanged(const QString &arg1);
     void on_darkDropColor_currentIndexChanged(const QString &arg1);
-    void on_lightDropGtk_currentIndexChanged(const QString &arg1);
-    void on_darkDropGtk_currentIndexChanged(const QString &arg1);
+
+    //Icon Scheme Buttons
     void on_lightDropIcon_currentIndexChanged(const QString &arg1);
     void on_darkDropIcon_currentIndexChanged(const QString &arg1);
+    void on_iconCheckBox_stateChanged(int arg1);
+
+    //Gtk theme Buttons
+
+    void on_gtkCheckBox_stateChanged(int arg1);
+    void on_lightDropGtk_currentIndexChanged(const QString &arg1);
+    void on_darkDropGtk_currentIndexChanged(const QString &arg1);
+
+    //Widget theme Buttons
+    void on_lightDropCursorStyle_currentIndexChanged(const QString &lightCursorUN);
+    void on_darkDropCursorStyle_currentIndexChanged(const QString &LightCursorUN);
+
+    //WallPaper Buttons
+    void on_lightWallBtn_clicked();
+
+    void on_darkWallBtn_clicked();
+
+    void on_backBtn_clicked();
+    //void on_actionRefresh_triggered();
+    void on_applyBtn_clicked();
+    void on_kvantumStyleCheckBox_stateChanged(int arg1);
+    void on_advancedPageBtn_clicked();
     void on_lightDropKvantumStyle_currentIndexChanged(const QString &arg1);
     void on_darkDropKvantumStyle_currentIndexChanged(const QString &arg1);
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
+
+    void on_wallCheckBox_stateChanged(int arg1);
+    //settings page 2
+    void on_advancedPageHomeBtn_clicked();
+
+    void on_advancedPageBackBtn_clicked();
+    void on_autoCheckBox_stateChanged(int arg1);
+
+
+    void on_scheduleRadioBtn_toggled(bool checked);
+    //Global Menu Settings
+    void on_actionQuit_triggered();
+    void on_actionPrefs_triggered();
+
+    void on_actionAbout_triggered();
+    void on_actionHide_triggered();
 
     void on_hiddenCheckBox_stateChanged(int arg1);
 
@@ -108,7 +132,8 @@ private:
     QString lightKvantumStyle;
     QString darkKvantumStyle;
     QString lightTime;
-
+    QString lightCursor;
+    QString darkCursor;
     QString darkTime;
     Utils utils;
 protected:

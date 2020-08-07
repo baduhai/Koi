@@ -297,13 +297,17 @@ void MainWindow::savePrefs()
     // Wallpaper saving prefs
     utils.settings->setValue("Wallpaper/light", lightWall);
     utils.settings->setValue("Wallpaper/dark", darkWall);
-    utils.settings->sync();
+
+    //Cursor Style Theme saving Prefs
+    utils.settings->setValue(QStringLiteral("Mouse/light"), lightCursor);
+    utils.settings->setValue(QStringLiteral("Mouse/dark"), darkCursor);
 
     //this would write to the actual lookand feel folder of the theme
     //TODO implement implement widgetstyle
     LnfLogic logic{};
     logic.writeToThemeConfigFile("Koi-Light", "light");
     logic.writeToThemeConfigFile("Koi-Dark", "dark");
+    utils.settings->sync();
 }
 void MainWindow::refreshDirs() // Refresh function to find new themes
 {
@@ -337,6 +341,13 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
     ui->darkDropKvantumStyle->clear();
     ui->lightDropKvantumStyle->addItems(kvantumStyle); //adds the new loaded kvantum styles
     ui->darkDropKvantumStyle->addItems(kvantumStyle);
+
+    //cursor themes.
+    QStringList cursorTheme = utils.getCursorThemes() ;
+    ui->lightDropCursorStyle->clear();
+    ui->darkDropCursorStyle->clear();
+    ui->lightDropCursorStyle->addItems(cursorTheme);
+    ui->darkDropCursorStyle->addItems(cursorTheme);
     loadPrefs();
 }
 void MainWindow::toggleVisibility()
@@ -542,6 +553,17 @@ void MainWindow::on_darkBtn_clicked()
 }*/
 
 // Editing options
+
+//2nd settings page
+
+//CursorStyle
+void MainWindow::on_lightDropCursorStyle_currentIndexChanged(const QString &lightCursorUN){
+    lightCursor = lightCursorUN;
+}
+void MainWindow::on_darkDropCursorStyle_currentIndexChanged(const QString &darkCursorUN) {
+    darkCursor = darkCursorUN;
+}
+
 void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style checkbox logic
 {
     if (ui->styleCheckBox->checkState() == 0)
