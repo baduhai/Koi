@@ -47,26 +47,29 @@ private slots:
 
     void on_prefsBtn_clicked();
     void on_backBtn_clicked();
+    void on_advancedPageBtn_clicked();
+    void on_advancedPageBackBtn_clicked();
+    void on_advancedPageHomeBtn_clicked();
     void on_applyBtn_clicked();
     void on_lightBtn_clicked();
+
     void on_darkBtn_clicked();
     //void on_refreshBtn_clicked();
-
     void on_styleCheckBox_stateChanged(int arg1);
     void on_colorCheckBox_stateChanged(int arg1);
     void on_iconCheckBox_stateChanged(int arg1);
     void on_gtkCheckBox_stateChanged(int arg1);
     void on_kvantumStyleCheckBox_stateChanged(int arg1);
     void on_wallCheckBox_stateChanged(int arg1);
+
     void on_autoCheckBox_stateChanged(int arg1);
     void on_scheduleRadioBtn_toggled(bool checked);
-
     void on_actionQuit_triggered();
     void on_actionPrefs_triggered();
     void on_actionAbout_triggered();
+
     void on_actionHide_triggered();
     //void on_actionRefresh_triggered();
-
     void on_lightWallBtn_clicked();
     void on_darkWallBtn_clicked();
     void on_lightDropStyle_currentIndexChanged(const QString &arg1);
@@ -81,11 +84,11 @@ private slots:
     void on_darkDropKvantumStyle_currentIndexChanged(const QString &arg1);
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
+
     void on_hiddenCheckBox_stateChanged(int arg1);
+
     void on_notifyCheckBox_stateChanged(int arg1);
-
     void on_actionRestart_triggered();
-
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *trayIcon;
@@ -105,9 +108,9 @@ private:
     QString lightKvantumStyle;
     QString darkKvantumStyle;
     QString lightTime;
+
     QString darkTime;
     Utils utils;
-
 protected:
 };
 #endif // MAINWINDOW_H

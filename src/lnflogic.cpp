@@ -180,7 +180,7 @@ void LnfLogic::dumpDefaultsConfigFile(const QString &pluginName)
 
 
 void LnfLogic::writeToThemeConfigFile(const QString &pluginName, const QString &themeType){
-    QString koiPath = QDir::homePath() + "/.config/koirc";
+    QString koiPath = QDir::homePath() + QStringLiteral( "/.config/koirc");
     //TODO add icons too the list
     //write the defaults file, read from kde config files and save to the defaultsrc
     KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");

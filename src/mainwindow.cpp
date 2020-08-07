@@ -514,6 +514,15 @@ void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must 
         }
     }
 }
+void MainWindow::on_advancedPageBtn_clicked(){
+    ui->mainStack->setCurrentIndex(2);
+}
+void MainWindow::on_advancedPageBackBtn_clicked(){
+    ui->mainStack->setCurrentIndex(1);
+}
+void MainWindow::on_advancedPageHomeBtn_clicked() {
+    ui->mainStack->setCurrentIndex(0);
+}
 void MainWindow::on_applyBtn_clicked()
 {
     savePrefs();

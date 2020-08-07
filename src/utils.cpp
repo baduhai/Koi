@@ -80,9 +80,9 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
     colorsLocalDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
     QStringList colorSchemesLocalNames;
-    for (int i = 0; i < colorSchemesLocal.size(); i++)
+    for (const auto & color : colorSchemesLocal)
     {
-        colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
+        colorSchemesLocalNames.append(color.baseName());
     }
     QDir colorsSystemDir("/usr/share/color-schemes");
     colorsSystemDir.setNameFilters(QStringList() << "*.colors");
@@ -115,15 +115,16 @@ QStringList Utils::getColorSchemesPath() // Get all available color schemes
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
     QStringList colorSchemesSystemPath;
-    for (int i = 0; i < colorSchemesSystem.size(); i++)
+    for (const auto & colorSchemes : colorSchemesSystem)
     {
-        colorSchemesSystemPath.append(colorSchemesSystem.at(i).absoluteFilePath());
+        colorSchemesSystemPath.append(colorSchemes.absoluteFilePath());
     }
     QStringList colorSchemesPath = colorSchemesSystemPath + colorSchemesLocalPath;
     return colorSchemesPath;
 }
-QStringList Utils::getIconThemes() // Get all available icont themes
+QStringList Utils::getIconThemes() // Get all available icon themes
 {
+    //TODO .icons is used for cursors not the icons
     QDir iconsOldLocalDir(QDir::homePath() + "/.icons");
     QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
     QDir iconsSystemDir("/usr/share/icons");
@@ -133,6 +134,26 @@ QStringList Utils::getIconThemes() // Get all available icont themes
     iconThemes.removeFirst();
     return iconThemes;
 }
+QStringList Utils::getCursorThemes() {
+    QDir cursorOldLocalParentDir(QDir::homePath() + QStringLiteral("/.local/share/icons/"));
+    QDir cursorLocalParentDir(QDir::homePath() + QStringLiteral("/.icons"));
+    QDir cursorSystemParentDir(QStringLiteral("/usr/share/icons"));
+    QFileInfoList parentDir(cursorOldLocalParentDir.entryInfoList(QDir::Dirs));
+    parentDir.append(cursorSystemParentDir.entryInfoList(QDir::Dirs| QDir::NoDotAndDotDot));
+    QStringList cursorThemes;
+    //oldlocal and system
+    for(QFileInfo &info : parentDir){
+        QDir filepath (info.absoluteFilePath() + QStringLiteral("/cursors")) ;
+        if(filepath.exists()){
+            cursorThemes.append(info.fileName());
+        }
+    }
+    //local cursors
+    cursorThemes.append(cursorLocalParentDir.entryList(QDir::Dirs| QDir::NoDotAndDotDot));
+    return cursorThemes;
+
+}
+
 QStringList Utils::getGtkThemes() // Get all available gtk themes
 {
     QDir gtkLocalDir(QDir::homePath() + "/.themes");
@@ -157,7 +178,7 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 void Utils::useGlobalTheme(QString themeName)
 {
     useGlobalProcess = new QProcess;
-    QString command = "lookandfeeltool";
+    QString command = QStringLiteral("lookandfeeltool");
     QStringList arguments = {"-a", std::move(themeName)};
     useGlobalProcess->start(command, arguments);
 }

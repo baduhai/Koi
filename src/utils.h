@@ -55,6 +55,8 @@ private:
     QProcess *useGlobalProcess{};
     QDBusConnection *bus{};
     QDBusInterface *notifyInterface{};
+
+    QStringList getCursorThemes();
 };
 
 #endif // UTILS_H

@@ -163,21 +163,6 @@ QVariant LnfListModel::data(const QModelIndex &index, int role) const
             return QVariant();
     }
 }
-// would not use this 
-QVariantMap LnfListModel::get(int row) const
-{
-    QVariantMap item;
-
-    QModelIndex idx = index(row, 0);
-
-    item["display"] = data(idx, Qt::DisplayRole);
-    item["packageNameRole"] = data(idx, PackageNameRole);
-    item["packageDescriptionRole"] = data(idx, PackageDescriptionRole);
-    item["packageAuthorRole"] = data(idx, PackageAuthorRole);
-    item["packageVersionRole"] = data(idx, PackageVersionRole);
-
-    return item;
-}
 
 QModelIndex LnfListModel::indexOf(const QString &name) const
 {
@@ -193,7 +178,4 @@ QModelIndex LnfListModel::indexOf(const QString &name) const
     return QModelIndex();
 }
 
-QList<ThemeInfo> LnfListModel::getThemes(){
-    return m_themes;
-}
 #include "moc_lnflistmodel.cpp"

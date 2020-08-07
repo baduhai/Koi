@@ -76,9 +76,6 @@ public:
         return rowCount();
     }
 
-    QList<ThemeInfo> getThemes();
-
-    Q_INVOKABLE QVariantMap get(int index) const;
 
 Q_SIGNALS:
     void countChanged();

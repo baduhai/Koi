@@ -14,15 +14,18 @@
    <string>Koi</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources/resources.qrc">
+   <iconset>
     <normaloff>:/resources/icons/koi.svg</normaloff>:/resources/icons/koi.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="KMessageWidget" name="resMsg"/>
+    </item>
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -194,75 +197,6 @@
       </widget>
       <widget class="QWidget" name="settingsPage">
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QCheckBox" name="notifyCheckBox">
-            <property name="toolTip">
-             <string>If this option is enabled, Koi will notify you when themes change.</string>
-            </property>
-            <property name="text">
-             <string>Enable Notifications</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="backBtn">
-            <property name="text">
-             <string>Back</string>
-            </property>
-            <property name="icon">
-             <iconset theme="draw-arrow-back">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="applyBtn">
-            <property name="text">
-             <string>Save</string>
-            </property>
-            <property name="icon">
-             <iconset theme="stock_save">
-              <normaloff>.</normaloff>.</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
         <item row="1" column="0">
          <widget class="QScrollArea" name="scrollArea">
           <property name="widgetResizable">
@@ -272,7 +206,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-129</y>
+             <y>-228</y>
              <width>401</width>
              <height>626</height>
             </rect>
@@ -496,6 +430,51 @@
               </item>
              </layout>
             </item>
+            <item row="5" column="0" colspan="2">
+             <layout class="QVBoxLayout" name="WidgetStyle">
+              <item>
+               <widget class="QCheckBox" name="widgetStyleCheckBox">
+                <property name="text">
+                 <string>Widget Style</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QLabel" name="lightWidgetStyle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Light:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="darkWidgetStyle">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>Dark:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <item>
+                 <widget class="QComboBox" name="lightDropWidgetStyle"/>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="darkDropWidgetStyle"/>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
             <item row="6" column="0" colspan="2">
              <layout class="QVBoxLayout" name="wallpaper">
               <item>
@@ -567,61 +546,386 @@
               </item>
              </layout>
             </item>
-            <item row="5" column="0" colspan="2">
-             <layout class="QVBoxLayout" name="kvantumStyle">
-              <item>
-               <widget class="QCheckBox" name="kvantumStyleCheckBox">
-                <property name="text">
-                 <string>Kvantum Style</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_10">
-                <item>
-                 <widget class="QLabel" name="lightKvantumStyle">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Light:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="darkKvantumStyle">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
-                  <property name="text">
-                   <string>Dark:</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_15">
-                <item>
-                 <widget class="QComboBox" name="lightDropKvantumStyle"/>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="darkDropKvantumStyle"/>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
            </layout>
           </widget>
          </widget>
         </item>
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QCheckBox" name="notifyCheckBox">
+            <property name="toolTip">
+             <string>If this option is enabled, Koi will notify you when themes change.</string>
+            </property>
+            <property name="text">
+             <string>Enable Notifications</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="backBtn">
+            <property name="text">
+             <string>Back</string>
+            </property>
+            <property name="icon">
+             <iconset theme="draw-arrow-back">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="advancedPageBtn">
+            <property name="text">
+             <string>Advanced</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="applyBtn">
+            <property name="text">
+             <string>Save</string>
+            </property>
+            <property name="icon">
+             <iconset theme="stock_save">
+              <normaloff>.</normaloff>.</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="AdvancedPage">
+       <property name="minimumSize">
+        <size>
+         <width>438</width>
+         <height>0</height>
+        </size>
+       </property>
+       <widget class="QWidget" name="horizontalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>431</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QPushButton" name="advancedPageHomeBtn">
+           <property name="text">
+            <string>Home</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="spacer_99">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="advancedPageBackBtn">
+           <property name="text">
+            <string>Back</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QScrollArea" name="scrollArea_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>60</y>
+          <width>431</width>
+          <height>441</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>427</width>
+           <height>437</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0" colspan="2">
+           <layout class="QVBoxLayout" name="kvantumStyle">
+            <item>
+             <widget class="QCheckBox" name="kvantumStyleCheckBox">
+              <property name="text">
+               <string>Kvantum Style</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <spacer name="horizontalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_16">
+              <item>
+               <widget class="QLabel" name="lightKvantumStyle">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Light:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="darkKvantumStyle">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Dark:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QComboBox" name="lightDropKvantumStyle"/>
+              </item>
+              <item>
+               <widget class="QComboBox" name="darkDropKvantumStyle"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <layout class="QVBoxLayout" name="cursorStyle">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <spacer name="horizontalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="CursorStyleLabel">
+                <property name="text">
+                 <string>Cursors</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_8">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_21">
+              <item>
+               <widget class="QLabel" name="lightCursorStyle">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Light:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="darkCursorStyle">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Dark:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_22">
+              <item>
+               <widget class="QComboBox" name="lightDropCursorStyle"/>
+              </item>
+              <item>
+               <widget class="QComboBox" name="darkDropCursorStyle"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <layout class="QVBoxLayout" name="cursorStyle_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_26">
+              <item>
+               <spacer name="horizontalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="CursorStyleLabel_3">
+                <property name="text">
+                 <string>Cursors</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_12">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_27">
+              <item>
+               <widget class="QLabel" name="lightCursorStyle_3">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Light:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="darkCursorStyle_3">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Dark:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_28">
+              <item>
+               <widget class="QComboBox" name="lightDropCursorStyle_3"/>
+              </item>
+              <item>
+               <widget class="QComboBox" name="darkDropCursorStyle_3"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </widget>
      </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="KMessageWidget" name="resMsg"/>
     </item>
    </layout>
   </widget>
@@ -730,7 +1034,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resources/resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>
