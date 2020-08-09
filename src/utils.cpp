@@ -1,3 +1,4 @@
+
 #include "utils.h"
 
 Utils::Utils()
@@ -80,7 +81,8 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
     colorsLocalDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
     QStringList colorSchemesLocalNames;
-    for (const auto & color : colorSchemesLocal)
+    //TODO remember to ask about qasconst in qt reddit group
+    for (const auto & color : qAsConst(colorSchemesLocal))
     {
         colorSchemesLocalNames.append(color.baseName());
     }
@@ -174,6 +176,12 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
     kvantumStyles.removeFirst();
     return kvantumStyles;
 }
+QStringList Utils::getWidgetStyles(){
+    //this literally took me 2 hrs to find.
+    QStringList widgetStyles = QStyleFactory::keys();
+    return  widgetStyles;
+}
+
 // Manage switching themes functions
 void Utils::useGlobalTheme(QString themeName)
 {

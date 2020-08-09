@@ -17,6 +17,7 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QTest>
+#include <QtWidgets/QStyleFactory>
 
 class Utils : public QObject
 {
@@ -34,6 +35,7 @@ public:
     QStringList getCursorThemes();
     QStringList getIconThemes();
     QStringList getGtkThemes();
+    QStringList getWidgetStyles();
 
     QStringList getKvantumStyles();
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);

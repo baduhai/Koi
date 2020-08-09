@@ -74,10 +74,12 @@ private slots:
     void on_lightDropGtk_currentIndexChanged(const QString &arg1);
     void on_darkDropGtk_currentIndexChanged(const QString &arg1);
 
-    //Widget theme Buttons
-    void on_lightDropCursorStyle_currentIndexChanged(const QString &lightCursorUN);
-    void on_darkDropCursorStyle_currentIndexChanged(const QString &LightCursorUN);
+    //Cursor theme Buttons
+    void on_lightDropCursor_currentIndexChanged(const QString &lightCursorUN);
+    void on_darkDropCursor_currentIndexChanged(const QString &LightCursorUN);
 
+    void on_lightDropWidget_currentIndexChanged(const QString&lightWidgetUN);
+    void on_darkDropWidget_currentIndexChanged(const QString &darkWidgetUN);
     //WallPaper Buttons
     void on_lightWallBtn_clicked();
 
@@ -135,6 +137,8 @@ private:
     QString lightCursor;
     QString darkCursor;
     QString darkTime;
+    QString lightWidget;
+    QString darkWidget;
     Utils utils;
 protected:
 };

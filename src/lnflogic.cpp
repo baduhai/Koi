@@ -189,7 +189,7 @@ void LnfLogic::writeToThemeConfigFile(const QString &pluginName, const QString &
     defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
 
     //widget style
-    KConfigGroup systemCG(KSharedConfig::openConfig(koiPath), "KvantumStyle");
+    KConfigGroup systemCG(KSharedConfig::openConfig(koiPath), "WidgetStyle");
     defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry(themeType, QStringLiteral("breeze")));
 
     //icon style

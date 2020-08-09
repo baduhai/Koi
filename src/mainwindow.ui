@@ -25,7 +25,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -206,9 +206,9 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-228</y>
-             <width>401</width>
-             <height>626</height>
+             <y>-240</y>
+             <width>395</width>
+             <height>730</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -442,7 +442,7 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
                 <item>
-                 <widget class="QLabel" name="lightWidgetStyle">
+                 <widget class="QLabel" name="lightWidget">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
@@ -452,7 +452,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="darkWidgetStyle">
+                 <widget class="QLabel" name="darkWidget">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
@@ -466,10 +466,14 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_15">
                 <item>
-                 <widget class="QComboBox" name="lightDropWidgetStyle"/>
+                 <widget class="QComboBox" name="lightDropWidget">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="darkDropWidgetStyle"/>
+                 <widget class="QComboBox" name="darkDropWidget"/>
                 </item>
                </layout>
               </item>
@@ -691,8 +695,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>427</width>
-           <height>437</height>
+           <width>421</width>
+           <height>431</height>
           </rect>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
@@ -813,7 +817,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_21">
               <item>
-               <widget class="QLabel" name="lightCursorStyle">
+               <widget class="QLabel" name="lightCursor">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -823,7 +827,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="darkCursorStyle">
+               <widget class="QLabel" name="darkCursor">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -837,10 +841,10 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_22">
               <item>
-               <widget class="QComboBox" name="lightDropCursorStyle"/>
+               <widget class="QComboBox" name="lightDropCursor"/>
               </item>
               <item>
-               <widget class="QComboBox" name="darkDropCursorStyle"/>
+               <widget class="QComboBox" name="darkDropCursor"/>
               </item>
              </layout>
             </item>

@@ -29,5 +29,6 @@ void ColorScheme::setColorScheme(QString colorScheme)
     QDBusConnection::sessionBus().send(notify);
     // Notify Plasma to regenerate Breeze gtk with new colors
     breezeGtkProcess = new QProcess();
-    breezeGtkProcess->start("krdb");
+    breezeGtkProcess->setProgram(QStringLiteral("krdb"));
+    breezeGtkProcess->start();
 }
