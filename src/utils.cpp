@@ -182,6 +182,167 @@ QStringList Utils::getWidgetStyles(){
     return  widgetStyles;
 }
 
+bool Utils::themeExists(QString themeName){
+    QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName + QStringLiteral("/contents/defaults") );
+    return localTheme.exists() && localTheme.isFile();
+}
+void Utils::createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author, const QString &email, const QString &license, const QString &website)
+//would not need this as this gets the plasma layout and i just need the theme
+{
+    const QString metadataPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/metadata.desktop"));
+    KConfig c(metadataPath);
+
+    KConfigGroup cg(&c, "Desktop Entry");
+    cg.writeEntry("Name", name);
+    cg.writeEntry("Comment", comment);
+    cg.writeEntry("X-KDE-PluginInfo-Name", pluginName);
+    cg.writeEntry("X-KDE-ServiceTypes", "Plasma/LookAndFeel");
+    cg.writeEntry("X-KDE-PluginInfo-Author", author);
+    cg.writeEntry("X-KDE-PluginInfo-Email", email);
+    cg.writeEntry("X-KDE-PluginInfo-Website", website);
+    cg.writeEntry("X-KDE-PluginInfo-Category", "Plasma Look And Feel");
+    cg.writeEntry("X-KDE-PluginInfo-License", license);
+    cg.writeEntry("X-KDE-PluginInfo-EnabledByDefault", "true");
+    cg.writeEntry("X-KDE-PluginInfo-Version", "0.1");
+    cg.sync();
+
+    dumpPlasmaLayout(pluginName);
+    dumpDefaultsConfigFile(pluginName);
+
+}
+
+//would not need this as this gets the plasma layout and i just need the theme
+void Utils::dumpPlasmaLayout(const QString &pluginName)
+{
+    QDBusMessage message = QDBusMessage::createMethodCall("org.kde.plasmashell", "/PlasmaShell",
+                                                          "org.kde.PlasmaShell", "dumpCurrentLayoutJS");
+    QDBusPendingCall pcall = QDBusConnection::sessionBus().asyncCall(message);
+
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(pcall, this);
+
+    QObject::connect(watcher, &QDBusPendingCallWatcher::finished,
+                     this, [=](QDBusPendingCallWatcher *watcher) {
+                         const QDBusMessage &msg = watcher->reply();
+                         watcher->deleteLater();
+                         if (watcher->isError())
+                         {
+                             return;
+                         }
+
+                         const QString layout = msg.arguments().first().toString();
+                         QDir themeDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName);
+                         if (!themeDir.mkpath("contents/layouts"))
+                         {
+                             qWarning() << "Impossible to create the layouts directory in the look and feel package";
+                             return;
+                         }
+
+                         QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/contents/layouts/org.kde.plasma.desktop-layout.js"));
+                         if (layoutFile.open(QIODevice::WriteOnly))
+                         {
+                             layoutFile.write(layout.toUtf8());
+                             layoutFile.close();
+                         }
+                         else
+                         {
+                             qWarning() << "Impossible to write to org.kde.plasma.desktop-layout.js";
+                             return;
+                         }
+                     });
+}
+
+void Utils::dumpDefaultsConfigFile(const QString &pluginName)
+{
+    //TODO add icons too the list
+    //write the defaults file, read from kde config files and save to the defaultsrc
+    KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
+
+    KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
+
+    //widget style
+    KConfigGroup systemCG(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "KDE");
+    defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry("widgetStyle", QStringLiteral("breeze")));
+
+    //icon style
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "Icons");
+    defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry("Theme", QStringLiteral("breeze")));
+
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "General");
+    defaultsConfigGroup.writeEntry("ColorScheme", systemCG.readEntry("ColorScheme", QStringLiteral("Breeze")));
+
+    //plasma theme
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "plasmarc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Theme");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("plasmarc")), "Theme");
+    defaultsConfigGroup.writeEntry("name", systemCG.readEntry("name", QStringLiteral("default")));
+
+    //cursor theme
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kcminputrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Mouse");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kcminputrc")), "Mouse");
+    defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry("cursorTheme", QStringLiteral("breeze_cursors")));
+
+    //KWin window switcher theme
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kwinrc")), "TabBox");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "WindowSwitcher");
+    defaultsConfigGroup.writeEntry("LayoutName", systemCG.readEntry("LayoutName", QStringLiteral("org.kde.breeze.desktop")));
+
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "DesktopSwitcher");
+    defaultsConfigGroup.writeEntry("LayoutName", systemCG.readEntry("DesktopLayout", QStringLiteral("org.kde.breeze.desktop")));
+
+    systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kwinrc")), "org.kde.kdecoration2");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "org.kde.kdecoration2");
+    defaultsConfigGroup.writeEntry("library", systemCG.readEntry("library", QStringLiteral("org.kde.breeze")));
+    defaultsConfigGroup.writeEntry("theme", systemCG.readEntry("theme", QString()));
+
+}
+
+void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &themeType){
+    QString koiPath = QDir::homePath() + QStringLiteral( "/.config/koirc");
+    //TODO add icons too the list
+    //write the defaults file, read from kde config files and save to the defaultsrc
+    KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
+
+    KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
+
+    //widget style
+    KConfigGroup systemCG(KSharedConfig::openConfig(koiPath), "WidgetStyle");
+    defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry(themeType, QStringLiteral("breeze")));
+
+    //icon style
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "IconTheme");
+    defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry(themeType, QStringLiteral("breeze")));
+
+
+    //color scheme (TODO: create an in-place color scheme?)
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "ColorScheme");
+    defaultsConfigGroup.writeEntry("ColorScheme", systemCG.readEntry(themeType, QStringLiteral("Breeze")));
+
+    //plasma theme
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "plasmarc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Theme");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "PlasmaStyle");
+    defaultsConfigGroup.writeEntry("name", systemCG.readEntry(themeType, QStringLiteral("default")));
+
+    //cursor theme
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kcminputrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Mouse");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "Mouse");
+    defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry(themeType, QStringLiteral("breeze_cursors")));
+}
 // Manage switching themes functions
 void Utils::useGlobalTheme(QString themeName)
 {

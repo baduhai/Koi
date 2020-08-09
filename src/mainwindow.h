@@ -3,8 +3,6 @@
 //Headers
 #include "about.h"
 #include "utils.h"
-#include "lnflogic.h"
-#include "lnflistmodel.h"
 //Qt libs
 #include <QFileDialog>
 #include <QFileInfo>

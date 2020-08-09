@@ -34,17 +34,24 @@ int main(int argc, char *argv[])
         Utils utils;
         utils.initialiseSettings();
 
-        LnfLogic logic{};
-        LnfListModel *themeList = logic.lnfList();
-        if (!(themeList->themeExists("Koi-Light")))
-        {
-            logic.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
-        }
+//        LnfLogic logic{};
+//        LnfListModel *themeList = logic.lnfList();
+//        if (!(themeList->themeExists("Koi-Light")))
+//        {
+//            logic.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
+//        }
+//
+//        if (!(themeList->themeExists("Koi-Dark")))
+//        {
+//            logic.createNewTheme("Koi-Dark","Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
+//
+//        }
 
-        if (!(themeList->themeExists("Koi-Dark")))
-        {
-            logic.createNewTheme("Koi-Dark","Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
-    
+        if(!utils.themeExists("Koi-Dark")){
+           utils.createNewTheme("Koi-Dark", "Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
+        }
+        if(!utils.themeExists("Koi-Light")){
+           utils.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
             /* QList<ThemeInfo> logicThemes = logic.lnfList()->getThemes();
 

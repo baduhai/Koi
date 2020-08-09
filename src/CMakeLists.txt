@@ -14,10 +14,8 @@ set(koi_SRC
     plasmastyle.cpp 
     utils.cpp 
     wallpaper.cpp 
-    kvantumstyle.cpp 
-    lnflistmodel.cpp 
-    lnflogic.cpp
-)
+    kvantumstyle.cpp
+        )
 find_package(Threads)
 
 add_executable(${PROJECT_NAME} ${koi_SRC} )

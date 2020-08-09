@@ -33,7 +33,7 @@ MainWindow::~MainWindow() {
 }
 
 // Override window managing events
-void MainWindow::closeEvent(QCloseEvent *event) { // Overide close event
+void MainWindow::closeEvent(QCloseEvent *event) { // Override close event
     event->ignore();
     toggleVisibility();
 }
@@ -252,9 +252,8 @@ void MainWindow::savePrefs() {
     utils.settings->setValue(QStringLiteral("WidgetStyle/light") ,lightWidget);
     utils.settings->setValue(QStringLiteral("WidgetStyle/dark"), darkWidget);
     //this would write to the actual lookand feel folder of the theme
-    LnfLogic logic{};
-    logic.writeToThemeConfigFile("Koi-Light", "light");
-    logic.writeToThemeConfigFile("Koi-Dark", "dark");
+    utils.writeToThemeConfigFile("Koi-Light", "light");
+    utils.writeToThemeConfigFile("Koi-Dark", "dark");
     utils.settings->sync();
 }
 
