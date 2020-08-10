@@ -252,8 +252,7 @@ void MainWindow::savePrefs() {
     utils.settings->setValue(QStringLiteral("WidgetStyle/light") ,lightWidget);
     utils.settings->setValue(QStringLiteral("WidgetStyle/dark"), darkWidget);
     //this would write to the actual lookand feel folder of the theme
-    utils.writeToThemeConfigFile("Koi-Light", "light");
-    utils.writeToThemeConfigFile("Koi-Dark", "dark");
+
     utils.settings->sync();
 }
 
@@ -321,7 +320,6 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
     //by using signals
 
     //to choose the settings page
-    if (ui->mainStack->currentIndex() == 1) {
         if (ui->styleCheckBox->isChecked() != utils.settings->value("PlasmaStyle/enabled").toBool()) {
             return 0;
         }
@@ -367,8 +365,6 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
         if (darkWall != utils.settings->value("Wallpaper/dark").toString()) {
             return 0;
         }
-    }
-    if (ui->mainStack->currentIndex() == 2){
         //kvantum
         if (ui->kvantumStyleCheckBox->isChecked() != utils.settings->value("KvantumStyle/enabled").toBool()) {
             return 0;
@@ -379,11 +375,19 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
         if (darkKvantumStyle != utils.settings->value("KvantumStyle/dark").toString()) {
             return 0;
         }
-        //TODO add cursor for back button
-        //cursor
-        //if(lightCursor!= utils.settings->value(QStringLiteral("")))
-    }
-    //TODO remeber to add other parts of theming
+        if (lightWidget != utils.settings->value("WidgetStyle/light").toString())   {
+            return 0;
+        }
+        if (darkWidget != utils.settings->value("WidgetStyle/light").toString()){
+            return 0;
+        }
+        if (darkCursor != utils.settings->value("Mouse/light").toString()){
+            return 0;
+        }
+        if (lightCursor != utils.settings->value("Mouse/light").toString() ){
+            return  0;
+        }
+
     return 1;
 }
 
@@ -476,9 +480,13 @@ void MainWindow::on_advancedPageHomeBtn_clicked() {
 
 void MainWindow::on_applyBtn_clicked() {
     savePrefs();
+    //dont know why but when it is in saveprefs; it requires two clicks on
+    //apply button it works fine here
+    utils.writeToThemeConfigFile("Koi-Light", "light");
+    utils.writeToThemeConfigFile("Koi-Dark", "dark");
 }
 //Todo cursors on the desktop don't update you need to restart the plasma shell
-// it also doesn't work in the normal kde systemsettings
+// it also doesn't even work in the normal kde systemsettings
 void MainWindow::on_lightBtn_clicked() {
     utils.goLight();
 }

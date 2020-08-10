@@ -126,11 +126,9 @@ QStringList Utils::getColorSchemesPath() // Get all available color schemes
 }
 QStringList Utils::getIconThemes() // Get all available icon themes
 {
-    //TODO .icons is used for cursors not the icons
-    QDir iconsOldLocalDir(QDir::homePath() + "/.icons");
     QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
     QDir iconsSystemDir("/usr/share/icons");
-    QStringList iconThemes = iconsOldLocalDir.entryList(QDir::Dirs) + iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
+    QStringList iconThemes = iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
     iconThemes.removeDuplicates();
     iconThemes.removeFirst();
     iconThemes.removeFirst();
@@ -253,7 +251,6 @@ void Utils::dumpPlasmaLayout(const QString &pluginName)
 
 void Utils::dumpDefaultsConfigFile(const QString &pluginName)
 {
-    //TODO add icons too the list
     //write the defaults file, read from kde config files and save to the defaultsrc
     KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
 
@@ -307,7 +304,6 @@ void Utils::dumpDefaultsConfigFile(const QString &pluginName)
 
 void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &themeType){
     QString koiPath = QDir::homePath() + QStringLiteral( "/.config/koirc");
-    //TODO add icons too the list
     //write the defaults file, read from kde config files and save to the defaultsrc
     KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
 
@@ -325,7 +321,6 @@ void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &the
     defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry(themeType, QStringLiteral("breeze")));
 
 
-    //color scheme (TODO: create an in-place color scheme?)
     defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
     defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
     systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "ColorScheme");
