@@ -145,7 +145,13 @@ QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
 {
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
-    QStringList kvantumStyles = kvantumStyleLocalDir.entryList(QDir::Dirs) + kvantumStyleSystemDir.entryList(QDir::Dirs);
+    QStringList kvantumStyles;
+    if(kvantumStyleLocalDir.exists()){
+        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs));
+    }
+    if(kvantumStyleSystemDir.exists()){
+        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs));
+    }
     kvantumStyles.removeDuplicates();
     kvantumStyles.removeFirst();
     kvantumStyles.removeFirst();

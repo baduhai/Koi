@@ -21,7 +21,8 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "visualizerFile": "/home/da-viper/.config/Code - OSS/User/workspaceStorage/2f412a7f433ec325db06c29a8319a6f8/tonka3000.qtvsctools/qt.natvis.xml"
         }
     ]
 }
