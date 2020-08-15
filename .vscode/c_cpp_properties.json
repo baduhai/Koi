@@ -4,34 +4,22 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${default}",
-                "/usr/include/qt/QtCore",
+                "/usr/include/qt/QtWidgets",
                 "/usr/include/qt",
+                "/usr/include/KF5/KCoreAddons",
+                "/usr/include/qt/QtCore",
                 "/usr/include/KF5/KConfigCore",
                 "/usr/include/qt/QtDBus",
+                "/usr/include/qt/QtDBus",
                 "/usr/include/qt/QtTest",
-                "/usr/include/qt/QtTest",
-                "/usr/include/KF5/KDELibs4Support",
-                "/usr/include/qt/QtWidgets",
-                "/usr/include/KF5/KPackage",
-                "/usr/include/KF5/KCoreAddons",
                 "/usr/include/qt/QtGui",
-                "/usr/include/KF5",
-                "/usr/include/KF5/KService",
-                "/usr/include/KF5/KI18n",
-                "/usr/include/qt/QtNetwork",
-                "/usr/include/KF5/KWidgetsAddons",
-                "/usr/include/KF5/KPackage/KPackage",
-                "/usr/include/qt/QtCore",
-                "/usr/include/qt/QtTest",
-                "/usr/include/KF5/KService"
+                "/usr/include/qt/QtNetwork"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
             "cppStandard": "c++14",
-            "intelliSenseMode": "clang-x64",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "intelliSenseMode": "clang-x64"
         }
     ],
     "version": 4

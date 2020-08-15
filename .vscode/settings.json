@@ -26,6 +26,7 @@
         "fstream": "cpp",
         "iostream": "cpp",
         "system_error": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "qdialog": "cpp"
     }
 }
