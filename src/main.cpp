@@ -47,10 +47,10 @@ int main(int argc, char *argv[])
 //
 //        }
 
-        if(!utils.themeExists("Koi-Dark")){
+        if(!utils.themeExists(QStringLiteral("Koi-Dark"))){
            utils.createNewTheme("Koi-Dark", "Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
-        if(!utils.themeExists("Koi-Light")){
+        if(!utils.themeExists(QStringLiteral("Koi-Light"))){
            utils.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
             /* QList<ThemeInfo> logicThemes = logic.lnfList()->getThemes();

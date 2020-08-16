@@ -204,49 +204,8 @@ void Utils::createNewTheme(const QString &pluginName, const QString &name, const
     cg.writeEntry("X-KDE-PluginInfo-Version", "0.1");
     cg.sync();
 
-    dumpPlasmaLayout(pluginName);
     dumpDefaultsConfigFile(pluginName);
 
-}
-
-//would not need this as this gets the plasma layout and i just need the theme
-void Utils::dumpPlasmaLayout(const QString &pluginName)
-{
-    QDBusMessage message = QDBusMessage::createMethodCall("org.kde.plasmashell", "/PlasmaShell",
-                                                          "org.kde.PlasmaShell", "dumpCurrentLayoutJS");
-    QDBusPendingCall pcall = QDBusConnection::sessionBus().asyncCall(message);
-
-    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(pcall, this);
-
-    QObject::connect(watcher, &QDBusPendingCallWatcher::finished,
-                     this, [=](QDBusPendingCallWatcher *watcher) {
-                         const QDBusMessage &msg = watcher->reply();
-                         watcher->deleteLater();
-                         if (watcher->isError())
-                         {
-                             return;
-                         }
-
-                         const QString layout = msg.arguments().first().toString();
-                         QDir themeDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName);
-                         if (!themeDir.mkpath("contents/layouts"))
-                         {
-                             qWarning() << "Impossible to create the layouts directory in the look and feel package";
-                             return;
-                         }
-
-                         QFile layoutFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % QLatin1String("/contents/layouts/org.kde.plasma.desktop-layout.js"));
-                         if (layoutFile.open(QIODevice::WriteOnly))
-                         {
-                             layoutFile.write(layout.toUtf8());
-                             layoutFile.close();
-                         }
-                         else
-                         {
-                             qWarning() << "Impossible to write to org.kde.plasma.desktop-layout.js";
-                             return;
-                         }
-                     });
 }
 
 void Utils::dumpDefaultsConfigFile(const QString &pluginName)
