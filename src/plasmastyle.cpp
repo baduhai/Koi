@@ -1,5 +1,8 @@
 #include "plasmastyle.h"
 
+/* This method is no longer used for anything
+ it would be better to move some of the code concerning plasma from utils to this 
+ class like get plasma style */
 PlasmaStyle::PlasmaStyle()
 {
 

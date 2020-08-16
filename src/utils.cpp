@@ -189,6 +189,21 @@ QStringList Utils::getWidgetStyles()
     return widgetStyles;
 }
 
+QStringList Utils::getWindowDecorations(){
+    /*TODO this would be deleted in the future  
+    There are two ways that window decoration is written that i know of 
+    using the 
+    "library = org.kde.nameofthelibrary"  then the "theme name" stored in /usr/lib/qt/plugins/org.kde.kdecoration2/  or 
+    "library =library=org.kde.kwin.aurorae"  then "theme=__aurorae__svg__nameoftheme" 
+    but i am not sure how to get the actual name of the library and the theme it uses 
+    its kinda hacky but i did it this way , if there is a better way tell me and i would update this  */
+
+    if (QDir::exists("/usr/lib/qt/plugins/org.kde.kdecoration2/"))
+    {
+        
+    }
+    
+}
 bool Utils::themeExists(QString themeName)
 {
     QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName + QStringLiteral("/contents/defaults"));
