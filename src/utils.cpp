@@ -176,7 +176,13 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 {
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
-    QStringList kvantumStyles = kvantumStyleLocalDir.entryList(QDir::Dirs) + kvantumStyleSystemDir.entryList(QDir::Dirs);
+    QStringList kvantumStyles;
+    if (kvantumStyleLocalDir.exists()){
+        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs  | QDir::NoDotAndDotDot  ));
+    }
+    if(kvantumStyleSystemDir.exists()){
+        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot  ));
+    }
     kvantumStyles.removeDuplicates();
     kvantumStyles.removeFirst();
     kvantumStyles.removeFirst();
@@ -189,7 +195,7 @@ QStringList Utils::getWidgetStyles()
     return widgetStyles;
 }
 
-QStringList Utils::getWindowDecorations(){
+QList<Decoration> Utils::getWindowDecorations(){
     /*TODO this would be deleted in the future  
     There are two ways that window decoration is written that i know of 
     using the 
@@ -197,14 +203,56 @@ QStringList Utils::getWindowDecorations(){
     "library =library=org.kde.kwin.aurorae"  then "theme=__aurorae__svg__nameoftheme" 
     but i am not sure how to get the actual name of the library and the theme it uses 
     its kinda hacky but i did it this way , if there is a better way tell me and i would update this  */
-
-    if (QDir::exists("/usr/lib/qt/plugins/org.kde.kdecoration2/"))
-    {
-        
+    QList<Decoration > dt;
+    QDir sysLib; //for the library
+    QDir dir("/usr/lib/qt/plugins/org.kde.kdecoration2/");
+    if (dir.exists()){
+        sysLib = dir;
     }
-    
+    QFileInfoList libInfoTheme = sysLib.entryInfoList(QDir::Files |QDir::NoDotAndDotDot,QDir::Name);
+    QStringList libThemes;
+    for (const auto &file : libInfoTheme ){
+        libThemes.append(file.baseName());
+        libThemes.append("test");
+        QString t = "try";
+        QString teta = "sorry";
+    }
+    if (libThemes.contains("kwin5_aurorae")){
+        libThemes.removeAt(libThemes.indexOf("kwin5_aurorae"));
+    }
+    for(auto &theme : libThemes){
+        if(theme.endsWith("decoration", Qt::CaseInsensitive)){
+            theme.chop(10);
+        }
+    }
+    //for aurorae styles
+    QStringList auroraeStyles;
+    QDir aurLocalLib(QDir::homePath() + "/.local/share/aurorae/themes");
+    QDir aurSysLib("/usr/share/aurorae/themes/");
+    if(aurSysLib.exists()){
+        auroraeStyles.append(aurSysLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
+    if(aurLocalLib.exists()){
+        auroraeStyles.append(aurLocalLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
+    auroraeStyles.removeDuplicates();
+
+    for (const auto &th: auroraeStyles ){
+        Decoration d{};
+        d.name = th;
+        d.library = "org.kde.kwin.aurorae";
+        d.theme = "__aurorae__svg__"+th;
+        dt.append(d);
+    }
+    for (const auto &th: libThemes ){
+        Decoration d{};
+        d.name = th;
+        d.name.replace(0, 1, d.name[0].toUpper());
+        d.library = "org.kde."+ d.name.toLower(); dt.append(d);
+    }
+    return dt;
 }
-bool Utils::themeExists(QString themeName)
+bool Utils::themeExists(const QString &themeName)
 {
     QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName + QStringLiteral("/contents/defaults"));
     return localTheme.exists() && localTheme.isFile();
@@ -319,7 +367,11 @@ void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &the
     defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Mouse");
     systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "Mouse");
     defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry(themeType, QStringLiteral("breeze_cursors")));
+
+    //window decoration
+
 }
+
 // Manage switching themes functions
 void Utils::useGlobalTheme(QString themeName)
 {
@@ -408,4 +460,14 @@ void Utils::goDarkWall()
             notify("Error setting Wallpaper", "Koi tried to change your wallpaper, but no wallpaper file was selected", 0);
         }
     }
+}
+
+QStringList Utils::getWindowDecorationsStyle() {
+    QList<Decoration> dt = Utils::getWindowDecorations();
+    QStringList styleList ;
+    for (const auto &style: dt){
+        styleList.append(style.name);
+    }
+    styleList.sort();
+    return QStringList();
 }

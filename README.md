@@ -5,6 +5,8 @@ This is a TODO list
 
 [x] add cursors style 
 [ ] add window decoration // i am having a hard time figuring out how to get all the window decoration on the system 
+[ ] most of the methods in utils should be static as they have no relation to the actual class Utils and should be moved
+into other classes that it is related to like plasmastyle, icons etc.
 
 // i found a way but not sure if it is optimal tho.
 [ ] some of the classes are now useless it would either need to be deleted or used for other thing l

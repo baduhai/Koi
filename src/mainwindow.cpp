@@ -157,6 +157,10 @@ void MainWindow::loadPrefs() {
     ui->lightDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/light").toString());
     ui->darkDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/Dark").toString());
 
+    //TODO add other styles here
+    ui->lightDropDecoration->setCurrentText(utils.settings->value("WindowDecoration/light").toString());
+    ui->darkDropDecoration->setCurrentText(utils.settings->value("WindowDecoration/light").toString());
+
     // Load Wallpaper prefs
     if (utils.settings->value("Wallpaper/enabled").toBool()) {
         ui->wallCheckBox->setChecked(true);
@@ -181,6 +185,7 @@ void MainWindow::loadPrefs() {
 
 void MainWindow::savePrefs() {
 
+    //make this asynchronous
     //TODO remove checkboxes and its values because you technically cannot disable the theme for some styles.
     //Todo and they are redundant ,also in util.settings .
 
@@ -253,6 +258,14 @@ void MainWindow::savePrefs() {
     utils.settings->setValue(QStringLiteral("WidgetStyle/dark"), darkWidget);
     //this would write to the actual lookand feel folder of the theme
 
+    //Decoration Style theme saving prefs
+    utils.settings->setValue(QStringLiteral("WindowDecoration/light"),lightDecoration);
+    utils.settings->setValue(QStringLiteral("WindowDecoration/lightLibrary"),lightDecorationLibrary);
+    utils.settings->setValue(QStringLiteral("WindowDecoration/lightTheme"),lightDecorationTheme);
+    utils.settings->setValue(QStringLiteral("WidgetDecoration/dark"),darkDecoration);
+    utils.settings->setValue(QStringLiteral("WidgetDecoration/darkLibrary"),darkDecorationLibrary);
+    utils.settings->setValue(QStringLiteral("WidgetDecoration/darkTheme"),darkDecorationTheme);
+
     utils.settings->sync();
 }
 
@@ -301,6 +314,12 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
     ui->darkDropWidget->clear();
     ui->lightDropWidget->addItems(widgetStyle);
     ui->darkDropWidget->addItems(widgetStyle);
+    //Window decoration styles
+    QStringList decorationStyle = utils.getWindowDecorationsStyle();
+    ui->lightDropDecoration->clear();
+    ui->darkDropDecoration->clear();
+    ui->lightDropDecoration->addItems(decorationStyle);
+    ui->darkDropDecoration->addItems(decorationStyle);
 
     loadPrefs();
 }
@@ -508,6 +527,30 @@ void MainWindow::on_lightDropCursor_currentIndexChanged(const QString &lightCurs
 
 void MainWindow::on_darkDropCursor_currentIndexChanged(const QString &darkCursorUN) {
     darkCursor = darkCursorUN;
+
+}
+
+//Decoration Style
+void MainWindow::on_lightDropDecoration_currentIndexChanged(const QString &lightDecorationUN){
+    lightDecoration = lightDecorationUN;
+    QList<Decoration> decList= utils.getWindowDecorations();
+    for (const auto &dt : decList){
+        if (QString::compare(dt.name, darkColor, Qt::CaseInsensitive) == 0){
+            lightDecorationLibrary = dt.library;
+            lightDecorationTheme = dt.theme;
+        }
+    }
+}
+
+void MainWindow::on_darkDropDecoration_currentIndexChanged(const QString &darkDecorationUN){
+    darkDecoration = darkDecorationUN;
+    QList<Decoration> decList= utils.getWindowDecorations();
+    for (const auto &dt : decList){
+        if (QString::compare(dt.name, darkColor, Qt::CaseInsensitive) == 0){
+            darkDecorationLibrary = dt.library;
+            darkDecorationTheme = dt.theme;
+        }
+    }
 }
 
 void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style checkbox logic

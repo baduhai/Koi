@@ -78,6 +78,11 @@ private slots:
 
     void on_lightDropWidget_currentIndexChanged(const QString&lightWidgetUN);
     void on_darkDropWidget_currentIndexChanged(const QString &darkWidgetUN);
+
+    // WindowDecoration buttons
+    void on_lightDropDecoration_currentIndexChanged(const QString &lightDecorationUN);
+    void on_darkDropDecoration_currentIndexChanged(const QString &darkDecorationUN);
+
     //WallPaper Buttons
     void on_lightWallBtn_clicked();
 
@@ -137,6 +142,12 @@ private:
     QString darkTime;
     QString lightWidget;
     QString darkWidget;
+    QString lightDecoration;
+    QString darkDecoration;
+    QString lightDecorationLibrary;
+    QString lightDecorationTheme;
+    QString darkDecorationLibrary;
+    QString darkDecorationTheme;
     Utils utils;
 protected:
 };

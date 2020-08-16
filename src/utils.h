@@ -19,6 +19,12 @@
 #include <QTest>
 #include <QtWidgets/QStyleFactory>
 
+struct Decoration
+{
+    QString library;
+    QString theme;
+    QString name;
+};
 class Utils : public QObject
 {
     Q_OBJECT
@@ -26,18 +32,21 @@ class Utils : public QObject
 public:
 
     Utils();
+
     QSettings *settings{};
-
     void initialiseSettings();
-    QStringList getPlasmaStyles();
 
+    QStringList getPlasmaStyles();
     QStringList getColorSchemes();
+
     QStringList getColorSchemesPath();
     QStringList getCursorThemes();
     QStringList getIconThemes();
     QStringList getGtkThemes();
     QStringList getWidgetStyles();
     QStringList getKvantumStyles();
+    QStringList getWindowDecorationsStyle();
+    QList<Decoration> getWindowDecorations();
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
@@ -52,7 +61,7 @@ public:
     void goLightWall();
     void goDarkWall();
 
-    bool themeExists(QString themeName);
+    static bool themeExists(const QString &themeName);
     void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
                         const QString &email, const QString &license, const QString &website);
     void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);

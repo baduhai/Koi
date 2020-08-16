@@ -25,7 +25,7 @@
     <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -870,7 +870,7 @@
               <item>
                <widget class="QLabel" name="CursorStyleLabel_3">
                 <property name="text">
-                 <string>Cursors</string>
+                 <string>Window Decoration</string>
                 </property>
                </widget>
               </item>
@@ -916,10 +916,10 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_28">
               <item>
-               <widget class="QComboBox" name="lightDropCursorStyle_3"/>
+               <widget class="QComboBox" name="lightDropDecoration"/>
               </item>
               <item>
-               <widget class="QComboBox" name="darkDropCursorStyle_3"/>
+               <widget class="QComboBox" name="darkDropDecoration"/>
               </item>
              </layout>
             </item>
