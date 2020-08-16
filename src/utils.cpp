@@ -213,9 +213,6 @@ QList<Decoration> Utils::getWindowDecorations(){
     QStringList libThemes;
     for (const auto &file : libInfoTheme ){
         libThemes.append(file.baseName());
-        libThemes.append("test");
-        QString t = "try";
-        QString teta = "sorry";
     }
     if (libThemes.contains("kwin5_aurorae")){
         libThemes.removeAt(libThemes.indexOf("kwin5_aurorae"));
@@ -248,7 +245,8 @@ QList<Decoration> Utils::getWindowDecorations(){
         Decoration d{};
         d.name = th;
         d.name.replace(0, 1, d.name[0].toUpper());
-        d.library = "org.kde."+ d.name.toLower(); dt.append(d);
+        d.library = "org.kde."+ d.name.toLower(); 
+        dt.append(d);
     }
     return dt;
 }
@@ -369,7 +367,11 @@ void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &the
     defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry(themeType, QStringLiteral("breeze_cursors")));
 
     //window decoration
-
+    defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
+    defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "org.kde.kdecoration2");
+    systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "WindowDecoration");
+    defaultsConfigGroup.writeEntry("library", systemCG.readEntry(themeType+"Library", QStringLiteral("org.kde.breeze")));
+    defaultsConfigGroup.writeEntry("theme", systemCG.readEntry(themeType+"Theme", QString()));
 }
 
 // Manage switching themes functions
@@ -469,5 +471,5 @@ QStringList Utils::getWindowDecorationsStyle() {
         styleList.append(style.name);
     }
     styleList.sort();
-    return QStringList();
+    return styleList;
 }

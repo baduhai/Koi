@@ -13,7 +13,8 @@
                 "/usr/include/qt/QtDBus",
                 "/usr/include/qt/QtTest",
                 "/usr/include/qt/QtGui",
-                "/usr/include/qt/QtNetwork"
+                "/usr/include/qt/QtNetwork",
+                "/usr/include/KF5/KWidgetsAddons"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

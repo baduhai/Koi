@@ -259,12 +259,26 @@ void MainWindow::savePrefs() {
     //this would write to the actual lookand feel folder of the theme
 
     //Decoration Style theme saving prefs
+    //TODO break out of the for loop once found.
+    QList<Decoration> decList= utils.getWindowDecorations();
+    for (const auto &dt : decList){
+        if (QString::compare(dt.name, darkDecoration, Qt::CaseInsensitive) == 0){
+            darkDecorationLibrary = dt.library;
+            darkDecorationTheme = dt.theme;
+        }
+    }
+    for (const auto &dt : decList){
+        if (QString::compare(dt.name, lightDecoration, Qt::CaseInsensitive) == 0){
+            lightDecorationLibrary = dt.library;
+            lightDecorationTheme = dt.theme;
+        }
+    }
     utils.settings->setValue(QStringLiteral("WindowDecoration/light"),lightDecoration);
     utils.settings->setValue(QStringLiteral("WindowDecoration/lightLibrary"),lightDecorationLibrary);
     utils.settings->setValue(QStringLiteral("WindowDecoration/lightTheme"),lightDecorationTheme);
-    utils.settings->setValue(QStringLiteral("WidgetDecoration/dark"),darkDecoration);
-    utils.settings->setValue(QStringLiteral("WidgetDecoration/darkLibrary"),darkDecorationLibrary);
-    utils.settings->setValue(QStringLiteral("WidgetDecoration/darkTheme"),darkDecorationTheme);
+    utils.settings->setValue(QStringLiteral("WindowDecoration/dark"),darkDecoration);
+    utils.settings->setValue(QStringLiteral("WindowDecoration/darkLibrary"),darkDecorationLibrary);
+    utils.settings->setValue(QStringLiteral("WindowDecoration/darkTheme"),darkDecorationTheme);
 
     utils.settings->sync();
 }
@@ -544,13 +558,6 @@ void MainWindow::on_lightDropDecoration_currentIndexChanged(const QString &light
 
 void MainWindow::on_darkDropDecoration_currentIndexChanged(const QString &darkDecorationUN){
     darkDecoration = darkDecorationUN;
-    QList<Decoration> decList= utils.getWindowDecorations();
-    for (const auto &dt : decList){
-        if (QString::compare(dt.name, darkColor, Qt::CaseInsensitive) == 0){
-            darkDecorationLibrary = dt.library;
-            darkDecorationTheme = dt.theme;
-        }
-    }
 }
 
 void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style checkbox logic
