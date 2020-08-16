@@ -147,14 +147,12 @@ QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
     QStringList kvantumStyles;
     if(kvantumStyleLocalDir.exists()){
-        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs));
+        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     }
     if(kvantumStyleSystemDir.exists()){
-        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs));
+        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     }
     kvantumStyles.removeDuplicates();
-    kvantumStyles.removeFirst();
-    kvantumStyles.removeFirst();
     return kvantumStyles;
 }
 // Manage switching themes functions
