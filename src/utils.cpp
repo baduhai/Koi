@@ -66,10 +66,16 @@ QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
     QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
     QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
-    QStringList plasmaStyles = stylesLocalDir.entryList(QDir::Dirs) + stylesSystemDir.entryList(QDir::Dirs);
+    QStringList plasmaStyles;
+    if (stylesLocalDir.exists())
+    {
+        plasmaStyles.append(stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
+    if (stylesSystemDir.exists())
+    {
+        plasmaStyles.append(stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
     plasmaStyles.removeDuplicates();
-    plasmaStyles.removeFirst();
-    plasmaStyles.removeFirst();
     plasmaStyles.append("breeze");
     return plasmaStyles;
 }
@@ -82,7 +88,7 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
     QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
     QStringList colorSchemesLocalNames;
     //TODO remember to ask about qasconst in qt reddit group
-    for (const auto & color : qAsConst(colorSchemesLocal))
+    for (const auto &color : qAsConst(colorSchemesLocal))
     {
         colorSchemesLocalNames.append(color.baseName());
     }
@@ -117,7 +123,7 @@ QStringList Utils::getColorSchemesPath() // Get all available color schemes
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
     QStringList colorSchemesSystemPath;
-    for (const auto & colorSchemes : colorSchemesSystem)
+    for (const auto &colorSchemes : colorSchemesSystem)
     {
         colorSchemesSystemPath.append(colorSchemes.absoluteFilePath());
     }
@@ -134,24 +140,26 @@ QStringList Utils::getIconThemes() // Get all available icon themes
     iconThemes.removeFirst();
     return iconThemes;
 }
-QStringList Utils::getCursorThemes() {
+QStringList Utils::getCursorThemes()
+{
     QDir cursorOldLocalParentDir(QDir::homePath() + QStringLiteral("/.local/share/icons/"));
     QDir cursorLocalParentDir(QDir::homePath() + QStringLiteral("/.icons"));
     QDir cursorSystemParentDir(QStringLiteral("/usr/share/icons"));
     QFileInfoList parentDir(cursorOldLocalParentDir.entryInfoList(QDir::Dirs));
-    parentDir.append(cursorSystemParentDir.entryInfoList(QDir::Dirs| QDir::NoDotAndDotDot));
+    parentDir.append(cursorSystemParentDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
     QStringList cursorThemes;
     //oldlocal and system
-    for(QFileInfo &info : parentDir){
-        QDir filepath (info.absoluteFilePath() + QStringLiteral("/cursors")) ;
-        if(filepath.exists()){
+    for (QFileInfo &info : parentDir)
+    {
+        QDir filepath(info.absoluteFilePath() + QStringLiteral("/cursors"));
+        if (filepath.exists())
+        {
             cursorThemes.append(info.fileName());
         }
     }
     //local cursors
-    cursorThemes.append(cursorLocalParentDir.entryList(QDir::Dirs| QDir::NoDotAndDotDot));
+    cursorThemes.append(cursorLocalParentDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     return cursorThemes;
-
 }
 
 QStringList Utils::getGtkThemes() // Get all available gtk themes
@@ -174,14 +182,16 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
     kvantumStyles.removeFirst();
     return kvantumStyles;
 }
-QStringList Utils::getWidgetStyles(){
+QStringList Utils::getWidgetStyles()
+{
     //this literally took me 2 hrs to find.
     QStringList widgetStyles = QStyleFactory::keys();
-    return  widgetStyles;
+    return widgetStyles;
 }
 
-bool Utils::themeExists(QString themeName){
-    QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName + QStringLiteral("/contents/defaults") );
+bool Utils::themeExists(QString themeName)
+{
+    QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName + QStringLiteral("/contents/defaults"));
     return localTheme.exists() && localTheme.isFile();
 }
 void Utils::createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author, const QString &email, const QString &license, const QString &website)
@@ -205,7 +215,6 @@ void Utils::createNewTheme(const QString &pluginName, const QString &name, const
     cg.sync();
 
     dumpDefaultsConfigFile(pluginName);
-
 }
 
 void Utils::dumpDefaultsConfigFile(const QString &pluginName)
@@ -258,11 +267,11 @@ void Utils::dumpDefaultsConfigFile(const QString &pluginName)
     defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "org.kde.kdecoration2");
     defaultsConfigGroup.writeEntry("library", systemCG.readEntry("library", QStringLiteral("org.kde.breeze")));
     defaultsConfigGroup.writeEntry("theme", systemCG.readEntry("theme", QString()));
-
 }
 
-void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &themeType){
-    QString koiPath = QDir::homePath() + QStringLiteral( "/.config/koirc");
+void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &themeType)
+{
+    QString koiPath = QDir::homePath() + QStringLiteral("/.config/koirc");
     //write the defaults file, read from kde config files and save to the defaultsrc
     KConfig defaultsConfig(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/") % pluginName % "/contents/defaults");
 
@@ -278,7 +287,6 @@ void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &the
     defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
     systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "IconTheme");
     defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry(themeType, QStringLiteral("breeze")));
-
 
     defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
     defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
@@ -307,11 +315,11 @@ void Utils::useGlobalTheme(QString themeName)
 }
 void Utils::goLight()
 {
-    goLightKvantumStyle(); //this should come before useGlobaltheme for it to update on the fly 
+    goLightKvantumStyle(); //this should come before useGlobaltheme for it to update on the fly
     useGlobalTheme("Koi-Light");
     goLightGtk();
     goLightWall();
-    
+
     if (settings->value("notify").toBool())
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
@@ -319,7 +327,7 @@ void Utils::goLight()
 }
 void Utils::goDark()
 {
-    goDarkKvantumStyle();//this should come before useGlobaltheme for it to update on the fly 
+    goDarkKvantumStyle(); //this should come before useGlobaltheme for it to update on the fly
     useGlobalTheme("Koi-Dark");
     goDarkGtk();
     goDarkWall();
@@ -345,14 +353,14 @@ void Utils::goDarkGtk()
 }
 void Utils::goLightKvantumStyle()
 {
-    if(settings->value("KvantumStyle/enabled").toBool())
+    if (settings->value("KvantumStyle/enabled").toBool())
     {
         kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/light").toString());
     }
 }
 void Utils::goDarkKvantumStyle()
 {
-    if(settings->value("KvantumStyle/enabled").toBool())
+    if (settings->value("KvantumStyle/enabled").toBool())
     {
         kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/dark").toString());
     }
