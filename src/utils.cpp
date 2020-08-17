@@ -196,8 +196,7 @@ QStringList Utils::getWidgetStyles()
 }
 
 QList<Decoration> Utils::getWindowDecorations(){
-    /*TODO this would be deleted in the future  
-    There are two ways that window decoration is written that i know of 
+    /*There are two ways that window decoration is written that i know of
     using the 
     "library = org.kde.nameofthelibrary"  then the "theme name" stored in /usr/lib/qt/plugins/org.kde.kdecoration2/  or 
     "library =library=org.kde.kwin.aurorae"  then "theme=__aurorae__svg__nameoftheme" 

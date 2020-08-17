@@ -416,14 +416,20 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
         if (lightWidget != utils.settings->value("WidgetStyle/light").toString())   {
             return 0;
         }
-        if (darkWidget != utils.settings->value("WidgetStyle/light").toString()){
+        if (darkWidget != utils.settings->value("WidgetStyle/dark").toString()){
             return 0;
         }
-        if (darkCursor != utils.settings->value("Mouse/light").toString()){
+        if (darkCursor != utils.settings->value("Mouse/dark").toString()){
             return 0;
         }
         if (lightCursor != utils.settings->value("Mouse/light").toString() ){
             return  0;
+        }
+        if (lightDecoration != utils.settings->value("WidgetDecoration/light").toString()){
+            return 0;
+        }
+        if (darkDecoration != utils.settings->value("WidgetDecoration/dark").toString()){
+            return 0;
         }
 
     return 1;
