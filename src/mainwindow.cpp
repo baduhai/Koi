@@ -147,6 +147,8 @@ void MainWindow::loadPrefs() {
     ui->lightDropGtk->setCurrentText(utils.settings->value("GTKTheme/light").toString());
     ui->darkDropGtk->setCurrentText(utils.settings->value("GTKTheme/dark").toString());
 
+    ui->lightDropWidget->setCurrentText(utils.settings->value("WidgetStyle/light").toString());
+    ui->darkDropWidget->setCurrentText(utils.settings->value("WidgetStyle/dark").toString());
     // Load Kvantum Style theme prefs
     if (utils.settings->value("KvantumStyle/enabled").toBool()) {
         ui->kvantumStyleCheckBox->setChecked(true);
@@ -157,7 +159,10 @@ void MainWindow::loadPrefs() {
     ui->lightDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/light").toString());
     ui->darkDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/Dark").toString());
 
-    //TODO add other styles here
+    //load cursor preferences 
+    ui->lightDropCursor->setCurrentText(utils.settings->value("Mouse/light").toString());
+    ui->darkDropCursor->setCurrentText(utils.settings->value("Mouse/dark").toString());
+
     ui->lightDropDecoration->setCurrentText(utils.settings->value("WindowDecoration/light").toString());
     ui->darkDropDecoration->setCurrentText(utils.settings->value("WindowDecoration/light").toString());
 
