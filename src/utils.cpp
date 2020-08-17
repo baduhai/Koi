@@ -8,7 +8,6 @@ Utils::Utils()
 // Global settings stuff
 void Utils::initialiseSettings()
 {
-    //fdfdfdf
     //settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
     //TODO switch to koiglobalrc because a file is already using koirc (Koirc)
     settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
@@ -22,8 +21,8 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
     QString app_name = "Koi";        // What program is the notification coming from?
     uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
     QString app_icon;                // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
-    QString summary = notifySummary; // Title of notification.
-    QString body = notifyBody;       // Notification body.
+    QString summary = std::move(notifySummary); // Title of notification.
+    QString body = std::move(notifyBody);       // Notification body.
     QStringList actions;             // No idea how to use.
     QVariantMap hints;               // No idea how to use.
     int timeout = timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
@@ -98,37 +97,12 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
     QStringList colorSchemesSystemNames;
-    for (int i = 0; i < colorSchemesSystem.size(); i++)
+    for (const auto & i : colorSchemesSystem)
     {
-        colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
+        colorSchemesSystemNames.append(i.baseName());
     }
     QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
     return colorSchemesNames;
-}
-QStringList Utils::getColorSchemesPath() // Get all available color schemes
-{
-    QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-    colorsLocalDir.setFilter(QDir::Files);
-    colorsLocalDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-    QStringList colorSchemesLocalPath;
-    for (int i = 0; i < colorSchemesLocal.size(); i++)
-    {
-        colorSchemesLocalPath.append(colorSchemesLocal.at(i).absoluteFilePath());
-    }
-    QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-    colorsSystemDir.setFilter(QDir::Files);
-    colorsSystemDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-    QStringList colorSchemesSystemPath;
-    for (const auto &colorSchemes : colorSchemesSystem)
-    {
-        colorSchemesSystemPath.append(colorSchemes.absoluteFilePath());
-    }
-    QStringList colorSchemesPath = colorSchemesSystemPath + colorSchemesLocalPath;
-    return colorSchemesPath;
 }
 QStringList Utils::getIconThemes() // Get all available icon themes
 {

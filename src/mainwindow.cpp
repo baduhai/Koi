@@ -291,50 +291,50 @@ void MainWindow::savePrefs() {
 void MainWindow::refreshDirs() // Refresh function to find new themes
 {
     // Refresh plasma styles
-    QStringList plasmaStyles = utils.getPlasmaStyles();
+    QStringList plasmaStyles = Utils::getPlasmaStyles();
     ui->lightDropStyle->clear();
     ui->lightDropStyle->addItems(plasmaStyles);
     ui->darkDropStyle->clear();
     ui->darkDropStyle->addItems(plasmaStyles);
     // Refresh color schemes
-    QStringList colorSchemes = utils.getColorSchemes();
+    QStringList colorSchemes = Utils::getColorSchemes();
     ui->lightDropColor->clear();
     ui->lightDropColor->addItems(colorSchemes);
     ui->darkDropColor->clear();
     ui->darkDropColor->addItems(colorSchemes);
     // Refresh icon themes
-    QStringList iconThemes = utils.getIconThemes();
+    QStringList iconThemes = Utils::getIconThemes();
     ui->lightDropIcon->clear();
     ui->lightDropIcon->addItems(iconThemes);
     ui->darkDropIcon->clear();
     ui->darkDropIcon->addItems(iconThemes);
     // Refresh gtk themes
-    QStringList gtkThemes = utils.getGtkThemes();
+    QStringList gtkThemes = Utils::getGtkThemes();
     ui->lightDropGtk->clear();
     ui->lightDropGtk->addItems(gtkThemes);
     ui->darkDropGtk->clear();
     ui->darkDropGtk->addItems(gtkThemes);
     // Refresh Kvantum Style themes.
-    QStringList kvantumStyle = utils.getKvantumStyles();
+    QStringList kvantumStyle = Utils::getKvantumStyles();
     ui->lightDropKvantumStyle->clear(); //clears everything from the kvantum drop down menu
     ui->darkDropKvantumStyle->clear();
     ui->lightDropKvantumStyle->addItems(kvantumStyle); //adds the new loaded kvantum styles
     ui->darkDropKvantumStyle->addItems(kvantumStyle);
 
     //cursor themes.
-    QStringList cursorTheme = utils.getCursorThemes();
+    QStringList cursorTheme = Utils::getCursorThemes();
     ui->lightDropCursor->clear();
     ui->darkDropCursor->clear();
     ui->lightDropCursor->addItems(cursorTheme);
     ui->darkDropCursor->addItems(cursorTheme);
     //widget styles.
-    QStringList widgetStyle = utils.getWidgetStyles();
+    QStringList widgetStyle = Utils::getWidgetStyles();
     ui->lightDropWidget->clear();
     ui->darkDropWidget->clear();
     ui->lightDropWidget->addItems(widgetStyle);
     ui->darkDropWidget->addItems(widgetStyle);
     //Window decoration styles
-    QStringList decorationStyle = utils.getWindowDecorationsStyle();
+    QStringList decorationStyle = Utils::getWindowDecorationsStyle();
     ui->lightDropDecoration->clear();
     ui->darkDropDecoration->clear();
     ui->lightDropDecoration->addItems(decorationStyle);
@@ -526,8 +526,8 @@ void MainWindow::on_applyBtn_clicked() {
     savePrefs();
     //dont know why but when it is in saveprefs; it requires two clicks on
     //apply button it works fine here
-    utils.writeToThemeConfigFile("Koi-Light", "light");
-    utils.writeToThemeConfigFile("Koi-Dark", "dark");
+    Utils::writeToThemeConfigFile("Koi-Light", "light");
+    Utils::writeToThemeConfigFile("Koi-Dark", "dark");
 }
 //Todo cursors on the desktop don't update you need to restart the plasma shell
 // it also doesn't even work in the normal kde systemsettings

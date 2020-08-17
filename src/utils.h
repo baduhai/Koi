@@ -36,17 +36,16 @@ public:
     QSettings *settings{};
     void initialiseSettings();
 
-    QStringList getPlasmaStyles();
-    QStringList getColorSchemes();
+    static QStringList getPlasmaStyles();
+    static QStringList getColorSchemes();
 
-    QStringList getColorSchemesPath();
-    QStringList getCursorThemes();
-    QStringList getIconThemes();
-    QStringList getGtkThemes();
-    QStringList getWidgetStyles();
-    QStringList getKvantumStyles();
-    QStringList getWindowDecorationsStyle();
-    QList<Decoration> getWindowDecorations();
+    static QStringList getCursorThemes();
+    static QStringList getIconThemes();
+    static QStringList getGtkThemes();
+    static QStringList getWidgetStyles();
+    static QStringList getKvantumStyles();
+    static QStringList getWindowDecorationsStyle();
+    static QList<Decoration> getWindowDecorations();
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
@@ -64,11 +63,10 @@ public:
     static bool themeExists(const QString &themeName);
     void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
                         const QString &email, const QString &license, const QString &website);
-    void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);
+    static void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);
 
-    void dumpPlasmaLayout(const QString &pluginName);
 
-    void dumpDefaultsConfigFile(const QString &pluginName);
+    static void dumpDefaultsConfigFile(const QString &pluginName);
 private:
     Gtk gtk;
     KvantumStyle kvantumStyle;
