@@ -4,26 +4,10 @@ ColorScheme::ColorScheme()
 {
 
 }
-
-void ColorScheme::setColorScheme(QString colorScheme)
+void ColorScheme::setColorScheme(const QString &colorScheme)
 {
-    // Setting color scheme in user kde config
-    QString kdeGlobalsLocation = QStandardPaths::locate(QStandardPaths::GenericConfigLocation, "kdeglobals");
-    KSharedConfigPtr schemeSource = KSharedConfig::openConfig(colorScheme, KSharedConfig::CascadeConfig);
-    KSharedConfigPtr userDestiny = KSharedConfig::openConfig(kdeGlobalsLocation, KSharedConfig::CascadeConfig);
-    for (const QString &group: schemeSource->groupList())
-    {
-        if (group == "General")
-        {
-            continue;
-        }
-        KConfigGroup schemeSourceCG(schemeSource, group);
-        KConfigGroup userDestinyCG(userDestiny, group);
-        schemeSourceCG.copyTo(&userDestinyCG);
-    }
-    KConfigGroup(userDestiny, "General").writeEntry("ColorScheme", QFileInfo(colorScheme).baseName());
-    userDestiny->sync();
     // Notifying Plasma of changes to color scheme
+    //TODO recheck if this is actually needed
     QDBusMessage notify = QDBusMessage::createSignal("/KGlobalSettings", "org.kde.KGlobalSettings", "notifyChange");
     notify.setArguments({0, 0});
     QDBusConnection::sessionBus().send(notify);
@@ -31,4 +15,30 @@ void ColorScheme::setColorScheme(QString colorScheme)
     breezeGtkProcess = new QProcess();
     breezeGtkProcess->setProgram(QStringLiteral("krdb"));
     breezeGtkProcess->start();
+}
+QStringList ColorScheme::getColorSchemes() // Get all available color schemes
+{
+    QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
+    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
+    colorsLocalDir.setFilter(QDir::Files);
+    colorsLocalDir.setSorting(QDir::Name);
+    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
+    QStringList colorSchemesLocalNames;
+    //TODO remember to ask about qasconst in qt reddit group
+    for (const auto &color : qAsConst(colorSchemesLocal))
+    {
+        colorSchemesLocalNames.append(color.baseName());
+    }
+    QDir colorsSystemDir("/usr/share/color-schemes");
+    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
+    colorsSystemDir.setFilter(QDir::Files);
+    colorsSystemDir.setSorting(QDir::Name);
+    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
+    QStringList colorSchemesSystemNames;
+    for (const auto & i : colorSchemesSystem)
+    {
+        colorSchemesSystemNames.append(i.baseName());
+    }
+    QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
+    return colorSchemesNames;
 }

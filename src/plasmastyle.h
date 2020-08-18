@@ -13,12 +13,7 @@ class PlasmaStyle
 public:
     PlasmaStyle();
 
-    void setPlasmaStyle(QString plasmaStyle);
-
-    void setPlasmaStyleBreeze();
-
-private:
-    QProcess *styleProcess;
+    static QStringList getPlasmaStyles();
 };
 
 #endif // PLASMASTYLE_H

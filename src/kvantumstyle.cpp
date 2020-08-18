@@ -1,3 +1,5 @@
+#include <QtCore/QDir>
+#include <utility>
 #include "kvantumstyle.h"
 
 KvantumStyle::KvantumStyle()
@@ -10,6 +12,23 @@ void KvantumStyle::setKvantumStyle(QString kvantumStyle)
 {
     kvantumStyleProcess = new QProcess;
     QString program = "/usr/bin/kvantummanager";
-    QStringList arguments{"--set", kvantumStyle};
+    QStringList arguments{"--set", std::move(kvantumStyle)};
     kvantumStyleProcess->start(program, arguments);
+}
+
+QStringList KvantumStyle::getKvantumStyles() // Get all available kvantum styles
+{
+    QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
+    QDir kvantumStyleSystemDir("/usr/share/Kvantum");
+    QStringList kvantumStyles;
+    if (kvantumStyleLocalDir.exists()){
+        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs  | QDir::NoDotAndDotDot  ));
+    }
+    if(kvantumStyleSystemDir.exists()){
+        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot  ));
+    }
+    kvantumStyles.removeDuplicates();
+    kvantumStyles.removeFirst();
+    kvantumStyles.removeFirst();
+    return kvantumStyles;
 }

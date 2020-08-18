@@ -9,10 +9,7 @@ class Icons
 public:
     Icons();
 
-    void setIcons(QString iconTheme);
-
-private:
-    QProcess *iconProcess;
+    static QStringList getIconThemes();
 };
 
 #endif // ICONS_H

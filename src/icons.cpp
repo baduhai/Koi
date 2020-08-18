@@ -1,3 +1,4 @@
+#include <QtCore/QDir>
 #include "icons.h"
 
 Icons::Icons()
@@ -5,10 +6,13 @@ Icons::Icons()
 
 }
 
-void Icons::setIcons(QString iconTheme)
+QStringList Icons::getIconThemes() // Get all available icon themes
 {
-    iconProcess = new QProcess;
-    QString program = "/usr/lib/plasma-changeicons";
-    QStringList arguments{iconTheme};
-    iconProcess->start(program, arguments);
+    QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
+    QDir iconsSystemDir("/usr/share/icons");
+    QStringList iconThemes = iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
+    iconThemes.removeDuplicates();
+    iconThemes.removeFirst();
+    iconThemes.removeFirst();
+    return iconThemes;
 }

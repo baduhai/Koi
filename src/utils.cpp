@@ -61,59 +61,8 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 }
 
 // Get stuff
-QStringList Utils::getPlasmaStyles() // Get all available plasma styles
-{
-    QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
-    QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
-    QStringList plasmaStyles;
-    if (stylesLocalDir.exists())
-    {
-        plasmaStyles.append(stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    if (stylesSystemDir.exists())
-    {
-        plasmaStyles.append(stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    plasmaStyles.removeDuplicates();
-    plasmaStyles.append("breeze");
-    return plasmaStyles;
-}
-QStringList Utils::getColorSchemes() // Get all available color schemes
-{
-    QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-    colorsLocalDir.setFilter(QDir::Files);
-    colorsLocalDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-    QStringList colorSchemesLocalNames;
-    //TODO remember to ask about qasconst in qt reddit group
-    for (const auto &color : qAsConst(colorSchemesLocal))
-    {
-        colorSchemesLocalNames.append(color.baseName());
-    }
-    QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-    colorsSystemDir.setFilter(QDir::Files);
-    colorsSystemDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-    QStringList colorSchemesSystemNames;
-    for (const auto & i : colorSchemesSystem)
-    {
-        colorSchemesSystemNames.append(i.baseName());
-    }
-    QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
-    return colorSchemesNames;
-}
-QStringList Utils::getIconThemes() // Get all available icon themes
-{
-    QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
-    QDir iconsSystemDir("/usr/share/icons");
-    QStringList iconThemes = iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
-    iconThemes.removeDuplicates();
-    iconThemes.removeFirst();
-    iconThemes.removeFirst();
-    return iconThemes;
-}
+
+
 QStringList Utils::getCursorThemes()
 {
     QDir cursorOldLocalParentDir(QDir::homePath() + QStringLiteral("/.local/share/icons/"));
@@ -136,32 +85,6 @@ QStringList Utils::getCursorThemes()
     return cursorThemes;
 }
 
-QStringList Utils::getGtkThemes() // Get all available gtk themes
-{
-    QDir gtkLocalDir(QDir::homePath() + "/.themes");
-    QDir gtkSystemDir("/usr/share/themes");
-    QStringList gtkThemes = gtkLocalDir.entryList(QDir::Dirs) + gtkSystemDir.entryList(QDir::Dirs);
-    gtkThemes.removeDuplicates();
-    gtkThemes.removeFirst();
-    gtkThemes.removeFirst();
-    return gtkThemes;
-}
-QStringList Utils::getKvantumStyles() // Get all available kvantum styles
-{
-    QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
-    QDir kvantumStyleSystemDir("/usr/share/Kvantum");
-    QStringList kvantumStyles;
-    if (kvantumStyleLocalDir.exists()){
-        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs  | QDir::NoDotAndDotDot  ));
-    }
-    if(kvantumStyleSystemDir.exists()){
-        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot  ));
-    }
-    kvantumStyles.removeDuplicates();
-    kvantumStyles.removeFirst();
-    kvantumStyles.removeFirst();
-    return kvantumStyles;
-}
 QStringList Utils::getWidgetStyles()
 {
     //this literally took me 2 hrs to find.
@@ -359,6 +282,7 @@ void Utils::goLight()
 {
     goLightKvantumStyle(); //this should come before useGlobaltheme for it to update on the fly
     useGlobalTheme("Koi-Light");
+    goLightColors();
     goLightGtk();
     goLightWall();
 
@@ -371,11 +295,26 @@ void Utils::goDark()
 {
     goDarkKvantumStyle(); //this should come before useGlobaltheme for it to update on the fly
     useGlobalTheme("Koi-Dark");
+    goDarkColors();
     goDarkGtk();
     goDarkWall();
     if (settings->value("notify").toBool())
     {
         notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
+    }
+}
+void Utils::goLightColors()
+{
+    if (settings->value("ColorScheme/enabled").toBool())
+    {
+        colorScheme.setColorScheme(settings->value("ColorScheme/light").toString());
+    }
+}
+void Utils::goDarkColors()
+{
+    if (settings->value("ColorScheme/enabled").toBool())
+    {
+        colorScheme.setColorScheme(settings->value("ColorScheme/dark").toString());
     }
 }
 void Utils::goLightGtk()

@@ -36,14 +36,9 @@ public:
     QSettings *settings{};
     void initialiseSettings();
 
-    static QStringList getPlasmaStyles();
-    static QStringList getColorSchemes();
-
     static QStringList getCursorThemes();
-    static QStringList getIconThemes();
-    static QStringList getGtkThemes();
     static QStringList getWidgetStyles();
-    static QStringList getKvantumStyles();
+
     static QStringList getWindowDecorationsStyle();
     static QList<Decoration> getWindowDecorations();
 
@@ -53,6 +48,8 @@ public:
     void useGlobalTheme(QString type);
     void goLight();
     void goDark();
+    void goLightColors();
+    void goDarkColors();
     void goLightGtk();
     void goDarkGtk();
     void goLightKvantumStyle();
@@ -71,6 +68,7 @@ private:
     Gtk gtk;
     KvantumStyle kvantumStyle;
     Wallpaper wallpaper;
+    ColorScheme colorScheme;
 
     QProcess *useGlobalProcess{};
 

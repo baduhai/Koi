@@ -8,14 +8,21 @@ PlasmaStyle::PlasmaStyle()
 
 }
 
-void PlasmaStyle::setPlasmaStyle(QString plasmaStyle)
+QStringList PlasmaStyle::getPlasmaStyles() // Get all available plasma styles
 {
-    KSharedConfigPtr plasmarc = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericConfigLocation, "plasmarc"), KSharedConfig::CascadeConfig);
-    KConfigGroup(plasmarc, "Theme").writeEntry("name", plasmaStyle);
+    QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
+    QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
+    QStringList plasmaStyles;
+    if (stylesLocalDir.exists())
+    {
+        plasmaStyles.append(stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
+    if (stylesSystemDir.exists())
+    {
+        plasmaStyles.append(stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
+    plasmaStyles.removeDuplicates();
+    plasmaStyles.append("breeze");
+    return plasmaStyles;
 }
 
-void PlasmaStyle::setPlasmaStyleBreeze()
-{
-    KSharedConfigPtr plasmarc = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericConfigLocation, "plasmarc"), KSharedConfig::CascadeConfig);
-    KConfigGroup(plasmarc, "Theme").deleteGroup();
-}

@@ -11,7 +11,7 @@ public:
     Gtk();
 
     void setGtk(QString gtkTheme);
-
+    static QStringList getGtkThemes();
 private:
     QDBusConnection *bus;
     QDBusInterface *interface;

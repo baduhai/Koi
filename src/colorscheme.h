@@ -14,7 +14,8 @@ class ColorScheme
 public:
     ColorScheme();
 
-    void setColorScheme(QString colorScheme);
+    void setColorScheme(const QString &colorScheme);
+    static QStringList getColorSchemes();
 
 private:
     QProcess *breezeGtkProcess;

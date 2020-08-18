@@ -291,31 +291,31 @@ void MainWindow::savePrefs() {
 void MainWindow::refreshDirs() // Refresh function to find new themes
 {
     // Refresh plasma styles
-    QStringList plasmaStyles = Utils::getPlasmaStyles();
+    QStringList plasmaStyles = PlasmaStyle::getPlasmaStyles();
     ui->lightDropStyle->clear();
     ui->lightDropStyle->addItems(plasmaStyles);
     ui->darkDropStyle->clear();
     ui->darkDropStyle->addItems(plasmaStyles);
     // Refresh color schemes
-    QStringList colorSchemes = Utils::getColorSchemes();
+    QStringList colorSchemes = ColorScheme::getColorSchemes();
     ui->lightDropColor->clear();
     ui->lightDropColor->addItems(colorSchemes);
     ui->darkDropColor->clear();
     ui->darkDropColor->addItems(colorSchemes);
     // Refresh icon themes
-    QStringList iconThemes = Utils::getIconThemes();
+    QStringList iconThemes = Icons::getIconThemes();
     ui->lightDropIcon->clear();
     ui->lightDropIcon->addItems(iconThemes);
     ui->darkDropIcon->clear();
     ui->darkDropIcon->addItems(iconThemes);
     // Refresh gtk themes
-    QStringList gtkThemes = Utils::getGtkThemes();
+    QStringList gtkThemes = Gtk::getGtkThemes();
     ui->lightDropGtk->clear();
     ui->lightDropGtk->addItems(gtkThemes);
     ui->darkDropGtk->clear();
     ui->darkDropGtk->addItems(gtkThemes);
     // Refresh Kvantum Style themes.
-    QStringList kvantumStyle = Utils::getKvantumStyles();
+    QStringList kvantumStyle = KvantumStyle::getKvantumStyles();
     ui->lightDropKvantumStyle->clear(); //clears everything from the kvantum drop down menu
     ui->darkDropKvantumStyle->clear();
     ui->lightDropKvantumStyle->addItems(kvantumStyle); //adds the new loaded kvantum styles
@@ -465,7 +465,7 @@ void MainWindow::scheduleDark() {
     });
 }
 
-// Funtionality of buttons - Related to program navigation, interaction and saving settings
+// Functionality of buttons - Related to program navigation, interaction and saving settings
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
 {
     lightWall = utils.settings->value("Wallpaper/light").toString();
@@ -479,7 +479,7 @@ void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferen
     ui->mainStack->setCurrentIndex(1);
 }
 
-void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must setup cheking if prefs saved
+void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must setup checking if prefs saved
 {
     if (prefsSaved()) {
         ui->mainStack->setCurrentIndex(0);
@@ -743,7 +743,7 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
         ui->darkTimeEdit->setEnabled(0);
         utils.settings->setValue("schedule", false);
         utils.settings->sync();
-        ui->resMsg->setText(tr("To disable automatic mode , Koi must be restarded."));
+        ui->resMsg->setText(tr("To disable automatic mode , Koi must be restarted."));
         ui->resMsg->setMessageType(KMessageWidget::Warning);
         ui->resMsg->animatedShow();
     } else {
@@ -762,7 +762,7 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
         }
         utils.settings->setValue("schedule", true);
         utils.settings->sync();
-        ui->resMsg->setText(tr("To enable automatic mode, Koi must be restarded."));
+        ui->resMsg->setText(tr("To enable automatic mode, Koi must be restarted."));
         ui->resMsg->setMessageType(KMessageWidget::Warning);
         ui->resMsg->animatedShow();
     }

@@ -10,7 +10,7 @@ public:
     KvantumStyle();
 
     void setKvantumStyle(QString KvantumStyle);
-
+    static QStringList getKvantumStyles();
 private:
     QProcess *kvantumStyleProcess;
 };
