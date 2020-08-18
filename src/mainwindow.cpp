@@ -240,6 +240,7 @@ void MainWindow::savePrefs() {
     } else {
         utils.settings->setValue("KvantumStyle/enabled", true);
     }
+
     //Kvantum Style Theme saving Prefs
     utils.settings->setValue("KvantumStyle/light", lightKvantumStyle);
     utils.settings->setValue("KvantumStyle/dark", darkKvantumStyle);
@@ -541,9 +542,23 @@ void MainWindow::on_darkBtn_clicked() {
 //widgetStyle
 void MainWindow::on_lightDropWidget_currentIndexChanged(const QString &lightWidgetUN){
     lightWidget= lightWidgetUN;
+    if(lightWidgetUN == "kvantum" || lightWidgetUN == "kvantum-dark"){
+        ui->lightKvantumStyle->setEnabled(true);
+        ui->lightDropKvantumStyle->setEnabled(true);
+    } else {
+        ui->lightKvantumStyle->setEnabled(false);
+        ui->lightDropKvantumStyle->setEnabled(false);
+    }
 }
 void MainWindow::on_darkDropWidget_currentIndexChanged(const QString &darkWidgetUN) {
     darkWidget = darkWidgetUN;
+    if(darkWidgetUN == "kvantum" || darkWidgetUN == "kvantum-dark"){
+        ui->darkKvantumStyle->setEnabled(true);
+        ui->darkDropKvantumStyle->setEnabled(true);
+    } else {
+        ui->darkKvantumStyle->setEnabled(false);
+        ui->darkDropKvantumStyle->setEnabled(false);
+    }
 }
 //CursorStyle
 void MainWindow::on_lightDropCursor_currentIndexChanged(const QString &lightCursorUN) {
@@ -616,21 +631,6 @@ void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme che
     }
 }
 
-void MainWindow::on_kvantumStyleCheckBox_stateChanged(
-        int kvantumStyleEnabled) //kvantum theme checkbox logic used to perform an actioni after enabling the check box
-{
-    if (ui->kvantumStyleCheckBox->checkState() == 0) {
-        ui->darkKvantumStyle->setEnabled(0);
-        ui->lightDropKvantumStyle->setEnabled(0);
-        ui->darkDropKvantumStyle->setEnabled(0);
-        ui->darkKvantumStyle->setEnabled(0);
-    } else {
-        ui->darkKvantumStyle->setEnabled(1);
-        ui->lightKvantumStyle->setEnabled(1);
-        ui->darkDropKvantumStyle->setEnabled(1);
-        ui->lightDropKvantumStyle->setEnabled(1);
-    }
-}
 
 void MainWindow::on_lightDropStyle_currentIndexChanged(const QString &lightStyleUN) // Set light plasma style
 {
