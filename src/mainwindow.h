@@ -91,7 +91,6 @@ private slots:
     void on_backBtn_clicked();
     //void on_actionRefresh_triggered();
     void on_applyBtn_clicked();
-    void on_kvantumStyleCheckBox_stateChanged(int arg1);
     void on_advancedPageBtn_clicked();
     void on_lightDropKvantumStyle_currentIndexChanged(const QString &arg1);
     void on_darkDropKvantumStyle_currentIndexChanged(const QString &arg1);
