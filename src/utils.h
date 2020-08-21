@@ -48,14 +48,11 @@ public:
     void useGlobalTheme(QString type);
     void goLight();
     void goDark();
-    void goLightColors();
-    void goDarkColors();
-    void goLightGtk();
-    void goDarkGtk();
-    void goLightKvantumStyle();
-    void goDarkKvantumStyle();
-    void goLightWall();
-    void goDarkWall();
+    void goColors(const QString& themeType);
+    void goGtk(const QString& themeType);
+    void goKvantumStyle(const QString &themeType);
+	void goWall(const QString& themeType);
+	void runScript(const QString& themeType);
 
     static bool themeExists(const QString &themeName);
     void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
@@ -75,6 +72,8 @@ private:
     QDBusConnection *bus{};
 
     QDBusInterface *notifyInterface{};
+
+
 };
 
 #endif // UTILS_H

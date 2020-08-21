@@ -186,6 +186,35 @@ void MainWindow::loadPrefs() {
     } else {
         ui->darkWallBtn->setText(darkWallBtnText);
     }
+
+    if (utils.settings->value("Script/lightEnabled").toBool()) {
+        ui->lightScriptCheckBox->setChecked(true);
+    } else {
+        ui->lightScriptCheckBox->setChecked(false);
+    }
+
+    if (utils.settings->value("Script/darkEnabled").toBool()) {
+        ui->darkScriptCheckBox->setChecked(true);
+    } else {
+        ui->darkScriptCheckBox->setChecked(false);
+    }
+    //Run Script Preferences
+    QFileInfo scriptL(utils.settings->value("Script/light").toString());
+    QString lightScriptBtnText = scriptL.fileName();
+    if(lightScript.isEmpty()){
+    	ui->lightScriptBtn->setText("Select Light Script");
+    }else {
+    	ui->lightScriptBtn->setText(lightScriptBtnText);
+    }
+
+    QFileInfo scriptD(utils.settings->value("Script/dark").toString());
+    QString darkScriptBtnText = scriptD.fileName();
+    if(darkScript.isEmpty()){
+    	ui->darkScriptBtn->setText("Select Dark Script");
+    }else {
+    	ui->darkScriptBtn->setText(darkScriptBtnText);
+    }
+
 }
 
 void MainWindow::savePrefs() {
@@ -254,6 +283,26 @@ void MainWindow::savePrefs() {
     // Wallpaper saving prefs
     utils.settings->setValue("Wallpaper/light", lightWall);
     utils.settings->setValue("Wallpaper/dark", darkWall);
+
+    // Run Scripts
+    //light
+    if(ui->lightScriptCheckBox->isChecked() == 0 )
+	{
+    	utils.settings->setValue("Script/lightEnabled", false);
+	}else {
+    	utils.settings->setValue("Script/lightEnabled", true);
+    }
+
+
+    //dark script
+    if(ui->darkScriptBtn->isChecked() == 0 )
+	{
+    	utils.settings->setValue("Script/darkEnabled", false);
+	}else {
+    	utils.settings->setValue("Script/darkEnabled", true);
+    }
+    utils.settings->setValue("Script/light",lightScript);
+    utils.settings->setValue("Script/dark",darkScript);
 
     //Cursor Style Theme saving Prefs
     utils.settings->setValue(QStringLiteral("Mouse/light"), lightCursor);
@@ -356,6 +405,7 @@ void MainWindow::toggleVisibility() {
 int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other way. Maybe an array?
 {
     //Todo simplyfy this probably by creating an emit change if the index of the combo boxes changes
+    //TODO add missing preferences here
     //by using signals
 
     //to choose the settings page
@@ -550,6 +600,24 @@ void MainWindow::on_lightDropWidget_currentIndexChanged(const QString &lightWidg
         ui->lightDropKvantumStyle->setEnabled(false);
     }
 }
+
+//runcommand dark
+void MainWindow::on_lightScriptCheckBox_stateChanged(int lightScriptEnabled){
+    if (ui->lightScriptCheckBox->checkState() == false) {
+    	ui->lightScriptBtn->setEnabled(false);
+    } else {
+    	ui->lightScriptBtn->setEnabled(true);
+    }
+}
+
+//runcommand dark
+void MainWindow::on_darkScriptCheckBox_stateChanged(int lightScriptEnabled){
+    if (ui->darkScriptCheckBox->checkState() == false) {
+    	ui->darkScriptBtn->setEnabled(false);
+    } else {
+    	ui->darkScriptBtn->setEnabled(true);
+    }
+}
 void MainWindow::on_darkDropWidget_currentIndexChanged(const QString &darkWidgetUN) {
     darkWidget = darkWidgetUN;
     if(darkWidgetUN == "kvantum" || darkWidgetUN == "kvantum-dark"){
@@ -732,6 +800,17 @@ void MainWindow::on_darkWallBtn_clicked() // Set dark wallpaper
     ui->darkWallBtn->setToolTip(darkWall);
 }
 
+void MainWindow::on_lightScriptBtn_clicked()
+{
+	lightScript = QFileDialog::getOpenFileName(this,
+        tr("Run Script"), "/home", tr("Script Files(.sh) (*.sh)"));
+}
+
+void MainWindow::on_darkScriptBtn_clicked()
+{
+	darkScript = QFileDialog::getOpenFileName(this,
+        tr("Run Script"), "/home", tr("Script Files(.sh) (*.sh)"));
+}
 void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for enabling scheduling of themes
 {
     if (ui->autoCheckBox->checkState() == 0) {

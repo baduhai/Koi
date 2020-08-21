@@ -206,7 +206,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>0</y>
+             <y>-352</y>
              <width>395</width>
              <height>730</height>
             </rect>
@@ -674,6 +674,10 @@
            <property name="text">
             <string>Back</string>
            </property>
+           <property name="icon">
+            <iconset theme="back">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
           </widget>
          </item>
         </layout>
@@ -694,9 +698,9 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
-           <width>421</width>
-           <height>431</height>
+           <y>-45</y>
+           <width>400</width>
+           <height>476</height>
           </rect>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
@@ -851,7 +855,7 @@
            </layout>
           </item>
           <item row="2" column="0" colspan="2">
-           <layout class="QVBoxLayout" name="cursorStyle_3">
+           <layout class="QVBoxLayout" name="windowDecoration">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_26">
               <item>
@@ -920,6 +924,60 @@
               </item>
               <item>
                <widget class="QComboBox" name="darkDropDecoration"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_19">
+              <item>
+               <widget class="QCheckBox" name="lightScriptCheckBox">
+                <property name="text">
+                 <string>Light Script</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="darkScriptCheckBox">
+                <property name="text">
+                 <string>Dark Script</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_23">
+              <item>
+               <widget class="QPushButton" name="lightScriptBtn">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Select Light Script</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="filerunner">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="darkScriptBtn">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Select dark Script</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="filerunner">
+                  <normaloff>.</normaloff>.</iconset>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

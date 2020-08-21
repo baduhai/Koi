@@ -97,6 +97,10 @@ private slots:
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
 
+    void on_lightScriptBtn_clicked();
+	void on_darkScriptBtn_clicked();
+	void on_lightScriptCheckBox_stateChanged(int lightScriptEnabled);
+	void on_darkScriptCheckBox_stateChanged(int darkScriptEnabled);
     void on_wallCheckBox_stateChanged(int arg1);
     //settings page 2
     void on_advancedPageHomeBtn_clicked();
@@ -147,7 +151,9 @@ private:
     QString lightDecorationTheme;
     QString darkDecorationLibrary;
     QString darkDecorationTheme;
+    QString lightScript;
+    QString darkScript;
     Utils utils;
-protected:
+
 };
 #endif // MAINWINDOW_H
