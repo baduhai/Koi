@@ -28,7 +28,5 @@ QStringList KvantumStyle::getKvantumStyles() // Get all available kvantum styles
         kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot  ));
     }
     kvantumStyles.removeDuplicates();
-    kvantumStyles.removeFirst();
-    kvantumStyles.removeFirst();
     return kvantumStyles;
 }
