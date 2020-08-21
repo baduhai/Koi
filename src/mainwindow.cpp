@@ -603,7 +603,7 @@ void MainWindow::on_lightDropWidget_currentIndexChanged(const QString &lightWidg
 
 //runcommand dark
 void MainWindow::on_lightScriptCheckBox_stateChanged(int lightScriptEnabled){
-    if (ui->lightScriptCheckBox->checkState() == false) {
+    if (lightScriptEnabled == false) {
     	ui->lightScriptBtn->setEnabled(false);
     } else {
     	ui->lightScriptBtn->setEnabled(true);
@@ -611,8 +611,8 @@ void MainWindow::on_lightScriptCheckBox_stateChanged(int lightScriptEnabled){
 }
 
 //runcommand dark
-void MainWindow::on_darkScriptCheckBox_stateChanged(int lightScriptEnabled){
-    if (ui->darkScriptCheckBox->checkState() == false) {
+void MainWindow::on_darkScriptCheckBox_stateChanged(int darkScriptEnabled){
+    if ( darkScriptEnabled == false) {
     	ui->darkScriptBtn->setEnabled(false);
     } else {
     	ui->darkScriptBtn->setEnabled(true);
