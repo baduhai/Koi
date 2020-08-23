@@ -35,7 +35,7 @@ QStringList ColorScheme::getColorSchemes() // Get all available color schemes
     colorsSystemDir.setSorting(QDir::Name);
     QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
     QStringList colorSchemesSystemNames;
-    for (const auto & i : colorSchemesSystem)
+    for (const auto & i : qAsConst(colorSchemesSystem))
     {
         colorSchemesSystemNames.append(i.baseName());
     }

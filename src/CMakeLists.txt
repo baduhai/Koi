@@ -25,3 +25,6 @@ find_package(Threads)
 
 add_executable(${PROJECT_NAME} ${koi_SRC}  ${koi_RCS} )
 target_link_libraries(${PROJECT_NAME} ${QT5_LIBRARIES} ${KF5_LIBRAIRES} Threads::Threads)
+
+# Install the executable
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)

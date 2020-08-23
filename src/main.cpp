@@ -34,33 +34,13 @@ int main(int argc, char *argv[])
         Utils utils;
         utils.initialiseSettings();
 
-//        LnfLogic logic{};
-//        LnfListModel *themeList = logic.lnfList();
-//        if (!(themeList->themeExists("Koi-Light")))
-//        {
-//            logic.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
-//        }
-//
-//        if (!(themeList->themeExists("Koi-Dark")))
-//        {
-//            logic.createNewTheme("Koi-Dark","Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
-//
-//        }
-
-        if(!Utils::themeExists(QStringLiteral("Koi-Dark"))){
-           utils.createNewTheme("Koi-Dark", "Koi-Dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
+		//probably apply the koirc settings too not sure if it should be implemented yet
+        if(!Utils::themeExists(QStringLiteral("Koi-dark"))){
+           utils.createNewTheme("Koi-dark", "Koi-dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
-        if(!Utils::themeExists(QStringLiteral("Koi-Light"))){
-           utils.createNewTheme("Koi-Light", "Koi-Light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
+        if(!Utils::themeExists(QStringLiteral("Koi-light"))){
+           utils.createNewTheme("Koi-light", "Koi-light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
         }
-            /* QList<ThemeInfo> logicThemes = logic.lnfList()->getThemes();
-
-        for ( ThemeInfo temp  : logicThemes)
-        {
-            if(temp.name == "Koi-Light"){
-                 
-            }
-        }  */
 
             QApplication a(argc, argv);
             MainWindow w;

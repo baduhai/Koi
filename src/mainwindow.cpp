@@ -150,11 +150,6 @@ void MainWindow::loadPrefs() {
     ui->lightDropWidget->setCurrentText(utils.settings->value("WidgetStyle/light").toString());
     ui->darkDropWidget->setCurrentText(utils.settings->value("WidgetStyle/dark").toString());
     // Load Kvantum Style theme prefs
-    if (utils.settings->value("KvantumStyle/enabled").toBool()) {
-        ui->kvantumStyleCheckBox->setChecked(true);
-    } else {
-        ui->kvantumStyleCheckBox->setChecked(false);
-    }
     // sets the displayed text on the combo box of the kvantum style.
     ui->lightDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/light").toString());
     ui->darkDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/Dark").toString());
@@ -263,13 +258,6 @@ void MainWindow::savePrefs() {
     utils.settings->setValue("GTKTheme/light", lightGtk);
     utils.settings->setValue("GTKTheme/dark", darkGtk);
 
-    // Kvantum Style enabling
-    if (ui->kvantumStyleCheckBox->isChecked() == 0) {
-        utils.settings->setValue("KvantumStyle/enabled", false);
-    } else {
-        utils.settings->setValue("KvantumStyle/enabled", true);
-    }
-
     //Kvantum Style Theme saving Prefs
     utils.settings->setValue("KvantumStyle/light", lightKvantumStyle);
     utils.settings->setValue("KvantumStyle/dark", darkKvantumStyle);
@@ -316,13 +304,13 @@ void MainWindow::savePrefs() {
     //Decoration Style theme saving prefs
     //TODO break out of the for loop once found.
     QList<Decoration> decList= utils.getWindowDecorations();
-    for (const auto &dt : decList){
+    for (const auto &dt : qAsConst(decList)){
         if (QString::compare(dt.name, darkDecoration, Qt::CaseInsensitive) == 0){
             darkDecorationLibrary = dt.library;
             darkDecorationTheme = dt.theme;
         }
     }
-    for (const auto &dt : decList){
+    for (const auto &dt : qAsConst(decList)){
         if (QString::compare(dt.name, lightDecoration, Qt::CaseInsensitive) == 0){
             lightDecorationLibrary = dt.library;
             lightDecorationTheme = dt.theme;
@@ -454,10 +442,6 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
         if (darkWall != utils.settings->value("Wallpaper/dark").toString()) {
             return 0;
         }
-        //kvantum
-        if (ui->kvantumStyleCheckBox->isChecked() != utils.settings->value("KvantumStyle/enabled").toBool()) {
-            return 0;
-        }
         if (lightKvantumStyle != utils.settings->value("KvantumStyle/light").toString()) {
             return 0;
         }
@@ -497,7 +481,7 @@ void MainWindow::scheduleLight() {
     }
     std::string lightCron = std::to_string(lightCronMin) + " " + std::to_string(lightCronHr) + " * * *";
     s.cron(lightCron, [this]() {
-        utils.goLight();
+        utils.go("light");
     });
 }
 
@@ -512,7 +496,7 @@ void MainWindow::scheduleDark() {
     }
     std::string darkCron = std::to_string(darkCronMin) + " " + std::to_string(darkCronHr) + " * * *";
     s.cron(darkCron, [this]() {
-        utils.goDark();
+        utils.go("dark");
     });
 }
 
@@ -577,17 +561,17 @@ void MainWindow::on_applyBtn_clicked() {
     savePrefs();
     //dont know why but when it is in saveprefs; it requires two clicks on
     //apply button it works fine here
-    Utils::writeToThemeConfigFile("Koi-Light", "light");
-    Utils::writeToThemeConfigFile("Koi-Dark", "dark");
+    Utils::writeToThemeConfigFile("Koi-light", "light");
+    Utils::writeToThemeConfigFile("Koi-dark", "dark");
 }
 //Todo cursors on the desktop don't update you need to restart the plasma shell
 // it also doesn't even work in the normal kde systemsettings
 void MainWindow::on_lightBtn_clicked() {
-    utils.goLight();
+    utils.go("light");
 }
 
 void MainWindow::on_darkBtn_clicked() {
-    utils.goDark();
+    utils.go("dark");
 }
 //widgetStyle
 void MainWindow::on_lightDropWidget_currentIndexChanged(const QString &lightWidgetUN){
@@ -642,7 +626,7 @@ void MainWindow::on_darkDropCursor_currentIndexChanged(const QString &darkCursor
 void MainWindow::on_lightDropDecoration_currentIndexChanged(const QString &lightDecorationUN){
     lightDecoration = lightDecorationUN;
     QList<Decoration> decList= utils.getWindowDecorations();
-    for (const auto &dt : decList){
+    for (const auto &dt : qAsConst(decList)){
         if (QString::compare(dt.name, darkColor, Qt::CaseInsensitive) == 0){
             lightDecorationLibrary = dt.library;
             lightDecorationTheme = dt.theme;
@@ -927,14 +911,18 @@ void MainWindow::on_actionHide_triggered() // Hide to tray
     this->setVisible(0);
 }
 
-/*void MainWindow::on_actionRefresh_triggered() // Refresh dirs
+//void MainWindow::on_actionRestart_triggered() {
+//    QProcess restartProcess;
+//    restartProcess.setProgram(QApplication::applicationFilePath());
+//    qint64 pid;
+//    restartProcess.startDetached(&pid);
+//    exit(12);
+//}
+
+//this is being used because of kubuntu 18.04 does not support the above
+
+void MainWindow::on_actionRestart_triggered()
 {
-    on_refreshBtn_clicked();
-}*/
-void MainWindow::on_actionRestart_triggered() {
-    QProcess restartProcess;
-    restartProcess.setProgram(QApplication::applicationFilePath());
-    qint64 pid;
-    restartProcess.startDetached(&pid);
-    exit(12);
+	QProcess::startDetached(QApplication::applicationFilePath(), QStringList());
+	exit(12);
 }

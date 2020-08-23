@@ -42,27 +42,27 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 	if (now < lightTime && now < darkTime)
 	{
 		QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
-		goDark();
+		go("dark");
 	}
 	else if (now == lightTime) // Highly unlikely
 	{
 		QTest::qWait(1000);
-		goLight();
+		go("light");
 	}
 	else if (now > lightTime && now < darkTime)
 	{
 		QTest::qWait(1000);
-		goLight();
+		go("light");
 	}
 	else if (now == darkTime) // Highly unlikely
 	{
 		QTest::qWait(1000);
-		goDark();
+		go("dark");
 	}
 	else
 	{
 		QTest::qWait(1000);
-		goDark();
+		go("dark");
 	}
 }
 
@@ -115,7 +115,7 @@ QList<Decoration> Utils::getWindowDecorations()
 	}
 	QFileInfoList libInfoTheme = sysLib.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
 	QStringList libThemes;
-	for (const auto& file : libInfoTheme)
+	for (const auto& file : qAsConst(libInfoTheme))
 	{
 		libThemes.append(file.baseName());
 	}
@@ -311,33 +311,17 @@ void Utils::useGlobalTheme(QString themeName)
 	useGlobalProcess->start(command, arguments);
 }
 
-//TODO to simplify this and remove redundant methods
-void Utils::goLight()
-{
-	goKvantumStyle("light"); //this should come before useGlobaltheme for it to update on the fly
-	useGlobalTheme("Koi-Light");
-	goColors("light");
-	goGtk("light");
-	goWall("light");
-	runScript("light");
-
+// Use to switch to a different theme profile
+void Utils::go(const QString &themeType){
+	goKvantumStyle(themeType);
+	useGlobalTheme("Koi-"+ themeType);
+	goColors(themeType);
+	goGtk(themeType);
+	goWall(themeType);
+	runScript(themeType);
 	if (settings->value("notify").toBool())
 	{
-		notify("Switched to light mode!",
-			"Some applications may need to be restarted for applied changes to take effect.");
-	}
-}
-void Utils::goDark()
-{
-	goKvantumStyle("dark"); //this should come before useGlobaltheme for it to update on the fly
-	useGlobalTheme("Koi-Dark");
-	goColors("dark");
-	goGtk("dark");
-	goWall("dark");
-	runScript("dark");
-	if (settings->value("notify").toBool())
-	{
-		notify("Switched to dark mode!",
+		notify("Switched to " + themeType + " mode!",
 			"Some applications may need to be restarted for applied changes to take effect.");
 	}
 }
@@ -387,7 +371,7 @@ QStringList Utils::getWindowDecorationsStyle()
 {
 	QList<Decoration> dt = Utils::getWindowDecorations();
 	QStringList styleList;
-	for (const auto& style: dt)
+	for (const auto& style: qAsConst(dt))
 	{
 		styleList.append(style.name);
 	}

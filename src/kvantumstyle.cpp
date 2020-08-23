@@ -1,5 +1,4 @@
 #include <QtCore/QDir>
-#include <utility>
 #include "kvantumstyle.h"
 
 KvantumStyle::KvantumStyle()

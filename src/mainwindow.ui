@@ -14,7 +14,7 @@
    <string>Koi</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../resources/resources.qrc">
     <normaloff>:/resources/icons/koi.svg</normaloff>:/resources/icons/koi.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -206,7 +206,7 @@
            <property name="geometry">
             <rect>
              <x>0</x>
-             <y>-352</y>
+             <y>-148</y>
              <width>395</width>
              <height>730</height>
             </rect>
@@ -698,21 +698,14 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-45</y>
+           <y>0</y>
            <width>400</width>
-           <height>476</height>
+           <height>442</height>
           </rect>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
           <item row="0" column="0" colspan="2">
            <layout class="QVBoxLayout" name="kvantumStyle">
-            <item>
-             <widget class="QCheckBox" name="kvantumStyleCheckBox">
-              <property name="text">
-               <string>Kvantum Style</string>
-              </property>
-             </widget>
-            </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_18">
               <item>
@@ -727,6 +720,13 @@
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Kvantum</string>
+                </property>
+               </widget>
               </item>
               <item>
                <spacer name="horizontalSpacer_5">
@@ -1096,7 +1096,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -46,25 +46,25 @@ public:
     void startupTimeCheck();
     //this would be used for global theme
     void useGlobalTheme(QString type);
-    void goLight();
-    void goDark();
-    void goColors(const QString& themeType);
-    void goGtk(const QString& themeType);
-    void goKvantumStyle(const QString &themeType);
+	void go(const QString& themeType);
+	void goColors(const QString& themeType);
+	void goGtk(const QString& themeType);
+	void goKvantumStyle(const QString &themeType);
 	void goWall(const QString& themeType);
+
 	void runScript(const QString& themeType);
-
-    static bool themeExists(const QString &themeName);
-    void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
+	static bool themeExists(const QString &themeName);
+	void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
                         const QString &email, const QString &license, const QString &website);
+
+
     static void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);
-
-
-    static void dumpDefaultsConfigFile(const QString &pluginName);
+	static void dumpDefaultsConfigFile(const QString &pluginName);
 private:
-    Gtk gtk;
-    KvantumStyle kvantumStyle;
-    Wallpaper wallpaper;
+	Gtk gtk;
+	KvantumStyle kvantumStyle;
+	Wallpaper wallpaper;
+
     ColorScheme colorScheme;
 
     QProcess *useGlobalProcess{};
@@ -72,8 +72,6 @@ private:
     QDBusConnection *bus{};
 
     QDBusInterface *notifyInterface{};
-
-
 };
 
 #endif // UTILS_H
