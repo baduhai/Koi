@@ -55,7 +55,18 @@ Lastest Koi version: 0.1.1 [beta]
 
 Koi targets the latest version of the above deps. As of writing this file, these are; Qt 5.14.2, KDE Plasma 5.18.5, KDE Frameworks 5.70 and qmake 3.1.
 
+#### Ubuntu Based 
+`sudo apt update` 
+
+`sudo apt install git g++ qtbase5-dev`
+
+`sudo apt install  libkf5coreaddons-dev libkf5widgetsaddons-dev libkf5config-dev libkf5package-dev libkf5service-dev`
+
 #### Arch Linux
+
+`sudo pacman -Syu` 
+
+`sudo pacman -S gcc` 
 
 Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 
