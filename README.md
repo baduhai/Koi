@@ -58,7 +58,7 @@ Koi targets the latest version of the above deps. As of writing this file, these
 #### Ubuntu Based 
 `sudo apt update` 
 
-`sudo apt install git cmake g++ extra-cmake-modules qtbase5-dev`
+`sudo apt install git g++ qtbase5-dev`
 
 `sudo apt install  libkf5coreaddons-dev libkf5widgetsaddons-dev libkf5config-dev libkf5package-dev libkf5service-dev`
 
@@ -66,7 +66,7 @@ Koi targets the latest version of the above deps. As of writing this file, these
 
 `sudo pacman -Syu` 
 
-`sudo pacman -S cmake gcc extra-cmake-modules` 
+`sudo pacman -S **gcc**` 
 
 Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 
