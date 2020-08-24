@@ -66,7 +66,7 @@ Koi targets the latest version of the above deps. As of writing this file, these
 
 `sudo pacman -Syu` 
 
-`sudo pacman -S **gcc**` 
+`sudo pacman -S gcc` 
 
 Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 

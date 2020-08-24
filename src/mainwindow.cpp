@@ -815,6 +815,6 @@ void MainWindow::on_actionHide_triggered() // Hide to tray
 }*/
 void MainWindow::on_actionRestart_triggered()
 {
-    QProcess::startDetached(QApplication::applicationFilePath());
+    QProcess::startDetached(QApplication::applicationFilePath(),QStringList());
     exit(12);
 }
