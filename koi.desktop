@@ -5,6 +5,6 @@ Exec=Koi
 Icon=koi
 Name=Koi
 StartupNotify=true
-StartupWMClass=Koi
+StartupWMClass=koi
 Terminal=false
 Type=Application
