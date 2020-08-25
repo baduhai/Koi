@@ -18,7 +18,7 @@ set(QT_MIN_VERSION "5.14.0")
 set(KF5_MIN_VERSION "5.38.0")
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake ${ECM_KDE_MODULE_DIR})
 set(QT5_LIBRARIES Qt5::Core Qt5::Gui Qt5::DBus Qt5::Network Qt5::Test Qt5::Widgets)
-set(KF5_LIBRAIRES KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigCore  KF5::ConfigGui KF5::Package KF5::Service)
+set(KF5_LIBRARIES KF5::CoreAddons KF5::WidgetsAddons KF5::ConfigCore  KF5::ConfigGui KF5::Package KF5::Service)
 
 
 include(KDEInstallDirs)

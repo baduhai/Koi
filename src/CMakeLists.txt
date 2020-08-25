@@ -20,11 +20,18 @@ set(koi_SRC
 set(koi_RCS
         ../resources/resources.qrc)
 
+set(icons
+        ../resources/icons/koi.svg
+        ../resources/icons/koi_tray.svg)
+
 find_package(Threads)
 
 
 add_executable(${PROJECT_NAME} ${koi_SRC}  ${koi_RCS} )
-target_link_libraries(${PROJECT_NAME} ${QT5_LIBRARIES} ${KF5_LIBRAIRES} Threads::Threads)
+target_link_libraries(${PROJECT_NAME} ${QT5_LIBRARIES} ${KF5_LIBRARIES} Threads::Threads)
 
 # Install the executable
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(PROGRAMS koi.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES ${icons} DESTINATION /usr/share/icons/hicolor/scalable/apps/)
+
