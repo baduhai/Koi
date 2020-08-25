@@ -32,6 +32,6 @@ target_link_libraries(${PROJECT_NAME} ${QT5_LIBRARIES} ${KF5_LIBRARIES} Threads:
 
 # Install the executable
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-install(FIlES  ${PROJECT_SOURCE_DIR}/koi.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(PROGRAMS ${PROJECT_SOURCE_DIR}/koi.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES ${icons} DESTINATION /usr/share/icons/hicolor/scalable/apps/)
 
