@@ -1,0 +1,60 @@
+//this is for writing the specifications of profile what a profile is so that i can come back to it later
+
+the purpose of profile is to make changing settings of a theme more modular
+
+Profile is all the settings of a particular theme in one file al together so that the settings( koirc /koiglobalrc )
+will not be cluttered/convoluted  when adding more than two themes ( will probably set a limit of five will make sense )
+
+this will enable seperation of the application settings from the theme settings
+
+
+this can be store in QStandardPaths::dataLocation + "koi".
+*******************************************************************************
+profile items
+they will be group on how related they are
+
+
+[Styles] // where all the styles are
+plasmaStyle=Materia
+colorScheme=MateriaDarkBlue
+gtkTheme=Materia-light-compact
+kvantum=KvAdapta
+widgetStyle=Lightly
+
+
+
+[Others] //have not thought of a good name for this settings page
+icon=We10X-blue
+mouse=Qogir-white-cursors
+script=/path/to/the/script.sh
+wallpaper=/home/da-viper/Downloads/arch_on_windows.png
+
+
+[WindowDecoration]// this is because it has more than one factor (perharps i can just put it in other )
+library=org.kde.breezeenhanced
+theme=__aurorae__svg__ChromeOS-dark
+
+[External] // this is where changing settings for external app would be
+konsole=materia.profile
+vscode= .......
+
+
+********************************************************************************
+
+this would make the actual app settings empty it would just be
+
+this wouild be in QStandardPaths::configLocation + "koirc".
+********************************************************************************
+[General]
+notify=true
+schedule=true
+start-hidden=true
+
+[LoadedThemes]//themes that are meant to be switched would be in here
+koi-dark=20:00:00
+koi-light=06:00:00
+middaytheme=12:00:00
+
+then you read all the time and the the one closest to the left( or while going back in time )
+gets to be the current theme
+********************************************************************************
