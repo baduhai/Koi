@@ -7,6 +7,10 @@ the original author of koi would back in september as he/she has other stuff to 
 
 **Theme scheduling for the KDE Plasma Desktop**
 
+<p>
+  <img alt="profile-dialog" title="Yin & Yang" src="doc/profile_dialog.png">
+</p>
+
 This is a TODO list 
 
 - [x] add cursors style 
