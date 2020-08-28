@@ -5,7 +5,7 @@ Gtk::Gtk()
 
 }
 
-void Gtk::setGtk(QString gtkTheme)
+void Gtk::setGtk(const QString& gtkTheme)
 {
     bus = new QDBusConnection(QDBusConnection::sessionBus());
     interface = new QDBusInterface("org.kde.GtkConfig", "/GtkConfig", "org.kde.GtkConfig", *bus);

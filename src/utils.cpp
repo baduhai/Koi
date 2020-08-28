@@ -12,6 +12,13 @@ void Utils::initialiseSettings()
 	//TODO switch to koiglobalrc because a file is already using koirc (Koirc)
 	settings =
 		new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
+
+	loadProfiles();
+		//When starting up the program
+	Profile lightProfile ("light");
+	Profile darkProfile ("dark");
+	profileList.append(lightProfile);
+	profileList.append(darkProfile);
 }
 
 // Miscelaneous functions
@@ -391,3 +398,34 @@ void Utils::runScript(const QString& themeType)
 	}
 }
 
+void Utils::loadProfiles(){
+    QDir dirs (QStandardPaths::writableLocation( QStandardPaths::AppLocalDataLocation) +  QStringLiteral("/koi"));
+    if(!dirs.exists()){
+		QDir().mkdir(dirs.absolutePath());
+		return;
+    }
+
+    // if light and dark does not exist create it here
+    //profile Utils::createProfile () ;
+
+
+    const QFileInfoList fileNames = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
+	for(const auto &themeCF : fileNames)
+	{
+		readProfile(const_cast<QFileInfo&>(themeCF));
+	}
+	qDebug() << "hi there " ;
+
+
+}
+
+Profile Utils::readProfile(QFileInfo &fileInfo)
+{
+	QString profilePath = fileInfo.absolutePath();
+	KConfig pf(profilePath);
+    qDebug() << "this is a konfig file " ;
+
+
+
+
+}

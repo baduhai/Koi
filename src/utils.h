@@ -7,6 +7,7 @@
 #include "wallpaper.h"
 #include "icons.h"
 #include "kvantumstyle.h"
+#include "profile.h"
 
 // Qt libs
 #include <QtGlobal>
@@ -57,10 +58,16 @@ public:
 	void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
                         const QString &email, const QString &license, const QString &website);
 
+	void loadProfiles();
+
+	Profile readProfile(QFileInfo &fileInfo);
 
     static void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);
 	static void dumpDefaultsConfigFile(const QString &pluginName);
 private:
+	Profile *currentProfile;
+
+	QList<Profile> profileList;
 	Gtk gtk;
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;
@@ -72,6 +79,8 @@ private:
     QDBusConnection *bus{};
 
     QDBusInterface *notifyInterface{};
+
+
 };
 
 #endif // UTILS_H

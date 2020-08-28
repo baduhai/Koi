@@ -15,7 +15,7 @@ set(koi_SRC
         utils.cpp
         wallpaper.cpp
         kvantumstyle.cpp
-        )
+        profile.cpp profile.h)
 
 set(koi_RCS
         ../resources/resources.qrc)
@@ -27,7 +27,7 @@ set(icons
 find_package(Threads)
 
 
-add_executable(${PROJECT_NAME} ${koi_SRC}  ${koi_RCS} )
+add_executable(${PROJECT_NAME} ${koi_SRC}  ${koi_RCS})
 target_link_libraries(${PROJECT_NAME} ${QT5_LIBRARIES} ${KF5_LIBRARIES} Threads::Threads)
 
 # Install the executable

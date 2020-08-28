@@ -10,7 +10,7 @@ class Gtk
 public:
     Gtk();
 
-    void setGtk(QString gtkTheme);
+    void setGtk(const QString& gtkTheme);
     static QStringList getGtkThemes();
 private:
     QDBusConnection *bus;
