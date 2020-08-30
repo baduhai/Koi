@@ -55,7 +55,7 @@ public:
 
 	void runScript(const QString& themeType);
 	static bool themeExists(const QString &themeName);
-	void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
+	static void createNewTheme(const QString &pluginName, const QString &name, const QString &comment, const QString &author,
                         const QString &email, const QString &license, const QString &website);
 
 	void loadProfiles();
@@ -66,8 +66,13 @@ public:
 	static void dumpDefaultsConfigFile(const QString &pluginName);
 private:
 	Profile *currentProfile;
+	bool lightExists = false;
+	bool darkExists = false;
 
+	Profile *activeProfile;
 	QList<Profile> profileList;
+
+	QStringList changes;
 	Gtk gtk;
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;

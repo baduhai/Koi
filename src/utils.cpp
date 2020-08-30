@@ -14,11 +14,33 @@ void Utils::initialiseSettings()
 		new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 
 	loadProfiles();
-		//When starting up the program
-	Profile lightProfile ("light");
-	Profile darkProfile ("dark");
-	profileList.append(lightProfile);
-	profileList.append(darkProfile);
+	//there should always be light and dark profiles in the list
+	if (!lightExists) {
+		Profile lightProfile("light");
+		profileList.append(lightProfile);
+	}
+	if(!darkExists){
+		Profile darkProfile("dark");
+		profileList.append(darkProfile);
+	}
+	if (!Utils::themeExists(QStringLiteral("Koi-dark"))) {
+		Utils::createNewTheme("Koi-dark",
+							  "Koi-dark",
+							  "Dark theme for koi",
+							  "Bahduai & Da-viper",
+							  "none",
+							  "gpl",
+							  "www.github.com");
+	}
+	if (!Utils::themeExists(QStringLiteral("Koi-light"))) {
+		Utils::createNewTheme("Koi-light",
+							  "Koi-light",
+							  "Light theme for koi",
+							  "Bahduai & Da-viper",
+							  "none",
+							  "gpl",
+							  "www.github.com");
+	}
 }
 
 // Miscelaneous functions
@@ -26,9 +48,9 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 {
 	bus = new QDBusConnection(QDBusConnection::sessionBus());
 	notifyInterface = new QDBusInterface("org.freedesktop.Notifications",
-		"/org/freedesktop/Notifications",
-		"org.freedesktop.Notifications",
-		*bus);
+										 "/org/freedesktop/Notifications",
+										 "org.freedesktop.Notifications",
+										 *bus);
 	QString app_name = "Koi";        // What program is the notification coming from?
 	uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
 	QString
@@ -46,8 +68,7 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 	QTime lightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
 	QTime darkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
 	QTime now = QTime::currentTime();
-	if (now < lightTime && now < darkTime)
-	{
+	if (now < lightTime && now < darkTime) {
 		QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
 		go("dark");
 	}
@@ -56,8 +77,7 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 		QTest::qWait(1000);
 		go("light");
 	}
-	else if (now > lightTime && now < darkTime)
-	{
+	else if (now > lightTime && now < darkTime) {
 		QTest::qWait(1000);
 		go("light");
 	}
@@ -66,8 +86,7 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 		QTest::qWait(1000);
 		go("dark");
 	}
-	else
-	{
+	else {
 		QTest::qWait(1000);
 		go("dark");
 	}
@@ -85,11 +104,9 @@ QStringList Utils::getCursorThemes()
 	parentDir.append(cursorSystemParentDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
 	QStringList cursorThemes;
 	//oldlocal and system
-	for (QFileInfo& info : parentDir)
-	{
+	for (QFileInfo &info : parentDir) {
 		QDir filepath(info.absoluteFilePath() + QStringLiteral("/cursors"));
-		if (filepath.exists())
-		{
+		if (filepath.exists()) {
 			cursorThemes.append(info.fileName());
 		}
 	}
@@ -116,24 +133,19 @@ QList<Decoration> Utils::getWindowDecorations()
 	QList<Decoration> dt;
 	QDir sysLib; //for the library
 	QDir dir("/usr/lib/qt/plugins/org.kde.kdecoration2/");
-	if (dir.exists())
-	{
+	if (dir.exists()) {
 		sysLib = dir;
 	}
 	QFileInfoList libInfoTheme = sysLib.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
 	QStringList libThemes;
-	for (const auto& file : qAsConst(libInfoTheme))
-	{
+	for (const auto &file : qAsConst(libInfoTheme)) {
 		libThemes.append(file.baseName());
 	}
-	if (libThemes.contains("kwin5_aurorae"))
-	{
+	if (libThemes.contains("kwin5_aurorae")) {
 		libThemes.removeAt(libThemes.indexOf("kwin5_aurorae"));
 	}
-	for (auto& theme : libThemes)
-	{
-		if (theme.endsWith("decoration", Qt::CaseInsensitive))
-		{
+	for (auto &theme : libThemes) {
+		if (theme.endsWith("decoration", Qt::CaseInsensitive)) {
 			theme.chop(10);
 		}
 	}
@@ -141,26 +153,22 @@ QList<Decoration> Utils::getWindowDecorations()
 	QStringList auroraeStyles;
 	QDir aurLocalLib(QDir::homePath() + "/.local/share/aurorae/themes");
 	QDir aurSysLib("/usr/share/aurorae/themes/");
-	if (aurSysLib.exists())
-	{
+	if (aurSysLib.exists()) {
 		auroraeStyles.append(aurSysLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
 	}
-	if (aurLocalLib.exists())
-	{
+	if (aurLocalLib.exists()) {
 		auroraeStyles.append(aurLocalLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
 	}
 	auroraeStyles.removeDuplicates();
 
-	for (const auto& th: auroraeStyles)
-	{
+	for (const auto &th: auroraeStyles) {
 		Decoration d{};
 		d.name = th;
 		d.library = "org.kde.kwin.aurorae";
 		d.theme = "__aurorae__svg__" + th;
 		dt.append(d);
 	}
-	for (const auto& th: libThemes)
-	{
+	for (const auto &th: libThemes) {
 		Decoration d{};
 		d.name = th;
 		d.name.replace(0, 1, d.name[0].toUpper());
@@ -169,24 +177,24 @@ QList<Decoration> Utils::getWindowDecorations()
 	}
 	return dt;
 }
-bool Utils::themeExists(const QString& themeName)
+bool Utils::themeExists(const QString &themeName)
 {
 	QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName
-		+ QStringLiteral("/contents/defaults"));
+							 + QStringLiteral("/contents/defaults"));
 	return localTheme.exists() && localTheme.isFile();
 }
-void Utils::createNewTheme(const QString& pluginName,
-	const QString& name,
-	const QString& comment,
-	const QString& author,
-	const QString& email,
-	const QString& license,
-	const QString& website)
+void Utils::createNewTheme(const QString &pluginName,
+						   const QString &name,
+						   const QString &comment,
+						   const QString &author,
+						   const QString &email,
+						   const QString &license,
+						   const QString &website)
 //would not need this as this gets the plasma layout and i just need the theme
 {
 	const QString metadataPath
 		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			% pluginName % QLatin1String("/metadata.desktop"));
+			 % pluginName % QLatin1String("/metadata.desktop"));
 	KConfig c(metadataPath);
 
 	KConfigGroup cg(&c, "Desktop Entry");
@@ -206,12 +214,12 @@ void Utils::createNewTheme(const QString& pluginName,
 	dumpDefaultsConfigFile(pluginName);
 }
 
-void Utils::dumpDefaultsConfigFile(const QString& pluginName)
+void Utils::dumpDefaultsConfigFile(const QString &pluginName)
 {
 	//write the defaults file, read from kde config files and save to the defaultsrc
 	KConfig defaultsConfig
 		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			% pluginName % "/contents/defaults");
+			 % pluginName % "/contents/defaults");
 
 	KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
 	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
@@ -262,13 +270,13 @@ void Utils::dumpDefaultsConfigFile(const QString& pluginName)
 	defaultsConfigGroup.writeEntry("theme", systemCG.readEntry("theme", QString()));
 }
 
-void Utils::writeToThemeConfigFile(const QString& pluginName, const QString& themeType)
+void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &themeType)
 {
 	QString koiPath = QDir::homePath() + QStringLiteral("/.config/koirc");
 	//write the defaults file, read from kde config files and save to the defaultsrc
 	KConfig defaultsConfig
 		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			% pluginName % "/contents/defaults");
+			 % pluginName % "/contents/defaults");
 
 	KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
 	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
@@ -314,62 +322,56 @@ void Utils::useGlobalTheme(QString themeName)
 {
 	useGlobalProcess = new QProcess;
 	QString command = QStringLiteral("lookandfeeltool");
-	QStringList arguments = { "-a", std::move(themeName) };
+	QStringList arguments = {"-a", std::move(themeName)};
 	useGlobalProcess->start(command, arguments);
 }
 
 // Use to switch to a different theme profile
-void Utils::go(const QString &themeType){
+void Utils::go(const QString &themeType)
+{
 	goKvantumStyle(themeType);
-	useGlobalTheme("Koi-"+ themeType);
+	useGlobalTheme("Koi-" + themeType);
 	goColors(themeType);
 	goGtk(themeType);
 	goWall(themeType);
 	runScript(themeType);
-	if (settings->value("notify").toBool())
-	{
+	if (settings->value("notify").toBool()) {
 		notify("Switched to " + themeType + " mode!",
-			"Some applications may need to be restarted for applied changes to take effect.");
+			   "Some applications may need to be restarted for applied changes to take effect.");
 	}
 }
 
 void Utils::goColors(const QString &themeType)
 {
-if (settings->value("ColorScheme/enabled").toBool())
-	{
-		colorScheme.setColorScheme(settings->value("ColorScheme/" + themeType ).toString());
+	if (settings->value("ColorScheme/enabled").toBool()) {
+		colorScheme.setColorScheme(settings->value("ColorScheme/" + themeType).toString());
 	}
 }
 
 void Utils::goGtk(const QString &themeType)
 {
-	if (settings->value("GTKTheme/enabled").toBool())
-	{
+	if (settings->value("GTKTheme/enabled").toBool()) {
 		gtk.setGtk(settings->value("GTKTheme/" + themeType).toString());
 	}
 }
 
 void Utils::goKvantumStyle(const QString &themeType)
 {
-	if (settings->value("KvantumStyle/enabled").toBool())
-	{
+	if (settings->value("KvantumStyle/enabled").toBool()) {
 		kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/" + themeType).toString());
 	}
 }
 
 void Utils::goWall(const QString &themeType)
 {
-	if (settings->value("Wallpaper/enabled").toBool())
-	{
-		if (!settings->value("Wallpaper/" + themeType).isNull())
-		{
-			wallpaper.setWallpaper(settings->value("Wallpaper/" + themeType ).toString());
+	if (settings->value("Wallpaper/enabled").toBool()) {
+		if (!settings->value("Wallpaper/" + themeType).isNull()) {
+			wallpaper.setWallpaper(settings->value("Wallpaper/" + themeType).toString());
 		}
-		else
-		{
+		else {
 			notify("Error setting Wallpaper",
-				"Koi tried to change your " + themeType +  " wallpaper, but no wallpaper fie was selected",
-				0);
+				   "Koi tried to change your " + themeType + " wallpaper, but no wallpaper fie was selected",
+				   0);
 		}
 	}
 }
@@ -378,54 +380,82 @@ QStringList Utils::getWindowDecorationsStyle()
 {
 	QList<Decoration> dt = Utils::getWindowDecorations();
 	QStringList styleList;
-	for (const auto& style: qAsConst(dt))
-	{
+	for (const auto &style: qAsConst(dt)) {
 		styleList.append(style.name);
 	}
 	styleList.sort();
 	return styleList;
 }
 
-void Utils::runScript(const QString& themeType)
+void Utils::runScript(const QString &themeType)
 {
 
-	if (settings->value("Script/" + themeType + "Enabled").toBool())
-	{
-		if (!QProcess::startDetached("/bin/sh", QStringList{ settings->value("Script/" + themeType).toString() }))
-	 	{
+	if (settings->value("Script/" + themeType + "Enabled").toBool()) {
+		if (!QProcess::startDetached("/bin/sh", QStringList{settings->value("Script/" + themeType).toString()})) {
 			qDebug() << "Failed to run " + themeType + " script";
 		}
 	}
 }
 
-void Utils::loadProfiles(){
-    QDir dirs (QStandardPaths::writableLocation( QStandardPaths::AppLocalDataLocation) +  QStringLiteral("/koi"));
-    if(!dirs.exists()){
+void Utils::loadProfiles()
+{
+	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QStringLiteral("/koi"));
+	if (!dirs.exists()) {
 		QDir().mkdir(dirs.absolutePath());
 		return;
-    }
-
-    // if light and dark does not exist create it here
-    //profile Utils::createProfile () ;
-
-
-    const QFileInfoList fileNames = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
-	for(const auto &themeCF : fileNames)
-	{
-		readProfile(const_cast<QFileInfo&>(themeCF));
+		qDebug() << "no profiles in koi ";
 	}
-	qDebug() << "hi there " ;
 
-
+	const QFileInfoList fileNames = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
+	for (const auto &themeCF : fileNames) {
+		//add to the global list of profiles
+		if(themeCF.baseName() == "light"){
+			lightExists = true;
+		}
+		if (themeCF.baseName() == "dark")
+		{
+			darkExists = true;
+		}
+		Profile n(readProfile(const_cast<QFileInfo &>(themeCF)));
+		if(!Profile::profileExists(n.getProfileName(),profileList)){
+			profileList.append(n);
+		}
+	}
 }
 
 Profile Utils::readProfile(QFileInfo &fileInfo)
 {
+	//create a config and a profile and read the config into the profile
+	//then put it in a list
 	QString profilePath = fileInfo.absolutePath();
-	KConfig pf(profilePath);
-    qDebug() << "this is a konfig file " ;
+	QSettings ps(profilePath, QSettings::IniFormat);
+	Profile newProfile(fileInfo.baseName());
 
+	//this opens a config group in the profile config file.
+	QString style("Styles");
+	QString other("Others");
+	QString window("Window Decoration");
+	QString external("External");
+	//set the properties to their respective settings
+	newProfile.setplasma(ps.value(style + "/plasmaStyle", QString()).toString());
+	newProfile.setColor(ps.value(style + "/colorScheme", QString()).toString());
+	newProfile.setGtk(ps.value(style + "/gtkTheme", QString()).toString());
+	newProfile.setKvantum(ps.value(style + "/kvantum", QString()).toString());
+	newProfile.setWidget(ps.value(style + "/widgetStyle", QString()).toString());
 
+	//Others
+	newProfile.setIcon(ps.value(other + "/icon", QString()).toString());
+	newProfile.setMouse(ps.value(other + "/mouse", QString()).toString());
+	newProfile.setScript(ps.value(other + "/script", QString()).toString());
+	newProfile.setWallpaper(ps.value(other + "/wallpaper", QString()).toString());
 
+	//window
+	newProfile.setDecLibrary(ps.value(window + "/library", QString()).toString());
+	newProfile.setDecTheme(ps.value(window + "/theme", QString()).toString());
 
+	//External
+	newProfile.setKonsole(ps.value(external + "/konsole", QString()).toString());
+	newProfile.setVscode(ps.value(external + "/vscode", QString()).toString());
+
+	return newProfile;
 }

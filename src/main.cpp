@@ -35,13 +35,6 @@ int main(int argc, char *argv[])
         Utils utils;
         utils.initialiseSettings();
 
-		//probably apply the koirc settings too not sure if it should be implemented yet
-        if(!Utils::themeExists(QStringLiteral("Koi-dark"))){
-           utils.createNewTheme("Koi-dark", "Koi-dark", "Dark theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
-        }
-        if(!Utils::themeExists(QStringLiteral("Koi-light"))){
-           utils.createNewTheme("Koi-light", "Koi-light", "Light theme for koi", "Bahduai & Da-viper", "none", "gpl", "www.github.com");
-        }
 
             QApplication a(argc, argv);
             MainWindow w;

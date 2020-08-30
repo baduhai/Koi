@@ -7,25 +7,59 @@
 
 #include <QString>
 #include <QFileInfo>
-#include <utility>
 
+//a struct may have been a better option .
 class Profile
 {
 
 public:
-	Profile ();
-	explicit Profile ( QString profileName);
+	Profile();
+	explicit Profile(const QString &profileName);
+
+	static bool profileExists( QString profileName, QList<Profile> &profileList);
 	//styles.
-	void setplasma(const QString& QString);
-	void setColor(const QString& QString);
-	void setGtk(const QString& QString);
-	void setKvantum(const QString& QString);
-	void setWidget(const QString& QString);
+	void setplasma(const QString &QString);
+	void setColor(const QString &QString);
+	void setGtk(const QString &QString);
+	void setKvantum(const QString &kvantum);
+	void setWidget(const QString &kvantum);
 
 	//icons..
-	void setIcon(const QString& QString);
+	void setIcon(const QString &icon);
+	void setMouse(const QString &mouse);
+	void setScript(const QString &script);
+	void setWallpaper(const QString &wallpaper);
 
-	QString getPlasma();
+	//Window Decoration
+	void setDecLibrary(const QString &decorationLibrary);
+	void setDecTheme(const QString &decorationTheme);
+
+	//external
+	void setKonsole(const QString &konsoleTheme);
+	void setVscode(const QString &vscodeTheme);
+
+	//getters
+	//Styles
+	QString getProfileName() const;
+	QString getPlasma() const;
+	QString getColor() const;
+	QString getGtk() const;
+	QString getKvantum() const;
+	QString getWidget() const;
+
+	//icons
+	QString getIcon() const;
+	QString getMouse() const;
+	QString getScript() const;
+	QString getWallpaper() const;
+
+	//window decorations
+	QString getDecLibrary() const;
+	QString getDecTheme() const;
+
+	// External
+	QString getKonsole() const;
+	QString getVscode() const;
 
 private:
 	QFileInfo m_path;
