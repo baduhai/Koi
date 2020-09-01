@@ -19,7 +19,7 @@ void Utils::initialiseSettings()
 		Profile lightProfile("light");
 		profileList.append(lightProfile);
 	}
-	if(!darkExists){
+	if (!darkExists) {
 		Profile darkProfile("dark");
 		profileList.append(darkProfile);
 	}
@@ -409,15 +409,14 @@ void Utils::loadProfiles()
 	const QFileInfoList fileNames = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
 	for (const auto &themeCF : fileNames) {
 		//add to the global list of profiles
-		if(themeCF.baseName() == "light"){
+		if (themeCF.baseName() == "light") {
 			lightExists = true;
 		}
-		if (themeCF.baseName() == "dark")
-		{
+		if (themeCF.baseName() == "dark") {
 			darkExists = true;
 		}
 		Profile n(readProfile(const_cast<QFileInfo &>(themeCF)));
-		if(!Profile::profileExists(n.getProfileName(),profileList)){
+		if (!Profile::profileExists(n.getProfileName(), profileList)) {
 			profileList.append(n);
 		}
 	}
