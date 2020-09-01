@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
@@ -119,6 +120,9 @@ void MainWindow::scheduleDark() {
 // Functionality of buttons - Related to program navigation, interaction and saving settings
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
 {
+    SettingDialog *dialog = new SettingDialog(this);
+    dialog->setModal(true);
+    dialog->show();
 }
 
 void MainWindow::on_lightBtn_clicked() {

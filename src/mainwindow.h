@@ -3,6 +3,7 @@
 //Headers
 #include "about.h"
 #include "utils.h"
+#include "settingdialog.h"
 //Qt libs
 #include <QFileDialog>
 #include <QFileInfo>
