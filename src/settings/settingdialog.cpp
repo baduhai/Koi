@@ -1,37 +1,40 @@
 #include "settingdialog.h"
-#include "ui_settingdialog.h"
 
-SettingDialog::SettingDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SettingDialog)
+
+SettingDialog::SettingDialog(QWidget *parent)
+	:
+	KPageDialog(parent),
+	_generalUi(nullptr),
+	_buttonBox(nullptr)
 {
-    ui->setupUi(this);
+	setWindowTitle("Settings Page");
+	setFaceType(KPageDialog::List);
 
-    //this connects the pagelist items to the stacked widgets
-    connect(ui->sPageList, &QListWidget::currentRowChanged,
-            ui->stackedWidget, &QStackedWidget::setCurrentIndex);
-	//connect(ui->addProfileBtn, &QPushButton::clicked, ui-)
-    //notifications
+	_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	setButtonBox(_buttonBox);
+
+	QPushButton *okButton = _buttonBox->button(QDialogButtonBox::Ok);
+	//  okButton->setDefault(true);
+
+	const auto defaultIcon = QIcon::fromTheme(QStringLiteral("utilities-terminal"));
+
+	//adding Pages
+	// General page
+	const QString generalPageName = ("General");
+	_generalUi = new GeneralSettings();
+
+//	this->addPage(_generalUi,generalPageName);
+	auto *generalPageItem = this->addPage(_generalUi, generalPageName);
+	generalPageItem->setHeader(generalPageName);
+	generalPageItem->setIcon(QIcon::fromTheme(QStringLiteral("application")));
+
+	// Profiles Page
+	const QString profilePageName = ("Profiles");
 
 }
 
 SettingDialog::~SettingDialog()
 {
-    delete ui;
+	delete _buttonBox;
 }
 
-
-void SettingDialog::on_buttonBox_rejected()
-{
-    accept();
-}
-
-void SettingDialog::on_pushButton_clicked()
-{
-    ui->sPageList->currentItem()->setBackgroundColor(Qt::red);
-}
-
-void SettingDialog::on_sPageList_itemClicked(QListWidgetItem *item)
-{
-
-}

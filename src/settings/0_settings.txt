@@ -1,0 +1,35 @@
+this is a document concerning the ui part of the settings dialog for future me
+
+this is the structure of the settings page
+
+the settings page will inherit
+
+Settings
+----General
+--------notification
+--------autostart
+----Profiles
+--------add/edit
+
+--------edit
+--------remove
+----Other(this is for other stuff that is not related  to the general or profiles page )
+
+
+NOTE: i am using pages structure,
+    i.e each page has its own corresponding .ui/.cpp/.h file there will be no stacked/tab widget
+    this way it is easier to maintain/change and correct errors that may occur if stacked/tab widget is used the file
+    can get up to 1000 lines and become hard to maintain or find something. this way you can easily go to the
+    corresponding page of the ui
+
+
+Settings Page [settingdialog] ##KPageDialog
+    This page will have no ui as it is just for connecting the general, profile and other page together.
+
+General Page
+    This page is for settings concering the application itself all settings come here .
+
+    ---- notification
+            for controlling if the app shows notification
+    ---- autostart
+            add the desktop file to the autostart folder
