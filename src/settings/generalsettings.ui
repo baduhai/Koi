@@ -15,21 +15,21 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="notifyCheckBox">
      <property name="text">
       <string>Enable Notifications</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QCheckBox" name="autostartCheckBox">
      <property name="text">
       <string>Enable AutoStart</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox_3">
+    <widget class="QCheckBox" name="scheduleCheckBox">
      <property name="text">
       <string>Scheduling</string>
      </property>
