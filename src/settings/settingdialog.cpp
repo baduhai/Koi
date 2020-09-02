@@ -10,6 +10,8 @@ SettingDialog::SettingDialog(QWidget *parent) :
     //this connects the pagelist items to the stacked widgets
     connect(ui->sPageList, &QListWidget::currentRowChanged,
             ui->stackedWidget, &QStackedWidget::setCurrentIndex);
+	//connect(ui->addProfileBtn, &QPushButton::clicked, ui-)
+    //notifications
 
 }
 

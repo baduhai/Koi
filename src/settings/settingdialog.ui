@@ -94,7 +94,7 @@
     <number>1</number>
    </property>
    <widget class="QWidget" name="generalPage">
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="notifiyCheckBox">
      <property name="geometry">
       <rect>
        <x>190</x>
@@ -107,7 +107,7 @@
       <string>Enable Notifications</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QCheckBox" name="hiddenCheckBox">
      <property name="geometry">
       <rect>
        <x>190</x>
@@ -120,7 +120,7 @@
       <string>Start Hidden</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_3">
+    <widget class="QCheckBox" name="autoStartCheckBox">
      <property name="geometry">
       <rect>
        <x>190</x>
@@ -161,21 +161,21 @@
          <number>4</number>
         </property>
         <item>
-         <widget class="QPushButton" name="pushButton_10">
+         <widget class="QPushButton" name="addProfileBtn">
           <property name="text">
            <string>Add</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_11">
+         <widget class="QPushButton" name="editProfileBtn">
           <property name="text">
            <string>Edit</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_12">
+         <widget class="QPushButton" name="removeProfileBtn">
           <property name="text">
            <string>Remove</string>
           </property>

@@ -16,7 +16,7 @@ set(koi_SRC
         wallpaper.cpp
         kvantumstyle.cpp
         profile.cpp
-        settingdialog.cpp )
+        settings/settingdialog.cpp)
 
 set(koi_RCS
         ../resources/resources.qrc)

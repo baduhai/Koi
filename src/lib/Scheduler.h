@@ -3,10 +3,10 @@
 #include <iomanip>
 #include <map>
 
-#include "ctpl_stl.h"
+#include "lib/ctpl_stl.h"
 
-#include "InterruptableSleep.h"
-#include "Cron.h"
+#include "lib/InterruptableSleep.h"
+#include "lib/Cron.h"
 
 namespace Bosma {
     using Clock = std::chrono::system_clock;

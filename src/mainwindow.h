@@ -3,7 +3,7 @@
 //Headers
 #include "about.h"
 #include "utils.h"
-#include "settingdialog.h"
+#include "settings/settingdialog.h"
 //Qt libs
 #include <QFileDialog>
 #include <QFileInfo>
@@ -12,7 +12,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 //Other libs
-#include "Scheduler.h"
+#include "lib/Scheduler.h"
 #include "profile.h"
 
 QT_BEGIN_NAMESPACE
