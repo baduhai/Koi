@@ -7,6 +7,7 @@ the original author of koi would back in september as he/she has other stuff to 
 
 **Theme scheduling for the KDE Plasma Desktop**
 
+**use the all in one branch 
 <p>
   <img alt="profile-dialog" title="Yin & Yang" src="doc/profile_dialog.png">
 </p>
@@ -74,7 +75,9 @@ NB: the app is built for the KDE desktop environment .
 
 ### All Distros
 
-`git clone https://github.com/Da-Viper/Koi.git` 
+`git clone https://github.com/Da-Viper/Koi.git`
+
+`git checkout allInOne` 
 
 `cd Koi && mkdir build && cd build` 
 
