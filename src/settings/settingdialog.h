@@ -14,7 +14,6 @@
 #include "generalsettings.h"
 
 namespace Ui {
-	class SettingDialog;
 	class GeneralSettings;
 }
 
@@ -27,14 +26,13 @@ public:
     ~SettingDialog() override;
 
 private slots:
+	void slotOkClicked();
 
 private:
 //    QMap<KPageWidgetItem *, Page> _pages;
 
-    QDialogButtonBox *_buttonBox;
-    Ui::SettingDialog *ui;
     GeneralSettings *_generalUi;
-
+	QSettings *settings ;
 };
 
 #endif // SETTINGDIALOG_H

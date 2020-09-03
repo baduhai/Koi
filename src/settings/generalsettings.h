@@ -14,17 +14,18 @@ class GeneralSettings;
 class GeneralSettings : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit GeneralSettings(QWidget *parent = nullptr);
-    ~GeneralSettings() override;
+	GeneralSettings(QWidget *parent, QSettings *pSettings);
+	~GeneralSettings() override;
+
+	void applySetting();
 
 private slots:
-    void enableNotification(bool enable);
 
 private:
     Ui::GeneralSettings *ui;
     Utils utils;
+    QSettings *setting;
 };
 
 #endif // GENERALSETTINGS_H

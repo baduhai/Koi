@@ -120,7 +120,7 @@ void MainWindow::scheduleDark() {
 // Functionality of buttons - Related to program navigation, interaction and saving settings
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
 {
-    SettingDialog *dialog = new SettingDialog(this);
+    auto *dialog = new SettingDialog(this);
     dialog->setModal(true);
     dialog->show();
 }
