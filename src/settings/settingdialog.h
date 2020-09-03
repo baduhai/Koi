@@ -5,25 +5,28 @@
 #include <QDialog>
 #include <QModelIndexList>
 #include <QListWidgetItem>
+#include <QSettings>
+#include <QDir>
 
 //KDE
 #include <KPageDialog>
 
 //koi
-#include "utils.h"
 #include "generalsettings.h"
+#include "profilesettings.h"
 
-namespace Ui {
-	class GeneralSettings;
+namespace Ui
+{
+class GeneralSettings;
 }
 
-class SettingDialog : public KPageDialog
+class SettingDialog: public KPageDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit SettingDialog(QWidget *parent = nullptr);
-    ~SettingDialog() override;
+	explicit SettingDialog(QWidget *parent = nullptr);
+	~SettingDialog() override;
 
 private slots:
 	void slotOkClicked();
@@ -31,8 +34,9 @@ private slots:
 private:
 //    QMap<KPageWidgetItem *, Page> _pages;
 
-    GeneralSettings *_generalUi;
-	QSettings *settings ;
+	GeneralSettings *_generalUi;
+	ProfileSettings *_profileUi;
+	QSettings *settings;
 };
 
 #endif // SETTINGDIALOG_H

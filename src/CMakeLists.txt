@@ -18,10 +18,11 @@ set(koi_SRC
         profile.cpp
         settings/settingdialog.cpp
         settings/generalsettings.cpp
+        settings/profilesettings.cpp
         )
 
 set(koi_RCS
-        ../resources/resources.qrc)
+        ../resources/resources.qrc )
 
 set(icons
         ../resources/icons/koi.svg

@@ -8,6 +8,7 @@ GeneralSettings::GeneralSettings(QWidget *parent, QSettings *pSettings)
 	setting(pSettings)
 {
 	ui->setupUi(this);
+	loadSetting();
 	//connect(ui->notifyCheckBox, &QCheckBox::toggled,this, &GeneralSettings::enableNotification);
 }
 
@@ -18,8 +19,11 @@ GeneralSettings::~GeneralSettings()
 void GeneralSettings::applySetting()
 {
 	//notification.
-	qDebug()<< "The old " << setting->value("General/notify").toString();
-	setting->setValue("General/notify", ui->notifyCheckBox->isChecked());
-	qDebug()<< setting->value("General/notify").toString();
+	//by default the general group is created if there is no group declared.
+	setting->setValue("notify", ui->notifyCheckBox->isChecked());
+}
+void GeneralSettings::loadSetting()
+{
+	ui->notifyCheckBox->setChecked(setting->value("notify").toBool());
 }
 

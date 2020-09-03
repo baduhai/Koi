@@ -3,9 +3,8 @@
 
 #include <QWidget>
 #include "ui_generalsettings.h"
-
+#include <QSettings>
 //koi
-#include "utils.h"
 
 namespace Ui {
 class GeneralSettings;
@@ -19,12 +18,11 @@ public:
 	~GeneralSettings() override;
 
 	void applySetting();
-
+	void loadSetting();
 private slots:
 
 private:
     Ui::GeneralSettings *ui;
-    Utils utils;
     QSettings *setting;
 };
 
