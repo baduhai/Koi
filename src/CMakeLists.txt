@@ -19,7 +19,9 @@ set(koi_SRC
         settings/settingdialog.cpp
         settings/generalsettings.cpp
         settings/profilesettings.cpp
-        )
+        settings/profiles/profiledialoggroup.cpp
+        settings/profiles/stylesdialog.cpp
+        settings/profiles/othersdialog.cpp)
 
 set(koi_RCS
         ../resources/resources.qrc )

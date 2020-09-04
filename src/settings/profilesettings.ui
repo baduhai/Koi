@@ -95,31 +95,13 @@
       </spacer>
      </item>
      <item row="0" column="0" rowspan="2">
-      <widget class="QTreeView" name="profilesList">
+      <widget class="QTableView" name="profilesList">
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
-       <property name="rootIsDecorated">
-        <bool>false</bool>
-       </property>
-       <property name="uniformRowHeights">
-        <bool>true</bool>
-       </property>
-       <property name="itemsExpandable">
-        <bool>false</bool>
-       </property>
-       <property name="expandsOnDoubleClick">
-        <bool>false</bool>
-       </property>
-       <attribute name="headerMinimumSectionSize">
-        <number>8</number>
-       </attribute>
-       <attribute name="headerStretchLastSection">
-        <bool>true</bool>
-       </attribute>
       </widget>
      </item>
     </layout>
