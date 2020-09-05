@@ -15,13 +15,12 @@ set(koi_SRC
         utils.cpp
         wallpaper.cpp
         kvantumstyle.cpp
-        profile.cpp
         settings/settingdialog.cpp
         settings/generalsettings.cpp
         settings/profilesettings.cpp
         settings/profiles/profiledialoggroup.cpp
         settings/profiles/stylesdialog.cpp
-        settings/profiles/othersdialog.cpp)
+        settings/profiles/othersdialog.cpp settings/profiles/profile.cpp settings/profiles/profile.h)
 
 set(koi_RCS
         ../resources/resources.qrc )

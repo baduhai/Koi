@@ -32,7 +32,7 @@ This is a TODO list
 - [ ] choose a formatting standard (currently digging the Microsoft one because is very easy to read
 - [ ] separating logic from UI
 - [ ] add switching browser styles for (for chrome, chromium and firefox)
-
+- [ ] add support for more languages other than English with i18n/i10n 
 
 
 

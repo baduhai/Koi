@@ -60,19 +60,11 @@ public:
 
 	void loadProfiles();
 
-	Profile readProfile(QFileInfo &fileInfo);
 
     static void writeToThemeConfigFile(const QString &pluginName, const QString &themeType);
 	static void dumpDefaultsConfigFile(const QString &pluginName);
 private:
-	Profile *currentProfile;
-	bool lightExists = false;
-	bool darkExists = false;
 
-	Profile *activeProfile;
-	QList<Profile> profileList;
-
-	QStringList changes;
 	Gtk gtk;
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;

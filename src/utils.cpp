@@ -15,14 +15,6 @@ void Utils::initialiseSettings()
 
 	loadProfiles();
 	//there should always be light and dark profiles in the list
-	if (!lightExists) {
-		Profile lightProfile("light");
-		profileList.append(lightProfile);
-	}
-	if (!darkExists) {
-		Profile darkProfile("dark");
-		profileList.append(darkProfile);
-	}
 	if (!Utils::themeExists(QStringLiteral("Koi-dark"))) {
 		Utils::createNewTheme("Koi-dark",
 							  "Koi-dark",
@@ -410,10 +402,8 @@ void Utils::loadProfiles()
 	for (const auto &themeCF : fileNames) {
 		//add to the global list of profiles
 		if (themeCF.baseName() == "light") {
-			lightExists = true;
 		}
 		if (themeCF.baseName() == "dark") {
-			darkExists = true;
 		}
 		Profile n(readProfile(const_cast<QFileInfo &>(themeCF)));
 		if (!Profile::profileExists(n.getProfileName(), profileList)) {
