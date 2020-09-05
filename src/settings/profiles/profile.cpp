@@ -6,25 +6,28 @@
 
 //may never use this.
 Profile::Profile()
-        :
-        m_name(), m_plasma(), m_color(),
-        m_gtk(), m_kvantum(), m_widget(),
-        m_icon(), m_script(), m_wallpaper(),
-        m_library(), m_theme(), m_konsole() {
+    :
+    m_name(), m_plasma(), m_color(),
+    m_gtk(), m_kvantum(), m_widget(),
+    m_icon(), m_script(), m_wallpaper(),
+    m_library(), m_theme(), m_konsole()
+{
     m_name = "name of profile here...";
 }
 
 //copying from and existing profile.
 Profile::Profile(const Profile &p)
-        :
-        m_name(), m_plasma(p.m_plasma), m_color(p.m_color),
-        m_gtk(p.m_gtk), m_kvantum(p.m_kvantum), m_widget(p.m_widget),
-        m_icon(p.m_icon), m_script(p.m_script), m_wallpaper(p.m_wallpaper),
-        m_library(p.m_library), m_theme(p.m_theme), m_konsole(p.m_konsole) {
+    :
+    m_name(), m_plasma(p.m_plasma), m_color(p.m_color),
+    m_gtk(p.m_gtk), m_kvantum(p.m_kvantum), m_widget(p.m_widget),
+    m_icon(p.m_icon), m_script(p.m_script), m_wallpaper(p.m_wallpaper),
+    m_library(p.m_library), m_theme(p.m_theme), m_konsole(p.m_konsole)
+{
     m_name = p.m_name + "-1";
 }
 
-void Profile::readConfig(QSettings &s) {
+void Profile::readConfig(QSettings &s)
+{
 
     //Styles
     s.beginGroup("Styles");
@@ -57,7 +60,8 @@ void Profile::readConfig(QSettings &s) {
 
 }
 
-void Profile::writeConfig(QSettings &s) {
+void Profile::writeConfig(QSettings &s)
+{
 
     //void write to globalTheme.
     //Styles
@@ -88,17 +92,17 @@ void Profile::writeConfig(QSettings &s) {
     s.setValue("konsole", m_konsole);
 }
 
-
 /*  data is never read from global
     *this is only for inbuilt kde configs
     *theme global configs is always prefixed with Koi-$nameoftheme
 */
-void Profile::writeToGlobal() {
+void Profile::writeToGlobal()
+{
     QString pluginName("Koi-" + m_name);
     //write the defaults file, read from kde config files and save to the defaultsrc
     KConfig defaultsConfig
-            (QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) %
-             QLatin1String("/plasma/look-and-feel/")
+        (QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) %
+            QLatin1String("/plasma/look-and-feel/")
              % pluginName % "/contents/defaults");
 
     KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
@@ -134,9 +138,11 @@ void Profile::writeToGlobal() {
     defaultsConfigGroup.writeEntry("theme", m_theme);
 }
 
-void Profile::setName(const QString &name) {
+void Profile::setName(const QString &name)
+{
     m_name = name;
 }
-QString Profile::name() const {
+QString Profile::name() const
+{
     return m_name;
 }

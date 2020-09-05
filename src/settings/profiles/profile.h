@@ -11,11 +11,12 @@
 #include <KConfigGroup>
 #include <QDir>
 
-class Profile {
+class Profile
+{
 
 public:
     Profile();
-    Profile(const Profile &p );
+    Profile(const Profile &p);
     ~Profile();
 
     void readConfig(QSettings &s);
@@ -33,14 +34,14 @@ public:
 
 private:
     //name of the profile that will be used for its location
-    QString m_name  ;
+    QString m_name;
 
     //Group
     //[Styles]
     QString m_plasma;
     QString m_color;
     QString m_gtk;
-    QString m_kvantum ;
+    QString m_kvantum;
     QString m_widget;
 
     //[Others]
