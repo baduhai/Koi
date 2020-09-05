@@ -529,71 +529,31 @@ void MainWindow::on_darkBtn_clicked()
 // Editing options
 void MainWindow::on_styleCheckBox_stateChanged(int styleEnabled) // Plasma style checkbox logic
 {
-    if (ui->styleCheckBox->checkState() == 0)
-    {
-        ui->darkStyle->setEnabled(0);
-        ui->lightStyle->setEnabled(0);
-        ui->darkDropStyle->setEnabled(0);
-        ui->lightDropStyle->setEnabled(0);
-    }
-    else
-    {
-        ui->darkStyle->setEnabled(1);
-        ui->lightStyle->setEnabled(1);
-        ui->darkDropStyle->setEnabled(1);
-        ui->lightDropStyle->setEnabled(1);
-    }
+        ui->darkStyle->setEnabled(styleEnabled);
+        ui->lightStyle->setEnabled(styleEnabled);
+        ui->darkDropStyle->setEnabled(styleEnabled);
+        ui->lightDropStyle->setEnabled(styleEnabled);
 }
 void MainWindow::on_colorCheckBox_stateChanged(int colorEnabled) // Color scheme checkbox logic
 {
-    if (ui->colorCheckBox->checkState() == 0)
-    {
-        ui->darkColor->setEnabled(0);
-        ui->lightColor->setEnabled(0);
-        ui->darkDropColor->setEnabled(0);
-        ui->lightDropColor->setEnabled(0);
-    }
-    else
-    {
-        ui->darkColor->setEnabled(1);
-        ui->lightColor->setEnabled(1);
-        ui->darkDropColor->setEnabled(1);
-        ui->lightDropColor->setEnabled(1);
-    }
+        ui->darkColor->setEnabled(colorEnabled);
+        ui->lightColor->setEnabled(colorEnabled);
+        ui->darkDropColor->setEnabled(colorEnabled);
+        ui->lightDropColor->setEnabled(colorEnabled);
 }
 void MainWindow::on_iconCheckBox_stateChanged(int iconEnabled) // Icon theme checkbox logic
 {
-    if (ui->iconCheckBox->checkState() == 0)
-    {
-        ui->darkIcon->setEnabled(0);
-        ui->lightIcon->setEnabled(0);
-        ui->darkDropIcon->setEnabled(0);
-        ui->lightDropIcon->setEnabled(0);
-    }
-    else
-    {
-        ui->darkIcon->setEnabled(1);
-        ui->lightIcon->setEnabled(1);
-        ui->darkDropIcon->setEnabled(1);
-        ui->lightDropIcon->setEnabled(1);
-    }
+        ui->darkIcon->setEnabled(iconEnabled);
+        ui->lightIcon->setEnabled(iconEnabled);
+        ui->darkDropIcon->setEnabled(iconEnabled);
+        ui->lightDropIcon->setEnabled(iconEnabled);
 }
 void MainWindow::on_kvantumStyleCheckBox_stateChanged(int kvantumStyleEnabled) //kvantum theme checkbox logic used to perform an actioni after enabling the check box
 {
-    if (ui->kvantumStyleCheckBox->checkState() == 0)
-    {
-        ui->darkKvantumStyle->setEnabled(0);
-        ui->lightDropKvantumStyle->setEnabled(0);
-        ui->darkDropKvantumStyle->setEnabled(0);
-        ui->darkKvantumStyle->setEnabled(0);
-    }
-    else
-    {
-        ui->darkKvantumStyle->setEnabled(1);
-        ui->lightKvantumStyle->setEnabled(1);
-        ui->darkDropKvantumStyle->setEnabled(1);
-        ui->lightDropKvantumStyle->setEnabled(1);
-    }
+        ui->darkKvantumStyle->setEnabled(kvantumStyleEnabled);
+        ui->lightDropKvantumStyle->setEnabled(kvantumStyleEnabled);
+        ui->darkDropKvantumStyle->setEnabled(kvantumStyleEnabled);
+        ui->darkKvantumStyle->setEnabled(kvantumStyleEnabled);
 }
 void MainWindow::on_lightDropStyle_currentIndexChanged(const QString &lightStyleUN) // Set light plasma style
 {
@@ -623,20 +583,10 @@ void MainWindow::on_darkDropIcon_currentIndexChanged(const QString &darkIconUN) 
 }
 void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnabled) // GTK theme checkbox logic
 {
-    if (ui->gtkCheckBox->checkState() == 0)
-    {
-        ui->darkGtk->setEnabled(0);
-        ui->lightGtk->setEnabled(0);
-        ui->darkDropGtk->setEnabled(0);
-        ui->lightDropGtk->setEnabled(0);
-    }
-    else
-    {
-        ui->darkGtk->setEnabled(1);
-        ui->lightGtk->setEnabled(1);
-        ui->darkDropGtk->setEnabled(1);
-        ui->lightDropGtk->setEnabled(1);
-    }
+        ui->darkGtk->setEnabled(gtkEnabled);
+        ui->lightGtk->setEnabled(gtkEnabled);
+        ui->darkDropGtk->setEnabled(gtkEnabled);
+        ui->lightDropGtk->setEnabled(gtkEnabled);
 }
 void MainWindow::on_lightDropGtk_currentIndexChanged(const QString &lightGtkUN) // Set light gtk theme
 {
@@ -656,20 +606,10 @@ void MainWindow::on_darkDropKvantumStyle_currentIndexChanged(const QString &dark
 }
 void MainWindow::on_wallCheckBox_stateChanged(int wallEnabled) // Wallpaper checkbox logic
 {
-    if (ui->wallCheckBox->checkState() == 0)
-    {
-        ui->darkWall->setEnabled(0);
-        ui->lightWall->setEnabled(0);
-        ui->darkWallBtn->setEnabled(0);
-        ui->lightWallBtn->setEnabled(0);
-    }
-    else
-    {
-        ui->darkWall->setEnabled(1);
-        ui->lightWall->setEnabled(1);
-        ui->darkWallBtn->setEnabled(1);
-        ui->lightWallBtn->setEnabled(1);
-    }
+        ui->darkWall->setEnabled(wallEnabled);
+        ui->lightWall->setEnabled(wallEnabled);
+        ui->darkWallBtn->setEnabled(wallEnabled);
+        ui->lightWallBtn->setEnabled(wallEnabled);
 }
 void MainWindow::on_lightWallBtn_clicked() // Set light wallpaper
 {
@@ -689,65 +629,32 @@ void MainWindow::on_darkWallBtn_clicked() // Set dark wallpaper
 }
 void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for enabling scheduling of themes
 {
-    if (ui->autoCheckBox->checkState() == 0)
-    {
-        ui->scheduleRadioBtn->setEnabled(0);
-        //ui->sunRadioBtn->setEnabled(0);
-        ui->lightTimeLabel->setEnabled(0);
-        ui->darkTimeLabel->setEnabled(0);
-        ui->lightTimeEdit->setEnabled(0);
-        ui->darkTimeEdit->setEnabled(0);
-        utils.settings->setValue("schedule", false);
+       ui->scheduleRadioBtn->setEnabled(automaticEnabled);
+        ui->lightTimeLabel->setEnabled(automaticEnabled);
+        ui->darkTimeLabel->setEnabled(automaticEnabled);
+        ui->lightTimeEdit->setEnabled(automaticEnabled);
+        ui->darkTimeEdit->setEnabled(automaticEnabled);
+        utils.settings->setValue("schedule", automaticEnabled);
         utils.settings->sync();
         ui->resMsg->setText(tr("To disable automatic mode , Koi must be restarded."));
         ui->resMsg->setMessageType(KMessageWidget::Warning);
         ui->resMsg->animatedShow();
-    }
-    else
-    {
-
-        ui->scheduleRadioBtn->setEnabled(1);
-        //ui->sunRadioBtn->setEnabled(1);
-        ui->lightTimeLabel->setEnabled(1);
-        ui->darkTimeLabel->setEnabled(1);
-        ui->lightTimeEdit->setEnabled(1);
-        ui->darkTimeEdit->setEnabled(1);
-        if (ui->scheduleRadioBtn->isChecked() == 0)
-        {
-            ui->lightTimeLabel->setEnabled(0);
-            ui->darkTimeLabel->setEnabled(0);
-            ui->lightTimeEdit->setEnabled(0);
-            ui->darkTimeEdit->setEnabled(0);
-        }
-        utils.settings->setValue("schedule", true);
-        utils.settings->sync();
-        ui->resMsg->setText(tr("To enable automatic mode, Koi must be restarded."));
-        ui->resMsg->setMessageType(KMessageWidget::Warning);
-        ui->resMsg->animatedShow();
-    }
 }
 void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between manual schedule, and sun schedule
 {
-    if (ui->sunRadioBtn->isChecked() == 0)
-    {
-        ui->lightTimeLabel->setEnabled(1);
-        ui->darkTimeLabel->setEnabled(1);
-        ui->lightTimeEdit->setEnabled(1);
-        ui->darkTimeEdit->setEnabled(1);
-        scheduleType = "time";
-        utils.settings->setValue("schedule-type", scheduleType);
-        utils.settings->sync();
-    }
-    else
-    {
-        ui->lightTimeLabel->setEnabled(0);
-        ui->darkTimeLabel->setEnabled(0);
-        ui->lightTimeEdit->setEnabled(0);
-        ui->darkTimeEdit->setEnabled(0);
-        scheduleType = "sun";
-        utils.settings->setValue("schedule-type", scheduleType);
-        utils.settings->sync();
-    }
+	ui->lightTimeLabel->setEnabled(scheduleSun);
+	ui->darkTimeLabel->setEnabled(scheduleSun);
+	ui->lightTimeEdit->setEnabled(scheduleSun);
+	ui->darkTimeEdit->setEnabled(scheduleSun);
+    if(ui->sunRadioBtn->isChecked() == 0)
+	{
+    	scheduleType = "time";
+	} else
+	{
+    	scheduleType = "sun";
+	}
+	utils.settings->setValue("schedule-type", scheduleType);
+	utils.settings->sync();
 }
 void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set light time
 {
@@ -770,25 +677,11 @@ void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark 
 void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
 {
     ui->resMsg->animatedShow();
-    if (ui->hiddenCheckBox->checkState() == 0)
-    {
-        utils.settings->setValue("start-hidden", false);
-    }
-    else
-    {
-        utils.settings->setValue("start-hidden", true);
-    }
+        utils.settings->setValue("start-hidden", hiddenEnabled);
 }
 void MainWindow::on_notifyCheckBox_stateChanged(int notifyEnabled)
 {
-    if (ui->notifyCheckBox->checkState() == 0)
-    {
-        utils.settings->setValue("notify", false);
-    }
-    else
-    {
-        utils.settings->setValue("notify", true);
-    }
+        utils.settings->setValue("notify", notifyEnabled);
 }
 
 // Menubar actions
