@@ -3,20 +3,21 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class StylesDialog;
 }
 
-class StylesDialog : public QWidget
+class StylesDialog: public QWidget
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    explicit StylesDialog(QWidget *parent = nullptr);
-    ~StylesDialog();
+	explicit StylesDialog(QWidget *parent = nullptr);
+	~StylesDialog();
 
 private:
-    Ui::StylesDialog *ui;
+	Ui::StylesDialog *ui;
 };
 
 #endif // STYLESDIALOG_H

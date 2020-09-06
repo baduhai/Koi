@@ -8,12 +8,12 @@
 
 #include <KPageDialog>
 
-class ProfileDialogGroup : public KPageDialog
+class ProfileDialogGroup: public KPageDialog
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	explicit ProfileDialogGroup(QWidget *parent = nullptr);
-	~ProfileDialogGroup() override ;
+    explicit ProfileDialogGroup(QWidget *parent = nullptr);
+    ~ProfileDialogGroup() override;
 
 };
 

@@ -3,13 +3,14 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class ExternalDialog;
 }
 
-class ExternalDialog : public QWidget
+class ExternalDialog: public QWidget
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit ExternalDialog(QWidget *parent = nullptr);

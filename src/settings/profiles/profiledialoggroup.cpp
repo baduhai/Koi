@@ -5,8 +5,8 @@
 #include "profiledialoggroup.h"
 
 ProfileDialogGroup::ProfileDialogGroup(QWidget *parent)
-	:
-	KPageDialog(parent)
+    :
+    KPageDialog(parent)
 {
 
 }

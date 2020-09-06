@@ -6,13 +6,14 @@
 #include <QSettings>
 //koi
 
-namespace Ui {
+namespace Ui
+{
 class GeneralSettings;
 }
 
-class GeneralSettings : public QWidget
+class GeneralSettings: public QWidget
 {
-    Q_OBJECT
+Q_OBJECT
 public:
 	GeneralSettings(QWidget *parent, QSettings *pSettings);
 	~GeneralSettings() override;
@@ -22,8 +23,8 @@ public:
 private slots:
 
 private:
-    Ui::GeneralSettings *ui;
-    QSettings *setting;
+	Ui::GeneralSettings *ui;
+	QSettings *setting;
 };
 
 #endif // GENERALSETTINGS_H

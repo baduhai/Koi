@@ -3,13 +3,14 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class OthersDialog;
 }
 
-class OthersDialog : public QWidget
+class OthersDialog: public QWidget
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit OthersDialog(QWidget *parent = nullptr);

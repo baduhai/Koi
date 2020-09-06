@@ -1,7 +1,8 @@
 #include "othersdialog.h"
 #include "ui_othersdialog.h"
 
-OthersDialog::OthersDialog(QWidget *parent) :
+OthersDialog::OthersDialog(QWidget *parent)
+    :
     QWidget(parent),
     ui(new Ui::OthersDialog)
 {
