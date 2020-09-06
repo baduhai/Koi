@@ -5,12 +5,12 @@
  * it has three widget item
  * -Styles, -Others, -External.
  */
-#include "profilesettings.h"
+#include "profilesettingsdialog.h"
 
-ProfileSettings::ProfileSettings(QWidget *parent, QSettings *pSettings)
+ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettings)
 	:
 	QWidget(parent),
-	ui(new Ui::ProfileSettings),
+	ui(new Ui::ProfileSettingsDialog),
 	settings(pSettings),
 	_profileListModel(new QStandardItemModel(this))
 {
@@ -20,35 +20,35 @@ ProfileSettings::ProfileSettings(QWidget *parent, QSettings *pSettings)
 	populateTable();
 }
 
-ProfileSettings::~ProfileSettings()
+ProfileSettingsDialog::~ProfileSettingsDialog()
 {
 	delete ui;
 }
 
-void ProfileSettings::createTable()
+void ProfileSettingsDialog::createTable()
 {
 	Q_ASSERT(!ui->profilesList->model());
 
 	ui->profilesList->setModel(_profileListModel);
 	_profileListModel->clear();
 
-	//Add Headers
-	_profileListModel->setHorizontalHeaderLabels({
-													 QString(), // Favourites Header
-													 ("Name"),    // Profile Name
-												 });
+	//Add Headers thi order  Favorites  ProfileName
+	QStringList headerNames ({ QString() , "Name"});
+	_profileListModel->setHorizontalHeaderLabels(headerNames);
 
 	auto *favoriteColumnHeaderItem = new QStandardItem();
 	favoriteColumnHeaderItem->setIcon(QIcon::fromTheme(QStringLiteral("visibility")));
 	favoriteColumnHeaderItem->setToolTip("Select Favorites ");
 	_profileListModel->setHorizontalHeaderItem(FavoriteStatusColumn, favoriteColumnHeaderItem);
 
+	ui->profilesList->horizontalHeader()->setSectionResizeMode(FavoriteStatusColumn , QHeaderView::ResizeToContents);
+	ui->profilesList->horizontalHeader()->setSectionResizeMode(ProfileNameColumn , QHeaderView::Stretch);
 
 	ui->profilesList->verticalHeader()->setSectionsMovable(false);
 	ui->profilesList->verticalHeader()->setHidden(true);
 	ui->profilesList->horizontalHeader()->setFirstSectionMovable(false);
 }
-void ProfileSettings::populateTable()
+void ProfileSettingsDialog::populateTable()
 {
 
 
@@ -60,7 +60,7 @@ void ProfileSettings::populateTable()
 }
 
 // Add the Profile to the Table view
-void ProfileSettings::addItems(const QStringList &list)
+void ProfileSettingsDialog::addItems(const QStringList &list)
 {
 	if (list.isEmpty()) {
 		return;
@@ -77,7 +77,7 @@ void ProfileSettings::addItems(const QStringList &list)
 }
 
 // Put the profile attributes(favourites , profile Name) in a standard item to show it on the table view
-void ProfileSettings::updateItemsForProfile(const QStringList &list, const QList<QStandardItem *> &items) const
+void ProfileSettingsDialog::updateItemsForProfile(const QStringList &list, const QList<QStandardItem *> &items) const
 {
 	// "Enabled" checkbox
 	const auto isEnabled = true;
@@ -89,7 +89,6 @@ void ProfileSettings::updateItemsForProfile(const QStringList &list, const QList
 	// only allow renaming the profile from the edit profile dialog
 	// so as to use ProfileManager::checkProfileName()
 	items[ProfileNameColumn]->setEditable(false);
-
 }
 
 

@@ -2,8 +2,8 @@
 // Created by da-viper on 03/09/2020.
 //
 
-#ifndef PROFILESETTINGS_H
-#define PROFILESETTINGS_H
+#ifndef PROFILESETTINGSDIALOG_H
+#define PROFILESETTINGSDIALOG_H
 
 #include <QSettings>
 #include <QWidget>
@@ -18,18 +18,18 @@ class QStandardItemModel;
 
 //namespace Ui
 //{
-////class ProfileSettings;
+//class ProfileSettings;
 //}
-class ProfileSettings: public QWidget
+class ProfileSettingsDialog: public QWidget
 {
 Q_OBJECT
 public:
-	ProfileSettings(QWidget *parent, QSettings *pSettings);
-	~ProfileSettings() override;
+	ProfileSettingsDialog(QWidget *parent, QSettings *pSettings);
+	~ProfileSettingsDialog() override;
 
 
 private:
-	Ui::ProfileSettings *ui;
+	Ui::ProfileSettingsDialog *ui;
 	QSettings *settings;
 
 	QStandardItemModel *_profileListModel;
@@ -53,4 +53,4 @@ private:
 };
 
 
-#endif //PROFILESETTINGS_H
+#endif //PROFILESETTINGSDIALOG_H

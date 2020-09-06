@@ -48,6 +48,11 @@ Profile::Profile(const Profile &p)
 	m_name = p.m_name + "-1";
 }
 
+Profile::~Profile()
+{
+
+}
+
 void Profile::readConfig(QSettings &s)
 {
 
@@ -161,7 +166,6 @@ void Profile::writeToGlobal()
 	defaultsConfigGroup.writeEntry("library", m_library);
 	defaultsConfigGroup.writeEntry("theme", m_theme);
 }
-
 void Profile::setName(const QString &name)
 {
 	m_name = name;

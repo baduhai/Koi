@@ -84,8 +84,7 @@ bool ProfileManager::loadProfile(const QFileInfo &file)
 }
 
 const Profile ProfileManager::_defaultProfile;
-
-const Profile *ProfileManager::defaultProfile()
+const Profile *ProfileManager::defaultProfile() const
 {
 	return &_defaultProfile;
 }

@@ -19,9 +19,9 @@ public:
 	ProfileManager();
 	~ProfileManager();
 
-	static const  Profile *defaultProfile();
 	static ProfileManager *instance();
 
+	const Profile  *defaultProfile() const;
 private:
 
 	//load the profile to the qhash. hashed with their filename
@@ -35,13 +35,12 @@ private:
 	//for storing the loaded profiles.
 	QHash<QString, const Profile*> _profileList;
 
-	static const Profile _activeProfile;
-
+	//makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
 	// or don't have and profile set
 	static const Profile _defaultProfile;
 
-	//makes sure it is only one instance of the class
+	static const Profile _activeProfile;
 	Q_DISABLE_COPY(ProfileManager);
 };
 

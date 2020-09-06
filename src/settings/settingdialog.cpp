@@ -27,7 +27,7 @@ SettingDialog::SettingDialog(QWidget *parent)
 
 	// Profiles Page
 	const QString profilePageName = ("Profiles");
-	_profileUi = new ProfileSettings(this, settings);
+	_profileUi = new ProfileSettingsDialog(this, settings);
 	KPageWidgetItem *profilePageItem = addPage(_profileUi, profilePageName);
 	profilePageItem->setHeader(profilePageName);
 	profilePageItem->setIcon(QIcon::fromTheme("style"));

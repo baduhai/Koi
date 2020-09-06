@@ -13,7 +13,7 @@
 
 //koi
 #include "generalsettings.h"
-#include "profilesettings.h"
+#include "profilesettingsdialog.h"
 
 namespace Ui
 {
@@ -35,7 +35,7 @@ private:
 //    QMap<KPageWidgetItem *, Page> _pages;
 
 	GeneralSettings *_generalUi;
-	ProfileSettings *_profileUi;
+	ProfileSettingsDialog *_profileUi;
 	QSettings *settings;
 };
 

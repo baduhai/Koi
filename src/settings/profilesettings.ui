@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProfileSettings</class>
- <widget class="QWidget" name="ProfileSettings">
+ <class>ProfileSettingsDialog</class>
+ <widget class="QWidget" name="ProfileSettingsDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
