@@ -53,37 +53,37 @@ Profile::~Profile()
 
 }
 
-void Profile::readConfig(QSettings &s)
+void Profile::readConfig(QSettings *s)
 {
 
 	//Styles
-	s.beginGroup("Styles");
+	s->beginGroup("Styles");
 	QString group("Styles");
-	m_plasma = s.value("/plasmaStyle").toString();
-	m_color = s.value("/colorScheme").toString();
-	m_gtk = s.value("/gtkTheme").toString();
-	m_kvantum = s.value("/kvantum").toString();
-	m_widget = s.value("/widgetStyle").toString();
-	s.endGroup();
+	m_plasma = s->value("/plasmaStyle").toString();
+	m_color = s->value("/colorScheme").toString();
+	m_gtk = s->value("/gtkTheme").toString();
+	m_kvantum = s->value("/kvantum").toString();
+	m_widget = s->value("/widgetStyle").toString();
+	s->endGroup();
 
 	//Others;
-	s.beginGroup("Others");
-	m_icon = s.value("icon").toString();
-	m_mouse = s.value("mouse").toString();
-	m_script = s.value("script").toString();
-	m_wallpaper = s.value("wallpaper").toString();
-	s.endGroup();
+	s->beginGroup("Others");
+	m_icon = s->value("icon").toString();
+	m_mouse = s->value("mouse").toString();
+	m_script = s->value("script").toString();
+	m_wallpaper = s->value("wallpaper").toString();
+	s->endGroup();
 
 	//Window Decoration
-	s.beginGroup("Window Decoration");
-	m_library = s.value("library").toString();
-	m_theme = s.value("theme").toString();
-	s.endGroup();
+	s->beginGroup("Window Decoration");
+	m_library = s->value("library").toString();
+	m_theme = s->value("theme").toString();
+	s->endGroup();
 
 	//External
-	s.beginGroup("External");
-	m_konsole = s.value("konsole").toString();
-	s.endGroup();
+	s->beginGroup("External");
+	m_konsole = s->value("konsole").toString();
+	s->endGroup();
 
 }
 

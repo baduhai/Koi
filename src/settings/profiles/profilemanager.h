@@ -20,8 +20,9 @@ public:
 	~ProfileManager();
 
 	static ProfileManager *instance();
+	QList<const Profile *> allProfiles();
 
-	const Profile  *defaultProfile() const;
+	const Profile *defaultProfile() const;
 private:
 
 	//load the profile to the qhash. hashed with their filename
@@ -31,10 +32,10 @@ private:
 
 	bool loadProfile(const QFileInfo &file);
 
-	bool m_haveLoadedAll;
 	//for storing the loaded profiles.
-	QHash<QString, const Profile*> _profileList;
+	QHash<QString, const Profile *> _profileList;
 
+	bool m_loadedAllProfiles;
 	//makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
 	// or don't have and profile set

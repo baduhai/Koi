@@ -23,7 +23,7 @@ ProfileManager *ProfileManager::instance()
 QFileInfoList ProfileManager::listProfiles()
 {
 	QFileInfoList pList;
-	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QStringLiteral("/koi"));
+    QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 	if (!dirs.exists()) {
 		QDir().mkdir(dirs.absolutePath());
 		return QFileInfoList(); //empty list.
@@ -48,15 +48,15 @@ void ProfileManager::loadProfiles()
 		}
 	}
 
-	m_haveLoadedAll = true;
+	m_loadedAllProfiles = true;
 
 }
 bool ProfileManager::loadProfile(const QFileInfo &file)
 {
 	//checks if it is a .koi file and it exists
-	auto filePath = file.absolutePath();
+    auto filePath = file.absoluteFilePath();
 
-	if (!(file.completeSuffix() != "koi") || !QFileInfo::exists(filePath)) {
+    if (file.completeSuffix() != "koi" || !QFileInfo::exists(filePath)) {
 		return false;
 	}
 	auto fileName = file.fileName();
@@ -66,7 +66,7 @@ bool ProfileManager::loadProfile(const QFileInfo &file)
 
 	p->setName(fileName);
 	//can just pass the pointer and remove the reference;
-	p->writeConfig(settings);
+	p->readConfig(settings);
 
 	if (p->name().isEmpty()) {
                               qDebug()<< "does not have a valid name and was not loaded.";
@@ -87,4 +87,12 @@ const Profile ProfileManager::_defaultProfile;
 const Profile *ProfileManager::defaultProfile() const
 {
 	return &_defaultProfile;
+}
+QList<const Profile *> ProfileManager::allProfiles()
+{
+	if(!m_loadedAllProfiles){
+		loadProfiles();
+	}
+	//gotten profiles from disk.
+	return _profileList.values();
 }

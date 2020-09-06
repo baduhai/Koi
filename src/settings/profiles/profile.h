@@ -20,7 +20,7 @@ public:
     Profile(const Profile &p);
     ~Profile();
 
-    void readConfig(QSettings &s);
+    void readConfig(QSettings *s);
 
     void writeConfig(QSettings *s);
 

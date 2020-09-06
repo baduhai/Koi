@@ -50,19 +50,19 @@ void ProfileSettingsDialog::createTable()
 }
 void ProfileSettingsDialog::populateTable()
 {
+	QList<const Profile*> profileList = ProfileManager::instance()->allProfiles();
 
-
-	QList<QStringList> theList({{"1", "Breeze", "yes"}, {"false", "Material", "no"}, {"4", "Qogir", "that"}});
-	for (const auto &sList : theList) {
-		addItems(sList);
+	for (const auto p : profileList) {
+		addItems(p);
 	}
 
 }
 
 // Add the Profile to the Table view
-void ProfileSettingsDialog::addItems(const QStringList &list)
+void ProfileSettingsDialog::addItems(const Profile *p)
 {
-	if (list.isEmpty()) {
+	//profile must have a name.
+	if (p->name().isEmpty()) {
 		return;
 	}
 
@@ -72,12 +72,12 @@ void ProfileSettingsDialog::addItems(const QStringList &list)
 		new QStandardItem(), // Profile Name.
 	};
 
-	updateItemsForProfile(list, items);
+	updateItemsForProfile(p, items);
 	_profileListModel->appendRow(items);
 }
 
 // Put the profile attributes(favourites , profile Name) in a standard item to show it on the table view
-void ProfileSettingsDialog::updateItemsForProfile(const QStringList &list, const QList<QStandardItem *> &items) const
+void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const
 {
 	// "Enabled" checkbox
 	const auto isEnabled = true;
@@ -85,7 +85,7 @@ void ProfileSettingsDialog::updateItemsForProfile(const QStringList &list, const
 	items[FavoriteStatusColumn]->setCheckable(true);
 
 	// Profile Name
-	items[ProfileNameColumn]->setText(list[1]);
+	items[ProfileNameColumn]->setText(p->name());
 	// only allow renaming the profile from the edit profile dialog
 	// so as to use ProfileManager::checkProfileName()
 	items[ProfileNameColumn]->setEditable(false);

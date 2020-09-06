@@ -10,7 +10,10 @@
 #include <QStandardItemModel>
 #include <QtWidgets/QStyledItemDelegate>
 
+//koi
 #include "ui_profilesettings.h"
+#include "profiles/profilemanager.h"
+
 
 class QItemSelection;
 class QStandardItem;
@@ -48,8 +51,8 @@ private:
 
 	void createTable();
 	void populateTable();
-	void addItems(const QStringList &list);
-	void updateItemsForProfile(const QStringList &list, const QList<QStandardItem *> &items) const;
+	void addItems(const Profile *p);
+	void updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const;
 };
 
 
