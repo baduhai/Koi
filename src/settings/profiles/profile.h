@@ -21,7 +21,7 @@ public:
 
     void readConfig(QSettings &s);
 
-    void writeConfig(QSettings &s);
+    void writeConfig(QSettings *s);
 
     //cannot use qsetting here because of double grouping in defaults file ;
     void writeToGlobal();

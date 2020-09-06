@@ -13,7 +13,6 @@ void Utils::initialiseSettings()
 	settings =
 		new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 
-	loadProfiles();
 	//there should always be light and dark profiles in the list
 	if (!Utils::themeExists(QStringLiteral("Koi-dark"))) {
 		Utils::createNewTheme("Koi-dark",
@@ -389,62 +388,5 @@ void Utils::runScript(const QString &themeType)
 	}
 }
 
-void Utils::loadProfiles()
-{
-	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QStringLiteral("/koi"));
-	if (!dirs.exists()) {
-		QDir().mkdir(dirs.absolutePath());
-		return;
-		qDebug() << "no profiles in koi ";
-	}
 
-	const QFileInfoList fileNames = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
-	for (const auto &themeCF : fileNames) {
-		//add to the global list of profiles
-		if (themeCF.baseName() == "light") {
-		}
-		if (themeCF.baseName() == "dark") {
-		}
-		Profile n(readProfile(const_cast<QFileInfo &>(themeCF)));
-		if (!Profile::profileExists(n.getProfileName(), profileList)) {
-			profileList.append(n);
-		}
-	}
-}
 
-Profile Utils::readProfile(QFileInfo &fileInfo)
-{
-	//create a config and a profile and read the config into the profile
-	//then put it in a list
-	QString profilePath = fileInfo.absolutePath();
-	QSettings ps(profilePath, QSettings::IniFormat);
-	Profile newProfile(fileInfo.baseName());
-
-	//this opens a config group in the profile config file.
-	QString style("Styles");
-	QString other("Others");
-	QString window("Window Decoration");
-	QString external("External");
-	//set the properties to their respective settings
-	newProfile.setplasma(ps.value(style + "/plasmaStyle", QString()).toString());
-	newProfile.setColor(ps.value(style + "/colorScheme", QString()).toString());
-	newProfile.setGtk(ps.value(style + "/gtkTheme", QString()).toString());
-	newProfile.setKvantum(ps.value(style + "/kvantum", QString()).toString());
-	newProfile.setWidget(ps.value(style + "/widgetStyle", QString()).toString());
-
-	//Others
-	newProfile.setIcon(ps.value(other + "/icon", QString()).toString());
-	newProfile.setMouse(ps.value(other + "/mouse", QString()).toString());
-	newProfile.setScript(ps.value(other + "/script", QString()).toString());
-	newProfile.setWallpaper(ps.value(other + "/wallpaper", QString()).toString());
-
-	//window
-	newProfile.setDecLibrary(ps.value(window + "/library", QString()).toString());
-	newProfile.setDecTheme(ps.value(window + "/theme", QString()).toString());
-
-	//External
-	newProfile.setKonsole(ps.value(external + "/konsole", QString()).toString());
-	newProfile.setVscode(ps.value(external + "/vscode", QString()).toString());
-
-	return newProfile;
-}

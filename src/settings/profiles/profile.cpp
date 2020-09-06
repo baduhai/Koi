@@ -60,36 +60,38 @@ void Profile::readConfig(QSettings &s)
 
 }
 
-void Profile::writeConfig(QSettings &s)
+void Profile::writeConfig(QSettings *s)
 {
 
     //void write to globalTheme.
     //Styles
-    s.beginGroup("Style");
-    s.setValue("plasmaStyle", m_plasma);
-    s.setValue("colorScheme", m_color);
-    s.setValue("gtkTheme", m_gtk);
-    s.setValue("kvantum", m_kvantum);
-    s.setValue("widgetStyle", m_widget);
-    s.endGroup();
+    s->beginGroup("Style");
+    s->setValue("plasmaStyle", m_plasma);
+    s->setValue("colorScheme", m_color);
+    s->setValue("gtkTheme", m_gtk);
+    s->setValue("kvantum", m_kvantum);
+    s->setValue("widgetStyle", m_widget);
+    s->endGroup();
 
     //Others
-    s.beginGroup("Others");
-    s.setValue("icon", m_icon);
-    s.setValue("mouse", m_mouse);
-    s.setValue("script", m_script);
-    s.setValue("wallpaper", m_wallpaper);
-    s.endGroup();
+    s->beginGroup("Others");
+    s->setValue("icon", m_icon);
+    s->setValue("mouse", m_mouse);
+    s->setValue("script", m_script);
+    s->setValue("wallpaper", m_wallpaper);
+    s->endGroup();
 
     //Window Decorations;
-    s.beginGroup("Window Decoration");
-    s.setValue("library ", m_library);
-    s.setValue("theme", m_theme);
-    s.endGroup();
+    s->beginGroup("Window Decoration");
+    s->setValue("library ", m_library);
+    s->setValue("theme", m_theme);
+
+    s->endGroup();
 
     //External
-    s.beginGroup("External");
-    s.setValue("konsole", m_konsole);
+    s->beginGroup("External");
+    s->setValue("konsole", m_konsole);
+    s->endGroup();
 }
 
 /*  data is never read from global
