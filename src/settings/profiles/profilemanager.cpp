@@ -13,6 +13,13 @@ ProfileManager::~ProfileManager()
 {
 
 }
+//see https://doc.qt.io/qt-5/qglobalstatic.html#Q_GLOBAL_STATIC
+Q_GLOBAL_STATIC(ProfileManager,theProfileManager);
+ProfileManager *ProfileManager::instance()
+{
+	return theProfileManager;
+}
+
 QFileInfoList ProfileManager::listProfiles()
 {
 	QFileInfoList pList;
@@ -30,6 +37,7 @@ QFileInfoList ProfileManager::listProfiles()
 	}
 	return fileNames;
 }
+
 void ProfileManager::loadProfiles()
 {
 	const auto localProfilesList = listProfiles();
@@ -73,7 +81,11 @@ bool ProfileManager::loadProfile(const QFileInfo &file)
         qDebug()<< "profile already exists in the list ";
     }
     return true;
+}
 
+const Profile ProfileManager::_defaultProfile;
 
-	return false;
+const Profile *ProfileManager::defaultProfile()
+{
+	return &_defaultProfile;
 }

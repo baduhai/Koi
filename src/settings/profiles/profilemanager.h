@@ -8,14 +8,20 @@
 //Qt
 #include <QString>
 #include <QDebug>
+#include <KSharedConfig>
 
 //koi
 #include "profile.h"
 
 class ProfileManager
 {
+public:
 	ProfileManager();
 	~ProfileManager();
+
+	static const  Profile *defaultProfile();
+	static ProfileManager *instance();
+
 private:
 
 	//load the profile to the qhash. hashed with their filename
@@ -27,7 +33,7 @@ private:
 
 	bool m_haveLoadedAll;
 	//for storing the loaded profiles.
-	QHash<QString, const Profile*>_profileList;
+	QHash<QString, const Profile*> _profileList;
 
 	static const Profile _activeProfile;
 

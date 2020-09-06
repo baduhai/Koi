@@ -10,6 +10,7 @@
 #include <KConfig>
 #include <KConfigGroup>
 #include <QDir>
+#include <KSharedConfig>
 
 class Profile
 {
