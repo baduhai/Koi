@@ -8,9 +8,9 @@
 //and setting it as default.
 Profile::Profile()
 	:
-	m_name(), m_plasma(), m_color(), //failsafe.
+	m_name(), m_pluginName("Koi-" + m_name), m_plasma(), m_color(), //name=themeName pluginName= koi-themeName
 	m_gtk(), m_kvantum(), m_widget(),
-	m_icon(),m_mouse(), m_script(), m_wallpaper(),
+	m_icon(), m_mouse(), m_script(), m_wallpaper(),
 	m_library(), m_theme(), m_konsole()
 {
 	m_name = "name of profile here...";
@@ -33,19 +33,20 @@ Profile::Profile()
 	//decoration library and theme.
 	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kwinrc")), "org.kde.kdecoration2");
 	m_library = systemCG.readEntry("library", QStringLiteral("org.kde.breeze"));
-	m_theme =  systemCG.readEntry("theme", QString());
+	m_theme = systemCG.readEntry("theme", QString());
 
 }
 
 //copying from and existing profile.
 Profile::Profile(const Profile &p)
 	:
-	m_name(), m_plasma(p.m_plasma), m_color(p.m_color),
+	m_name(), m_pluginName("Koi-" + m_name), m_plasma(p.m_plasma), m_color(p.m_color),
 	m_gtk(p.m_gtk), m_kvantum(p.m_kvantum), m_widget(p.m_widget),
-	m_icon(p.m_icon),m_mouse(p.m_mouse), m_script(p.m_script), m_wallpaper(p.m_wallpaper),
+	m_icon(p.m_icon), m_mouse(p.m_mouse), m_script(p.m_script), m_wallpaper(p.m_wallpaper),
 	m_library(p.m_library), m_theme(p.m_theme), m_konsole(p.m_konsole)
 {
 	m_name = p.m_name + "-1";
+	m_pluginName = "Koi-" + m_name;
 }
 
 Profile::~Profile()
@@ -87,7 +88,7 @@ void Profile::readConfig(QSettings *s)
 
 }
 
-void Profile::writeConfig(QSettings *s)
+void Profile::writeConfig(QSettings *s) const
 {
 
 	//void write to globalTheme.
@@ -125,9 +126,9 @@ void Profile::writeConfig(QSettings *s)
     *this is only for inbuilt kde configs
     *theme global configs is always prefixed with Koi-$nameoftheme
 */
-void Profile::writeToGlobal()
+void Profile::writeToGlobal() const
 {
-	QString pluginName("Koi-" + m_name);
+	QString pluginName(m_pluginName);
 	//write the defaults file, read from kde config files and save to the defaultsrc
 	KConfig defaultsConfig
 		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) %
@@ -169,8 +170,38 @@ void Profile::writeToGlobal()
 void Profile::setName(const QString &name)
 {
 	m_name = name;
+	m_pluginName = "Koi-" + m_name;
 }
 QString Profile::name() const
 {
 	return m_name;
+}
+bool Profile::globalDefaultExists(const QString &pluginName)
+{
+	QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + pluginName
+							 + QStringLiteral("/contents/defaults"));
+	return localTheme.exists() && localTheme.isFile();
+}
+void Profile::createProfileGlobalDir() const
+//would not need this as this gets the plasma layout and i just need the theme
+{
+	const QString metadataPath
+		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
+			 % m_pluginName % QLatin1String("/metadata.desktop"));
+	KConfig c(metadataPath);
+
+	KConfigGroup cg(&c, "Desktop Entry");
+	cg.writeEntry("Name", m_pluginName);
+	cg.writeEntry("Comment", "This is automatically created from koi app ");
+	cg.writeEntry("X-KDE-PluginInfo-Name", m_pluginName);
+	cg.writeEntry("X-KDE-ServiceTypes", "Plasma/LookAndFeel");
+	cg.writeEntry("X-KDE-PluginInfo-Author", "Da-Viper and  Baduhai");
+	cg.writeEntry("X-KDE-PluginInfo-Email", "yerimyah1@gmail.com");
+	cg.writeEntry("X-KDE-PluginInfo-Website", "https://github.com/Da-Viper/Koi");
+	cg.writeEntry("X-KDE-PluginInfo-Category", "Plasma Look And Feel");
+	cg.writeEntry("X-KDE-PluginInfo-License", "LGPL-3.0");
+	cg.writeEntry("X-KDE-PluginInfo-EnabledByDefault", "true");
+	cg.writeEntry("X-KDE-PluginInfo-Version", "0.1");
+	cg.sync();
+
 }

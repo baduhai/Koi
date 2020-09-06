@@ -20,11 +20,12 @@ public:
 	~ProfileManager();
 
 	static ProfileManager *instance();
+	//loads all profile including the defaults.
 	QList<const Profile *> allProfiles();
 
 	const Profile *defaultProfile() const;
 private:
-
+	static bool profileExists(const QString &fileName, const QFileInfoList &fileList);
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
 	//get the list of profiles

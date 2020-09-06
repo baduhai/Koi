@@ -14,7 +14,7 @@ ProfileManager::~ProfileManager()
 
 }
 //see https://doc.qt.io/qt-5/qglobalstatic.html#Q_GLOBAL_STATIC
-Q_GLOBAL_STATIC(ProfileManager,theProfileManager);
+Q_GLOBAL_STATIC(ProfileManager, theProfileManager);
 ProfileManager *ProfileManager::instance()
 {
 	return theProfileManager;
@@ -23,7 +23,7 @@ ProfileManager *ProfileManager::instance()
 QFileInfoList ProfileManager::listProfiles()
 {
 	QFileInfoList pList;
-    QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 	if (!dirs.exists()) {
 		QDir().mkdir(dirs.absolutePath());
 		return QFileInfoList(); //empty list.
@@ -36,6 +36,15 @@ QFileInfoList ProfileManager::listProfiles()
 		pList.append(file);
 	}
 	return fileNames;
+}
+bool ProfileManager::profileExists(const QString &fileName, const QFileInfoList &fileList)
+{
+	for (const auto &file: fileList) {
+		if (QString::compare(fileName, file.baseName(), Qt::CaseInsensitive) == 0) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void ProfileManager::loadProfiles()
@@ -54,14 +63,21 @@ void ProfileManager::loadProfiles()
 bool ProfileManager::loadProfile(const QFileInfo &file)
 {
 	//checks if it is a .koi file and it exists
-    auto filePath = file.absoluteFilePath();
+	auto filePath = file.absoluteFilePath();
 
-    if (file.completeSuffix() != "koi" || !QFileInfo::exists(filePath)) {
+	if (file.completeSuffix() != "koi") {
 		return false;
+	}
+
+	if (!QFileInfo::exists(filePath)) {
+		QFile f(filePath);
+		if (f.open(QIODevice::ReadWrite)) {
+			qDebug() << "file now exists";
+		}
 	}
 	auto fileName = file.fileName();
 
-	auto *settings = new QSettings(filePath , QSettings::IniFormat);
+	auto *settings = new QSettings(filePath, QSettings::IniFormat);
 	auto p = new Profile();
 
 	p->setName(fileName);
@@ -69,29 +85,59 @@ bool ProfileManager::loadProfile(const QFileInfo &file)
 	p->readConfig(settings);
 
 	if (p->name().isEmpty()) {
-                              qDebug()<< "does not have a valid name and was not loaded.";
+		qDebug() << "does not have a valid name and was not loaded.";
 		delete settings;
-        return false;
-    }
+		return false;
+	}
 
-    if (!_profileList.contains(fileName)) {
-        _profileList.insert(p->name(), p);
-    } else {
-        delete settings;
-        qDebug()<< "profile already exists in the list ";
-    }
-    return true;
+	if (!_profileList.contains(fileName)) {
+		_profileList.insert(p->name(), p);
+	}
+	else {
+		delete settings;
+		qDebug() << "profile already exists in the list ";
+	}
+	return true;
 }
 
 const Profile ProfileManager::_defaultProfile;
+
 const Profile *ProfileManager::defaultProfile() const
 {
 	return &_defaultProfile;
 }
 QList<const Profile *> ProfileManager::allProfiles()
 {
-	if(!m_loadedAllProfiles){
+	QFileInfoList pList(listProfiles());
+	if (!m_loadedAllProfiles) {
 		loadProfiles();
+	}
+	//there should be a better way to do this if iam wrong
+	//this creates default light and dark profile if there are none.
+	QString dark("dark");
+	if (!profileExists(dark, pList)) {
+		QFileInfo darkFileInfo(QStandardPaths::writableLocation(
+			QStandardPaths::AppLocalDataLocation) + "/" + dark + ".koi");
+		loadProfile(darkFileInfo);
+		if (!Profile::globalDefaultExists("Koi-" + dark)) {
+			QSettings s(darkFileInfo.absoluteFilePath(), QSettings::IniFormat);
+			ProfileManager::instance()->_profileList.value(dark)->writeConfig(&s);
+			ProfileManager::instance()->_profileList.value(dark)->createProfileGlobalDir();
+			ProfileManager::instance()->_profileList.value(dark)->writeToGlobal();
+		}
+	}
+
+	QString light(QStringLiteral("light"));
+	if (!profileExists(light, pList)) {
+		QFileInfo lightFileInfo(QStandardPaths::writableLocation(
+			QStandardPaths::AppLocalDataLocation) + light + ".koi");
+		loadProfile(lightFileInfo);
+		if (!Profile::globalDefaultExists("Koi-" + dark)) {
+			QSettings s(lightFileInfo.absoluteFilePath(), QSettings::IniFormat);
+			ProfileManager::instance()->_profileList.value(light)->writeConfig(&s);
+			ProfileManager::instance()->_profileList.value(light)->createProfileGlobalDir();
+			ProfileManager::instance()->_profileList.value(light)->writeToGlobal();
+		}
 	}
 	//gotten profiles from disk.
 	return _profileList.values();
