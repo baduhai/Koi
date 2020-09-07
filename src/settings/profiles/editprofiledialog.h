@@ -11,6 +11,8 @@
 #include "ui_externaldialog.h"
 #include "ui_stylesdialog.h"
 #include "ui_othersdialog.h"
+#include "profile.h"
+#include "utils.h"
 
 namespace Ui {
 	class OthersDialog;
@@ -23,12 +25,22 @@ Q_OBJECT
 public:
     explicit EditProfileDialog(QWidget *parent = nullptr);
     ~EditProfileDialog() override;
-	
+
+    void setupPage();
+    void setProfile( Profile p) ;
+
+    void updatePages();
 private:
 	Ui::StylesDialog *_stylesDialog;
 	Ui::OthersDialog *_othersDialog;
     Ui::ExternalDialog *_extDialog;
+
+    Profile m_tempProfile;
+    Profile *_profile ;
 };
+
+
+
 
 
 #endif //EDITPROFILEDIALOG_H

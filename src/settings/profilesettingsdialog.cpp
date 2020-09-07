@@ -32,8 +32,9 @@ void ProfileSettingsDialog::addNewProfile()
     Profile newProfile;
     ProfileManager::instance()->_activeProfile = &newProfile;
 
-    QPointer<EditProfileDialog> dialog = new EditProfileDialog(this);
+    EditProfileDialog *dialog = new EditProfileDialog(this);
     dialog->setModal(true);
+
 	//setup the page by loading items there
     dialog->show();
 }

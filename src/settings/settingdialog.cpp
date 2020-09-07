@@ -15,7 +15,7 @@ SettingDialog::SettingDialog(QWidget *parent)
 	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::NativeFormat);
 
 	setWindowTitle("Settings Page");
-	setFaceType(KPageDialog::List);
+	setFaceType(KPageDialog::Tabbed);
 
 	//Adding Pages
 	// General page

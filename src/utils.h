@@ -36,8 +36,13 @@ public:
     QSettings *settings{};
     void initialiseSettings();
 
-    static QStringList getCursorThemes();
-    static QStringList getWidgetStyles();
+    //styles.
+    static QStringList getPlasmaStyles();
+    static QStringList getColorSchemes();
+    static QStringList getGtkThemes();
+	static QStringList getKvantumStyles();
+	static QStringList getWidgetStyles();
+	static QStringList getCursorThemes();
 
     static QStringList getWindowDecorationsStyle();
     static QList<Decoration> getWindowDecorations();

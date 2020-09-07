@@ -5,7 +5,7 @@
 #include "editprofiledialog.h"
 
 
-EditProfileDialog::EditProfileDialog(QWidget *parent)
+EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile here.
     :
 	KPageDialog(parent),
 	_stylesDialog(nullptr),
@@ -13,7 +13,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)
 	_extDialog(nullptr)
 {
     setWindowTitle("Profiles Page");
-    setFaceType(KPageDialog::Tabbed);
+    setFaceType(KPageDialog::List);
 
     //Adding Pages
     //Styles page
@@ -38,7 +38,37 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)
 	_extDialog->setupUi(extPageWidget);
 	addPage(extPageWidget, extPageName);
 
+	//update pages
+	setupPage();
+
+
 }
 EditProfileDialog::~EditProfileDialog()
 {
 }
+void EditProfileDialog::setProfile(Profile p)
+{
+	//checks if it points to anything befor using .
+	_profile = &p;
+	updatePages();
+}
+void EditProfileDialog::updatePages()
+{
+	Q_ASSERT(_profile);
+
+
+}
+void EditProfileDialog::setupPage()
+{
+	//Styles Page.
+	_stylesDialog->plasmaComboBox->addItems(Utils::getPlasmaStyles());
+	_stylesDialog->QtComboBox->addItems(Utils::getColorSchemes());
+	_stylesDialog->gtkComboBox->addItems(Utils::getGtkThemes());
+	_stylesDialog->widgetComboBox->addItems(Utils::getWidgetStyles());
+
+
+
+
+}
+
+
