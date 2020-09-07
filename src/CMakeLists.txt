@@ -18,9 +18,8 @@ set(koi_SRC
         settings/settingdialog.cpp
         settings/generalsettings.cpp
         settings/profilesettingsdialog.cpp
-        settings/profiles/profiledialoggroup.cpp
-        settings/profiles/stylesdialog.cpp
-        settings/profiles/othersdialog.cpp settings/profiles/profile.cpp settings/profiles/profile.h settings/profiles/profilemanager.cpp settings/profiles/profilemanager.h)
+        settings/profiles/editprofiledialog.cpp
+        settings/profiles/profile.cpp settings/profiles/profile.h settings/profiles/profilemanager.cpp settings/profiles/profilemanager.h)
 
 set(koi_RCS
         ../resources/resources.qrc )

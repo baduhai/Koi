@@ -11,10 +11,12 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettin
 	:
 	QWidget(parent),
 	ui(new Ui::ProfileSettingsDialog),
+	_ProfileDGUi(nullptr),
 	settings(pSettings),
 	_profileListModel(new QStandardItemModel(this))
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
+    connect(ui->newProfileBtn , &QPushButton::clicked ,this , &ProfileSettingsDialog::addNewProfile);
 	createTable();
 
 	populateTable();
@@ -22,7 +24,18 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettin
 
 ProfileSettingsDialog::~ProfileSettingsDialog()
 {
-	delete ui;
+    delete ui;
+}
+
+void ProfileSettingsDialog::addNewProfile()
+{   
+    Profile newProfile;
+    ProfileManager::instance()->_activeProfile = &newProfile;
+
+    QPointer<EditProfileDialog> dialog = new EditProfileDialog(this);
+    dialog->setModal(true);
+	//setup the page by loading items there
+    dialog->show();
 }
 
 void ProfileSettingsDialog::createTable()
@@ -39,9 +52,9 @@ void ProfileSettingsDialog::createTable()
 	auto *favoriteColumnHeaderItem = new QStandardItem();
 	favoriteColumnHeaderItem->setIcon(QIcon::fromTheme(QStringLiteral("visibility")));
 	favoriteColumnHeaderItem->setToolTip("Select Favorites ");
-	_profileListModel->setHorizontalHeaderItem(FavoriteStatusColumn, favoriteColumnHeaderItem);
+	_profileListModel->setHorizontalHeaderItem(FavouriteStatusColumn, favoriteColumnHeaderItem);
 
-	ui->profilesList->horizontalHeader()->setSectionResizeMode(FavoriteStatusColumn , QHeaderView::ResizeToContents);
+	ui->profilesList->horizontalHeader()->setSectionResizeMode(FavouriteStatusColumn , QHeaderView::ResizeToContents);
 	ui->profilesList->horizontalHeader()->setSectionResizeMode(ProfileNameColumn , QHeaderView::Stretch);
 
 	ui->profilesList->verticalHeader()->setSectionsMovable(false);
@@ -80,9 +93,15 @@ void ProfileSettingsDialog::addItems(const Profile *p)
 void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const
 {
 	// "Enabled" checkbox
-	const auto isEnabled = true;
-	items[FavoriteStatusColumn]->setCheckState(isEnabled ? Qt::Checked : Qt::Unchecked);
-	items[FavoriteStatusColumn]->setCheckable(true);
+	const auto isEnabled (ProfileManager::instance()->isFavourite(p));
+	items[FavouriteStatusColumn]->setCheckState(isEnabled ? Qt::Checked : Qt::Unchecked);
+	if((p->name() == "light") || p->name() == "dark"){
+		items[FavouriteStatusColumn]->setCheckState(Qt::Checked);
+		items[FavouriteStatusColumn]->setCheckable(false);
+		items[FavouriteStatusColumn]->setEnabled(false);
+	}else{
+		items[FavouriteStatusColumn]->setCheckable(true);
+	}
 
 	// Profile Name
 	items[ProfileNameColumn]->setText(p->name());
@@ -92,3 +111,8 @@ void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<
 }
 
 
+
+void ProfileSettingsDialog::on_newProfileBtn_clicked()
+{
+    
+}

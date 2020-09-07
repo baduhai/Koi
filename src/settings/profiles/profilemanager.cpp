@@ -6,12 +6,10 @@
 
 ProfileManager::ProfileManager()
 {
-
 }
 
 ProfileManager::~ProfileManager()
 {
-
 }
 //see https://doc.qt.io/qt-5/qglobalstatic.html#Q_GLOBAL_STATIC
 Q_GLOBAL_STATIC(ProfileManager, theProfileManager);
@@ -75,7 +73,7 @@ bool ProfileManager::loadProfile(const QFileInfo &file)
 			qDebug() << "file now exists";
 		}
 	}
-	auto fileName = file.fileName();
+	auto fileName = file.baseName();
 
 	auto *settings = new QSettings(filePath, QSettings::IniFormat);
 	auto p = new Profile();
@@ -130,7 +128,7 @@ QList<const Profile *> ProfileManager::allProfiles()
 	QString light(QStringLiteral("light"));
 	if (!profileExists(light, pList)) {
 		QFileInfo lightFileInfo(QStandardPaths::writableLocation(
-			QStandardPaths::AppLocalDataLocation) + light + ".koi");
+			QStandardPaths::AppLocalDataLocation) + "/" + light + ".koi");
 		loadProfile(lightFileInfo);
 		if (!Profile::globalDefaultExists("Koi-" + dark)) {
 			QSettings s(lightFileInfo.absoluteFilePath(), QSettings::IniFormat);
@@ -141,4 +139,19 @@ QList<const Profile *> ProfileManager::allProfiles()
 	}
 	//gotten profiles from disk.
 	return _profileList.values();
+}
+bool ProfileManager::isFavourite(const Profile *p)
+{
+	QStringList favourites(listFavourites());
+	if(favourites.contains(p->name())){
+		return true;
+	}
+    return false;
+}
+
+
+QStringList ProfileManager::listFavourites()
+{
+	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	return  s.value("favourites").toStringList();
 }

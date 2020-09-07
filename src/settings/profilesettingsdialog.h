@@ -9,20 +9,22 @@
 #include <QWidget>
 #include <QStandardItemModel>
 #include <QtWidgets/QStyledItemDelegate>
+#include <QPointer>
 
 //koi
-#include "ui_profilesettings.h"
+#include "ui_profilesettingsdialog.h"
 #include "profiles/profilemanager.h"
+#include "profiles/editprofiledialog.h"
 
 
 class QItemSelection;
 class QStandardItem;
 class QStandardItemModel;
+class EditProfileDialog;
 
-//namespace Ui
-//{
-//class ProfileSettings;
-//}
+namespace Ui
+{class ProfileSettingsDialog;
+}
 class ProfileSettingsDialog: public QWidget
 {
 Q_OBJECT
@@ -31,15 +33,21 @@ public:
 	~ProfileSettingsDialog() override;
 
 
+private slots:
+    void addNewProfile();
+
+    void on_newProfileBtn_clicked();
+
 private:
 	Ui::ProfileSettingsDialog *ui;
 	QSettings *settings;
 
+	EditProfileDialog *_ProfileDGUi;
 	QStandardItemModel *_profileListModel;
 
 	enum Column
 	{
-		FavoriteStatusColumn = 0,
+		FavouriteStatusColumn = 0,
 		ProfileNameColumn = 1,
 	};
 

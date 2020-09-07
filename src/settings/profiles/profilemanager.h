@@ -24,25 +24,29 @@ public:
 	QList<const Profile *> allProfiles();
 
 	const Profile *defaultProfile() const;
+
+    Profile * _activeProfile ;
+
+	bool isFavourite(const Profile *p );
 private:
 	static bool profileExists(const QString &fileName, const QFileInfoList &fileList);
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
+
 	//get the list of profiles
 	QFileInfoList listProfiles();
 
 	bool loadProfile(const QFileInfo &file);
+	QStringList listFavourites();
 
 	//for storing the loaded profiles.
 	QHash<QString, const Profile *> _profileList;
-
 	bool m_loadedAllProfiles;
+
 	//makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
 	// or don't have and profile set
 	static const Profile _defaultProfile;
-
-	static const Profile _activeProfile;
 	Q_DISABLE_COPY(ProfileManager);
 };
 
