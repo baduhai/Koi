@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "utils.h"
-#include "profile.h"
 
 #include <iostream>
 #include <QApplication>

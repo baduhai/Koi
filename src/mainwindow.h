@@ -13,7 +13,6 @@
 #include <QCloseEvent>
 //Other libs
 #include "lib/Scheduler.h"
-#include "profile.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

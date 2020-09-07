@@ -51,7 +51,9 @@ void ProfileManager::loadProfiles()
 
 	for (const auto &localProfiles : localProfilesList) {
 		if (!loadProfile(localProfiles)) {
-			qDebug() << "failed to load " << localProfiles;
+			//qt 5.9.5 does does not support appending qfileinfo
+			//in qdebug();
+			qDebug() << "failed to load " ;
 		}
 	}
 

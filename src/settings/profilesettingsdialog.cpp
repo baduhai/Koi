@@ -59,7 +59,7 @@ void ProfileSettingsDialog::createTable()
 
 	ui->profilesList->verticalHeader()->setSectionsMovable(false);
 	ui->profilesList->verticalHeader()->setHidden(true);
-	ui->profilesList->horizontalHeader()->setFirstSectionMovable(false);
+	ui->profilesList->horizontalHeader()->setSectionsMovable(false);
 }
 void ProfileSettingsDialog::populateTable()
 {

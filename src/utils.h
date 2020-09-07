@@ -7,7 +7,6 @@
 #include "wallpaper.h"
 #include "icons.h"
 #include "kvantumstyle.h"
-#include "profile.h"
 
 // Qt libs
 #include <QtGlobal>

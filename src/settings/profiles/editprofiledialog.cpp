@@ -21,21 +21,22 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)
 	_stylesDialog = new Ui::StylesDialog() ;
 	auto *stylePageWidget = new QWidget(this);
 	_stylesDialog->setupUi(stylePageWidget);
-	auto *stylePageItem = this->addPage(stylePageWidget, stylePageName);
+	//put this to make it easier to read
+	this->addPage(stylePageWidget, stylePageName);
 
 	//otherPage
     const QString othersPageName("Other");
 	_othersDialog = new Ui::OthersDialog();
 	auto *othersPageWidget = new QWidget(this);
 	_othersDialog->setupUi(othersPageWidget);
-	auto *othersPageItem = this->addPage(othersPageWidget, othersPageName);
+	addPage(othersPageWidget, othersPageName);
 
 	//External Page
 	const QString extPageName("External");
 	_extDialog = new Ui::ExternalDialog() ;
 	auto *extPageWidget = new QWidget(this);
 	_extDialog->setupUi(extPageWidget);
-	auto *extPageItem = this->addPage(extPageWidget, extPageName);
+	addPage(extPageWidget, extPageName);
 
 }
 EditProfileDialog::~EditProfileDialog()
