@@ -31,9 +31,10 @@ QStringList ProfileManager::listProfiles()
 
 	const QStringList fileNames = QDir(dirs).entryList(QStringList() << QStringLiteral("*.koi"));
 	for (const auto &file: fileNames) {
-		pList.append(file);
+		//remove the extension
+		pList.append(file.left(file.lastIndexOf(".")));
 	}
-	return fileNames;
+    return pList;
 }
 bool ProfileManager::profileExists(const QString &fileName, const QFileInfoList &fileList)
 {
