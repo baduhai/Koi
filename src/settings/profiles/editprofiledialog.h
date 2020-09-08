@@ -28,7 +28,7 @@ public:
 
     void setupPage();
     void setProfile( Profile p) ;
-
+	void saveProfile();
     void updatePages();
 private:
 	Ui::StylesDialog *_stylesDialog;

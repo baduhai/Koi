@@ -41,6 +41,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	//update pages
 	setupPage();
 
+	connect(this , &EditProfileDialog::accepted , this , &EditProfileDialog::saveProfile);
 
 }
 EditProfileDialog::~EditProfileDialog()
@@ -48,26 +49,31 @@ EditProfileDialog::~EditProfileDialog()
 }
 void EditProfileDialog::setProfile(Profile p)
 {
-	//checks if it points to anything befor using .
+	//checks if it points to anything before using .
 	_profile = &p;
 	updatePages();
 }
+//may seperate this in the future
 void EditProfileDialog::updatePages()
 {
+
 	Q_ASSERT(_profile);
-
-
+	_stylesDialog->plasmaComboBox->setCurrentText(_profile->getPlasma());
+	_stylesDialog->colorComboBox->setCurrentText(_profile->getColor());
+	_stylesDialog->gtkComboBox->setCurrentText(_profile->getGtk());
+	_stylesDialog->widgetComboBox->setCurrentText(_profile->getWidget());
 }
 void EditProfileDialog::setupPage()
 {
 	//Styles Page.
 	_stylesDialog->plasmaComboBox->addItems(Utils::getPlasmaStyles());
-	_stylesDialog->QtComboBox->addItems(Utils::getColorSchemes());
+	_stylesDialog->colorComboBox->addItems(Utils::getColorSchemes());
 	_stylesDialog->gtkComboBox->addItems(Utils::getGtkThemes());
 	_stylesDialog->widgetComboBox->addItems(Utils::getWidgetStyles());
 
-
-
+}
+void EditProfileDialog::saveProfile()
+{
 
 }
 

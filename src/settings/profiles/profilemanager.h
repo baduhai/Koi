@@ -23,9 +23,12 @@ public:
 	//loads all profile including the defaults.
 	QList<const Profile *> allProfiles();
 
+	void saveProfile(const QString& profileName);
+
 	const Profile *defaultProfile() const;
 
     Profile * _activeProfile ;
+
 
 	bool isFavourite(const Profile *p );
 private:
@@ -34,9 +37,9 @@ private:
 	void loadProfiles();
 
 	//get the list of profiles
-	QFileInfoList listProfiles();
+	QStringList listProfiles();
 
-	bool loadProfile(const QFileInfo &file);
+	bool addProfile(const QString &profileName);
 	QStringList listFavourites();
 
 	//for storing the loaded profiles.

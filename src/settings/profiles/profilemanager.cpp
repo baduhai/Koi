@@ -18,18 +18,18 @@ ProfileManager *ProfileManager::instance()
 	return theProfileManager;
 }
 
-QFileInfoList ProfileManager::listProfiles()
+QStringList ProfileManager::listProfiles()
 {
-	QFileInfoList pList;
+	QStringList pList;
 	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 	if (!dirs.exists()) {
 		QDir().mkdir(dirs.absolutePath());
-		return QFileInfoList(); //empty list.
+		return QStringList(); //empty list.
 		qDebug() << "no profiles in koi ";
 	}
 	pList.reserve(dirs.Size);
 
-	const QFileInfoList fileNames = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
+	const QStringList fileNames = QDir(dirs).entryList(QStringList() << QStringLiteral("*.koi"));
 	for (const auto &file: fileNames) {
 		pList.append(file);
 	}
@@ -50,7 +50,7 @@ void ProfileManager::loadProfiles()
 	const auto localProfilesList = listProfiles();
 
 	for (const auto &localProfiles : localProfilesList) {
-		if (!loadProfile(localProfiles)) {
+		if (!addProfile(localProfiles)) {
 			//qt 5.9.5 does does not support appending qfileinfo
 			//in qdebug();
 			qDebug() << "failed to load " ;
@@ -60,12 +60,14 @@ void ProfileManager::loadProfiles()
 	m_loadedAllProfiles = true;
 
 }
-bool ProfileManager::loadProfile(const QFileInfo &file)
+bool ProfileManager::addProfile(const QString &profileName)
 {
+	QFileInfo profileInfo(QStandardPaths::writableLocation(
+			QStandardPaths::AppLocalDataLocation) + "/" + profileName + ".koi");
 	//checks if it is a .koi file and it exists
-	auto filePath = file.absoluteFilePath();
+	auto filePath = profileInfo.absoluteFilePath();
 
-	if (file.completeSuffix() != "koi") {
+	if (profileInfo.completeSuffix() != "koi") {
 		return false;
 	}
 
@@ -75,7 +77,7 @@ bool ProfileManager::loadProfile(const QFileInfo &file)
 			qDebug() << "file now exists";
 		}
 	}
-	auto fileName = file.baseName();
+	auto fileName = profileInfo.baseName();
 
 	auto *settings = new QSettings(filePath, QSettings::IniFormat);
 	auto p = new Profile();
@@ -108,36 +110,22 @@ const Profile *ProfileManager::defaultProfile() const
 }
 QList<const Profile *> ProfileManager::allProfiles()
 {
-	QFileInfoList pList(listProfiles());
+	QStringList pList(listProfiles());
 	if (!m_loadedAllProfiles) {
 		loadProfiles();
 	}
 	//there should be a better way to do this if iam wrong
 	//this creates default light and dark profile if there are none.
 	QString dark("dark");
-	if (!profileExists(dark, pList)) {
-		QFileInfo darkFileInfo(QStandardPaths::writableLocation(
-			QStandardPaths::AppLocalDataLocation) + "/" + dark + ".koi");
-		loadProfile(darkFileInfo);
-		if (!Profile::globalDefaultExists("Koi-" + dark)) {
-			QSettings s(darkFileInfo.absoluteFilePath(), QSettings::IniFormat);
-			ProfileManager::instance()->_profileList.value(dark)->writeConfig(&s);
-			ProfileManager::instance()->_profileList.value(dark)->createProfileGlobalDir();
-			ProfileManager::instance()->_profileList.value(dark)->writeToGlobal();
-		}
+	if(!pList.contains(dark)){
+		addProfile(dark);
+		saveProfile(dark);
 	}
 
 	QString light(QStringLiteral("light"));
-	if (!profileExists(light, pList)) {
-		QFileInfo lightFileInfo(QStandardPaths::writableLocation(
-			QStandardPaths::AppLocalDataLocation) + "/" + light + ".koi");
-		loadProfile(lightFileInfo);
-		if (!Profile::globalDefaultExists("Koi-" + dark)) {
-			QSettings s(lightFileInfo.absoluteFilePath(), QSettings::IniFormat);
-			ProfileManager::instance()->_profileList.value(light)->writeConfig(&s);
-			ProfileManager::instance()->_profileList.value(light)->createProfileGlobalDir();
-			ProfileManager::instance()->_profileList.value(light)->writeToGlobal();
-		}
+	if (!pList.contains(light)) {
+		addProfile(light);
+		saveProfile(light);
 	}
 	//gotten profiles from disk.
 	return _profileList.values();
@@ -156,4 +144,15 @@ QStringList ProfileManager::listFavourites()
 {
 	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
 	return  s.value("favourites").toStringList();
+}
+
+void ProfileManager::saveProfile(const QString &profileName)
+{
+	QFileInfo profileInfo(QStandardPaths::writableLocation(
+			QStandardPaths::AppLocalDataLocation) + "/" + profileName + ".koi");
+	QSettings s(profileInfo.absoluteFilePath(), QSettings::IniFormat);
+	_profileList.value(profileName)->writeConfig(&s);
+	_profileList.value(profileName)->createProfileGlobalDir();
+	_profileList.value(profileName)->writeToGlobal();
+
 }

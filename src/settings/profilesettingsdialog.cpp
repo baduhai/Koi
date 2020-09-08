@@ -32,11 +32,10 @@ void ProfileSettingsDialog::addNewProfile()
     Profile newProfile;
     ProfileManager::instance()->_activeProfile = &newProfile;
 
-    EditProfileDialog *dialog = new EditProfileDialog(this);
-    dialog->setModal(true);
-
-	//setup the page by loading items there
-    dialog->show();
+    QPointer<EditProfileDialog> dialog = new EditProfileDialog(this);
+	dialog.data()->setProfile(newProfile);
+	dialog.data()->open();
+//connect(dialog.data(), &EditProfileDialog::accepted , this , &ProfileManager::instance()->_activeProfile)
 }
 
 void ProfileSettingsDialog::createTable()

@@ -32,6 +32,8 @@ public:
 	//QString m_browser;
 	void createProfileGlobalDir() const;
 
+
+
 	//QString m_vscode;
 	static bool globalDefaultExists(const QString &pluginName);
 	// Returns the profile Name
@@ -55,6 +57,7 @@ public:
 	//External
 	QString getKonsole() const;
 
+	//Maybe i don't need setters ?
 	//Setters
 	void setPlasma(const QString &plasma);
 	void setColor(const QString &color);
