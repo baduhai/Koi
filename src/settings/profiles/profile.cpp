@@ -205,3 +205,104 @@ void Profile::createProfileGlobalDir() const
 	cg.sync();
 
 }
+
+//Getters
+QString Profile::getPlasma() const
+{
+	return  m_plasma ;
+}
+QString Profile::getColor() const
+{
+	return m_color ;
+}
+QString Profile::getGtk() const
+{
+	return m_gtk;
+}
+QString Profile::getKvantum() const
+{
+	return m_kvantum;
+}
+QString Profile::getWidget() const
+{
+	return m_widget;
+}
+QString Profile::getIcon() const
+{
+	return m_icon;
+}
+QString Profile::getMouse() const
+{
+	return m_mouse;
+}
+QString Profile::getScript() const
+{
+	return m_script;
+}
+QString Profile::getWallpaper() const
+{
+	return m_wallpaper;
+}
+QString Profile::getLibrary() const
+{
+	return m_library;
+}
+QString Profile::getTheme() const
+{
+	return m_theme;
+}
+QString Profile::getKonsole() const
+{
+	 return m_konsole;
+}
+
+//Setters
+void Profile::setPlasma(const QString &plasma)
+{
+	m_plasma = plasma;
+}
+void Profile::setColor(const QString &color)
+{
+	m_color = color;
+
+}
+void Profile::setGtk(const QString &gtk)
+{
+	m_gtk = gtk ;
+}
+void Profile::setKvantum(const QString &kvantum)
+{
+	m_kvantum = kvantum ;
+}
+void Profile::setWidget(const QString &widget)
+{
+	m_widget = widget ;
+}
+void Profile::setIcon(const QString &icon)
+{
+	 m_icon = icon ;
+}
+void Profile::setMouse(const QString &mouse)
+{
+	 m_mouse = mouse ;
+}
+void Profile::setScript(const QString &script)
+{
+	m_script = script ;
+}
+void Profile::setWallpaper(const QString &wallpaper)
+{
+	m_wallpaper = wallpaper ;
+}
+void Profile::setLibrary(const QString &library)
+{
+	m_library = library ;
+}
+void Profile::setTheme(const QString &theme)
+{
+	m_theme= theme ;
+}
+void Profile::setKonsole(const QString &konsole)
+{
+	m_konsole = konsole ;
+}

@@ -36,6 +36,39 @@ public:
 	static bool globalDefaultExists(const QString &pluginName);
 	// Returns the profile Name
 	QString name() const;
+
+	//getters and setters for the variables
+	//getters
+	QString getPlasma() const;
+	QString getColor() const;
+	QString getGtk() const;
+	QString getKvantum() const;
+	QString getWidget() const;
+	//Others
+	QString getIcon() const;
+	QString getMouse() const;
+	QString getScript() const;
+	QString getWallpaper() const;
+	//Window Decorations
+	QString getLibrary() const;
+	QString getTheme() const;
+	//External
+	QString getKonsole() const;
+
+	//Setters
+	void setPlasma(const QString &plasma);
+	void setColor(const QString &color);
+	void setGtk(const QString &gtk);
+	void setKvantum(const QString &kvantum);
+	void setWidget(const QString &widget);
+	void setIcon(const QString &icon);
+	void setMouse(const QString &mouse);
+	void setScript(const QString &script);
+	void setWallpaper(const QString &wallpaper);
+	void setLibrary(const QString &library);
+	void setTheme(const QString &theme);
+	void setKonsole(const QString &konsole);
+
 private:
 
 	//name of the profile that will be used for its location
