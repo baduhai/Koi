@@ -36,7 +36,6 @@ public:
 private slots:
     void addNewProfile();
 
-    void on_newProfileBtn_clicked();
 
 private:
 	Ui::ProfileSettingsDialog *ui;

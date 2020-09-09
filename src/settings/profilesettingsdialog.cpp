@@ -29,13 +29,10 @@ ProfileSettingsDialog::~ProfileSettingsDialog()
 
 void ProfileSettingsDialog::addNewProfile()
 {   
-    Profile newProfile;
-    ProfileManager::instance()->_activeProfile = &newProfile;
-
-    QPointer<EditProfileDialog> dialog = new EditProfileDialog(this);
-	dialog.data()->setProfile(newProfile);
-	dialog.data()->open();
-//connect(dialog.data(), &EditProfileDialog::accepted , this , &ProfileManager::instance()->_activeProfile)
+    Profile *newProfile = new Profile();
+    EditProfileDialog *dialog = new EditProfileDialog(this);
+    dialog->setProfile(newProfile);
+    dialog->open();
 }
 
 void ProfileSettingsDialog::createTable()
@@ -110,9 +107,3 @@ void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<
 	items[ProfileNameColumn]->setEditable(false);
 }
 
-
-
-void ProfileSettingsDialog::on_newProfileBtn_clicked()
-{
-    
-}

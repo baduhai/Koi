@@ -13,6 +13,7 @@
 #include "ui_othersdialog.h"
 #include "profile.h"
 #include "utils.h"
+#include "profilemanager.h"
 
 namespace Ui {
 	class OthersDialog;
@@ -27,7 +28,7 @@ public:
     ~EditProfileDialog() override;
 
     void setupPage();
-    void setProfile( Profile p) ;
+    void setProfile( Profile *p) ;
 	void saveProfile();
     void updatePages();
 private:
@@ -35,7 +36,7 @@ private:
 	Ui::OthersDialog *_othersDialog;
     Ui::ExternalDialog *_extDialog;
 
-    Profile m_tempProfile;
+    //sProfile m_tempProfile;
     Profile *_profile ;
 };
 

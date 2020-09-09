@@ -10,11 +10,11 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	KPageDialog(parent),
 	_stylesDialog(nullptr),
 	_othersDialog(nullptr),
-	_extDialog(nullptr)
+    _extDialog(nullptr),
+    _profile(nullptr)
 {
     setWindowTitle("Profiles Page");
     setFaceType(KPageDialog::List);
-
     //Adding Pages
     //Styles page
     const QString stylePageName("Styles");
@@ -38,6 +38,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	_extDialog->setupUi(extPageWidget);
 	addPage(extPageWidget, extPageName);
 
+
 	//update pages
 	setupPage();
 
@@ -47,20 +48,19 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 EditProfileDialog::~EditProfileDialog()
 {
 }
-void EditProfileDialog::setProfile(Profile p)
+void EditProfileDialog::setProfile(Profile *p)
 {
 	//checks if it points to anything before using .
-	_profile = &p;
+    _profile = p;
 	updatePages();
 }
 //may seperate this in the future
 void EditProfileDialog::updatePages()
 {
-
 	Q_ASSERT(_profile);
-	_stylesDialog->plasmaComboBox->setCurrentText(_profile->getPlasma());
-	_stylesDialog->colorComboBox->setCurrentText(_profile->getColor());
-	_stylesDialog->gtkComboBox->setCurrentText(_profile->getGtk());
+    _stylesDialog->plasmaComboBox->setCurrentText(_profile->getPlasma());
+    _stylesDialog->colorComboBox->setCurrentText(_profile->getColor());
+    _stylesDialog->gtkComboBox->setCurrentText(_profile->getGtk());
 	_stylesDialog->widgetComboBox->setCurrentText(_profile->getWidget());
 }
 void EditProfileDialog::setupPage()
@@ -74,6 +74,15 @@ void EditProfileDialog::setupPage()
 }
 void EditProfileDialog::saveProfile()
 {
+   _profile->setName(_stylesDialog->nameTextBox->text());
+   _profile->setPlasma ( _stylesDialog->plasmaComboBox->currentText());
+   _profile->setColor(_stylesDialog->colorComboBox->currentText());
+   _profile->setGtk(_stylesDialog->plasmaComboBox->currentText() );
+   _profile->setWidget(_stylesDialog->widgetComboBox->currentText());
+
+   //this is meant to be in the controller as i currently don't know how.
+   ProfileManager::instance()->addProfile(_profile);
+   ProfileManager::instance()->saveProfile(_profile->name());
 
 }
 

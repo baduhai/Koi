@@ -54,72 +54,71 @@ Profile::~Profile()
 
 }
 
-void Profile::readConfig(QSettings *s)
+void Profile::readConfig(QSettings &s)
 {
 
 	//Styles
-	s->beginGroup("Styles");
+	s.beginGroup("Styles");
 	QString group("Styles");
-	m_plasma = s->value("/plasmaStyle").toString();
-	m_color = s->value("/colorScheme").toString();
-	m_gtk = s->value("/gtkTheme").toString();
-	m_kvantum = s->value("/kvantum").toString();
-	m_widget = s->value("/widgetStyle").toString();
-	s->endGroup();
+	m_plasma = s.value("/plasmaStyle").toString();
+	m_color = s.value("/colorScheme").toString();
+	m_gtk = s.value("/gtkTheme").toString();
+	m_kvantum = s.value("/kvantum").toString();
+	m_widget = s.value("/widgetStyle").toString();
+	s.endGroup();
 
 	//Others;
-	s->beginGroup("Others");
-	m_icon = s->value("icon").toString();
-	m_mouse = s->value("mouse").toString();
-	m_script = s->value("script").toString();
-	m_wallpaper = s->value("wallpaper").toString();
-	s->endGroup();
+	s.beginGroup("Others");
+	m_icon = s.value("icon").toString();
+	m_mouse = s.value("mouse").toString();
+	m_script = s.value("script").toString();
+	m_wallpaper = s.value("wallpaper").toString();
+	s.endGroup();
 
 	//Window Decoration
-	s->beginGroup("Window Decoration");
-	m_library = s->value("library").toString();
-	m_theme = s->value("theme").toString();
-	s->endGroup();
+	s.beginGroup("Window Decoration");
+	m_library = s.value("library").toString();
+	m_theme = s.value("theme").toString();
+	s.endGroup();
 
 	//External
-	s->beginGroup("External");
-	m_konsole = s->value("konsole").toString();
-	s->endGroup();
+	s.beginGroup("External");
+	m_konsole = s.value("konsole").toString();
+	s.endGroup();
 
 }
 
-void Profile::writeConfig(QSettings *s) const
+void Profile::writeConfig(QSettings &s) const
 {
 
 	//void write to globalTheme.
 	//Styles
-	s->beginGroup("Style");
-	s->setValue("plasmaStyle", m_plasma);
-	s->setValue("colorScheme", m_color);
-	s->setValue("gtkTheme", m_gtk);
-	s->setValue("kvantum", m_kvantum);
-	s->setValue("widgetStyle", m_widget);
-	s->endGroup();
+	s.beginGroup("Style");
+	s.setValue("plasmaStyle", m_plasma);
+	s.setValue("colorScheme", m_color);
+	s.setValue("gtkTheme", m_gtk);
+	s.setValue("kvantum", m_kvantum);
+	s.setValue("widgetStyle", m_widget);
+	s.endGroup();
 
 	//Others
-	s->beginGroup("Others");
-	s->setValue("icon", m_icon);
-	s->setValue("mouse", m_mouse);
-	s->setValue("script", m_script);
-	s->setValue("wallpaper", m_wallpaper);
-	s->endGroup();
+	s.beginGroup("Others");
+	s.setValue("icon", m_icon);
+	s.setValue("mouse", m_mouse);
+	s.setValue("script", m_script);
+	s.setValue("wallpaper", m_wallpaper);
+	s.endGroup();
 
 	//Window Decorations;
-	s->beginGroup("Window Decoration");
-	s->setValue("library ", m_library);
-	s->setValue("theme", m_theme);
-
-	s->endGroup();
+	s.beginGroup("Window Decoration");
+	s.setValue("library", m_library);
+	s.setValue("theme", m_theme);
+	s.endGroup();
 
 	//External
-	s->beginGroup("External");
-	s->setValue("konsole", m_konsole);
-	s->endGroup();
+	s.beginGroup("External");
+	s.setValue("konsole", m_konsole);
+	s.endGroup();
 }
 
 /*  data is never read from global

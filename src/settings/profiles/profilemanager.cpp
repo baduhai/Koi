@@ -18,30 +18,24 @@ ProfileManager *ProfileManager::instance()
 	return theProfileManager;
 }
 
-QStringList ProfileManager::listProfiles()
+QFileInfoList ProfileManager::listProfiles()
 {
-	QStringList pList;
+	QFileInfoList pList;
 	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 	if (!dirs.exists()) {
 		QDir().mkdir(dirs.absolutePath());
-		return QStringList(); //empty list.
 		qDebug() << "no profiles in koi ";
+		return QFileInfoList(); //empty list.
 	}
 	pList.reserve(dirs.Size);
 
-	const QStringList fileNames = QDir(dirs).entryList(QStringList() << QStringLiteral("*.koi"));
-	for (const auto &file: fileNames) {
-		//remove the extension
-		pList.append(file.left(file.lastIndexOf(".")));
-	}
+	pList = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
     return pList;
 }
-bool ProfileManager::profileExists(const QString &fileName, const QFileInfoList &fileList)
+bool ProfileManager::profileExists(const QString &fileName, const QHash<QString, const Profile *> &profileList)
 {
-	for (const auto &file: fileList) {
-		if (QString::compare(fileName, file.baseName(), Qt::CaseInsensitive) == 0) {
-			return true;
-		}
+	if(profileList.contains(fileName)){
+		return true;
 	}
 	return false;
 }
@@ -50,8 +44,13 @@ void ProfileManager::loadProfiles()
 {
 	const auto localProfilesList = listProfiles();
 
-	for (const auto &localProfiles : localProfilesList) {
-		if (!addProfile(localProfiles)) {
+	for (const auto &localProfileName : localProfilesList) {
+		QSettings settings(localProfileName.absoluteFilePath() , QSettings::IniFormat);
+		auto *localProfile = new Profile;
+		localProfile->setName(localProfileName.baseName());
+		localProfile->readConfig(settings);
+
+		if (!addProfile(localProfile)) {
 			//qt 5.9.5 does does not support appending qfileinfo
 			//in qdebug();
 			qDebug() << "failed to load " ;
@@ -61,10 +60,11 @@ void ProfileManager::loadProfiles()
 	m_loadedAllProfiles = true;
 
 }
-bool ProfileManager::addProfile(const QString &profileName)
+//this would add the profile to the hash table.
+bool ProfileManager::addProfile(const Profile *profile)
 {
 	QFileInfo profileInfo(QStandardPaths::writableLocation(
-			QStandardPaths::AppLocalDataLocation) + "/" + profileName + ".koi");
+			QStandardPaths::AppLocalDataLocation) + "/" + profile->name() + ".koi");
 	//checks if it is a .koi file and it exists
 	auto filePath = profileInfo.absoluteFilePath();
 
@@ -80,25 +80,10 @@ bool ProfileManager::addProfile(const QString &profileName)
 	}
 	auto fileName = profileInfo.baseName();
 
-	auto *settings = new QSettings(filePath, QSettings::IniFormat);
-	auto p = new Profile();
-
-	p->setName(fileName);
-	//can just pass the pointer and remove the reference;
-	p->readConfig(settings);
-
-	if (p->name().isEmpty()) {
-		qDebug() << "does not have a valid name and was not loaded.";
-		delete settings;
-		return false;
-	}
-
-	if (!_profileList.contains(fileName)) {
-		_profileList.insert(p->name(), p);
-	}
-	else {
-		delete settings;
-		qDebug() << "profile already exists in the list ";
+	if (!profileExists(profile->name(),_profileList)){
+		_profileList.insert(profile->name(),profile);
+	}else{
+		qDebug() << "Profile already exist use a different Name for it " ;
 	}
 	return true;
 }
@@ -111,21 +96,35 @@ const Profile *ProfileManager::defaultProfile() const
 }
 QList<const Profile *> ProfileManager::allProfiles()
 {
-	QStringList pList(listProfiles());
 	if (!m_loadedAllProfiles) {
 		loadProfiles();
 	}
 	//there should be a better way to do this if iam wrong
 	//this creates default light and dark profile if there are none.
+	//Defaults
 	QString dark("dark");
-	if(!pList.contains(dark)){
-		addProfile(dark);
+	if(!profileExists(dark,_profileList)){
+		QFileInfo darkInfo(QDir::homePath() + "/.local/koi/dark.koi");
+		QSettings settings(darkInfo.absoluteFilePath() , QSettings::IniFormat);
+		auto *dProfile = new Profile;
+		dProfile->setName(dark);
+		if (!addProfile(dProfile)) {
+			//qt 5.9.5 does does not support appending qfileinfo in qdebug();
+			qDebug() << "failed to load " ;
+		}
 		saveProfile(dark);
 	}
 
 	QString light(QStringLiteral("light"));
-	if (!pList.contains(light)) {
-		addProfile(light);
+	if(!profileExists(light,_profileList)){
+		QFileInfo lightInfo(QDir::homePath() + "/.local/koi/light.koi" );
+		QSettings settings(lightInfo.absoluteFilePath() , QSettings::IniFormat);
+		auto *lProfile = new Profile;
+		lProfile->setName(light);
+		if (!addProfile(lProfile)) {
+			//qt 5.9.5 does does not support appending qfileinfo in qdebug();
+			qDebug() << "failed to load " ;
+		}
 		saveProfile(light);
 	}
 	//gotten profiles from disk.
@@ -149,10 +148,12 @@ QStringList ProfileManager::listFavourites()
 
 void ProfileManager::saveProfile(const QString &profileName)
 {
+	Q_ASSERT(_profileList.value(profileName));
+
 	QFileInfo profileInfo(QStandardPaths::writableLocation(
 			QStandardPaths::AppLocalDataLocation) + "/" + profileName + ".koi");
 	QSettings s(profileInfo.absoluteFilePath(), QSettings::IniFormat);
-	_profileList.value(profileName)->writeConfig(&s);
+	_profileList.value(profileName)->writeConfig(s);
 	_profileList.value(profileName)->createProfileGlobalDir();
 	_profileList.value(profileName)->writeToGlobal();
 

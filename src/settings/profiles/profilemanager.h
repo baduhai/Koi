@@ -29,17 +29,17 @@ public:
 
     Profile * _activeProfile ;
 
+	bool addProfile(const Profile *profile);
 
 	bool isFavourite(const Profile *p );
 private:
-	static bool profileExists(const QString &fileName, const QFileInfoList &fileList);
+	static bool profileExists(const QString &fileName, const QHash<QString, const Profile *> &profileList );
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
 
 	//get the list of profiles
-	QStringList listProfiles();
+	QFileInfoList listProfiles();
 
-	bool addProfile(const QString &profileName);
 	QStringList listFavourites();
 
 	//for storing the loaded profiles.
