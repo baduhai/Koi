@@ -1,8 +1,9 @@
-//
+    //
 // Created by da-viper on 06/09/2020.
 //
 
 #include "profilemanager.h"
+#include <QLoggingCategory>
 
 ProfileManager::ProfileManager()
 {
@@ -18,6 +19,9 @@ ProfileManager *ProfileManager::instance()
 	return theProfileManager;
 }
 
+QHash<QString, Profile *> ProfileManager::_profileList{} ;
+Profile* ProfileManager::_activeProfile {};
+
 QFileInfoList ProfileManager::listProfiles()
 {
 	QFileInfoList pList;
@@ -32,7 +36,8 @@ QFileInfoList ProfileManager::listProfiles()
 	pList = QDir(dirs).entryInfoList(QStringList() << QStringLiteral("*.koi"));
     return pList;
 }
-bool ProfileManager::profileExists(const QString &fileName, const QHash<QString, const Profile *> &profileList)
+
+bool ProfileManager::profileExists(const QString &fileName, const QHash<QString,Profile *> &profileList)
 {
 	if(profileList.contains(fileName)){
 		return true;
@@ -45,8 +50,10 @@ void ProfileManager::loadProfiles()
 	const auto localProfilesList = listProfiles();
 
 	for (const auto &localProfileName : localProfilesList) {
-		QSettings settings(localProfileName.absoluteFilePath() , QSettings::IniFormat);
-		auto *localProfile = new Profile;
+        QString path(localProfileName.filePath());
+        QSettings settings(path , QSettings::NativeFormat);
+
+        auto *localProfile = new Profile;
 		localProfile->setName(localProfileName.baseName());
 		localProfile->readConfig(settings);
 
@@ -61,7 +68,7 @@ void ProfileManager::loadProfiles()
 
 }
 //this would add the profile to the hash table.
-bool ProfileManager::addProfile(const Profile *profile)
+bool ProfileManager::addProfile(Profile *profile)
 {
 	QFileInfo profileInfo(QStandardPaths::writableLocation(
 			QStandardPaths::AppLocalDataLocation) + "/" + profile->name() + ".koi");
@@ -78,7 +85,6 @@ bool ProfileManager::addProfile(const Profile *profile)
 			qDebug() << "file now exists";
 		}
 	}
-	auto fileName = profileInfo.baseName();
 
 	if (!profileExists(profile->name(),_profileList)){
 		_profileList.insert(profile->name(),profile);
@@ -94,7 +100,7 @@ const Profile *ProfileManager::defaultProfile() const
 {
 	return &_defaultProfile;
 }
-QList<const Profile *> ProfileManager::allProfiles()
+QList<Profile *> ProfileManager::allProfiles()
 {
 	if (!m_loadedAllProfiles) {
 		loadProfiles();
@@ -130,6 +136,7 @@ QList<const Profile *> ProfileManager::allProfiles()
 	//gotten profiles from disk.
 	return _profileList.values();
 }
+
 bool ProfileManager::isFavourite(const Profile *p)
 {
 	QStringList favourites(listFavourites());
@@ -139,6 +146,10 @@ bool ProfileManager::isFavourite(const Profile *p)
     return false;
 }
 
+Profile * ProfileManager::getProfile(const QString &profileName)
+{
+    return _profileList.value(profileName);
+}
 
 QStringList ProfileManager::listFavourites()
 {

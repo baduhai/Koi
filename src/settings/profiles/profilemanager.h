@@ -21,19 +21,20 @@ public:
 
 	static ProfileManager *instance();
 	//loads all profile including the defaults.
-	QList<const Profile *> allProfiles();
+	QList<Profile *> allProfiles();
 
 	void saveProfile(const QString& profileName);
 
 	const Profile *defaultProfile() const;
 
-    Profile * _activeProfile ;
+	static Profile * _activeProfile ;
 
-	bool addProfile(const Profile *profile);
+	bool addProfile( Profile *profile);
 
 	bool isFavourite(const Profile *p );
+    static Profile* getProfile(const QString &profileName);
 private:
-	static bool profileExists(const QString &fileName, const QHash<QString, const Profile *> &profileList );
+	static bool profileExists(const QString &fileName,const QHash<QString, Profile *> &profileList );
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
 
@@ -43,7 +44,7 @@ private:
 	QStringList listFavourites();
 
 	//for storing the loaded profiles.
-	QHash<QString, const Profile *> _profileList;
+    static QHash<QString, Profile*> _profileList;
 	bool m_loadedAllProfiles;
 
 	//makes sure it is only one instance of the class

@@ -35,6 +35,8 @@ public:
 
 private slots:
     void addNewProfile();
+    void rowSelected(const QModelIndex &index );
+    void editCurrentProfile();
 
 
 private:

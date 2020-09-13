@@ -2,6 +2,7 @@
 // Created by da-viper on 05/09/2020.
 //
 
+#include <QDebug>
 #include "profile.h"
 
 //This is used for getting the current active plasma style settings
@@ -57,16 +58,17 @@ Profile::~Profile()
 void Profile::readConfig(QSettings &s)
 {
 
-	//Styles
-	s.beginGroup("Styles");
-	QString group("Styles");
+    //Style
+    s.beginGroup("Style");
 	m_plasma = s.value("/plasmaStyle").toString();
 	m_color = s.value("/colorScheme").toString();
 	m_gtk = s.value("/gtkTheme").toString();
 	m_kvantum = s.value("/kvantum").toString();
 	m_widget = s.value("/widgetStyle").toString();
-	s.endGroup();
 
+
+	qDebug() << "the setting param " << s.value("/plasmaStyle").toString() <<s.value("/colorScheme").toString() << s.value("/kvantum").toString() ;
+	s.endGroup();
 	//Others;
 	s.beginGroup("Others");
 	m_icon = s.value("icon").toString();
@@ -85,7 +87,6 @@ void Profile::readConfig(QSettings &s)
 	s.beginGroup("External");
 	m_konsole = s.value("konsole").toString();
 	s.endGroup();
-
 }
 
 void Profile::writeConfig(QSettings &s) const

@@ -58,6 +58,7 @@ void EditProfileDialog::setProfile(Profile *p)
 void EditProfileDialog::updatePages()
 {
 	Q_ASSERT(_profile);
+	_stylesDialog->nameTextBox->setText(_profile->name());
     _stylesDialog->plasmaComboBox->setCurrentText(_profile->getPlasma());
     _stylesDialog->colorComboBox->setCurrentText(_profile->getColor());
     _stylesDialog->gtkComboBox->setCurrentText(_profile->getGtk());
@@ -77,7 +78,7 @@ void EditProfileDialog::saveProfile()
    _profile->setName(_stylesDialog->nameTextBox->text());
    _profile->setPlasma ( _stylesDialog->plasmaComboBox->currentText());
    _profile->setColor(_stylesDialog->colorComboBox->currentText());
-   _profile->setGtk(_stylesDialog->plasmaComboBox->currentText() );
+   _profile->setGtk(_stylesDialog->gtkComboBox->currentText());
    _profile->setWidget(_stylesDialog->widgetComboBox->currentText());
 
    //this is meant to be in the controller as i currently don't know how.

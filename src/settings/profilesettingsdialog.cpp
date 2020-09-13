@@ -20,6 +20,11 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettin
 	createTable();
 
 	populateTable();
+
+   // may use this for double clicked too
+   //connect(ui->profilesList, &QTableView::activated , this , &ProfileSettingsDialog::rowSelected );
+    connect(ui->profilesList, &QTableView::clicked , this , &ProfileSettingsDialog::rowSelected);
+    connect(ui->editProfileBtn, &QPushButton::clicked, this , &ProfileSettingsDialog::editCurrentProfile);
 }
 
 ProfileSettingsDialog::~ProfileSettingsDialog()
@@ -35,6 +40,23 @@ void ProfileSettingsDialog::addNewProfile()
     dialog->open();
 }
 
+void ProfileSettingsDialog::rowSelected(const QModelIndex &index)
+{
+    QString indexStr = ui->profilesList->model()->data(index).toString();
+
+    qDebug()<< "The selected theme is  " << indexStr ;
+    ui->editProfileBtn->setEnabled(true);
+
+    ProfileManager::instance()->_activeProfile = ProfileManager::instance()->getProfile(indexStr);
+}
+
+void ProfileSettingsDialog::editCurrentProfile()
+{
+	EditProfileDialog *dialog = new EditProfileDialog(this);
+    dialog->setProfile(ProfileManager::_activeProfile);
+    dialog->open();
+}
+
 void ProfileSettingsDialog::createTable()
 {
 	Q_ASSERT(!ui->profilesList->model());
@@ -42,7 +64,7 @@ void ProfileSettingsDialog::createTable()
 	ui->profilesList->setModel(_profileListModel);
 	_profileListModel->clear();
 
-	//Add Headers thi order  Favorites  ProfileName
+	//Add Headers this order:  Favorites  ProfileName
 	QStringList headerNames ({ QString() , "Name"});
 	_profileListModel->setHorizontalHeaderLabels(headerNames);
 
@@ -60,7 +82,7 @@ void ProfileSettingsDialog::createTable()
 }
 void ProfileSettingsDialog::populateTable()
 {
-	QList<const Profile*> profileList = ProfileManager::instance()->allProfiles();
+	QList<Profile*> profileList = ProfileManager::instance()->allProfiles();
 
 	for (const auto p : profileList) {
 		addItems(p);
