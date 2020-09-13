@@ -12,26 +12,6 @@ void Utils::initialiseSettings()
 	//TODO switch to koiglobalrc because a file is already using koirc (Koirc)
 	settings =
 		new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
-
-	//there should always be light and dark profiles in the list
-	if (!Utils::themeExists(QStringLiteral("Koi-dark"))) {
-		Utils::createNewTheme("Koi-dark",
-							  "Koi-dark",
-							  "Dark theme for koi",
-							  "Bahduai & Da-viper",
-							  "none",
-							  "gpl",
-							  "www.github.com");
-	}
-	if (!Utils::themeExists(QStringLiteral("Koi-light"))) {
-		Utils::createNewTheme("Koi-light",
-							  "Koi-light",
-							  "Light theme for koi",
-							  "Bahduai & Da-viper",
-							  "none",
-							  "gpl",
-							  "www.github.com");
-	}
 }
 
 // Miscelaneous functions
@@ -89,77 +69,83 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 
 QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
-    QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
-    QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
-    QStringList plasmaStyles;
-    if (stylesLocalDir.exists())
-    {
-        plasmaStyles.append(stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    if (stylesSystemDir.exists())
-    {
-        plasmaStyles.append(stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    plasmaStyles.removeDuplicates();
-    plasmaStyles.append("breeze");
-    return plasmaStyles;
+	QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
+	QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
+	QStringList plasmaStyles;
+	if (stylesLocalDir.exists()) {
+		plasmaStyles.append(stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+	}
+	if (stylesSystemDir.exists()) {
+		plasmaStyles.append(stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+	}
+	plasmaStyles.removeDuplicates();
+	plasmaStyles.append("breeze");
+	return plasmaStyles;
 }
 
 //Color Schemes
 QStringList Utils::getColorSchemes() // Get all available color schemes
 {
-    QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-    colorsLocalDir.setFilter(QDir::Files);
-    colorsLocalDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-    QStringList colorSchemesLocalNames;
-    for (const auto &color : qAsConst(colorSchemesLocal))
-    {
-        colorSchemesLocalNames.append(color.baseName());
-    }
-    QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-    colorsSystemDir.setFilter(QDir::Files);
-    colorsSystemDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-    QStringList colorSchemesSystemNames;
-    for (const auto & i : qAsConst(colorSchemesSystem))
-    {
-        colorSchemesSystemNames.append(i.baseName());
-    }
-    QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
-    return colorSchemesNames;
+	QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
+	colorsLocalDir.setNameFilters(QStringList() << "*.colors");
+	colorsLocalDir.setFilter(QDir::Files);
+	colorsLocalDir.setSorting(QDir::Name);
+	QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
+	QStringList colorSchemesLocalNames;
+	for (const auto &color : qAsConst(colorSchemesLocal)) {
+		colorSchemesLocalNames.append(color.baseName());
+	}
+	QDir colorsSystemDir("/usr/share/color-schemes");
+	colorsSystemDir.setNameFilters(QStringList() << "*.colors");
+	colorsSystemDir.setFilter(QDir::Files);
+	colorsSystemDir.setSorting(QDir::Name);
+	QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
+	QStringList colorSchemesSystemNames;
+	for (const auto &i : qAsConst(colorSchemesSystem)) {
+		colorSchemesSystemNames.append(i.baseName());
+	}
+	QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
+	return colorSchemesNames;
 }
 
 //GTK
 QStringList Utils::getGtkThemes() // Get all available gtk themes
 {
-    QDir gtkLocalDir(QDir::homePath() + "/.themes");
-    QDir gtkSystemDir("/usr/share/themes");
-    QStringList gtkThemes = gtkLocalDir.entryList(QDir::Dirs) + gtkSystemDir.entryList(QDir::Dirs);
-    gtkThemes.removeDuplicates();
-    gtkThemes.removeFirst();
-    gtkThemes.removeFirst();
-    return gtkThemes;
+	QDir gtkLocalDir(QDir::homePath() + "/.themes");
+	QDir gtkSystemDir("/usr/share/themes");
+	QStringList gtkThemes = gtkLocalDir.entryList(QDir::Dirs) + gtkSystemDir.entryList(QDir::Dirs);
+	gtkThemes.removeDuplicates();
+	gtkThemes.removeFirst();
+	gtkThemes.removeFirst();
+	return gtkThemes;
 }
 
 //Kvantum
 QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 {
-    QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
-    QDir kvantumStyleSystemDir("/usr/share/Kvantum");
-    QStringList kvantumStyles;
-    if (kvantumStyleLocalDir.exists()){
-        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs  | QDir::NoDotAndDotDot  ));
-    }
-    if(kvantumStyleSystemDir.exists()){
-        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot  ));
-    }
-    kvantumStyles.removeDuplicates();
-    return kvantumStyles;
+	QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
+	QDir kvantumStyleSystemDir("/usr/share/Kvantum");
+	QStringList kvantumStyles;
+	if (kvantumStyleLocalDir.exists()) {
+		kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+	}
+	if (kvantumStyleSystemDir.exists()) {
+		kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+	}
+	kvantumStyles.removeDuplicates();
+	return kvantumStyles;
 }
-
+//Icons
+QStringList Utils::getIcons() // Get all available icon themes
+{
+	QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
+	QDir iconsSystemDir("/usr/share/icons");
+	QStringList iconThemes = iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
+	iconThemes.removeDuplicates();
+	iconThemes.removeFirst();
+	iconThemes.removeFirst();
+	return iconThemes;
+}
 //cursor
 QStringList Utils::getCursorThemes()
 {
@@ -250,140 +236,6 @@ bool Utils::themeExists(const QString &themeName)
 	QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName
 							 + QStringLiteral("/contents/defaults"));
 	return localTheme.exists() && localTheme.isFile();
-}
-
-void Utils::createNewTheme(const QString &pluginName,
-						   const QString &name,
-						   const QString &comment,
-						   const QString &author,
-						   const QString &email,
-						   const QString &license,
-						   const QString &website)
-//would not need this as this gets the plasma layout and i just need the theme
-{
-	const QString metadataPath
-		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			 % pluginName % QLatin1String("/metadata.desktop"));
-	KConfig c(metadataPath);
-
-	KConfigGroup cg(&c, "Desktop Entry");
-	cg.writeEntry("Name", name);
-	cg.writeEntry("Comment", comment);
-	cg.writeEntry("X-KDE-PluginInfo-Name", pluginName);
-	cg.writeEntry("X-KDE-ServiceTypes", "Plasma/LookAndFeel");
-	cg.writeEntry("X-KDE-PluginInfo-Author", author);
-	cg.writeEntry("X-KDE-PluginInfo-Email", email);
-	cg.writeEntry("X-KDE-PluginInfo-Website", website);
-	cg.writeEntry("X-KDE-PluginInfo-Category", "Plasma Look And Feel");
-	cg.writeEntry("X-KDE-PluginInfo-License", license);
-	cg.writeEntry("X-KDE-PluginInfo-EnabledByDefault", "true");
-	cg.writeEntry("X-KDE-PluginInfo-Version", "0.1");
-	cg.sync();
-
-	dumpDefaultsConfigFile(pluginName);
-}
-
-void Utils::dumpDefaultsConfigFile(const QString &pluginName)
-{
-	//write the defaults file, read from kde config files and save to the defaultsrc
-	KConfig defaultsConfig
-		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			 % pluginName % "/contents/defaults");
-
-	KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
-
-	//widget style
-	KConfigGroup systemCG(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "KDE");
-	defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry("widgetStyle", QStringLiteral("breeze")));
-
-	//icon style
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "Icons");
-	defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry("Theme", QStringLiteral("breeze")));
-
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), "General");
-	defaultsConfigGroup.writeEntry("ColorScheme", systemCG.readEntry("ColorScheme", QStringLiteral("Breeze")));
-
-	//plasma theme
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "plasmarc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Theme");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("plasmarc")), "Theme");
-	defaultsConfigGroup.writeEntry("name", systemCG.readEntry("name", QStringLiteral("default")));
-
-	//cursor theme
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kcminputrc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Mouse");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kcminputrc")), "Mouse");
-	defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry("cursorTheme", QStringLiteral("breeze_cursors")));
-
-	//KWin window switcher theme
-	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kwinrc")), "TabBox");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "WindowSwitcher");
-	defaultsConfigGroup
-		.writeEntry("LayoutName", systemCG.readEntry("LayoutName", QStringLiteral("org.kde.breeze.desktop")));
-
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "DesktopSwitcher");
-	defaultsConfigGroup
-		.writeEntry("LayoutName", systemCG.readEntry("DesktopLayout", QStringLiteral("org.kde.breeze.desktop")));
-
-	systemCG = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kwinrc")), "org.kde.kdecoration2");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "org.kde.kdecoration2");
-	defaultsConfigGroup.writeEntry("library", systemCG.readEntry("library", QStringLiteral("org.kde.breeze")));
-	defaultsConfigGroup.writeEntry("theme", systemCG.readEntry("theme", QString()));
-}
-
-void Utils::writeToThemeConfigFile(const QString &pluginName, const QString &themeType)
-{
-	QString koiPath = QDir::homePath() + QStringLiteral("/.config/koirc");
-	//write the defaults file, read from kde config files and save to the defaultsrc
-	KConfig defaultsConfig
-		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			 % pluginName % "/contents/defaults");
-
-	KConfigGroup defaultsConfigGroup(&defaultsConfig, "kdeglobals");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "KDE");
-
-	//widget style
-	KConfigGroup systemCG(KSharedConfig::openConfig(koiPath), "WidgetStyle");
-	defaultsConfigGroup.writeEntry("widgetStyle", systemCG.readEntry(themeType, QStringLiteral("breeze")));
-
-	//icon style
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Icons");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "IconTheme");
-	defaultsConfigGroup.writeEntry("Theme", systemCG.readEntry(themeType, QStringLiteral("breeze")));
-
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kdeglobals");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "General");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "ColorScheme");
-	defaultsConfigGroup.writeEntry("ColorScheme", systemCG.readEntry(themeType, QStringLiteral("Breeze")));
-
-	//plasma theme
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "plasmarc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Theme");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "PlasmaStyle");
-	defaultsConfigGroup.writeEntry("name", systemCG.readEntry(themeType, QStringLiteral("default")));
-
-	//cursor theme
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kcminputrc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "Mouse");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "Mouse");
-	defaultsConfigGroup.writeEntry("cursorTheme", systemCG.readEntry(themeType, QStringLiteral("breeze_cursors")));
-
-	//window decoration
-	defaultsConfigGroup = KConfigGroup(&defaultsConfig, "kwinrc");
-	defaultsConfigGroup = KConfigGroup(&defaultsConfigGroup, "org.kde.kdecoration2");
-	systemCG = KConfigGroup(KSharedConfig::openConfig(koiPath), "WindowDecoration");
-	defaultsConfigGroup
-		.writeEntry("library", systemCG.readEntry(themeType + "Library", QStringLiteral("org.kde.breeze")));
-	defaultsConfigGroup.writeEntry("theme", systemCG.readEntry(themeType + "Theme", QString()));
 }
 
 // Manage switching themes functions

@@ -7,11 +7,9 @@ set(koi_SRC
         colorscheme.cpp
         about.cpp
         gtk.cpp
-        icons.cpp
         license.cpp
         main.cpp
         mainwindow.cpp
-        plasmastyle.cpp
         utils.cpp
         wallpaper.cpp
         kvantumstyle.cpp
