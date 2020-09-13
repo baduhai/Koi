@@ -39,6 +39,8 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	addPage(extPageWidget, extPageName);
 
 
+
+
 	//update pages
 	setupPage();
 
@@ -71,20 +73,30 @@ void EditProfileDialog::setupPage()
 	_stylesDialog->colorComboBox->addItems(Utils::getColorSchemes());
 	_stylesDialog->gtkComboBox->addItems(Utils::getGtkThemes());
 	_stylesDialog->widgetComboBox->addItems(Utils::getWidgetStyles());
+	_stylesDialog->kvComboBox->addItems(Utils::getKvantumStyles());
 
 }
 void EditProfileDialog::saveProfile()
 {
+	//Style
    _profile->setName(_stylesDialog->nameTextBox->text());
    _profile->setPlasma ( _stylesDialog->plasmaComboBox->currentText());
    _profile->setColor(_stylesDialog->colorComboBox->currentText());
    _profile->setGtk(_stylesDialog->gtkComboBox->currentText());
    _profile->setWidget(_stylesDialog->widgetComboBox->currentText());
+   _profile->setKvantum(_stylesDialog->kvComboBox->currentText());
+
+   //Others
 
    //this is meant to be in the controller as i currently don't know how.
    ProfileManager::instance()->addProfile(_profile);
    ProfileManager::instance()->saveProfile(_profile->name());
 
 }
+//void EditProfileDialog::setKvantum(QString &widgetName)
+//{
+//	if(QString::compare(widgetName,"kvantum",Qt::CaseInsensitive) != 0 || QString::compare(widgetName, "kvantum-dark" , Qt::CaseInsensitive)
+//
+//}
 
 

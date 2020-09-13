@@ -16,9 +16,6 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="5" column="2" colspan="2">
-      <widget class="QComboBox" name="comboBox"/>
-     </item>
      <item row="7" column="2" colspan="2">
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
@@ -28,9 +25,6 @@
      </item>
      <item row="4" column="2" colspan="2">
       <widget class="QComboBox" name="comboBox_2"/>
-     </item>
-     <item row="3" column="2" colspan="2">
-      <widget class="QComboBox" name="comboBox_3"/>
      </item>
      <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -138,6 +132,12 @@
         <string>Select Wallpaper ...</string>
        </property>
       </widget>
+     </item>
+     <item row="5" column="2" colspan="2">
+      <widget class="QComboBox" name="comboBox_3"/>
+     </item>
+     <item row="3" column="2" colspan="2">
+      <widget class="QComboBox" name="comboBox"/>
      </item>
     </layout>
    </item>

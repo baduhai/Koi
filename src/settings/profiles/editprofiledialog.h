@@ -31,6 +31,7 @@ public:
     void setProfile( Profile *p) ;
 	void saveProfile();
     void updatePages();
+//    void setKvantum(QString &widgetName);
 private:
 	Ui::StylesDialog *_stylesDialog;
 	Ui::OthersDialog *_othersDialog;
