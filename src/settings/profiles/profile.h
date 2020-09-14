@@ -52,6 +52,7 @@ public:
 	QString getScript() const;
 	QString getWallpaper() const;
 	//Window Decorations
+	QString getDecName() const;
 	QString getLibrary() const;
 	QString getTheme() const;
 	//External
@@ -68,6 +69,7 @@ public:
 	void setMouse(const QString &mouse);
 	void setScript(const QString &script);
 	void setWallpaper(const QString &wallpaper);
+	void setDecName(const QString &decorationName);
 	void setLibrary(const QString &library);
 	void setTheme(const QString &theme);
 	void setKonsole(const QString &konsole);
@@ -94,6 +96,7 @@ private:
 	QString m_wallpaper;
 
 	//[Window Decorations];
+	QString m_decorationName;
 	QString m_library;
 	QString m_theme;
 

@@ -60,14 +60,14 @@ void Profile::readConfig(QSettings &s)
 
     //Style
     s.beginGroup("Style");
-	m_plasma = s.value("/plasmaStyle").toString();
-	m_color = s.value("/colorScheme").toString();
-	m_gtk = s.value("/gtkTheme").toString();
-	m_kvantum = s.value("/kvantum").toString();
-	m_widget = s.value("/widgetStyle").toString();
+	m_plasma = s.value("plasmaStyle").toString();
+	m_color = s.value("colorScheme").toString();
+	m_gtk = s.value("gtkTheme").toString();
+	m_kvantum = s.value("kvantum").toString();
+	m_widget = s.value("widgetStyle").toString();
 
 
-	qDebug() << "the setting param " << s.value("/plasmaStyle").toString() <<s.value("/colorScheme").toString() << s.value("/kvantum").toString() ;
+	qDebug() << "the setting param " << s.value("plasmaStyle").toString() <<s.value("colorScheme").toString() << s.value("kvantum").toString() ;
 	s.endGroup();
 	//Others;
 	s.beginGroup("Others");
@@ -79,6 +79,7 @@ void Profile::readConfig(QSettings &s)
 
 	//Window Decoration
 	s.beginGroup("Window Decoration");
+	m_decorationName = s.value("name").toString();
 	m_library = s.value("library").toString();
 	m_theme = s.value("theme").toString();
 	s.endGroup();
@@ -91,7 +92,7 @@ void Profile::readConfig(QSettings &s)
 
 void Profile::writeConfig(QSettings &s) const
 {
-
+	//TODO only replace what has changed.
 	//void write to globalTheme.
 	//Styles
 	s.beginGroup("Style");
@@ -112,6 +113,7 @@ void Profile::writeConfig(QSettings &s) const
 
 	//Window Decorations;
 	s.beginGroup("Window Decoration");
+	s.setValue("name", m_decorationName);
 	s.setValue("library", m_library);
 	s.setValue("theme", m_theme);
 	s.endGroup();
@@ -243,6 +245,10 @@ QString Profile::getWallpaper() const
 {
 	return m_wallpaper;
 }
+QString Profile::getDecName() const
+{
+	return m_decorationName;
+}
 QString Profile::getLibrary() const
 {
 	return m_library;
@@ -293,6 +299,10 @@ void Profile::setScript(const QString &script)
 void Profile::setWallpaper(const QString &wallpaper)
 {
 	m_wallpaper = wallpaper ;
+}
+void Profile::setDecName(const QString &decorationName)
+{
+	m_decorationName = decorationName;
 }
 void Profile::setLibrary(const QString &library)
 {

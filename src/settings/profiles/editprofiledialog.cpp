@@ -86,6 +86,7 @@ void EditProfileDialog::updatePages()
 	//Others Page
 	_othersDialog->iconBox->setCurrentText(_profile->getIcon());
 	_othersDialog->cursorBox->setCurrentText(_profile->getMouse());
+	_othersDialog->decorationBox->setCurrentText(_profile->getDecName());
 }
 void EditProfileDialog::setupPage()
 {
@@ -100,6 +101,7 @@ void EditProfileDialog::setupPage()
 	//Others page
 	_othersDialog->iconBox->addItems(Utils::getIcons());
 	_othersDialog->cursorBox->addItems(Utils::getCursorThemes());
+	_othersDialog->decorationBox->addItems(Utils::getWindowDecorationsStyle());
 
 }
 void EditProfileDialog::saveProfile()
@@ -116,6 +118,18 @@ void EditProfileDialog::saveProfile()
 	//Others
 	_profile->setIcon(_othersDialog->iconBox->currentText());
 	_profile->setMouse(_othersDialog->cursorBox->currentText());
+
+	//Decorations.
+	QString decoration(_othersDialog->decorationBox->currentText());
+	//TODO use QHash instead
+    QList<Decoration> decList= Utils::getWindowDecorations();
+    for (const auto &dt : qAsConst(decList)){
+        if (QString::compare(dt.name, decoration, Qt::CaseInsensitive) == 0){
+        	_profile->setDecName(dt.name);
+            _profile->setLibrary(dt.library);
+            _profile->setTheme(dt.theme);
+        }
+    }
 
 	//this is meant to be in the controller as i currently don't know how.
 	ProfileManager::instance()->addProfile(_profile);
