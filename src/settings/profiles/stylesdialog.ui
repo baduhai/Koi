@@ -27,7 +27,7 @@
           <item row="8" column="2">
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>     Decoration:</string>
+             <string>Widget:</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

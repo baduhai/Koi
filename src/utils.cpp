@@ -120,6 +120,13 @@ QStringList Utils::getGtkThemes() // Get all available gtk themes
 	return gtkThemes;
 }
 
+//widget styles
+QStringList Utils::getWidgetStyles()
+{
+	//this literally took me 2 hrs to find.
+	QStringList widgetStyles = QStyleFactory::keys();
+	return widgetStyles;
+}
 //Kvantum
 QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 {
@@ -146,6 +153,7 @@ QStringList Utils::getIcons() // Get all available icon themes
 	iconThemes.removeFirst();
 	return iconThemes;
 }
+
 //cursor
 QStringList Utils::getCursorThemes()
 {
@@ -165,14 +173,6 @@ QStringList Utils::getCursorThemes()
 	//local cursors
 	cursorThemes.append(cursorLocalParentDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
 	return cursorThemes;
-}
-
-//widget styles
-QStringList Utils::getWidgetStyles()
-{
-	//this literally took me 2 hrs to find.
-	QStringList widgetStyles = QStyleFactory::keys();
-	return widgetStyles;
 }
 
 QList<Decoration> Utils::getWindowDecorations()
