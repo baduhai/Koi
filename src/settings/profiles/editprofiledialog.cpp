@@ -58,6 +58,8 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 			&QCheckBox::stateChanged,
 			_othersDialog->scriptBtn,
 			&QPushButton::setEnabled);
+	connect(_othersDialog->scriptBtn, &QPushButton::clicked, this, &EditProfileDialog::selectScript);
+	connect(_othersDialog->wallpaperBtn, &QPushButton::clicked, this, &EditProfileDialog::selectWallpaper);
 }
 EditProfileDialog::~EditProfileDialog()
 {
@@ -87,6 +89,10 @@ void EditProfileDialog::updatePages()
 	_othersDialog->iconBox->setCurrentText(_profile->getIcon());
 	_othersDialog->cursorBox->setCurrentText(_profile->getMouse());
 	_othersDialog->decorationBox->setCurrentText(_profile->getDecName());
+	_othersDialog->scriptCheckBox->setChecked(_profile->getScriptEnabled());
+	_othersDialog->scriptBtn->setText(_profile->getScript());
+	_othersDialog->wallpaperBtn->setText(_profile->getWallpaper());
+	_othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
 }
 void EditProfileDialog::setupPage()
 {
@@ -118,18 +124,20 @@ void EditProfileDialog::saveProfile()
 	//Others
 	_profile->setIcon(_othersDialog->iconBox->currentText());
 	_profile->setMouse(_othersDialog->cursorBox->currentText());
+	_profile->setScriptEnabled(_othersDialog->scriptCheckBox->isChecked());
+	_profile->setWallEnabled(_othersDialog->wallpaperCheckBox->isChecked());
 
 	//Decorations.
 	QString decoration(_othersDialog->decorationBox->currentText());
 	//TODO use QHash instead
-    QList<Decoration> decList= Utils::getWindowDecorations();
-    for (const auto &dt : qAsConst(decList)){
-        if (QString::compare(dt.name, decoration, Qt::CaseInsensitive) == 0){
-        	_profile->setDecName(dt.name);
-            _profile->setLibrary(dt.library);
-            _profile->setTheme(dt.theme);
-        }
-    }
+	QList<Decoration> decList = Utils::getWindowDecorations();
+	for (const auto &dt : qAsConst(decList)) {
+		if (QString::compare(dt.name, decoration, Qt::CaseInsensitive) == 0) {
+			_profile->setDecName(dt.name);
+			_profile->setLibrary(dt.library);
+			_profile->setTheme(dt.theme);
+		}
+	}
 
 	//this is meant to be in the controller as i currently don't know how.
 	ProfileManager::instance()->addProfile(_profile);
@@ -149,5 +157,18 @@ void EditProfileDialog::enableProfileName(const int &state)
 {
 	_stylesDialog->nameTextBox->setEnabled(state);
 }
+void EditProfileDialog::selectScript()
+{
+	_profile->setScript(QFileDialog::getOpenFileName(this,
+													 tr("Run Script"), "/home", tr("Script Files(.sh) (*.sh)")));
+}
+void EditProfileDialog::selectWallpaper()
+{
+	//todo add the file format here for wallpaper.
+	_profile->setWallpaper(QFileDialog::getOpenFileName(this,
+														tr("Choose wallpaper"), "/home", tr(".png")));
+}
+
+
 
 

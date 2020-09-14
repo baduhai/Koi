@@ -7,6 +7,7 @@
 
 
 #include <KPageDialog>
+#include <QFileDialog>
 
 #include "ui_externaldialog.h"
 #include "ui_stylesdialog.h"
@@ -35,6 +36,8 @@ public:
 	void saveProfile();
 	void enableKvantum(const QString &widgetName);
 	void enableProfileName(const int &state);
+	void selectScript();
+	void selectWallpaper();
 
 private:
 	Ui::StylesDialog *_stylesDialog;

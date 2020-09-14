@@ -32,8 +32,6 @@ public:
 	//QString m_browser;
 	void createProfileGlobalDir() const;
 
-
-
 	//QString m_vscode;
 	static bool globalDefaultExists(const QString &pluginName);
 	// Returns the profile Name
@@ -50,7 +48,9 @@ public:
 	QString getIcon() const;
 	QString getMouse() const;
 	QString getScript() const;
+	bool getScriptEnabled() const;
 	QString getWallpaper() const;
+	bool getWallEnabled() const;
 	//Window Decorations
 	QString getDecName() const;
 	QString getLibrary() const;
@@ -67,7 +67,9 @@ public:
 	void setWidget(const QString &widget);
 	void setIcon(const QString &icon);
 	void setMouse(const QString &mouse);
+	void setScriptEnabled(const bool &scriptEnabled);
 	void setScript(const QString &script);
+	void setWallEnabled(const bool &wallEnabled);
 	void setWallpaper(const QString &wallpaper);
 	void setDecName(const QString &decorationName);
 	void setLibrary(const QString &library);
@@ -93,7 +95,9 @@ private:
 	QString m_mouse;
 
 	QString m_script;
+	bool m_scriptEnabled;
 	QString m_wallpaper;
+	bool m_wallEnabled;
 
 	//[Window Decorations];
 	QString m_decorationName;

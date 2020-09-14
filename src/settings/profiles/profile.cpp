@@ -58,8 +58,8 @@ Profile::~Profile()
 void Profile::readConfig(QSettings &s)
 {
 
-    //Style
-    s.beginGroup("Style");
+	//Style
+	s.beginGroup("Style");
 	m_plasma = s.value("plasmaStyle").toString();
 	m_color = s.value("colorScheme").toString();
 	m_gtk = s.value("gtkTheme").toString();
@@ -67,14 +67,17 @@ void Profile::readConfig(QSettings &s)
 	m_widget = s.value("widgetStyle").toString();
 
 
-	qDebug() << "the setting param " << s.value("plasmaStyle").toString() <<s.value("colorScheme").toString() << s.value("kvantum").toString() ;
+	qDebug() << "the setting param " << s.value("plasmaStyle").toString() << s.value("colorScheme").toString()
+			 << s.value("kvantum").toString();
 	s.endGroup();
 	//Others;
 	s.beginGroup("Others");
 	m_icon = s.value("icon").toString();
 	m_mouse = s.value("mouse").toString();
 	m_script = s.value("script").toString();
+	m_scriptEnabled = s.value("scriptEnabled").toBool();
 	m_wallpaper = s.value("wallpaper").toString();
+	m_wallEnabled = s.value("wallEnabled").toBool();
 	s.endGroup();
 
 	//Window Decoration
@@ -108,7 +111,9 @@ void Profile::writeConfig(QSettings &s) const
 	s.setValue("icon", m_icon);
 	s.setValue("mouse", m_mouse);
 	s.setValue("script", m_script);
+	s.setValue("scriptEnabled", m_scriptEnabled);
 	s.setValue("wallpaper", m_wallpaper);
+	s.setValue("wallEnabled", m_wallEnabled);
 	s.endGroup();
 
 	//Window Decorations;
@@ -211,11 +216,11 @@ void Profile::createProfileGlobalDir() const
 //Getters
 QString Profile::getPlasma() const
 {
-	return  m_plasma ;
+	return m_plasma;
 }
 QString Profile::getColor() const
 {
-	return m_color ;
+	return m_color;
 }
 QString Profile::getGtk() const
 {
@@ -241,9 +246,17 @@ QString Profile::getScript() const
 {
 	return m_script;
 }
+bool Profile::getScriptEnabled() const
+{
+	return m_scriptEnabled;
+}
 QString Profile::getWallpaper() const
 {
 	return m_wallpaper;
+}
+bool Profile::getWallEnabled() const
+{
+	return m_wallEnabled;
 }
 QString Profile::getDecName() const
 {
@@ -259,7 +272,7 @@ QString Profile::getTheme() const
 }
 QString Profile::getKonsole() const
 {
-	 return m_konsole;
+	return m_konsole;
 }
 
 //Setters
@@ -274,31 +287,39 @@ void Profile::setColor(const QString &color)
 }
 void Profile::setGtk(const QString &gtk)
 {
-	m_gtk = gtk ;
+	m_gtk = gtk;
 }
 void Profile::setKvantum(const QString &kvantum)
 {
-	m_kvantum = kvantum ;
+	m_kvantum = kvantum;
 }
 void Profile::setWidget(const QString &widget)
 {
-	m_widget = widget ;
+	m_widget = widget;
 }
 void Profile::setIcon(const QString &icon)
 {
-	 m_icon = icon ;
+	m_icon = icon;
 }
 void Profile::setMouse(const QString &mouse)
 {
-	 m_mouse = mouse ;
+	m_mouse = mouse;
 }
 void Profile::setScript(const QString &script)
 {
-	m_script = script ;
+	m_script = script;
+}
+void Profile::setScriptEnabled(const bool &scriptEnabled)
+{
+	m_scriptEnabled = scriptEnabled;
 }
 void Profile::setWallpaper(const QString &wallpaper)
 {
-	m_wallpaper = wallpaper ;
+	m_wallpaper = wallpaper;
+}
+void Profile::setWallEnabled(const bool &wallEnabled)
+{
+	m_wallEnabled = wallEnabled;
 }
 void Profile::setDecName(const QString &decorationName)
 {
@@ -306,13 +327,13 @@ void Profile::setDecName(const QString &decorationName)
 }
 void Profile::setLibrary(const QString &library)
 {
-	m_library = library ;
+	m_library = library;
 }
 void Profile::setTheme(const QString &theme)
 {
-	m_theme= theme ;
+	m_theme = theme;
 }
 void Profile::setKonsole(const QString &konsole)
 {
-	m_konsole = konsole ;
+	m_konsole = konsole;
 }
