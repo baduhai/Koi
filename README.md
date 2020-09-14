@@ -32,6 +32,7 @@ This is a TODO list
 - [ ] separating logic from UI
 - [ ] add switching browser styles for (for chrome, chromium and firefox)
 - [ ] add support for more languages other than English with i18n/i10n 
+- [ ] make the favourites button work
 
 
 

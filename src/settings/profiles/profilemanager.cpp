@@ -137,10 +137,10 @@ QList<Profile *> ProfileManager::allProfiles()
 	return _profileList.values();
 }
 
-bool ProfileManager::isFavourite(const Profile *p)
+bool ProfileManager::isFavourite(const QString &profileName)
 {
 	QStringList favourites(listFavourites());
-	if(favourites.contains(p->name())){
+	if(favourites.contains(profileName)){
 		return true;
 	}
     return false;
@@ -167,5 +167,28 @@ void ProfileManager::saveProfile(const QString &profileName)
 	_profileList.value(profileName)->writeConfig(s);
 	_profileList.value(profileName)->createProfileGlobalDir();
 	_profileList.value(profileName)->writeToGlobal();
+}
+void ProfileManager::deleteProfile()
+{
+	Q_ASSERT(_activeProfile);
 
+
+}
+void ProfileManager::addtoFavourite(const QString &profileName)
+{
+	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	QStringList fav(listFavourites() << profileName);
+	if(!isFavourite(profileName)){
+		// TODO write to koirc here
+		s.setValue("favourites", fav.join(","));
+	}
+}
+void ProfileManager::removeFromFavourite(const QString &profileName)
+{
+	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	if(isFavourite(profileName)){
+		QStringList fav(listFavourites());
+		fav.removeAt(fav.indexOf(profileName));
+		s.setValue("favourites", fav.join(","));
+	}
 }

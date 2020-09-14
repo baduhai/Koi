@@ -20,11 +20,16 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettin
 	createTable();
 
 	populateTable();
+	//TODO when you don't have any profile selected, point to nothing
+	//and disable the edit and delete button.
+   	// may use this for double clicked too
 
-   // may use this for double clicked too
-   //connect(ui->profilesList, &QTableView::activated , this , &ProfileSettingsDialog::rowSelected );
+   //TODO when add profile update the table view.
+   //TODO when you delete profile update the table view.
     connect(ui->profilesList, &QTableView::clicked , this , &ProfileSettingsDialog::rowSelected);
     connect(ui->editProfileBtn, &QPushButton::clicked, this , &ProfileSettingsDialog::editCurrentProfile);
+    connect(ui->deleteProfileBtn, &QPushButton::clicked, this, &ProfileSettingsDialog::deleteCurrentProfile);
+//    connect(ui->deleteProfileBtn, &QPushButton::clicked, ProfileManager::instance, &ProfileManager::_activeProfile.delete);
 }
 
 ProfileSettingsDialog::~ProfileSettingsDialog()
@@ -43,9 +48,10 @@ void ProfileSettingsDialog::addNewProfile()
 void ProfileSettingsDialog::rowSelected(const QModelIndex &index)
 {
     QString indexStr = ui->profilesList->model()->data(index).toString();
-
+	qDebug() << "the index is " << index;
     qDebug()<< "The selected theme is  " << indexStr ;
     ui->editProfileBtn->setEnabled(true);
+    ui->deleteProfileBtn->setEnabled(true);
 
     ProfileManager::instance()->_activeProfile = ProfileManager::instance()->getProfile(indexStr);
 }
@@ -57,6 +63,10 @@ void ProfileSettingsDialog::editCurrentProfile()
     dialog->open();
 }
 
+void ProfileSettingsDialog::deleteCurrentProfile()
+{
+	//ProfileManager::instance()->_activeProfile
+}
 void ProfileSettingsDialog::createTable()
 {
 	Q_ASSERT(!ui->profilesList->model());
@@ -83,7 +93,6 @@ void ProfileSettingsDialog::createTable()
 void ProfileSettingsDialog::populateTable()
 {
 	QList<Profile*> profileList = ProfileManager::instance()->allProfiles();
-
 	for (const auto p : profileList) {
 		addItems(p);
 	}
@@ -97,7 +106,6 @@ void ProfileSettingsDialog::addItems(const Profile *p)
 	if (p->name().isEmpty()) {
 		return;
 	}
-
 	// each _sessionModel row has three items.
 	const auto items = QList<QStandardItem *>{
 		new QStandardItem(), // Favorites.
@@ -112,7 +120,7 @@ void ProfileSettingsDialog::addItems(const Profile *p)
 void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const
 {
 	// "Enabled" checkbox
-	const auto isEnabled (ProfileManager::instance()->isFavourite(p));
+	const auto isEnabled (ProfileManager::instance()->isFavourite(p->name()));
 	items[FavouriteStatusColumn]->setCheckState(isEnabled ? Qt::Checked : Qt::Unchecked);
 	if((p->name() == "light") || p->name() == "dark"){
 		items[FavouriteStatusColumn]->setCheckState(Qt::Checked);
