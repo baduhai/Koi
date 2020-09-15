@@ -35,10 +35,9 @@ public:
 
 private slots:
     void addNewProfile();
-    void rowSelected(const QModelIndex &index );
     void editCurrentProfile();
     void deleteCurrentProfile();
-
+	void tableSelectionChanged();
 
 private:
 	Ui::ProfileSettingsDialog *ui;
@@ -46,6 +45,7 @@ private:
 
 	EditProfileDialog *_ProfileDGUi;
 	QStandardItemModel *_profileListModel;
+	QString currentIndex;
 
 	enum Column
 	{
@@ -58,6 +58,7 @@ private:
 //		ProfilePtrRole = Qt::UserRole + 1,
 //		ShortcutRole,
 //	};
+
 
 	void createTable();
 	void populateTable();
