@@ -23,7 +23,8 @@ class QStandardItemModel;
 class EditProfileDialog;
 
 namespace Ui
-{class ProfileSettingsDialog;
+{
+class ProfileSettingsDialog;
 }
 class ProfileSettingsDialog: public QWidget
 {
@@ -34,9 +35,9 @@ public:
 
 
 private slots:
-    void addNewProfile();
-    void editCurrentProfile();
-    void deleteCurrentProfile();
+	void addNewProfile();
+	void editCurrentProfile();
+	void deleteCurrentProfile();
 	void tableSelectionChanged();
 
 private:
@@ -62,6 +63,7 @@ private:
 
 	void createTable();
 	void populateTable();
+	void updateTable();
 	void addItems(const Profile *p);
 	void updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const;
 };

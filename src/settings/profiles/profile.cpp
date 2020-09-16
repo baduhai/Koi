@@ -9,12 +9,11 @@
 //and setting it as default.
 Profile::Profile()
 	:
-	m_name(), m_pluginName("Koi-" + m_name), m_plasma(), m_color(), //name=themeName pluginName= koi-themeName
+	m_name(), m_pluginName(), m_plasma(), m_color(), //name=themeName pluginName= koi-themeName
 	m_gtk(), m_kvantum(), m_widget(),
 	m_icon(), m_mouse(), m_script(), m_wallpaper(),
 	m_library(), m_theme(), m_konsole()
 {
-	m_name = "name of profile here...";
 
 	// KSharedconfig would source from the QStandardPath::configLocation if no path is given.
 	//plasma theme
@@ -178,23 +177,34 @@ void Profile::setName(const QString &name)
 {
 	m_name = name;
 	m_pluginName = "Koi-" + m_name;
+	qDebug() << "theGlobDir " << m_globDir;
+	qDebug() << "the config pathe " << m_configPath;
+//	if(m_globDir.exists()){
+//		m_globDir.removeRecursively();
+//	}
+//	if(QFile::exists(m_configPath)){
+//		QFile::remove(m_configPath);
+//	}
+//	m_globDir.setPath(
+//		QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
+//			% m_pluginName);
+//	m_configPath = QStandardPaths::writableLocation(
+//			QStandardPaths::AppLocalDataLocation) + "/" + m_name + ".koi";
 }
 QString Profile::name() const
 {
 	return m_name;
 }
-bool Profile::globalDefaultExists(const QString &pluginName)
+bool Profile::globalDefaultExists() const
 {
-	QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + pluginName
-							 + QStringLiteral("/contents/defaults"));
+	QFileInfo localTheme(getGlobDir() + QStringLiteral("/contents/defaults"));
 	return localTheme.exists() && localTheme.isFile();
 }
 void Profile::createProfileGlobalDir() const
 //would not need this as this gets the plasma layout and i just need the theme
 {
 	const QString metadataPath
-		(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-			 % m_pluginName % QLatin1String("/metadata.desktop"));
+		(getGlobDir() % QLatin1String("/metadata.desktop"));
 	KConfig c(metadataPath);
 
 	KConfigGroup cg(&c, "Desktop Entry");
@@ -213,6 +223,14 @@ void Profile::createProfileGlobalDir() const
 
 }
 
+QString Profile::getGlobDir() const
+{
+	return m_globDir.absolutePath();
+}
+QString Profile::configPath() const
+{
+	return m_configPath;
+}
 //Getters
 QString Profile::getPlasma() const
 {
@@ -270,11 +288,11 @@ QString Profile::getTheme() const
 {
 	return m_theme;
 }
+
 QString Profile::getKonsole() const
 {
 	return m_konsole;
 }
-
 //Setters
 void Profile::setPlasma(const QString &plasma)
 {
@@ -336,4 +354,15 @@ void Profile::setTheme(const QString &theme)
 void Profile::setKonsole(const QString &konsole)
 {
 	m_konsole = konsole;
+}
+void Profile::setGlobDir()
+{
+	m_globDir.setPath(
+		QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
+			% m_pluginName);
+}
+void Profile::setConfigPath()
+{
+	m_configPath = QStandardPaths::writableLocation(
+		QStandardPaths::AppLocalDataLocation) + "/" + m_name + ".koi";
 }

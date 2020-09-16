@@ -8,6 +8,7 @@
 
 #include <KPageDialog>
 #include <QFileDialog>
+#include <QtWidgets>
 
 #include "ui_externaldialog.h"
 #include "ui_stylesdialog.h"

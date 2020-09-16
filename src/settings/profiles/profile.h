@@ -33,12 +33,14 @@ public:
 	void createProfileGlobalDir() const;
 
 	//QString m_vscode;
-	static bool globalDefaultExists(const QString &pluginName);
+	bool globalDefaultExists() const;
 	// Returns the profile Name
 	QString name() const;
 
 	//getters and setters for the variables
 	//getters
+	QString getGlobDir() const;
+	QString configPath() const;
 	QString getPlasma() const;
 	QString getColor() const;
 	QString getGtk() const;
@@ -60,6 +62,8 @@ public:
 
 	//Maybe i don't need setters ?
 	//Setters
+	void setGlobDir();
+	void setConfigPath();
 	void setPlasma(const QString &plasma);
 	void setColor(const QString &color);
 	void setGtk(const QString &gtk);
@@ -79,6 +83,9 @@ public:
 private:
 
 	//name of the profile that will be used for its location
+	QDir m_globDir;
+	QString m_configPath;
+
 	QString m_name;
 	//can never set the plugin in name manually;
 	QString m_pluginName;

@@ -23,7 +23,10 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettin
 	//TODO when you don't have any profile selected, point to nothing
 	//and disable the edit and delete button.
 	// may use this for double clicked too
-
+	connect(ui->profilesList->selectionModel(),
+			&QItemSelectionModel::selectionChanged,
+			this,
+			&ProfileSettingsDialog::tableSelectionChanged);
 	//TODO when add profile update the table view.
 	//TODO when you delete profile update the table view.
 	connect(ui->profilesList, &QAbstractItemView::doubleClicked, this, &ProfileSettingsDialog::editCurrentProfile);
@@ -47,16 +50,19 @@ void ProfileSettingsDialog::addNewProfile()
 void ProfileSettingsDialog::editCurrentProfile()
 {
 	Q_ASSERT(!currentIndex.isEmpty());
-	ProfileManager::_activeProfile = ProfileManager::instance()->getProfile(currentIndex);
+
 	qDebug() << "the profile selected before editing:\n " << currentIndex;
 	EditProfileDialog *dialog = new EditProfileDialog(this);
-	dialog->setProfile(ProfileManager::_activeProfile);
+	dialog->setProfile(ProfileManager::instance()->_activeProfile);
 	dialog->open();
 }
 
 void ProfileSettingsDialog::deleteCurrentProfile()
 {
-	//ProfileManager::instance()->_activeProfile
+	auto name = ProfileManager::instance()->_activeProfile->name();
+	ProfileManager::instance()->deleteProfile();
+	//TODO remove only deleted rows.
+	//_profileListModel->clear();
 }
 void ProfileSettingsDialog::createTable()
 {
@@ -88,10 +94,7 @@ void ProfileSettingsDialog::populateTable()
 	for (const auto p : profileList) {
 		addItems(p);
 	}
-	connect(ui->profilesList->selectionModel(),
-			&QItemSelectionModel::selectionChanged,
-			this,
-			&ProfileSettingsDialog::tableSelectionChanged);
+
 }
 
 // Add the Profile to the Table view
@@ -101,6 +104,8 @@ void ProfileSettingsDialog::addItems(const Profile *p)
 	if (p->name().isEmpty()) {
 		return;
 	}
+
+
 	// each _sessionModel row has three items.
 	const auto items = QList<QStandardItem *>{
 		new QStandardItem(), // Favorites.
@@ -137,10 +142,16 @@ void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<
 void ProfileSettingsDialog::tableSelectionChanged()
 {
 	currentIndex = ui->profilesList->selectionModel()->currentIndex().data().toString();
+	auto manager = ProfileManager::instance();
+	manager->_activeProfile = manager->getProfile(currentIndex);
 	bool isDefault = (currentIndex == ("dark") || (currentIndex == ("light")));
 	bool isDeletable = !isDefault && !currentIndex.isEmpty();
 
 	ui->editProfileBtn->setEnabled(!currentIndex.isEmpty());
 	ui->deleteProfileBtn->setEnabled(isDeletable);
+}
+void ProfileSettingsDialog::updateTable()
+{
+
 }
 

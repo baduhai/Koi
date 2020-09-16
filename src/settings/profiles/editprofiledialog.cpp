@@ -76,9 +76,9 @@ void EditProfileDialog::updatePages()
 	Q_ASSERT(_profile);
 	//Styles Page.
 	//TODO enable later when you can delete profiles
-//	if(_profile->name()== "light" || _profile->name() == "dark"){
-	_stylesDialog->nameCheckBox->setHidden(true);
-//	}
+	if (_profile->name() == "light" || _profile->name() == "dark") {
+		_stylesDialog->nameCheckBox->setHidden(true);
+	}
 	_stylesDialog->nameTextBox->setText(_profile->name());
 	_stylesDialog->plasmaBox->setCurrentText(_profile->getPlasma());
 	_stylesDialog->colorBox->setCurrentText(_profile->getColor());

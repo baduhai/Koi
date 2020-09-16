@@ -23,22 +23,22 @@ public:
 	//loads all profile including the defaults.
 	QList<Profile *> allProfiles();
 
-	void saveProfile(const QString& profileName);
+	void saveProfile(const QString &profileName);
+
+	Profile *_activeProfile;
 
 	const Profile *defaultProfile() const;
 
-	static Profile * _activeProfile ;
-
-	bool addProfile( Profile *profile);
+	bool addProfile(Profile *profile);
 
 	//can only delete the active profile.
 	void deleteProfile();
 	bool isFavourite(const QString &profileName);
 	void removeFromFavourite(const QString &profileName);
 	void addtoFavourite(const QString &profileName);
-    static Profile* getProfile(const QString &profileName);
+	static Profile *getProfile(const QString &profileName);
 private:
-	static bool profileExists(const QString &fileName,const QHash<QString, Profile *> &profileList );
+	static bool profileExists(const QString &fileName, const QHash<QString, Profile *> &profileList);
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
 
@@ -48,7 +48,7 @@ private:
 	QStringList listFavourites();
 
 	//for storing the loaded profiles.
-    static QHash<QString, Profile*> _profileList;
+	static QHash<QString, Profile *> _profileList;
 	bool m_loadedAllProfiles;
 	//makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
