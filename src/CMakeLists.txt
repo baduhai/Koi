@@ -17,7 +17,9 @@ set(koi_SRC
         settings/generalsettings.cpp
         settings/profilesettingsdialog.cpp
         settings/profiles/editprofiledialog.cpp
-        settings/profiles/profile.cpp settings/profiles/profile.h settings/profiles/profilemanager.cpp settings/profiles/profilemanager.h)
+        settings/profiles/profile.cpp
+        settings/profiles/profilemanager.cpp
+        )
 
 set(koi_RCS
         ../resources/resources.qrc )

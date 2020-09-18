@@ -13,8 +13,11 @@
 //koi
 #include "profile.h"
 
-class ProfileManager
+class ProfileManager: public QObject
 {
+	Q_OBJECT
+Q_SIGNALS:
+	void favouritesChanged();
 public:
 	ProfileManager();
 	~ProfileManager();
@@ -34,19 +37,22 @@ public:
 	//can only delete the active profile.
 	void deleteProfile();
 	bool isFavourite(const QString &profileName);
-	void removeFromFavourite(const QString &profileName);
-	void addtoFavourite(const QString &profileName);
 	static Profile *getProfile(const QString &profileName);
+	void setFavourite(QString profileName, bool favourite);
+	void saveFavourites();
+	void loadFavourites();
 private:
 	static bool profileExists(const QString &fileName, const QHash<QString, Profile *> &profileList);
+
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
+
+	static QSet<QString> m_favourites;
 
 	//get the list of profiles
 	QFileInfoList listProfiles();
 
-	QStringList listFavourites();
-
+	QString listFavourites();
 	//for storing the loaded profiles.
 	static QHash<QString, Profile *> _profileList;
 	bool m_loadedAllProfiles;

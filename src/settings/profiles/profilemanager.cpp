@@ -7,6 +7,7 @@
 
 ProfileManager::ProfileManager()
 {
+	loadFavourites();
 }
 
 ProfileManager::~ProfileManager()
@@ -20,6 +21,8 @@ ProfileManager *ProfileManager::instance()
 }
 
 QHash<QString, Profile *> ProfileManager::_profileList{};
+
+QSet<QString> ProfileManager::m_favourites;
 //Profile* ProfileManager::_activeProfile {};
 
 QFileInfoList ProfileManager::listProfiles()
@@ -146,11 +149,8 @@ QList<Profile *> ProfileManager::allProfiles()
 
 bool ProfileManager::isFavourite(const QString &profileName)
 {
-	QStringList favourites(listFavourites());
-	if (favourites.contains(profileName)) {
-		return true;
-	}
-	return false;
+	bool yes(m_favourites.contains(profileName));
+	return m_favourites.contains(profileName);
 }
 
 Profile *ProfileManager::getProfile(const QString &profileName)
@@ -158,10 +158,10 @@ Profile *ProfileManager::getProfile(const QString &profileName)
 	return _profileList.value(profileName);
 }
 
-QStringList ProfileManager::listFavourites()
+QString ProfileManager::listFavourites()
 {
 	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-	return s.value("favourites").toStringList();
+	return s.value("favourites").toString();
 }
 
 void ProfileManager::saveProfile(const QString &profileName)
@@ -190,21 +190,37 @@ void ProfileManager::deleteProfile()
 		QFile::remove(_activeProfile->configPath());
 	}
 }
-void ProfileManager::addtoFavourite(const QString &profileName)
+void ProfileManager::setFavourite(QString profileName, bool favourite)
 {
-	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-	QStringList fav(listFavourites() << profileName);
-	if (!isFavourite(profileName)) {
-		// TODO write to koirc here
-		s.setValue("favourites", fav.join(","));
+	if (favourite && !m_favourites.contains(profileName)) {
+		m_favourites.insert(profileName);
+		emit favouritesChanged();
+	}
+	else if (!favourite && m_favourites.contains(profileName)) {
+		m_favourites.remove(profileName);
+		emit favouritesChanged();
 	}
 }
-void ProfileManager::removeFromFavourite(const QString &profileName)
+void ProfileManager::loadFavourites()
+{
+	QStringList favList(listFavourites().split(","));
+	for (const auto &fav: favList) {
+		if (!m_favourites.contains(fav)) {
+			m_favourites.insert(fav);
+		}
+	}
+	if (!m_favourites.contains("light")) {
+		m_favourites.insert("light");
+	}
+	if (!m_favourites.contains("dark")) {
+		m_favourites.insert("dark");
+	}
+
+}
+
+void ProfileManager::saveFavourites()
 {
 	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-	if (isFavourite(profileName)) {
-		QStringList fav(listFavourites());
-		fav.removeAt(fav.indexOf(profileName));
-		s.setValue("favourites", fav.join(","));
-	}
+	s.setValue("favourites", m_favourites.values().join(","));
+
 }

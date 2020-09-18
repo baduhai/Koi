@@ -18,8 +18,12 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettin
 	ui->setupUi(this);
 	connect(ui->newProfileBtn, &QPushButton::clicked, this, &ProfileSettingsDialog::addNewProfile);
 	createTable();
-
+	ProfileManager *manager = ProfileManager::instance();
 	populateTable();
+
+	connect(_profileListModel, &QStandardItemModel::itemChanged, this, &ProfileSettingsDialog::itemDataChanged);
+	connect(manager, &ProfileManager::favouritesChanged, manager, &ProfileManager::saveFavourites);
+
 	//TODO when you don't have any profile selected, point to nothing
 	//and disable the edit and delete button.
 	// may use this for double clicked too
@@ -152,6 +156,17 @@ void ProfileSettingsDialog::tableSelectionChanged()
 }
 void ProfileSettingsDialog::updateTable()
 {
+
+}
+void ProfileSettingsDialog::itemDataChanged(QStandardItem *item)
+{
+	qDebug() << "this is the item " << item;
+	if (item->column() == FavouriteStatusColumn) {
+		QString profileName = item->model()->item(item->row(), ProfileNameColumn)->data(Qt::DisplayRole).toString();
+		bool isFav = item->checkState() == Qt::Checked;
+		qDebug() << "isFav " << isFav;
+		ProfileManager::instance()->setFavourite(profileName, isFav);
+	}
 
 }
 

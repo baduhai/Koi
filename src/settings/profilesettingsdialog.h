@@ -39,6 +39,7 @@ private slots:
 	void editCurrentProfile();
 	void deleteCurrentProfile();
 	void tableSelectionChanged();
+	void itemDataChanged(QStandardItem *item);
 
 private:
 	Ui::ProfileSettingsDialog *ui;
@@ -59,6 +60,7 @@ private:
 //		ProfilePtrRole = Qt::UserRole + 1,
 //		ShortcutRole,
 //	};
+
 
 
 	void createTable();
