@@ -9,7 +9,8 @@ SettingDialog::SettingDialog(QWidget *parent)
 	:
 	KPageDialog(parent),
 	_generalUi(nullptr),
-	_profileUi(nullptr)
+	_profileUi(nullptr),
+	_scheduleUi(nullptr)
 {
 	// KOI Settings Location on the drive
 	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::NativeFormat);
@@ -32,7 +33,12 @@ SettingDialog::SettingDialog(QWidget *parent)
 	profilePageItem->setHeader(profilePageName);
 	profilePageItem->setIcon(QIcon::fromTheme("style"));
 
-	//others Page
+	//Schedule Page
+	const QString schedulePageName = ("Schedule");
+	_scheduleUi = new ScheduleProfile(this);
+	KPageWidgetItem *schedulePageItem = addPage(_scheduleUi, schedulePageName);
+	schedulePageItem->setHeader(schedulePageName);
+	schedulePageItem->setIcon(QIcon::fromTheme("time"));
 
 	connect(this, &SettingDialog::accepted, this, &SettingDialog::slotOkClicked);
 }

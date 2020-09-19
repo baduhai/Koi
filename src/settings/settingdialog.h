@@ -14,10 +14,12 @@
 //koi
 #include "generalsettings.h"
 #include "profilesettingsdialog.h"
+#include "scheduleprofile.h"
 
 namespace Ui
 {
 class GeneralSettings;
+class ScheduleProfile;
 }
 
 class SettingDialog: public KPageDialog
@@ -36,6 +38,7 @@ private:
 
 	GeneralSettings *_generalUi;
 	ProfileSettingsDialog *_profileUi;
+	ScheduleProfile *_scheduleUi;
 	QSettings *settings;
 };
 

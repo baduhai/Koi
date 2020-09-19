@@ -1,3 +1,4 @@
+#i currently cannot nest cmakelists because it breaks don't know why don't know how.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -13,9 +14,12 @@ set(koi_SRC
         utils.cpp
         wallpaper.cpp
         kvantumstyle.cpp
+        #Settings Dir
         settings/settingdialog.cpp
         settings/generalsettings.cpp
         settings/profilesettingsdialog.cpp
+        settings/scheduleprofile.cpp
+        #Settings/Profile
         settings/profiles/editprofiledialog.cpp
         settings/profiles/profile.cpp
         settings/profiles/profilemanager.cpp

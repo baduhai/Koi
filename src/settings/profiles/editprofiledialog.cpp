@@ -14,29 +14,37 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	_profile(nullptr)
 {
 	setWindowTitle("Edit"  " profile");
-	setFaceType(KPageDialog::Tabbed);
+	this->setMinimumHeight(480);
+	//try the one below for a different style, i currently prefer this fn;
+	setFaceType(KPageDialog::List);
+//	setFaceType(KPageDialog::Tabbed);
 	//Adding Pages
 	//Styles page
 	const QString stylePageName("Styles");
 	_stylesDialog = new Ui::StylesDialog();
-	auto *stylePageWidget = new QWidget(this);
+	auto *stylePageWidget = new QListWidget(this);
 	_stylesDialog->setupUi(stylePageWidget);
+
 	//put this to make it easier to read
-	this->addPage(stylePageWidget, stylePageName);
+	//point to kpagewidgetitem to add icons.
+	KPageWidgetItem *stylesPageItem = this->addPage(stylePageWidget, stylePageName);
+	stylesPageItem->setIcon(QIcon::fromTheme("style"));
 
 	//otherPage
 	const QString othersPageName("Other");
 	_othersDialog = new Ui::OthersDialog();
 	auto *othersPageWidget = new QWidget(this);
 	_othersDialog->setupUi(othersPageWidget);
-	addPage(othersPageWidget, othersPageName);
+	KPageWidgetItem *othersPageItem = addPage(othersPageWidget, othersPageName);
+	othersPageItem->setIcon(QIcon::fromTheme("color"));
 
 	//External Page
 	const QString extPageName("External");
 	_extDialog = new Ui::ExternalDialog();
 	auto *extPageWidget = new QWidget(this);
 	_extDialog->setupUi(extPageWidget);
-	addPage(extPageWidget, extPageName);
+	KPageWidgetItem *extPageItem = addPage(extPageWidget, extPageName);
+	extPageItem->setIcon(QIcon::fromTheme("add"));
 
 
 
