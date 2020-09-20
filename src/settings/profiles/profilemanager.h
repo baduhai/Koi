@@ -19,8 +19,10 @@ class ProfileManager: public QObject
 Q_SIGNALS:
 	void favouritesChanged();
 public:
+	QHash<QString, QString> listFavourites();
 	ProfileManager();
 	~ProfileManager();
+
 
 	static ProfileManager *instance();
 	//loads all profile including the defaults.
@@ -40,19 +42,18 @@ public:
 	static Profile *getProfile(const QString &profileName);
 	void setFavourite(QString profileName, bool favourite);
 	void saveFavourites();
-	void loadFavourites();
 private:
 	static bool profileExists(const QString &fileName, const QHash<QString, Profile *> &profileList);
 
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();
 
-	static QSet<QString> m_favourites;
+	//////Name-----time
+	QHash<QString, QString> m_favourites;
 
 	//get the list of profiles
 	QFileInfoList listProfiles();
 
-	QString listFavourites();
 	//for storing the loaded profiles.
 	static QHash<QString, Profile *> _profileList;
 	bool m_loadedAllProfiles;

@@ -7,7 +7,7 @@
 
 ProfileManager::ProfileManager()
 {
-	loadFavourites();
+	m_favourites = listFavourites();
 }
 
 ProfileManager::~ProfileManager()
@@ -21,9 +21,6 @@ ProfileManager *ProfileManager::instance()
 }
 
 QHash<QString, Profile *> ProfileManager::_profileList{};
-
-QSet<QString> ProfileManager::m_favourites;
-//Profile* ProfileManager::_activeProfile {};
 
 QFileInfoList ProfileManager::listProfiles()
 {
@@ -149,7 +146,6 @@ QList<Profile *> ProfileManager::allProfiles()
 
 bool ProfileManager::isFavourite(const QString &profileName)
 {
-	bool yes(m_favourites.contains(profileName));
 	return m_favourites.contains(profileName);
 }
 
@@ -158,10 +154,24 @@ Profile *ProfileManager::getProfile(const QString &profileName)
 	return _profileList.value(profileName);
 }
 
-QString ProfileManager::listFavourites()
+QHash<QString, QString> ProfileManager::listFavourites()
 {
+	QHash<QString, QString> favourites;
 	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-	return s.value("favourites").toString();
+	s.beginGroup("Favourites");
+	QStringList keys(s.allKeys());
+	for (const auto &key : keys) {
+		if (!favourites.contains(key)) {
+			favourites.insert(key, s.value(key).toString());
+		}
+	}
+	if (!favourites.contains("light")) {
+		favourites.insert("light", "06:00:00");
+	}
+	if (!favourites.contains("dark")) {
+		favourites.insert("dark", "20:00:00");
+	}
+	return favourites;
 }
 
 void ProfileManager::saveProfile(const QString &profileName)
@@ -193,7 +203,7 @@ void ProfileManager::deleteProfile()
 void ProfileManager::setFavourite(QString profileName, bool favourite)
 {
 	if (favourite && !m_favourites.contains(profileName)) {
-		m_favourites.insert(profileName);
+		m_favourites.insert(profileName, QString());
 		emit favouritesChanged();
 	}
 	else if (!favourite && m_favourites.contains(profileName)) {
@@ -201,26 +211,14 @@ void ProfileManager::setFavourite(QString profileName, bool favourite)
 		emit favouritesChanged();
 	}
 }
-void ProfileManager::loadFavourites()
-{
-	QStringList favList(listFavourites().split(","));
-	for (const auto &fav: favList) {
-		if (!m_favourites.contains(fav)) {
-			m_favourites.insert(fav);
-		}
-	}
-	if (!m_favourites.contains("light")) {
-		m_favourites.insert("light");
-	}
-	if (!m_favourites.contains("dark")) {
-		m_favourites.insert("dark");
-	}
-
-}
 
 void ProfileManager::saveFavourites()
 {
 	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-	s.setValue("favourites", m_favourites.values().join(","));
-
+	s.beginGroup("Favourites");
+	QHashIterator<QString, QString> i(m_favourites);
+	while (i.hasNext()) {
+		i.next();
+		s.setValue(i.key(), i.value());
+	}
 }

@@ -7,6 +7,9 @@
 #include <QWidget>
 #include <QStandardItemModel>
 
+//Koi
+#include "profiles/profilemanager.h"
+
 enum scheduleColumns{
 	ProfileColumn = 0,
 	TimeColumn,
@@ -25,10 +28,13 @@ public:
 	explicit ScheduleProfile(QWidget *parent = nullptr);
 	~ScheduleProfile();
 
+public slots:
+	void populateView();
 private:
 	void createview();
 	Ui::ScheduleProfile *ui;
 	QStandardItemModel *_profileTimeModel;
+	void addItems();
 
 
 };
