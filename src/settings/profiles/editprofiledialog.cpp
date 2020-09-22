@@ -22,7 +22,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	//Styles page
 	const QString stylePageName("Styles");
 	_stylesDialog = new Ui::StylesDialog();
-	auto *stylePageWidget = new QListWidget(this);
+	auto *stylePageWidget = new QWidget(this);
 	_stylesDialog->setupUi(stylePageWidget);
 
 	//put this to make it easier to read

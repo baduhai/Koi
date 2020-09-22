@@ -58,6 +58,8 @@ void ProfileSettingsDialog::editCurrentProfile()
 	qDebug() << "the profile selected before editing:\n " << currentIndex;
 	EditProfileDialog *dialog = new EditProfileDialog(this);
 	dialog->setProfile(ProfileManager::instance()->_activeProfile);
+	qDebug() << "the glob path " << ProfileManager::instance()->_activeProfile->getGlobDir();
+	qDebug() << "the config path " << ProfileManager::instance()->_activeProfile->configPath();
 	dialog->open();
 }
 

@@ -177,19 +177,6 @@ void Profile::setName(const QString &name)
 {
 	m_name = name;
 	m_pluginName = "Koi-" + m_name;
-	qDebug() << "theGlobDir " << m_globDir;
-	qDebug() << "the config pathe " << m_configPath;
-//	if(m_globDir.exists()){
-//		m_globDir.removeRecursively();
-//	}
-//	if(QFile::exists(m_configPath)){
-//		QFile::remove(m_configPath);
-//	}
-//	m_globDir.setPath(
-//		QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) % QLatin1String("/plasma/look-and-feel/")
-//			% m_pluginName);
-//	m_configPath = QStandardPaths::writableLocation(
-//			QStandardPaths::AppLocalDataLocation) + "/" + m_name + ".koi";
 }
 QString Profile::name() const
 {

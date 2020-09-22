@@ -6,12 +6,15 @@
 //Qt
 #include <QWidget>
 #include <QStandardItemModel>
+#include <QStyledItemDelegate>
+#include <QTimeEdit>
 
 //Koi
 #include "profiles/profilemanager.h"
 
-enum scheduleColumns{
-	ProfileColumn = 0,
+enum scheduleColumns
+{
+	favNameColumn = 0,
 	TimeColumn,
 };
 
@@ -34,9 +37,25 @@ private:
 	void createview();
 	Ui::ScheduleProfile *ui;
 	QStandardItemModel *_profileTimeModel;
-	void addItems();
-
-
+	void addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &item);
 };
 
+///For the Time column spinbox to be able to be edited, and shown.
+class FavTimeDelegate: public QStyledItemDelegate
+{
+Q_OBJECT
+
+public:
+	FavTimeDelegate(QObject *parent = nullptr);
+
+	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+						  const QModelIndex &index) const override;
+
+	void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+	void setModelData(QWidget *editor, QAbstractItemModel *model,
+					  const QModelIndex &index) const override;
+
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option,
+							  const QModelIndex &index) const override;
+};
 #endif // SCHEDULEPROFILE_H
