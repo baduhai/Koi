@@ -30,6 +30,7 @@ Q_OBJECT
 public:
 
 	Utils();
+	explicit Utils(const QString &profileConfPath);
 
 	QSettings *settings{};
 	void initialiseSettings();

@@ -12,6 +12,7 @@ ScheduleProfile::ScheduleProfile(QWidget *parent)
 	populateView();
 
 	connect(_profileTimeModel, &QStandardItemModel::itemChanged, this, &ScheduleProfile::timeChanged);
+	connect(ui->profleTimeView, &QTableView::doubleClicked, this, &ScheduleProfile::enableProfile);
 }
 
 ScheduleProfile::~ScheduleProfile()
@@ -20,6 +21,7 @@ ScheduleProfile::~ScheduleProfile()
 }
 void ScheduleProfile::createview()
 {
+	ui->profleTimeView->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->profleTimeView->setModel(_profileTimeModel);
 	ui->profleTimeView->setItemDelegateForColumn(TimeColumn, new FavTimeDelegate(this));
 
@@ -86,6 +88,16 @@ void ScheduleProfile::saveChanges()
 	}
 
 }
+void ScheduleProfile::enableProfile(const QModelIndex &index)
+{
+	auto s = index.data(Qt::DisplayRole);
+	if (index.column() == FavNameColumn){
+		auto profile = ProfileManager::instance()->getProfile(index.data(Qt::DisplayRole).toString());
+		Utils utils(profile->configPath());
+		utils.go(profile->name());
+	}
+}
+
 
 /*
  * The Time Spin Box area

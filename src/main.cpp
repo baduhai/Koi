@@ -8,39 +8,35 @@
 
 bool isAlreadyRunning(QString netName)
 {
-    QLocalSocket socket;
-    socket.connectToServer(netName);
-    bool isOpen = socket.isOpen();
-    socket.close();
-    return isOpen;
+	QLocalSocket socket;
+	socket.connectToServer(netName);
+	bool isOpen = socket.isOpen();
+	socket.close();
+	return isOpen;
 }
 
 void createDummyNetwork(QString netName)
 {
-    QLocalServer *server = new QLocalServer;
-    server->setSocketOptions(QLocalServer::WorldAccessOption);
-    server->listen(netName);
+	QLocalServer *server = new QLocalServer;
+	server->setSocketOptions(QLocalServer::WorldAccessOption);
+	server->listen(netName);
 }
 
 int main(int argc, char *argv[])
 {
-    if (isAlreadyRunning("koiDummyNetwork"))
-    {
-        std::cout << "Another instance of Koi is already running" << std::endl;
-    }
-    else
-    {
-        createDummyNetwork("koiDummyNetwork");
-        Utils utils;
-        utils.initialiseSettings();
+	if (isAlreadyRunning("koiDummyNetwork")) {
+		std::cout << "Another instance of Koi is already running" << std::endl;
+	}
+	else {
+		createDummyNetwork("koiDummyNetwork");
 
+		QApplication a(argc, argv);
+		MainWindow w;
 
-            QApplication a(argc, argv);
-            MainWindow w;
-            if (utils.settings->value("start-hidden").toBool() == 0)
-            {
-                w.show();
-            }
-            return a.exec();
-        }
-    }
+		QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+		if (!s.value("start-hidden").toBool()) {
+			w.show();
+		}
+		return a.exec();
+	}
+}

@@ -11,6 +11,7 @@
 
 //Koi
 #include "profiles/profilemanager.h"
+#include "utils.h"
 
 enum scheduleColumns
 {
@@ -35,14 +36,17 @@ public slots:
 	void populateView();
 	void timeChanged(QStandardItem *item);
 	void saveChanges();
+
+private slots:
+	void enableProfile(const QModelIndex &index);
 private:
 	////--Name -----Time
 	QHash<QString, QString> m_editedFavourites;
 	void createview();
 	Ui::ScheduleProfile *ui;
 	QStandardItemModel *_profileTimeModel;
-	void addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &item);
 
+	void addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &item);
 };
 
 ///For the Time column spinbox to be able to be edited, and shown.

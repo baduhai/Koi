@@ -1,13 +1,8 @@
 # Koi
-## this is not a release,  this is just for testing features that may/may not be added to koi via pull requests if you want to use something daily use 
-
-## [Koi](https://github.com/baduhai/Koi) 
-
-the original author of koi would back in september as he/she has other stuff to to  mean while here is just for testing stuff until he/she is back 
 
 **Theme scheduling for the KDE Plasma Desktop**
 
-**use the all in one branch 
+**use the all in one branch** 
 <p>
   <img alt="profile-dialog" title="Yin & Yang" src="doc/profile_dialog.png">
 </p>
@@ -23,16 +18,16 @@ This is a TODO list
 - [x] make methods modular this will assist in the ability to add more than just light and dark if it is not hard-coded.  //almost done
 - [ ] add ability to switch konsole terminal themes 
 - [X] The ui/ux is currently a mess i am no ux/ui guy but i don't really know how to make it any better .... for now
-- [ ] add install directory for icons in the cmakelists 
+- [x] add install directory for icons in the cmakelists 
 - [x] remove redundant code 
 - [x] add ability to run scripts 
-- [ ] make the UI better and remove redundant check boxes
-- [ ] fix icons not added in the desktop file and in the system
-- [ ] choose a formatting standard (currently digging the Microsoft one because is very easy to read
+- [x] make the UI better and remove redundant check boxes
+- [x] fix icons not added in the desktop file and in the system
+- [x] choose a formatting standard (currently digging the Microsoft one because is very easy to read
 - [ ] separating logic from UI
 - [ ] add switching browser styles for (for chrome, chromium and firefox)
 - [ ] add support for more languages other than English with i18n/i10n 
-- [ ] make the favourites button work
+- [x] make the favourites button work
 
 
 

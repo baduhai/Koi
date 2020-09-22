@@ -5,6 +5,11 @@ Utils::Utils()
 {
 }
 
+Utils::Utils(const QString &profilePath)
+{
+	settings = new QSettings(profilePath, QSettings::NativeFormat);
+}
+
 // Global settings stuff
 void Utils::initialiseSettings()
 {
@@ -13,7 +18,6 @@ void Utils::initialiseSettings()
 	settings =
 		new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 }
-
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
@@ -34,37 +38,65 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 		timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
 	notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
+
 void Utils::startupTimeCheck() // Check if switching is needed based on time.
 {
-	QTime lightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
-	QTime darkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
-	QTime now = QTime::currentTime();
-	if (now < lightTime && now < darkTime) {
-		QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
-		go("dark");
+	settings->beginGroup("Favourites");
+	auto favList = settings->allKeys();
+	QTime currentTime = QTime::currentTime();
+	int nearest = 0;
+	QString nearestName;
+	for (const auto &favourite: favList) {
+		QString timeStr = settings->value(favourite).toString();
+		QTime favTime(QTime::fromString(timeStr));
+		int timeSec = currentTime.secsTo(favTime);
+		if (timeSec > 0) {
+			timeSec -= 86400;
+		}
+		if (nearest == 0) {
+			nearestName = favourite;
+			nearest = timeSec;
+			continue;
+		}
+		else if (nearest < 0 && timeSec > 0) {
+			continue;
+		}
+		else if (nearest > timeSec) {
+			continue;
+		}
+		else {
+			nearest = timeSec;
+			nearestName = favourite;
+		}
 	}
-	else if (now == lightTime) // Highly unlikely
-	{
-		QTest::qWait(1000);
-		go("light");
-	}
-	else if (now > lightTime && now < darkTime) {
-		QTest::qWait(1000);
-		go("light");
-	}
-	else if (now == darkTime) // Highly unlikely
-	{
-		QTest::qWait(1000);
-		go("dark");
-	}
-	else {
-		QTest::qWait(1000);
-		go("dark");
-	}
+	go(nearestName);
+//	QTime lightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
+//	QTime darkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
+//	QTime now = QTime::currentTime();
+//	if (now < lightTime && now < darkTime) {
+//		QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
+//		go("dark");
+//	}
+//	else if (now == lightTime) // Highly unlikely
+//	{
+//		QTest::qWait(1000);
+//		go("light");
+//	}
+//	else if (now > lightTime && now < darkTime) {
+//		QTest::qWait(1000);
+//		go("light");
+//	}
+//	else if (now == darkTime) // Highly unlikely
+//	{
+//		QTest::qWait(1000);
+//		go("dark");
+//	}
+//	else {
+//		QTest::qWait(1000);
+//		go("dark");
+//	}
 }
 
-// Get stuff
-// this will be listed orderly
 //PlasmaStyle
 
 QStringList Utils::getPlasmaStyles() // Get all available plasma styles
@@ -119,7 +151,6 @@ QStringList Utils::getGtkThemes() // Get all available gtk themes
 	gtkThemes.removeFirst();
 	return gtkThemes;
 }
-
 //widget styles
 QStringList Utils::getWidgetStyles()
 {
@@ -142,6 +173,7 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 	kvantumStyles.removeDuplicates();
 	return kvantumStyles;
 }
+
 //Icons
 QStringList Utils::getIcons() // Get all available icon themes
 {
@@ -256,7 +288,8 @@ void Utils::go(const QString &themeType)
 	goGtk(themeType);
 	goWall(themeType);
 	runScript(themeType);
-	if (settings->value("notify").toBool()) {
+	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat );
+	if (s.value("notify").toBool()) {
 		notify("Switched to " + themeType + " mode!",
 			   "Some applications may need to be restarted for applied changes to take effect.");
 	}
@@ -264,36 +297,33 @@ void Utils::go(const QString &themeType)
 
 void Utils::goColors(const QString &themeType)
 {
-	if (settings->value("ColorScheme/enabled").toBool()) {
-		colorScheme.setColorScheme(settings->value("ColorScheme/" + themeType).toString());
-	}
+	colorScheme.setColorScheme(settings->value("Style/colorScheme").toString());
 }
 
 void Utils::goGtk(const QString &themeType)
 {
-	if (settings->value("GTKTheme/enabled").toBool()) {
-		gtk.setGtk(settings->value("GTKTheme/" + themeType).toString());
-	}
+	gtk.setGtk(settings->value("Style/gtkTheme").toString());
 }
 
 void Utils::goKvantumStyle(const QString &themeType)
 {
-	if (settings->value("KvantumStyle/enabled").toBool()) {
-		kvantumStyle.setKvantumStyle(settings->value("KvantumStyle/" + themeType).toString());
+	settings->beginGroup("Style");
+	QString widget(settings->value("widgetStyle").toString());
+	if (widget == "kvantum" || widget == "kvantum-dark") {
+		kvantumStyle.setKvantumStyle(settings->value("kvantum").toString());
 	}
+	settings->endGroup();
 }
 
 void Utils::goWall(const QString &themeType)
 {
-	if (settings->value("Wallpaper/enabled").toBool()) {
-		if (!settings->value("Wallpaper/" + themeType).isNull()) {
-			wallpaper.setWallpaper(settings->value("Wallpaper/" + themeType).toString());
-		}
-		else {
-			notify("Error setting Wallpaper",
-				   "Koi tried to change your " + themeType + " wallpaper, but no wallpaper fie was selected",
-				   0);
-		}
+	if (!settings->value("Others/wallpaper").isNull()) {
+		wallpaper.setWallpaper(settings->value("Others/wallpaper").toString());
+	}
+	else {
+		notify("Error setting Wallpaper",
+			   "Koi tried to change your " + themeType + " wallpaper, but no wallpaper fie was selected",
+			   0);
 	}
 }
 
@@ -307,12 +337,10 @@ QStringList Utils::getWindowDecorationsStyle()
 	styleList.sort();
 	return styleList;
 }
-
 void Utils::runScript(const QString &themeType)
 {
-
-	if (settings->value("Script/" + themeType + "Enabled").toBool()) {
-		if (!QProcess::startDetached("/bin/sh", QStringList{settings->value("Script/" + themeType).toString()})) {
+	if (settings->value("Others/scriptEnabled").toBool()) {
+		if (!QProcess::startDetached("/bin/sh", QStringList{settings->value("Others/script").toString()})) {
 			qDebug() << "Failed to run " + themeType + " script";
 		}
 	}
