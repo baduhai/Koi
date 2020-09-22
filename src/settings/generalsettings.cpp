@@ -16,7 +16,7 @@ GeneralSettings::~GeneralSettings()
 {
 	delete ui;
 }
-void GeneralSettings::applySetting()
+void GeneralSettings::saveChanges()
 {
 	//notification.
 	//by default the general group is created if there is no group declared.

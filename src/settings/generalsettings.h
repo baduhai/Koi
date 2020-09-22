@@ -18,7 +18,7 @@ public:
 	GeneralSettings(QWidget *parent, QSettings *pSettings);
 	~GeneralSettings() override;
 
-	void applySetting();
+	void saveChanges();
 	void loadSetting();
 private slots:
 

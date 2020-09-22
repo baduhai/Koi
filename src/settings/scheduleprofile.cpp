@@ -10,6 +10,8 @@ ScheduleProfile::ScheduleProfile(QWidget *parent)
 	ui->setupUi(this);
 	createview();
 	populateView();
+
+	connect(_profileTimeModel, &QStandardItemModel::itemChanged, this, &ScheduleProfile::timeChanged);
 }
 
 ScheduleProfile::~ScheduleProfile()
@@ -25,7 +27,7 @@ void ScheduleProfile::createview()
 	QStringList headerNames({QString(), "Name"});
 	_profileTimeModel->setHorizontalHeaderLabels({"Profile Name ", "Start Time"});
 
-	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(favNameColumn, QHeaderView::Stretch);
+	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(FavNameColumn, QHeaderView::Stretch);
 	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(TimeColumn, QHeaderView::ResizeToContents);
 	ui->profleTimeView->verticalHeader()->setHidden(true);
 }
@@ -50,10 +52,39 @@ void ScheduleProfile::populateView()
 }
 void ScheduleProfile::addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &items)
 {
-	items[favNameColumn]->setText(favName);
-	items[favNameColumn]->setEditable(false);
+	items[FavNameColumn]->setText(favName);
+	items[FavNameColumn]->setEditable(false);
 
 	items[TimeColumn]->setText(favTime);
+}
+
+//not sure if i should save it automatically or not.
+void ScheduleProfile::timeChanged(QStandardItem *item)
+{
+	qDebug() << "the item " << item;
+	if (item->column() == TimeColumn) {
+		QString favTime = item->model()->data(item->index(), Qt::DisplayRole).toString();
+		QString profileName = item->model()->item(item->row(), FavNameColumn)->data(Qt::DisplayRole).toString();
+		//don't know a better way to do this .
+		if (m_editedFavourites.contains(profileName)) {
+			m_editedFavourites.remove(profileName);
+			m_editedFavourites.insert(profileName, favTime);
+		}
+		else {
+			m_editedFavourites.insert(profileName, favTime);
+		}
+	}
+}
+void ScheduleProfile::saveChanges()
+{
+	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	s.beginGroup("Favourites");
+	QHashIterator<QString, QString> favIt(m_editedFavourites);
+	while (favIt.hasNext()) {
+		favIt.next();
+		s.setValue(favIt.key(), favIt.value());
+	}
+
 }
 
 /*
@@ -75,22 +106,22 @@ QWidget *FavTimeDelegate::createEditor(QWidget *parent,
 void FavTimeDelegate::setEditorData(QWidget *editor,
 									const QModelIndex &index) const
 {
-	QTime indexTime;
 	QString value = (index.model()->data(index, Qt::EditRole).toString());
-	indexTime = QTime::fromString(value), "HH:mm";
-	qDebug() << "the int " << value;
-	qDebug() << "the time " << indexTime;
+	QTime indexTime = QTime::fromString(value);
+
 	//convert from QWidget to timeEdit widget
 	auto *spinBox = dynamic_cast<QTimeEdit *>(editor);
 	spinBox->setTime(indexTime);
+	spinBox->setDisplayFormat("HH:mm");
+	qDebug() << "the box " << spinBox->time();
 }
 void FavTimeDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 								   const QModelIndex &index) const
 {
 	auto *spinBox = dynamic_cast<QTimeEdit *>(editor);
 	spinBox->interpretText();
-	auto value = spinBox->time();
-
+	spinBox->setDisplayFormat("HH:mm");
+	auto value = spinBox->time().toString("HH:mm");
 	model->setData(index, value, Qt::EditRole);
 }
 void FavTimeDelegate::updateEditorGeometry(QWidget *editor,

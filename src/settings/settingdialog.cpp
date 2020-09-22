@@ -51,6 +51,7 @@ SettingDialog::~SettingDialog()
 }
 void SettingDialog::slotOkClicked()
 {
-	_generalUi->applySetting();
+	_generalUi->saveChanges();
+	_scheduleUi->saveChanges();
 }
 

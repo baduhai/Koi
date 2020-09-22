@@ -14,7 +14,7 @@
 
 enum scheduleColumns
 {
-	favNameColumn = 0,
+	FavNameColumn = 0,
 	TimeColumn,
 };
 
@@ -33,11 +33,16 @@ public:
 
 public slots:
 	void populateView();
+	void timeChanged(QStandardItem *item);
+	void saveChanges();
 private:
+	////--Name -----Time
+	QHash<QString, QString> m_editedFavourites;
 	void createview();
 	Ui::ScheduleProfile *ui;
 	QStandardItemModel *_profileTimeModel;
 	void addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &item);
+
 };
 
 ///For the Time column spinbox to be able to be edited, and shown.
