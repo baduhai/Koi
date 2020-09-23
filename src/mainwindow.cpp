@@ -6,16 +6,27 @@ Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
+
+	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat );
+
     trayIcon = new QSystemTrayIcon(this);
     this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
     this->trayIcon->setVisible(true);
     trayMenu = this->createMenu();
-    this->trayIcon->setContextMenu(trayMenu);                                         // Set tray context menu
+    this->trayIcon->setContextMenu(trayMenu);   // Set tray context menu
+
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
+
     utils.initialiseSettings();
     ui->setupUi(this);
-    if (utils.settings->value("schedule").toBool()) {
-        utils.startupTimeCheck(); // Switch themes on startup
+    if (settings->value("schedule").toBool()) {
+        QString currentName (Utils::startupTimeCheck()); // get the profile to be used.
+        auto currentProfile = ProfileManager::getProfile(currentName);
+        Utils current(currentProfile);
+        current.go();
+
+        //Schedule other Profiles.
+
         scheduleLight();
         scheduleDark();
     }
@@ -213,16 +224,6 @@ void MainWindow::on_actionHide_triggered() // Hide to tray
 {
     this->setVisible(0);
 }
-
-//void MainWindow::on_actionRestart_triggered() {
-//    QProcess restartProcess;
-//    restartProcess.setProgram(QApplication::applicationFilePath());
-//    qint64 pid;
-//    restartProcess.startDetached(&pid);
-//    exit(12);
-//}
-
-//this is being used because of kubuntu 18.04 does not support the above
 
 void MainWindow::on_actionRestart_triggered()
 {

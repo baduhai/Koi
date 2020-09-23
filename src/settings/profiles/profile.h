@@ -36,7 +36,7 @@ public:
 	bool globalDefaultExists() const;
 	// Returns the profile Name
 	QString name() const;
-
+	QString pluginName() const;
 	//getters and setters for the variables
 	//getters
 	QString getGlobDir() const;

@@ -76,6 +76,7 @@ private:
     QString lightTime;
     QString darkTime;
     Utils utils;
+    QSettings *settings;
 
 };
 #endif // MAINWINDOW_H

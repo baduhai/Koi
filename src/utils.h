@@ -16,6 +16,7 @@
 #include <QTimer>
 #include <QTest>
 #include <QtWidgets/QStyleFactory>
+#include <settings/profiles/profile.h>
 
 struct Decoration
 {
@@ -26,8 +27,10 @@ struct Decoration
 class Utils: public QObject
 {
 Q_OBJECT
-
 public:
+
+
+	explicit Utils(Profile *pProfile);
 
 	Utils();
 	explicit Utils(const QString &profileConfPath);
@@ -48,16 +51,16 @@ public:
 	static QList<Decoration> getWindowDecorations();
 
 	void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
-	void startupTimeCheck();
+	static QString startupTimeCheck();
 	//this would be used for global theme
-	void useGlobalTheme(QString type);
-	void go(const QString &themeType);
-	void goColors(const QString &themeType);
-	void goGtk(const QString &themeType);
-	void goKvantumStyle(const QString &themeType);
-	void goWall(const QString &themeType);
+	void useGlobalTheme();
+	void go();
+	void goColors();
+	void goGtk();
+	void goKvantumStyle();
+	void goWall();
 
-	void runScript(const QString &themeType);
+	void runScript();
 	static bool themeExists(const QString &themeName);
 
 private:
@@ -73,7 +76,7 @@ private:
 	QDBusConnection *bus{};
 
 	QDBusInterface *notifyInterface{};
-
+	Profile *_profile;
 };
 
 #endif // UTILS_H

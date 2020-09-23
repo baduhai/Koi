@@ -4,10 +4,11 @@
 Utils::Utils()
 {
 }
-
-Utils::Utils(const QString &profilePath)
+Utils::Utils(Profile *pProfile)
 {
-	settings = new QSettings(profilePath, QSettings::NativeFormat);
+	Q_ASSERT(pProfile);
+	_profile = pProfile;
+
 }
 
 // Global settings stuff
@@ -39,13 +40,14 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 	notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
 
-void Utils::startupTimeCheck() // Check if switching is needed based on time.
+QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 {
 	settings->beginGroup("Favourites");
 	auto favList = settings->allKeys();
 	QTime currentTime = QTime::currentTime();
 	int nearest = 0;
 	QString nearestName;
+
 	for (const auto &favourite: favList) {
 		QString timeStr = settings->value(favourite).toString();
 		QTime favTime(QTime::fromString(timeStr));
@@ -69,32 +71,7 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
 			nearestName = favourite;
 		}
 	}
-	go(nearestName);
-//	QTime lightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
-//	QTime darkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
-//	QTime now = QTime::currentTime();
-//	if (now < lightTime && now < darkTime) {
-//		QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
-//		go("dark");
-//	}
-//	else if (now == lightTime) // Highly unlikely
-//	{
-//		QTest::qWait(1000);
-//		go("light");
-//	}
-//	else if (now > lightTime && now < darkTime) {
-//		QTest::qWait(1000);
-//		go("light");
-//	}
-//	else if (now == darkTime) // Highly unlikely
-//	{
-//		QTest::qWait(1000);
-//		go("dark");
-//	}
-//	else {
-//		QTest::qWait(1000);
-//		go("dark");
-//	}
+	return nearestName;
 }
 
 //PlasmaStyle
@@ -271,58 +248,57 @@ bool Utils::themeExists(const QString &themeName)
 }
 
 // Manage switching themes functions
-void Utils::useGlobalTheme(QString themeName)
+void Utils::useGlobalTheme()
 {
 	useGlobalProcess = new QProcess;
 	QString command = QStringLiteral("lookandfeeltool");
-	QStringList arguments = {"-a", std::move(themeName)};
+	QStringList arguments = {"-a", _profile->pluginName()};
 	useGlobalProcess->start(command, arguments);
 }
 
 // Use to switch to a different theme profile
-void Utils::go(const QString &themeType)
+void Utils::go()
 {
-	goKvantumStyle(themeType);
-	useGlobalTheme("Koi-" + themeType);
-	goColors(themeType);
-	goGtk(themeType);
-	goWall(themeType);
-	runScript(themeType);
-	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat );
+	goKvantumStyle();
+	useGlobalTheme();
+	goColors();
+	goGtk();
+	goWall();
+	runScript();
+	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
 	if (s.value("notify").toBool()) {
-		notify("Switched to " + themeType + " mode!",
+		notify("Switched to " + _profile->name() + " mode!",
 			   "Some applications may need to be restarted for applied changes to take effect.");
 	}
 }
 
-void Utils::goColors(const QString &themeType)
+void Utils::goColors()
 {
-	colorScheme.setColorScheme(settings->value("Style/colorScheme").toString());
+	colorScheme.setColorScheme(_profile->getColor());
 }
 
-void Utils::goGtk(const QString &themeType)
+void Utils::goGtk()
 {
-	gtk.setGtk(settings->value("Style/gtkTheme").toString());
+	gtk.setGtk(_profile->getGtk());
 }
 
-void Utils::goKvantumStyle(const QString &themeType)
+void Utils::goKvantumStyle()
 {
-	settings->beginGroup("Style");
-	QString widget(settings->value("widgetStyle").toString());
+	QString widget(_profile->getWidget());
 	if (widget == "kvantum" || widget == "kvantum-dark") {
-		kvantumStyle.setKvantumStyle(settings->value("kvantum").toString());
+		kvantumStyle.setKvantumStyle(_profile->getKvantum());
 	}
-	settings->endGroup();
 }
 
-void Utils::goWall(const QString &themeType)
+void Utils::goWall()
 {
-	if (!settings->value("Others/wallpaper").isNull()) {
-		wallpaper.setWallpaper(settings->value("Others/wallpaper").toString());
+	if (_profile->getWallEnabled()) {
+		//TODO check if it is an actually file and a picture.
+		wallpaper.setWallpaper(_profile->getWallpaper());
 	}
 	else {
 		notify("Error setting Wallpaper",
-			   "Koi tried to change your " + themeType + " wallpaper, but no wallpaper fie was selected",
+			   "Koi tried to change your " + _profile->name() + " wallpaper, but no wallpaper fie was selected",
 			   0);
 	}
 }
@@ -337,14 +313,15 @@ QStringList Utils::getWindowDecorationsStyle()
 	styleList.sort();
 	return styleList;
 }
-void Utils::runScript(const QString &themeType)
+void Utils::runScript()
 {
-	if (settings->value("Others/scriptEnabled").toBool()) {
-		if (!QProcess::startDetached("/bin/sh", QStringList{settings->value("Others/script").toString()})) {
-			qDebug() << "Failed to run " + themeType + " script";
+	if (_profile->getScriptEnabled()) {
+		if (!QProcess::startDetached("/bin/sh", {_profile->getScript()})) {
+			qDebug() << "Failed to run " + _profile->name() + " script";
 		}
 	}
 }
+
 
 
 

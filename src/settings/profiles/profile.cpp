@@ -182,6 +182,10 @@ QString Profile::name() const
 {
 	return m_name;
 }
+QString Profile::pluginName() const
+{
+	return m_pluginName;
+}
 bool Profile::globalDefaultExists() const
 {
 	QFileInfo localTheme(getGlobDir() + QStringLiteral("/contents/defaults"));
