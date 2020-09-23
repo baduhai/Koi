@@ -39,7 +39,6 @@ private slots:
 	void toggleVisibility();
 
 	//Main Page
-
 	void on_prefsBtn_clicked();
 	void on_lightBtn_clicked();
 	void on_darkBtn_clicked();
@@ -75,6 +74,6 @@ private:
 	QSettings *settings;
 	QHash<QTime, Utils *> schedProfiles;
 
-	void schedule(Utils utils, QTime time);
+	void schedule( Utils *utils,QTime time);
 };
 #endif // MAINWINDOW_H

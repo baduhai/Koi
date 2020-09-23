@@ -17,7 +17,7 @@ class ProfileManager: public QObject
 {
 	Q_OBJECT
 Q_SIGNALS:
-	void favouritesChanged();
+	void favouritesChanged(const QString &profileName,const bool &isFav);
 public:
 	QHash<QString, QString> listFavourites();
 	ProfileManager();
@@ -40,8 +40,10 @@ public:
 	void deleteProfile();
 	bool isFavourite(const QString &profileName);
 	Profile *getProfile(const QString &profileName);
-	void setFavourite(QString profileName, bool favourite);
+	QHash<QString, QString> getFavouritesList() const;
+	void setFavourite(const QString& profileName, bool favourite);
 	void saveFavourites();
+
 private:
 	static bool profileExists(const QString &fileName, const QHash<QString, Profile *> &profileList);
 

@@ -155,6 +155,11 @@ Profile *ProfileManager::getProfile(const QString &profileName)
 	return _profileList.value(profileName);
 }
 
+QHash<QString, QString> ProfileManager::getFavouritesList() const
+{
+	return m_favourites;
+}
+
 QHash<QString, QString> ProfileManager::listFavourites()
 {
 	QHash<QString, QString> favourites;
@@ -201,15 +206,15 @@ void ProfileManager::deleteProfile()
 		QFile::remove(_activeProfile->configPath());
 	}
 }
-void ProfileManager::setFavourite(QString profileName, bool favourite)
+void ProfileManager::setFavourite(const QString& profileName, bool favourite)
 {
 	if (favourite && !m_favourites.contains(profileName)) {
 		m_favourites.insert(profileName, QString());
-		emit favouritesChanged();
+		emit favouritesChanged(profileName,favourite);
 	}
 	else if (!favourite && m_favourites.contains(profileName)) {
 		m_favourites.remove(profileName);
-		emit favouritesChanged();
+		emit favouritesChanged(profileName, favourite);
 	}
 }
 
@@ -217,9 +222,11 @@ void ProfileManager::saveFavourites()
 {
 	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
 	s.beginGroup("Favourites");
+	s.remove("");
 	QHashIterator<QString, QString> i(m_favourites);
 	while (i.hasNext()) {
 		i.next();
 		s.setValue(i.key(), i.value());
 	}
+	s.endGroup();
 }

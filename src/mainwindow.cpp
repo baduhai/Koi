@@ -36,29 +36,29 @@ MainWindow::MainWindow(QWidget *parent)
 				auto *utils = new Utils(profile);
 				auto favTime = QTime::fromString(settings->value(profile->name()).toString());
 				if (!favTime.isNull()) {
-					schedProfiles.insert(favTime, utils);
+					schedule(utils, favTime);
 				}
 			}
 		}
 		settings->endGroup();
 
-		QHashIterator<QTime, Utils *> listIt(schedProfiles );
-		while (listIt.hasNext()) {
-			listIt.next();
-			auto favTime = listIt.key();
-			auto util = listIt.value();
-			int cronMin = (favTime.minute() < 0) ? 0 : favTime.minute();
-			int cronHr = (favTime.hour() < 0) ? 0 : favTime.hour();
-			std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
-
-
-			s.cron(cronJ, [util]()
-			{
-				util->go();
-				// not sure if i am to delete it .
-				//delete util;
-			});
-		}
+//		QHashIterator<QTime, Utils *> listIt(schedProfiles);
+//		while (listIt.hasNext()) {
+//			listIt.next();
+//			auto favTime = listIt.key();
+//			auto util = listIt.value();
+//			int cronMin = (favTime.minute() < 0) ? 0 : favTime.minute();
+//			int cronHr = (favTime.hour() < 0) ? 0 : favTime.hour();
+//			std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
+//
+//
+////			s.cron(cronJ, [util]()
+////			{
+////				//util->go();
+////				// not sure if i am to delete it .
+////				//delete util;
+////			});
+//		}
 	}
 	ui->resMsg->hide();
 	auto actionRes = new QAction("Restart", this);
@@ -93,12 +93,12 @@ QMenu *MainWindow::createMenu() // Define context menu items for SysTray - R-cli
 	connect(actionMenuToggle, &QAction::triggered, this, &MainWindow::toggleVisibility);
 
 	// Build tray items
-	auto trayMenu = new QMenu(this);
-	trayMenu->addAction(actionMenuToggle);
-	trayMenu->addAction(actionMenuLight);
-	trayMenu->addAction(actionMenuDark);
-	trayMenu->addAction(actionMenuQuit);
-	return trayMenu;
+	auto trayMenu1 = new QMenu(this);
+	trayMenu1->addAction(actionMenuToggle);
+	trayMenu1->addAction(actionMenuLight);
+	trayMenu1->addAction(actionMenuDark);
+	trayMenu1->addAction(actionMenuQuit);
+	return trayMenu1;
 }
 
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Define actions for SysTray L&M-click
@@ -131,7 +131,7 @@ void MainWindow::toggleVisibility()
 	}
 }
 
-void MainWindow::schedule(Utils utils, QTime time)
+void MainWindow::schedule(Utils *utils, QTime time)
 {
 	auto favTime = time;
 
@@ -140,9 +140,9 @@ void MainWindow::schedule(Utils utils, QTime time)
 
 	std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
 
-//	s.cron(cronJ, [utils](){
-//		utils.go();
-//	});
+	s.cron(cronJ, [utils](){
+		utils->go();
+	});
 }
 
 // Functionality of buttons - Related to program navigation, interaction and saving settings
@@ -155,12 +155,18 @@ void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferen
 
 void MainWindow::on_lightBtn_clicked()
 {
-//    utils.go();
+   QString currentName("light"); // get the profile to be used.
+		auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+		Utils current(currentProfile);
+		current.go();
 }
 
 void MainWindow::on_darkBtn_clicked()
 {
-//    utils.go();
+   QString currentName("dark"); // get the profile to be used.
+		auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+		Utils current(currentProfile);
+		current.go();
 }
 //widgetStyle
 

@@ -38,6 +38,7 @@ public slots:
 	void saveChanges();
 
 private slots:
+	void favouritesChanged(const QString &profileName, const bool &isFav);
 	void enableProfile(const QModelIndex &index);
 private:
 	////--Name -----Time

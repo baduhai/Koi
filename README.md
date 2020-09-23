@@ -28,13 +28,13 @@ This is a TODO list
 - [ ] add switching browser styles for (for chrome, chromium and firefox)
 - [ ] add support for more languages other than English with i18n/i10n 
 - [x] make the favourites button work
-
+- [ ] updating pages 
 
 
 
 ## **How to Build** 
 
-NB: the app is built for the KDE desktop environment .
+NB: the app is built for the K desktop environment .
 
 ### **Ubuntu Based ** 
 

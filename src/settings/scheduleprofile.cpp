@@ -11,8 +11,11 @@ ScheduleProfile::ScheduleProfile(QWidget *parent)
 	createview();
 	populateView();
 
+	ProfileManager *manager = ProfileManager::instance();
+
 	connect(_profileTimeModel, &QStandardItemModel::itemChanged, this, &ScheduleProfile::timeChanged);
 	connect(ui->profleTimeView, &QTableView::doubleClicked, this, &ScheduleProfile::enableProfile);
+	connect(manager, &ProfileManager::favouritesChanged, this, &ScheduleProfile::favouritesChanged);
 }
 
 ScheduleProfile::~ScheduleProfile()
@@ -35,7 +38,8 @@ void ScheduleProfile::createview()
 }
 void ScheduleProfile::populateView()
 {
-	auto profileList = ProfileManager::instance()->listFavourites();
+	auto profileList = ProfileManager::instance()->getFavouritesList();
+
 	qDebug() << "this is the profile list " << profileList;
 	QHashIterator<QString, QString> i(profileList);
 	while (i.hasNext()) {
@@ -48,8 +52,13 @@ void ScheduleProfile::populateView()
 			new QStandardItem(), // ProfileName.
 			new QStandardItem(), // Start Time.
 		};
+
 		addItems(i.key(), i.value(), items);
-		_profileTimeModel->appendRow(items);
+		auto isMatch = _profileTimeModel->findItems(i.key(), Qt::MatchExactly, FavNameColumn);
+
+		if (isMatch.isEmpty()) {
+			_profileTimeModel->appendRow(items);
+		}
 	}
 }
 void ScheduleProfile::addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &items)
@@ -91,14 +100,25 @@ void ScheduleProfile::saveChanges()
 void ScheduleProfile::enableProfile(const QModelIndex &index)
 {
 	auto s = index.data(Qt::DisplayRole);
-	if (index.column() == FavNameColumn){
+	if (index.column() == FavNameColumn) {
 		auto profile = ProfileManager::instance()->getProfile(index.data(Qt::DisplayRole).toString());
 		Utils utils(profile);
 		utils.go();
 	}
 }
 
-
+void ScheduleProfile::favouritesChanged(const QString &profileName, const bool &isFav)
+{
+	if (!isFav) {
+		auto isMatch = _profileTimeModel->findItems(profileName, Qt::MatchExactly, FavNameColumn);
+		for (const auto &item : isMatch) {
+			_profileTimeModel->removeRow(item->row());
+		}
+	}
+	if (isFav) {
+		populateView();
+	}
+}
 /*
  * The Time Spin Box area
  */
