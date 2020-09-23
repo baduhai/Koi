@@ -24,19 +24,14 @@ struct Decoration
 	QString theme;
 	QString name;
 };
-class Utils: public QObject
+class Utils
 {
-Q_OBJECT
 public:
 
 
 	explicit Utils(Profile *pProfile);
 
 	Utils();
-	explicit Utils(const QString &profileConfPath);
-
-	static QSettings *settings;
-	void initialiseSettings();
 
 	//styles.
 	static QStringList getPlasmaStyles();

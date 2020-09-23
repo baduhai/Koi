@@ -94,7 +94,7 @@ void ScheduleProfile::enableProfile(const QModelIndex &index)
 	if (index.column() == FavNameColumn){
 		auto profile = ProfileManager::instance()->getProfile(index.data(Qt::DisplayRole).toString());
 		Utils utils(profile);
-		utils.go(profile->name());
+		utils.go();
 	}
 }
 

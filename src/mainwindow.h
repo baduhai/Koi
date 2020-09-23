@@ -17,67 +17,62 @@
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class MainWindow;
+class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow: public QMainWindow
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+	MainWindow(QWidget *parent = nullptr);
+	~MainWindow();
 
 public slots:
 
 private slots:
-    void closeEvent(QCloseEvent *event);
+	void closeEvent(QCloseEvent *event);
 
-    void iconActivated(QSystemTrayIcon::ActivationReason);
+	void iconActivated(QSystemTrayIcon::ActivationReason);
 
-    void toggleVisibility();
-    void scheduleLight();
-    void scheduleDark();
+	void toggleVisibility();
 
-    //Main Page
+	//Main Page
 
-    void on_prefsBtn_clicked();
-    void on_lightBtn_clicked();
-    void on_darkBtn_clicked();
+	void on_prefsBtn_clicked();
+	void on_lightBtn_clicked();
+	void on_darkBtn_clicked();
 
-    //Settings page 1
+	//Settings page 1
 
-    //Plasma Buttons
-    void on_lightTimeEdit_userTimeChanged(const QTime &time);
-    void on_darkTimeEdit_userTimeChanged(const QTime &time);
+	//Plasma Buttons
+	//   void on_lightTimeEdit_userTimeChanged(const QTime &time);
+	// void on_darkTimeEdit_userTimeChanged(const QTime &time);
 
-  //  void on_autoCheckBox_stateChanged(int arg1);
+	//  void on_autoCheckBox_stateChanged(int arg1);
 
 
-    void on_scheduleRadioBtn_toggled(bool checked);
-    //Global Menu Settings
-    void on_actionQuit_triggered();
-    void on_actionPrefs_triggered();
+	//void on_scheduleRadioBtn_toggled(bool checked);
+	//Global Menu Settings
+	void on_actionQuit_triggered();
+	void on_actionPrefs_triggered();
 
-    void on_actionAbout_triggered();
-    void on_actionHide_triggered();
+	void on_actionAbout_triggered();
+	void on_actionHide_triggered();
 
-    void on_hiddenCheckBox_stateChanged(int arg1);
+	//  void on_hiddenCheckBox_stateChanged(int arg1);
 
- //   void on_notifyCheckBox_stateChanged(int arg1);
-    void on_actionRestart_triggered();
+	//   void on_notifyCheckBox_stateChanged(int arg1);
+	void on_actionRestart_triggered();
 private:
-    Ui::MainWindow *ui;
-    QSystemTrayIcon *trayIcon;
-    QMenu *trayMenu;
-    QMenu *createMenu();
-    QString scheduleType;
-    QString lightTime;
-    QString darkTime;
-    Utils utils;
-    QSettings *settings;
-
-	void schedule(Profile *const pProfile);
+	Ui::MainWindow *ui;
+	QSystemTrayIcon *trayIcon;
+	QMenu *trayMenu;
+	QMenu *createMenu();
+//    Utils utils;
+	QSettings *settings;
+	QHash<QTime, Utils> schedProfiles;
+	void schedule(Utils utils, QTime time);
 };
 #endif // MAINWINDOW_H

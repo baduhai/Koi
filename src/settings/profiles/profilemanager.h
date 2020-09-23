@@ -39,7 +39,7 @@ public:
 	//can only delete the active profile.
 	void deleteProfile();
 	bool isFavourite(const QString &profileName);
-	static Profile *getProfile(const QString &profileName);
+	Profile *getProfile(const QString &profileName);
 	void setFavourite(QString profileName, bool favourite);
 	void saveFavourites();
 private:
@@ -55,7 +55,7 @@ private:
 	QFileInfoList listProfiles();
 
 	//for storing the loaded profiles.
-	static QHash<QString, Profile *> _profileList;
+	QHash<QString, Profile *> _profileList;
 	bool m_loadedAllProfiles;
 	//makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time

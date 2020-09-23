@@ -6,8 +6,10 @@
 #include <QLoggingCategory>
 
 ProfileManager::ProfileManager()
+	: _profileList()
 {
 	m_favourites = listFavourites();
+	loadProfiles();
 }
 
 ProfileManager::~ProfileManager()
@@ -19,8 +21,6 @@ ProfileManager *ProfileManager::instance()
 {
 	return theProfileManager;
 }
-
-QHash<QString, Profile *> ProfileManager::_profileList{};
 
 QFileInfoList ProfileManager::listProfiles()
 {
@@ -151,6 +151,7 @@ bool ProfileManager::isFavourite(const QString &profileName)
 
 Profile *ProfileManager::getProfile(const QString &profileName)
 {
+	auto s = _profileList.value(profileName);
 	return _profileList.value(profileName);
 }
 

@@ -11,14 +11,6 @@ Utils::Utils(Profile *pProfile)
 
 }
 
-// Global settings stuff
-void Utils::initialiseSettings()
-{
-	//settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
-	//TODO switch to koiglobalrc because a file is already using koirc (Koirc)
-	settings =
-		new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
-}
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
@@ -42,14 +34,15 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 
 QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 {
-	settings->beginGroup("Favourites");
-	auto favList = settings->allKeys();
+	QSettings settings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat );
+	settings.beginGroup("Favourites");
+	auto favList = settings.allKeys();
 	QTime currentTime = QTime::currentTime();
 	int nearest = 0;
 	QString nearestName;
 
 	for (const auto &favourite: favList) {
-		QString timeStr = settings->value(favourite).toString();
+		QString timeStr = settings.value(favourite).toString();
 		QTime favTime(QTime::fromString(timeStr));
 		int timeSec = currentTime.secsTo(favTime);
 		if (timeSec > 0) {
