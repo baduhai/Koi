@@ -25,7 +25,14 @@ MainWindow::MainWindow(QWidget *parent)
         Utils current(currentProfile);
         current.go();
 
+        auto manager = ProfileManager::instance();
         //Schedule other Profiles.
+        auto profileSchedList = manager->allProfiles();
+        for (const auto profile : profileSchedList){
+        	if(manager->isFavourite(profile->name())){
+        		schedule(profile);
+        	}
+        }
 
         scheduleLight();
         scheduleDark();
@@ -97,7 +104,16 @@ void MainWindow::toggleVisibility() {
     }
 }
 
+void MainWindow::schedule(Profile *const pProfile)
+{
+	settings->beginGroup("Favourites");
+	auto favTime = QTime::fromString(settings->value(pProfile->name()).toString() );
 
+	int cronMin = (favTime.minute() < 0) ? 0 : favTime.minute();
+	int cronHr = (favTime.hour() < 0 ) ? 0: favTime.hour();
+
+
+}
 void MainWindow::scheduleLight() {
     int lightCronMin = QTime::fromString(utils.settings->value("time-light").toString()).minute();
     int lightCronHr = QTime::fromString(utils.settings->value("time-light").toString()).hour();
@@ -230,3 +246,4 @@ void MainWindow::on_actionRestart_triggered()
 	QProcess::startDetached(QApplication::applicationFilePath(), QStringList());
 	exit(12);
 }
+

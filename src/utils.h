@@ -35,7 +35,7 @@ public:
 	Utils();
 	explicit Utils(const QString &profileConfPath);
 
-	QSettings *settings{};
+	static QSettings *settings;
 	void initialiseSettings();
 
 	//styles.

@@ -78,5 +78,6 @@ private:
     Utils utils;
     QSettings *settings;
 
+	void schedule(Profile *const pProfile);
 };
 #endif // MAINWINDOW_H
