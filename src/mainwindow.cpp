@@ -1,12 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
+
 
 	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
 
@@ -33,14 +33,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 		for (const auto profile : profileSchedList) {
 			if (manager->isFavourite(profile->name())) {
-				Utils utils(profile);
+				auto *utils = new Utils(profile);
 				auto favTime = QTime::fromString(settings->value(profile->name()).toString());
-				schedProfiles.insert(favTime, utils);
+				if (!favTime.isNull()) {
+					schedProfiles.insert(favTime, utils);
+				}
 			}
 		}
 		settings->endGroup();
 
-		QHashIterator<QTime, Utils> listIt(schedProfiles);
+		QHashIterator<QTime, Utils *> listIt(schedProfiles );
 		while (listIt.hasNext()) {
 			listIt.next();
 			auto favTime = listIt.key();
@@ -49,10 +51,13 @@ MainWindow::MainWindow(QWidget *parent)
 			int cronHr = (favTime.hour() < 0) ? 0 : favTime.hour();
 			std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
 
-//			s.cron(cronJ, [util]()
-//			{
-//				util.go();
-//			});
+
+			s.cron(cronJ, [util]()
+			{
+				util->go();
+				// not sure if i am to delete it .
+				//delete util;
+			});
 		}
 	}
 	ui->resMsg->hide();

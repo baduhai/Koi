@@ -43,6 +43,9 @@ QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 
 	for (const auto &favourite: favList) {
 		QString timeStr = settings.value(favourite).toString();
+		if(timeStr.isEmpty() || timeStr.isNull()){
+			continue;
+		}
 		QTime favTime(QTime::fromString(timeStr));
 		int timeSec = currentTime.secsTo(favTime);
 		if (timeSec > 0) {

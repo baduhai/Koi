@@ -70,9 +70,11 @@ private:
 	QSystemTrayIcon *trayIcon;
 	QMenu *trayMenu;
 	QMenu *createMenu();
-//    Utils utils;
+	Utils *_utils;
+	Utils test;
 	QSettings *settings;
-	QHash<QTime, Utils> schedProfiles;
+	QHash<QTime, Utils *> schedProfiles;
+
 	void schedule(Utils utils, QTime time);
 };
 #endif // MAINWINDOW_H
