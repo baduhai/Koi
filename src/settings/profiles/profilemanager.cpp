@@ -37,9 +37,9 @@ QFileInfoList ProfileManager::listProfiles()
 	return pList;
 }
 
-bool ProfileManager::profileExists(const QString &fileName, const QHash<QString, Profile *> &profileList)
+bool ProfileManager::profileExists(const QString &fileName)
 {
-	if (profileList.contains(fileName)) {
+	if (_profileList.contains(fileName)) {
 		return true;
 	}
 	return false;
@@ -88,7 +88,7 @@ bool ProfileManager::addProfile(Profile *profile)
 		}
 	}
 
-	if (!profileExists(profile->name(), _profileList)) {
+	if (!profileExists(profile->name())) {
 		_profileList.insert(profile->name(), profile);
 	}
 	else {
@@ -112,7 +112,7 @@ QList<Profile *> ProfileManager::allProfiles()
 	//this creates default light and dark profile if there are none.
 	//Defaults
 	QString dark("dark");
-	if (!profileExists(dark, _profileList)) {
+	if (!profileExists(dark)) {
 		QFileInfo darkInfo(QDir::homePath() + "/.local/koi/dark.koi");
 		QSettings settings(darkInfo.absoluteFilePath(), QSettings::IniFormat);
 		auto *dProfile = new Profile;
@@ -127,7 +127,7 @@ QList<Profile *> ProfileManager::allProfiles()
 	}
 
 	QString light(QStringLiteral("light"));
-	if (!profileExists(light, _profileList)) {
+	if (!profileExists(light)) {
 		QFileInfo lightInfo(QDir::homePath() + "/.local/koi/light.koi");
 		QSettings settings(lightInfo.absoluteFilePath(), QSettings::IniFormat);
 		auto *lProfile = new Profile;

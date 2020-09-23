@@ -19,6 +19,7 @@ class ProfileManager: public QObject
 Q_SIGNALS:
 	void favouritesChanged(const QString &profileName,const bool &isFav);
 public:
+	bool profileExists(const QString &fileName);
 	QHash<QString, QString> listFavourites();
 	ProfileManager();
 	~ProfileManager();
@@ -45,7 +46,6 @@ public:
 	void saveFavourites();
 
 private:
-	static bool profileExists(const QString &fileName, const QHash<QString, Profile *> &profileList);
 
 	//load the profile to the qhash. hashed with their filename
 	void loadProfiles();

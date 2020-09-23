@@ -26,6 +26,8 @@ class ExternalDialog;
 class EditProfileDialog: public KPageDialog
 {
 Q_OBJECT
+Q_SIGNALS:
+	void addNewProfile(const Profile*);
 public:
 	explicit EditProfileDialog(QWidget *parent = nullptr);
 	~EditProfileDialog() override;

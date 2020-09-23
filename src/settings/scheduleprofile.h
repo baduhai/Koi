@@ -43,7 +43,7 @@ private slots:
 private:
 	////--Name -----Time
 	QHash<QString, QString> m_editedFavourites;
-	void createview();
+	void createView();
 	Ui::ScheduleProfile *ui;
 	QStandardItemModel *_profileTimeModel;
 

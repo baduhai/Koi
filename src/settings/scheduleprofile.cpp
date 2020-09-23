@@ -8,7 +8,7 @@ ScheduleProfile::ScheduleProfile(QWidget *parent)
 	_profileTimeModel(new QStandardItemModel(this))
 {
 	ui->setupUi(this);
-	createview();
+	createView();
 	populateView();
 
 	ProfileManager *manager = ProfileManager::instance();
@@ -22,7 +22,7 @@ ScheduleProfile::~ScheduleProfile()
 {
 	delete ui;
 }
-void ScheduleProfile::createview()
+void ScheduleProfile::createView()
 {
 	ui->profleTimeView->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->profleTimeView->setModel(_profileTimeModel);

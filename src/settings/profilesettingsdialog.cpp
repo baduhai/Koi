@@ -47,6 +47,7 @@ void ProfileSettingsDialog::addNewProfile()
 {
 	Profile *newProfile = new Profile();
 	EditProfileDialog *dialog = new EditProfileDialog(this);
+	connect(dialog, &EditProfileDialog::addNewProfile, this , &ProfileSettingsDialog::addItems);
 	dialog->setProfile(newProfile);
 	dialog->open();
 }
@@ -119,7 +120,11 @@ void ProfileSettingsDialog::addItems(const Profile *p)
 	};
 
 	updateItemsForProfile(p, items);
-	_profileListModel->appendRow(items);
+	auto isMatch = _profileListModel->findItems(p->name(), Qt::MatchExactly, ProfileNameColumn);
+
+	if(isMatch.isEmpty()){
+		_profileListModel->appendRow(items);
+	}
 
 }
 

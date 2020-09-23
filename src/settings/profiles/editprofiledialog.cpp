@@ -147,6 +147,9 @@ void EditProfileDialog::saveProfile()
 		}
 	}
 
+	if(!ProfileManager::instance()->profileExists(_profile->name())){
+		emit addNewProfile(_profile);
+	}
 	//this is meant to be in the controller as i currently don't know how.
 	ProfileManager::instance()->addProfile(_profile);
 	ProfileManager::instance()->saveProfile(_profile->name());
