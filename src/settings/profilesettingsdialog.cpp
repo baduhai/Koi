@@ -47,7 +47,7 @@ void ProfileSettingsDialog::addNewProfile()
 {
 	Profile *newProfile = new Profile();
 	EditProfileDialog *dialog = new EditProfileDialog(this);
-	connect(dialog, &EditProfileDialog::addNewProfile, this , &ProfileSettingsDialog::addItems);
+	connect(dialog, &EditProfileDialog::addNewProfile, this, &ProfileSettingsDialog::addItems);
 	dialog->setProfile(newProfile);
 	dialog->open();
 }
@@ -66,11 +66,20 @@ void ProfileSettingsDialog::editCurrentProfile()
 
 void ProfileSettingsDialog::deleteCurrentProfile()
 {
-	auto name = ProfileManager::instance()->_activeProfile->name();
-	ProfileManager::instance()->deleteProfile();
-	//TODO remove only deleted rows.
-	//_profileListModel->clear();
+	//verify the right directory
+	//TODO make sure it is the right directory
+	auto delManager = ProfileManager::instance();
+	auto name = delManager->_activeProfile->name();
+	auto isDelFav = delManager->isFavourite(name);
+	delManager->deleteProfile();
+
+	auto isMatch = _profileListModel->findItems(name, Qt::MatchExactly, ProfileNameColumn);
+	for (const auto &item : isMatch) {
+		_profileListModel->removeRow(item->row());
+	}
+	delManager->favouritesChanged(name, isDelFav);
 }
+
 void ProfileSettingsDialog::createTable()
 {
 	Q_ASSERT(!ui->profilesList->model());
@@ -122,7 +131,7 @@ void ProfileSettingsDialog::addItems(const Profile *p)
 	updateItemsForProfile(p, items);
 	auto isMatch = _profileListModel->findItems(p->name(), Qt::MatchExactly, ProfileNameColumn);
 
-	if(isMatch.isEmpty()){
+	if (isMatch.isEmpty()) {
 		_profileListModel->appendRow(items);
 	}
 

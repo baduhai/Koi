@@ -104,7 +104,6 @@ void EditProfileDialog::updatePages()
 }
 void EditProfileDialog::setupPage()
 {
-	//TODO there maybe a  more efficient way to do this.
 	//Styles Page.
 	_stylesDialog->plasmaBox->addItems(Utils::getPlasmaStyles());
 	_stylesDialog->colorBox->addItems(Utils::getColorSchemes());
@@ -144,7 +143,6 @@ void EditProfileDialog::saveProfile()
 
 	//Decorations.
 	QString decoration(_othersDialog->decorationBox->currentText());
-	//TODO use QHash instead
 	QList<Decoration> decList = Utils::getWindowDecorations();
 	for (const auto &dt : qAsConst(decList)) {
 		if (QString::compare(dt.name, decoration, Qt::CaseInsensitive) == 0) {
@@ -157,6 +155,8 @@ void EditProfileDialog::saveProfile()
 	if (!ProfileManager::instance()->profileExists(_profile->name())) {
 		emit addNewProfile(_profile);
 	}
+	_profile->setConfigPath();
+	_profile->setGlobDir();
 	//this is meant to be in the controller as i currently don't know how.
 	ProfileManager::instance()->addProfile(_profile);
 	ProfileManager::instance()->saveProfile(_profile->name());
