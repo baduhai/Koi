@@ -111,11 +111,16 @@ void EditProfileDialog::setupPage()
 	_stylesDialog->gtkBox->addItems(Utils::getGtkThemes());
 	_stylesDialog->widgetBox->addItems(Utils::getWidgetStyles());
 	_stylesDialog->kvBox->addItems(Utils::getKvantumStyles());
+	//Kvantum Specific
+	_stylesDialog->kvBox->setHidden(true);
+	_stylesDialog->kvLabel->setHidden(true);
 
 	//Others page
 	_othersDialog->iconBox->addItems(Utils::getIcons());
 	_othersDialog->cursorBox->addItems(Utils::getCursorThemes());
 	_othersDialog->decorationBox->addItems(Utils::getWindowDecorationsStyle());
+	_othersDialog->scriptCheckBox->setChecked(false);
+	_othersDialog->wallpaperCheckBox->setChecked(false);
 
 }
 void EditProfileDialog::saveProfile()
@@ -127,8 +132,10 @@ void EditProfileDialog::saveProfile()
 	_profile->setColor(_stylesDialog->colorBox->currentText());
 	_profile->setGtk(_stylesDialog->gtkBox->currentText());
 	_profile->setWidget(_stylesDialog->widgetBox->currentText());
-	_profile->setKvantum(_stylesDialog->kvBox->currentText());
-
+	auto widgetName = _stylesDialog->widgetBox->currentText();
+	if (widgetName == "kvantum" || widgetName == "kvantum-dark") {
+		_profile->setKvantum(_stylesDialog->kvBox->currentText());
+	}
 	//Others
 	_profile->setIcon(_othersDialog->iconBox->currentText());
 	_profile->setMouse(_othersDialog->cursorBox->currentText());
@@ -147,7 +154,7 @@ void EditProfileDialog::saveProfile()
 		}
 	}
 
-	if(!ProfileManager::instance()->profileExists(_profile->name())){
+	if (!ProfileManager::instance()->profileExists(_profile->name())) {
 		emit addNewProfile(_profile);
 	}
 	//this is meant to be in the controller as i currently don't know how.
@@ -159,9 +166,13 @@ void EditProfileDialog::enableKvantum(const QString &widgetName)
 {
 	if (widgetName == "kvantum" || widgetName == "kvantum-dark") {
 		_stylesDialog->kvBox->setEnabled(true);
+		_stylesDialog->kvBox->setHidden(false);
+		_stylesDialog->kvLabel->setHidden(false);
 	}
 	else {
 		_stylesDialog->kvBox->setEnabled(false);
+		_stylesDialog->kvBox->setHidden(true);
+		_stylesDialog->kvLabel->setHidden(true);
 	}
 }
 void EditProfileDialog::enableProfileName(const int &state)

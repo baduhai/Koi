@@ -94,7 +94,7 @@
            </widget>
           </item>
           <item row="9" column="2">
-           <widget class="QLabel" name="label_6">
+           <widget class="QLabel" name="kvLabel">
             <property name="text">
              <string>Kvantum:</string>
             </property>
