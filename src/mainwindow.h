@@ -46,8 +46,6 @@ private slots:
 	//Settings page 1
 
 	//Plasma Buttons
-	//   void on_lightTimeEdit_userTimeChanged(const QTime &time);
-	// void on_darkTimeEdit_userTimeChanged(const QTime &time);
 
 	//  void on_autoCheckBox_stateChanged(int arg1);
 
@@ -60,17 +58,14 @@ private slots:
 	void on_actionAbout_triggered();
 	void on_actionHide_triggered();
 
-	//  void on_hiddenCheckBox_stateChanged(int arg1);
+	void on_hiddenCheckBox_stateChanged(int arg1);
 
-	//   void on_notifyCheckBox_stateChanged(int arg1);
 	void on_actionRestart_triggered();
 private:
 	Ui::MainWindow *ui;
 	QSystemTrayIcon *trayIcon;
 	QMenu *trayMenu;
 	QMenu *createMenu();
-	Utils *_utils;
-	Utils test;
 	QSettings *settings;
 	QHash<QTime, Utils *> schedProfiles;
 

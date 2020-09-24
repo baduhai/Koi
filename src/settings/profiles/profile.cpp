@@ -11,7 +11,7 @@ Profile::Profile()
 	:
 	m_name(), m_pluginName(), m_plasma(), m_color(), //name=themeName pluginName= koi-themeName
 	m_gtk(), m_kvantum(), m_widget(),
-	m_icon(), m_mouse(), m_script(), m_wallpaper(),
+	m_icon(), m_mouse(), m_script(),m_scriptEnabled(false), m_wallpaper(), m_wallEnabled(false),
 	m_library(), m_theme(), m_konsole()
 {
 
@@ -42,7 +42,8 @@ Profile::Profile(const Profile &p)
 	:
 	m_name(), m_pluginName("Koi-" + m_name), m_plasma(p.m_plasma), m_color(p.m_color),
 	m_gtk(p.m_gtk), m_kvantum(p.m_kvantum), m_widget(p.m_widget),
-	m_icon(p.m_icon), m_mouse(p.m_mouse), m_script(p.m_script), m_wallpaper(p.m_wallpaper),
+	m_icon(p.m_icon), m_mouse(p.m_mouse), m_script(p.m_script),m_scriptEnabled(p.m_scriptEnabled),
+	m_wallpaper(p.m_wallpaper), m_wallEnabled(p.m_wallEnabled),
 	m_library(p.m_library), m_theme(p.m_theme), m_konsole(p.m_konsole)
 {
 	m_name = p.m_name + "-1";

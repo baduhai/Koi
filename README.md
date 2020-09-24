@@ -29,7 +29,7 @@ This is a TODO list
 - [ ] add support for more languages other than English with i18n/i10n 
 - [x] make the favourites button work
 - [ ] updating pages 
-
+- [ ] add Global Shortcut to cycle between themes.//not yet sure on a good way to implement this.
 
 
 ## **How to Build** 

@@ -41,24 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
 			}
 		}
 		settings->endGroup();
-
-//		QHashIterator<QTime, Utils *> listIt(schedProfiles);
-//		while (listIt.hasNext()) {
-//			listIt.next();
-//			auto favTime = listIt.key();
-//			auto util = listIt.value();
-//			int cronMin = (favTime.minute() < 0) ? 0 : favTime.minute();
-//			int cronHr = (favTime.hour() < 0) ? 0 : favTime.hour();
-//			std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
-//
-//
-////			s.cron(cronJ, [util]()
-////			{
-////				//util->go();
-////				// not sure if i am to delete it .
-////				//delete util;
-////			});
-//		}
 	}
 	ui->resMsg->hide();
 	auto actionRes = new QAction("Restart", this);
@@ -140,7 +122,8 @@ void MainWindow::schedule(Utils *utils, QTime time)
 
 	std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
 
-	s.cron(cronJ, [utils](){
+	s.cron(cronJ, [utils]()
+	{
 		utils->go();
 	});
 }
@@ -155,78 +138,28 @@ void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferen
 
 void MainWindow::on_lightBtn_clicked()
 {
-   QString currentName("light"); // get the profile to be used.
-		auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-		Utils current(currentProfile);
-		current.go();
+	QString currentName("light"); // get the profile to be used.
+	auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+	Utils current(currentProfile);
+	current.go();
 }
 
 void MainWindow::on_darkBtn_clicked()
 {
-   QString currentName("dark"); // get the profile to be used.
-		auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-		Utils current(currentProfile);
-		current.go();
+	QString currentName("dark"); // get the profile to be used.
+	auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+	Utils current(currentProfile);
+	current.go();
 }
-//widgetStyle
 
-//void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between manual schedule, and sun schedule
-//{
-//    if (ui->sunRadioBtn->isChecked() == 0) {
-//        ui->lightTimeLabel->setEnabled(1);
-//        ui->darkTimeLabel->setEnabled(1);
-//        ui->lightTimeEdit->setEnabled(1);
-//        ui->darkTimeEdit->setEnabled(1);
-//        scheduleType = "time";
-//        utils.settings->setValue("schedule-type", scheduleType);
-//        utils.settings->sync();
-//    } else {
-//        ui->lightTimeLabel->setEnabled(0);
-//        ui->darkTimeLabel->setEnabled(0);
-//        ui->lightTimeEdit->setEnabled(0);
-//        ui->darkTimeEdit->setEnabled(0);
-//        scheduleType = "sun";
-//        utils.settings->setValue("schedule-type", scheduleType);
-//        utils.settings->sync();
-//    }
-//}
-
-//void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set light time
-//{
-//    lightTime = time.toString();
-//    utils.settings->setValue("time-light", lightTime);
-//    utils.settings->sync();
-//    ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
-//    ui->resMsg->setMessageType(KMessageWidget::Warning);
-//    ui->resMsg->animatedShow();
-//}
-//
-//void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark time
-//{
-//    darkTime = time.toString();
-//    utils.settings->setValue("time-dark", darkTime);
-//    utils.settings->sync();
-//    ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
-//    ui->resMsg->setMessageType(KMessageWidget::Warning);
-//    ui->resMsg->animatedShow();
-//}
-//
-//void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled) {
-//    ui->resMsg->animatedShow();
-//    if (ui->hiddenCheckBox->checkState() == 0) {
-//        utils.settings->setValue("start-hidden", false);
-//    } else {
-//        utils.settings->setValue("start-hidden", true);
-//    }
-//}
-
-//void MainWindow::on_notifyCheckBox_stateChanged(int notifyEnabled) {
-//    if (ui->notifyCheckBox->checkState() == 0) {
-//        utils.settings->setValue("notify", false);
-//    } else {
-//        utils.settings->setValue("notify", true);
-//    }
-//}
+void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled) {
+    ui->resMsg->animatedShow();
+    if (ui->hiddenCheckBox->checkState() == 0) {
+        settings->setValue("start-hidden", false);
+    } else {
+        settings->setValue("start-hidden", true);
+    }
+}
 
 // Menubar actions
 void MainWindow::on_actionQuit_triggered() // Quit app
