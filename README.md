@@ -9,6 +9,8 @@
 
 This is a TODO list 
 
+- [ ] rewrite the tray to show the favourites (may be with shortcuts / icons ) ;
+- [ ] add a dialog box if koi is run for the first time to say it is in the tray.
 - [x] add cursors style 
 - [x]  add window decoration // i am having a hard time figuring out how to get all the window decoration on the system 
 - [x] most of the methods in utils should be static as they have no relation to the actual class Utils and should be movedinto other classes that it is related to like plasma-style, icons etc.

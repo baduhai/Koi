@@ -154,13 +154,17 @@ void MainWindow::on_darkBtn_clicked()
 
 void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
 {
-	ui->resMsg->animatedShow();
 	if (ui->hiddenCheckBox->checkState() == 0) {
 		_settings->setValue("start-hidden", false);
 	}
 	else {
 		_settings->setValue("start-hidden", true);
 	}
+	ui->resMsg->setText(tr("To set Hidden , Koi must be restarted."));
+	ui->resMsg->setMessageType(KMessageWidget::Warning);
+	ui->resMsg->animatedShow();
+//	QTest::qWait(3000);
+//	ui->resMsg->animatedHide();
 }
 
 // Menubar actions
