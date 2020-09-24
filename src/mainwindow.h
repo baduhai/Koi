@@ -66,7 +66,7 @@ private:
 	QSystemTrayIcon *trayIcon;
 	QMenu *trayMenu;
 	QMenu *createMenu();
-	QSettings *settings;
+	QSettings *_settings;
 	QHash<QTime, Utils *> schedProfiles;
 
 	void schedule( Utils *utils,QTime time);

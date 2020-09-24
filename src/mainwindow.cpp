@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
 
-	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	_settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
 
 	trayIcon = new QSystemTrayIcon(this);
 	this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
 
 	ui->setupUi(this);
-	if (settings->value("schedule").toBool()) {
+	if (_settings->value("schedule").toBool()) {
 		QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
 		auto currentProfile = ProfileManager::instance()->getProfile(currentName);
 		Utils current(currentProfile);
@@ -27,20 +27,20 @@ MainWindow::MainWindow(QWidget *parent)
 
 		auto manager = ProfileManager::instance();
 		//Schedule other Profiles.
-		settings->beginGroup("Favourites");
+		_settings->beginGroup("Favourites");
 		auto profileSchedList = manager->allProfiles();
 
 
 		for (const auto profile : profileSchedList) {
 			if (manager->isFavourite(profile->name())) {
 				auto *utils = new Utils(profile);
-				auto favTime = QTime::fromString(settings->value(profile->name()).toString());
+				auto favTime = QTime::fromString(_settings->value(profile->name()).toString());
 				if (!favTime.isNull()) {
 					schedule(utils, favTime);
 				}
 			}
 		}
-		settings->endGroup();
+		_settings->endGroup();
 	}
 	ui->resMsg->hide();
 	auto actionRes = new QAction("Restart", this);
@@ -152,13 +152,15 @@ void MainWindow::on_darkBtn_clicked()
 	current.go();
 }
 
-void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled) {
-    ui->resMsg->animatedShow();
-    if (ui->hiddenCheckBox->checkState() == 0) {
-        settings->setValue("start-hidden", false);
-    } else {
-        settings->setValue("start-hidden", true);
-    }
+void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
+{
+	ui->resMsg->animatedShow();
+	if (ui->hiddenCheckBox->checkState() == 0) {
+		_settings->setValue("start-hidden", false);
+	}
+	else {
+		_settings->setValue("start-hidden", true);
+	}
 }
 
 // Menubar actions
