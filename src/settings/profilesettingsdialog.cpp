@@ -66,18 +66,27 @@ void ProfileSettingsDialog::editCurrentProfile()
 
 void ProfileSettingsDialog::deleteCurrentProfile()
 {
-	//verify the right directory
-	//TODO make sure it is the right directory
 	auto delManager = ProfileManager::instance();
 	auto name = delManager->_activeProfile->name();
-	auto isDelFav = delManager->isFavourite(name);
-	delManager->deleteProfile();
 
-	auto isMatch = _profileListModel->findItems(name, Qt::MatchExactly, ProfileNameColumn);
-	for (const auto &item : isMatch) {
-		_profileListModel->removeRow(item->row());
+	QMessageBox::StandardButton reply;
+	reply = QMessageBox::question(this,
+								  "Delete Profile",
+								  "Are you sure you want to delete " + name + " profile ? ",
+								  QMessageBox::Yes | QMessageBox::No);
+
+	if (reply == QMessageBox::Yes) {
+		//verify the right directory
+		//TODO make sure it is the right directory
+		auto isDelFav = delManager->isFavourite(name);
+		delManager->deleteProfile();
+
+		auto isMatch = _profileListModel->findItems(name, Qt::MatchExactly, ProfileNameColumn);
+		for (const auto &item : isMatch) {
+			_profileListModel->removeRow(item->row());
+		}
+		delManager->favouritesChanged(name, isDelFav);
 	}
-	delManager->favouritesChanged(name, isDelFav);
 }
 
 void ProfileSettingsDialog::createTable()
