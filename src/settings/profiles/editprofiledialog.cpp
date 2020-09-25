@@ -28,7 +28,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	//put this to make it easier to read
 	//point to kpagewidgetitem to add icons.
 	KPageWidgetItem *stylesPageItem = this->addPage(stylePageWidget, stylePageName);
-	stylesPageItem->setIcon(QIcon::fromTheme("style"));
+	stylesPageItem->setIcon(QIcon::fromTheme("kcolorchooser"));
 
 	//otherPage
 	const QString othersPageName("Other");
@@ -36,7 +36,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	auto *othersPageWidget = new QWidget(this);
 	_othersDialog->setupUi(othersPageWidget);
 	KPageWidgetItem *othersPageItem = addPage(othersPageWidget, othersPageName);
-	othersPageItem->setIcon(QIcon::fromTheme("color"));
+	othersPageItem->setIcon(QIcon::fromTheme("applications-other"));
 
 	//External Page
 	const QString extPageName("External");
@@ -44,7 +44,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	auto *extPageWidget = new QWidget(this);
 	_extDialog->setupUi(extPageWidget);
 	KPageWidgetItem *extPageItem = addPage(extPageWidget, extPageName);
-	extPageItem->setIcon(QIcon::fromTheme("add"));
+	extPageItem->setIcon(QIcon::fromTheme("preferences"));
 
 
 

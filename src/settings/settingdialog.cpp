@@ -26,21 +26,21 @@ SettingDialog::SettingDialog(QWidget *parent)
 	_generalUi = new GeneralSettings(this, settings);
 	KPageWidgetItem *generalPageItem = this->addPage(_generalUi, generalPageName);
 	generalPageItem->setHeader(generalPageName);
-	generalPageItem->setIcon(QIcon::fromTheme(QStringLiteral("firewall")));
+	generalPageItem->setIcon(QIcon::fromTheme(QStringLiteral("settings-configure")));
 
 	// Profiles Page
 	const QString profilePageName = ("Profiles");
 	_profileUi = new ProfileSettingsDialog(this, settings);
 	KPageWidgetItem *profilePageItem = addPage(_profileUi, profilePageName);
 	profilePageItem->setHeader(profilePageName);
-	profilePageItem->setIcon(QIcon::fromTheme("style"));
+	profilePageItem->setIcon(QIcon::fromTheme("systemsettings"));
 
 	//Schedule Page
 	const QString schedulePageName = ("Schedule");
 	_scheduleUi = new ScheduleProfile(this);
 	KPageWidgetItem *schedulePageItem = addPage(_scheduleUi, schedulePageName);
 	schedulePageItem->setHeader(schedulePageName);
-	schedulePageItem->setIcon(QIcon::fromTheme("time"));
+	schedulePageItem->setIcon(QIcon::fromTheme("clock"));
 
 	connect(this, &SettingDialog::accepted, this, &SettingDialog::slotOkClicked);
 	connect(buttonBox()->button(QDialogButtonBox::Cancel),
