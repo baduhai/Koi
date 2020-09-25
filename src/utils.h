@@ -24,8 +24,9 @@ struct Decoration
 	QString theme;
 	QString name;
 };
-class Utils
+class Utils: public QObject
 {
+	Q_OBJECT
 public:
 
 

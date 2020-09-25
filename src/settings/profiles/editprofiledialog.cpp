@@ -125,6 +125,8 @@ void EditProfileDialog::setupPage()
 void EditProfileDialog::saveProfile()
 {
 	//TODO save only stuff that has been changed.
+
+	//TODO check if the name has been changed so it can be updated and the previous deleted.
 	//Style Page
 	_profile->setName(_stylesDialog->nameTextBox->text());
 	_profile->setPlasma(_stylesDialog->plasmaBox->currentText());

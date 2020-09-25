@@ -2,9 +2,11 @@
 #include "utils.h"
 
 Utils::Utils()
+	:useGlobalProcess(new QProcess(this))
 {
 }
 Utils::Utils(Profile *pProfile)
+	:useGlobalProcess(new QProcess(this))
 {
 	Q_ASSERT(pProfile);
 	_profile = pProfile;
@@ -246,10 +248,11 @@ bool Utils::themeExists(const QString &themeName)
 // Manage switching themes functions
 void Utils::useGlobalTheme()
 {
-	useGlobalProcess = new QProcess;
 	QString command = QStringLiteral("lookandfeeltool");
 	QStringList arguments = {"-a", _profile->pluginName()};
 	useGlobalProcess->start(command, arguments);
+	//TODO recheck this there was memoryleak
+	useGlobalProcess->waitForFinished();
 }
 
 // Use to switch to a different theme profile
@@ -293,9 +296,10 @@ void Utils::goWall()
 		wallpaper.setWallpaper(_profile->getWallpaper());
 	}
 	else {
+		//TODO change the type of error.
 		notify("Error setting Wallpaper",
 			   "Koi tried to change your " + _profile->name() + " wallpaper, but no wallpaper fie was selected",
-			   0);
+			   5000);
 	}
 }
 

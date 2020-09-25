@@ -32,6 +32,7 @@ public:
 
 private slots:
 	void slotOkClicked();
+	void cancelClicked();
 
 private:
 //    QMap<KPageWidgetItem *, Page> _pages;

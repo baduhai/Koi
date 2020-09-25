@@ -166,7 +166,9 @@ void ProfileSettingsDialog::tableSelectionChanged()
 	manager->_activeProfile = manager->getProfile(currentIndex);
 	bool isDefault = (currentIndex == ("dark") || (currentIndex == ("light")));
 	bool isDeletable = !isDefault && !currentIndex.isEmpty();
+	auto noOfRows = _profileListModel->rowCount();
 
+	ui->newProfileBtn->setEnabled(noOfRows < 5);
 	ui->editProfileBtn->setEnabled(!currentIndex.isEmpty());
 	ui->deleteProfileBtn->setEnabled(isDeletable);
 }

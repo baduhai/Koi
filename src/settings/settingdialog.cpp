@@ -14,6 +14,8 @@ SettingDialog::SettingDialog(QWidget *parent)
 {
 	// KOI Settings Location on the drive
 	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::NativeFormat);
+	buttonBox()->setStandardButtons(QDialogButtonBox::Ok
+										| QDialogButtonBox::Cancel);
 
 	setWindowTitle("Settings Page");
 	setFaceType(KPageDialog::List);
@@ -41,6 +43,10 @@ SettingDialog::SettingDialog(QWidget *parent)
 	schedulePageItem->setIcon(QIcon::fromTheme("time"));
 
 	connect(this, &SettingDialog::accepted, this, &SettingDialog::slotOkClicked);
+	connect(buttonBox()->button(QDialogButtonBox::Cancel),
+			&QAbstractButton::clicked,
+			this,
+			&SettingDialog::cancelClicked);
 }
 
 SettingDialog::~SettingDialog()
@@ -53,5 +59,23 @@ void SettingDialog::slotOkClicked()
 {
 	_generalUi->saveChanges();
 	_scheduleUi->saveChanges();
+}
+void SettingDialog::cancelClicked()
+{
+	QMessageBox msgBox;
+	msgBox.setText("The document has been modified.");
+	msgBox.setInformativeText("Do you want to save your changes?");
+	msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+	msgBox.setDefaultButton(QMessageBox::Save);
+	int ret = msgBox.exec();
+	QString s = "heello";
+	qDebug() << " hit";
+	qDebug() << " hit";
+	qDebug() << " hit";
+	qDebug() << " hit";
+	qDebug() << " hit";
+	qDebug() << " hit";
+	qDebug() << " hit";
+
 }
 
