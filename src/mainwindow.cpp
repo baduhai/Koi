@@ -21,9 +21,11 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	if (_settings->value("schedule").toBool()) {
 		QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
-		auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-		Utils current(currentProfile);
-		current.go();
+		if (!currentName.isEmpty() || !currentName.isNull()) {
+			auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+			Utils current(currentProfile);
+			current.go();
+		}
 
 		auto manager = ProfileManager::instance();
 		//Schedule other Profiles.
