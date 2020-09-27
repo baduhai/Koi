@@ -15,6 +15,7 @@ void ColorScheme::setColorScheme(const QString &colorScheme)
     breezeGtkProcess = new QProcess();
     breezeGtkProcess->setProgram(QStringLiteral("krdb"));
     breezeGtkProcess->start();
+    breezeGtkProcess->waitForFinished();
 }
 QStringList ColorScheme::getColorSchemes() // Get all available color schemes
 {

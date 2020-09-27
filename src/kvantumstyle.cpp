@@ -13,6 +13,7 @@ void KvantumStyle::setKvantumStyle(QString kvantumStyle)
     QString program = "/usr/bin/kvantummanager";
     QStringList arguments{"--set", std::move(kvantumStyle)};
     kvantumStyleProcess->start(program, arguments);
+    kvantumStyleProcess->waitForFinished();
 }
 
 QStringList KvantumStyle::getKvantumStyles() // Get all available kvantum styles
