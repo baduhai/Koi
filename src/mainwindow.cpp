@@ -7,9 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent), ui(new Ui::MainWindow)
 {
 
-
-	_settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-
 	trayIcon = new QSystemTrayIcon(this);
 	this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
 	this->trayIcon->setVisible(true);
@@ -19,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
 
 	ui->setupUi(this);
-	if (_settings->value("schedule").toBool()) {
+	// TODO use an enum for this maybe ?
+	if (m_settings.value("schedule").toString() == "custom time") {
 		QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
 		if (!currentName.isEmpty() || !currentName.isNull()) {
 			auto currentProfile = ProfileManager::instance()->getProfile(currentName);
@@ -29,20 +27,20 @@ MainWindow::MainWindow(QWidget *parent)
 
 		auto manager = ProfileManager::instance();
 		//Schedule other Profiles.
-		_settings->beginGroup("Favourites");
+		m_settings.beginGroup("Favourites");
 		auto profileSchedList = manager->allProfiles();
 
 
 		for (const auto profile : profileSchedList) {
 			if (manager->isFavourite(profile->name())) {
 				auto *utils = new Utils(profile);
-				auto favTime = QTime::fromString(_settings->value(profile->name()).toString());
+				auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
 				if (!favTime.isNull()) {
 					schedule(utils, favTime);
 				}
 			}
 		}
-		_settings->endGroup();
+		m_settings.endGroup();
 	}
 	ui->resMsg->hide();
 	auto actionRes = new QAction("Restart", this);
@@ -131,7 +129,7 @@ void MainWindow::schedule(Utils *utils, QTime time)
 }
 
 // Functionality of buttons - Related to program navigation, interaction and saving settings
-void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
+void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koi.conf// file
 {
 	auto *dialog = new SettingDialog(this);
 	dialog->setModal(true);
@@ -156,12 +154,7 @@ void MainWindow::on_darkBtn_clicked()
 
 void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
 {
-	if (ui->hiddenCheckBox->checkState() == 0) {
-		_settings->setValue("start-hidden", false);
-	}
-	else {
-		_settings->setValue("start-hidden", true);
-	}
+    m_settings.setValue("start-hidden", !(ui->hiddenCheckBox->checkState() == 0));
 	ui->resMsg->setText(tr("To set Hidden , Koi must be restarted."));
 	ui->resMsg->setMessageType(KMessageWidget::Warning);
 	ui->resMsg->animatedShow();

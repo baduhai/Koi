@@ -163,7 +163,7 @@ QHash<QString, QString> ProfileManager::getFavouritesList() const
 QHash<QString, QString> ProfileManager::listFavourites()
 {
 	QHash<QString, QString> favourites;
-	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	QSettings s;
 	s.beginGroup("Favourites");
 	QStringList keys(s.allKeys());
 	for (const auto &key : keys) {
@@ -172,10 +172,10 @@ QHash<QString, QString> ProfileManager::listFavourites()
 		}
 	}
 	if (!favourites.contains("light")) {
-		favourites.insert("light", "06:00:00");
+		favourites.insert("light", QString());
 	}
 	if (!favourites.contains("dark")) {
-		favourites.insert("dark", "20:00:00");
+		favourites.insert("dark", QString());
 	}
 	return favourites;
 }
@@ -220,7 +220,7 @@ void ProfileManager::setFavourite(const QString& profileName, bool favourite)
 
 void ProfileManager::saveFavourites()
 {
-	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	QSettings s;
 	s.beginGroup("Favourites");
 	s.remove("");
 	QHashIterator<QString, QString> i(m_favourites);

@@ -59,7 +59,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_2"/>
+       <widget class="QWidget" name="sunsetSunrisePage"/>
       </widget>
      </item>
      <item row="0" column="2">

@@ -30,7 +30,7 @@ class ProfileSettingsDialog: public QWidget
 {
 Q_OBJECT
 public:
-	ProfileSettingsDialog(QWidget *parent, QSettings *pSettings);
+	ProfileSettingsDialog(QWidget *parent);
 	~ProfileSettingsDialog() override;
 
 
@@ -43,7 +43,6 @@ private slots:
 
 private:
 	Ui::ProfileSettingsDialog *ui;
-	QSettings *settings;
 
 	EditProfileDialog *_ProfileDGUi;
 	QStandardItemModel *_profileListModel;
@@ -55,17 +54,8 @@ private:
 		ProfileNameColumn = 1,
 	};
 
-//	enum Role
-//	{
-//		ProfilePtrRole = Qt::UserRole + 1,
-//		ShortcutRole,
-//	};
-
-
-
 	void createTable();
 	void populateTable();
-	void updateTable();
 	void addItems(const Profile *p);
 	void updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const;
 };

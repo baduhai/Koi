@@ -35,12 +35,9 @@ private slots:
 	void cancelClicked();
 
 private:
-//    QMap<KPageWidgetItem *, Page> _pages;
-
 	GeneralSettings *_generalUi;
 	ProfileSettingsDialog *_profileUi;
 	ScheduleProfile *_scheduleUi;
-	QSettings *settings;
 };
 
 #endif // SETTINGDIALOG_H

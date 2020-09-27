@@ -10,12 +10,13 @@ ScheduleProfile::ScheduleProfile(QWidget *parent)
 	ui->setupUi(this);
 	createView();
 	populateView();
-
+	
 	ProfileManager *manager = ProfileManager::instance();
 
 	connect(_profileTimeModel, &QStandardItemModel::itemChanged, this, &ScheduleProfile::timeChanged);
 	connect(ui->profleTimeView, &QTableView::doubleClicked, this, &ScheduleProfile::enableProfile);
 	connect(manager, &ProfileManager::favouritesChanged, this, &ScheduleProfile::favouritesChanged);
+    connect(ui->schedTypeBox, &QComboBox::currentTextChanged, this, &ScheduleProfile::switchPages );
 }
 
 ScheduleProfile::~ScheduleProfile()
@@ -26,6 +27,10 @@ void ScheduleProfile::createView()
 {
 	ui->profleTimeView->setSelectionMode(QAbstractItemView::SingleSelection);
 	ui->profleTimeView->setModel(_profileTimeModel);
+
+    //the type of schedule
+    ui->schedTypeBox->addItems({enumToQString(CustomPage), enumToQString(SunsetSunrisePage)});
+
 	ui->profleTimeView->setItemDelegateForColumn(TimeColumn, new FavTimeDelegate(this));
 
 	//Add Headers this order:  Favorites  ProfileName
@@ -35,9 +40,11 @@ void ScheduleProfile::createView()
 	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(FavNameColumn, QHeaderView::Stretch);
 	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(TimeColumn, QHeaderView::ResizeToContents);
 	ui->profleTimeView->verticalHeader()->setHidden(true);
+
 }
 void ScheduleProfile::populateView()
 {
+
 	auto profileList = ProfileManager::instance()->getFavouritesList();
 
 	qDebug() << "this is the profile list " << profileList;
@@ -86,15 +93,26 @@ void ScheduleProfile::timeChanged(QStandardItem *item)
 		}
 	}
 }
-void ScheduleProfile::saveChanges()
+void ScheduleProfile::saveSettings()
 {
-	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
-	s.beginGroup("Favourites");
+	m_settings.beginGroup("Favourites");
 	QHashIterator<QString, QString> favIt(m_editedFavourites);
 	while (favIt.hasNext()) {
 		favIt.next();
-		s.setValue(favIt.key(), favIt.value());
+		m_settings.setValue(favIt.key(), favIt.value());
 	}
+	m_settings.endGroup();
+	m_settings.setValue("schedule", ui->schedTypeBox->currentText());
+	m_settings.sync();
+}
+
+void ScheduleProfile::switchPages(const QString &schedType)
+{
+    if(schedType == enumToQString(CustomPage)) {
+        ui->stackedWidget->setCurrentIndex(CustomPage);
+    }else if( schedType == enumToQString(SunsetSunrisePage)){
+        ui->stackedWidget->setCurrentIndex(SunsetSunrisePage);
+    }
 
 }
 void ScheduleProfile::enableProfile(const QModelIndex &index)

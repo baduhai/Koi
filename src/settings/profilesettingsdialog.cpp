@@ -7,12 +7,11 @@
  */
 #include "profilesettingsdialog.h"
 
-ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent, QSettings *pSettings)
+ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent)
 	:
 	QWidget(parent),
 	ui(new Ui::ProfileSettingsDialog),
 	_ProfileDGUi(nullptr),
-	settings(pSettings),
 	_profileListModel(new QStandardItemModel(this))
 {
 	ui->setupUi(this);
@@ -181,10 +180,7 @@ void ProfileSettingsDialog::tableSelectionChanged()
 	ui->editProfileBtn->setEnabled(!currentIndex.isEmpty());
 	ui->deleteProfileBtn->setEnabled(isDeletable);
 }
-void ProfileSettingsDialog::updateTable()
-{
 
-}
 void ProfileSettingsDialog::itemDataChanged(QStandardItem *item)
 {
 	qDebug() << "this is the item " << item;

@@ -2,7 +2,7 @@
 
 the purpose of profile is to make changing settings of a theme more modular
 
-Profile is all the settings of a particular theme in one file al together so that the settings( koirc /koiglobalrc )
+Profile is all the settings of a particular theme in one file al together so that the settings( koi.conf /koiglobalrc )
 will not be cluttered/convoluted  when adding more than two themes ( will probably set a limit of five will make sense )
 
 this will enable seperation of the application settings from the theme settings
@@ -43,7 +43,7 @@ vscode= .......
 
 this would make the actual app settings empty it would just be
 
-this wouild be in QStandardPaths::configLocation + "koirc".
+this wouild be in QStandardPaths::configLocation + "/koi/koi.conf".
 ********************************************************************************
 [General]
 notify=true

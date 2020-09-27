@@ -36,7 +36,7 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 
 QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 {
-	QSettings settings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat );
+	QSettings settings;
 	settings.beginGroup("Favourites");
 	auto favList = settings.allKeys();
 	QTime currentTime = QTime::currentTime();
@@ -264,7 +264,7 @@ void Utils::go()
 	goGtk();
 	goWall();
 	runScript();
-	QSettings s(QDir::homePath() + "/.config/koirc", QSettings::IniFormat);
+	QSettings s;
 	if (s.value("notify").toBool()) {
 		notify("Switched to " + _profile->name() + " mode!",
 			   "Some applications may need to be restarted for applied changes to take effect.");

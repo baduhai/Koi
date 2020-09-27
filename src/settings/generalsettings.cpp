@@ -1,14 +1,13 @@
 #include "generalsettings.h"
 
 
-GeneralSettings::GeneralSettings(QWidget *parent, QSettings *pSettings)
+GeneralSettings::GeneralSettings(QWidget *parent)
 	:
-	QWidget(parent),
-	ui(new Ui::GeneralSettings),
-	setting(pSettings)
+        QWidget(parent),
+        ui(new Ui::GeneralSettings)
 {
 	ui->setupUi(this);
-	loadSetting();
+    loadSettings();
 	//connect(ui->notifyCheckBox, &QCheckBox::toggled,this, &GeneralSettings::enableNotification);
 }
 
@@ -16,14 +15,14 @@ GeneralSettings::~GeneralSettings()
 {
 	delete ui;
 }
-void GeneralSettings::saveChanges()
+void GeneralSettings::saveSettings()
 {
 	//notification.
 	//by default the general group is created if there is no group declared.
-	setting->setValue("notify", ui->notifyCheckBox->isChecked());
+	m_settings.setValue("notify", ui->notifyCheckBox->isChecked());
 }
-void GeneralSettings::loadSetting()
+void GeneralSettings::loadSettings()
 {
-	ui->notifyCheckBox->setChecked(setting->value("notify").toBool());
+	ui->notifyCheckBox->setChecked(m_settings.value("notify").toBool());
 }
 

@@ -13,7 +13,6 @@ SettingDialog::SettingDialog(QWidget *parent)
 	_scheduleUi(nullptr)
 {
 	// KOI Settings Location on the drive
-	settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::NativeFormat);
 	buttonBox()->setStandardButtons(QDialogButtonBox::Ok
 										| QDialogButtonBox::Cancel);
 
@@ -23,14 +22,14 @@ SettingDialog::SettingDialog(QWidget *parent)
 	//Adding Pages
 	// General page
 	const QString generalPageName = ("General");
-	_generalUi = new GeneralSettings(this, settings);
+	_generalUi = new GeneralSettings(this);
 	KPageWidgetItem *generalPageItem = this->addPage(_generalUi, generalPageName);
 	generalPageItem->setHeader(generalPageName);
 	generalPageItem->setIcon(QIcon::fromTheme(QStringLiteral("settings-configure")));
 
 	// Profiles Page
 	const QString profilePageName = ("Profiles");
-	_profileUi = new ProfileSettingsDialog(this, settings);
+	_profileUi = new ProfileSettingsDialog(this);
 	KPageWidgetItem *profilePageItem = addPage(_profileUi, profilePageName);
 	profilePageItem->setHeader(profilePageName);
 	profilePageItem->setIcon(QIcon::fromTheme("systemsettings"));
@@ -53,12 +52,11 @@ SettingDialog::~SettingDialog()
 {
 	delete _generalUi;
 	delete _profileUi;
-	delete settings;
 }
 void SettingDialog::slotOkClicked()
 {
-	_generalUi->saveChanges();
-	_scheduleUi->saveChanges();
+    _generalUi->saveSettings();
+    _scheduleUi->saveSettings();
 }
 void SettingDialog::cancelClicked()
 {
