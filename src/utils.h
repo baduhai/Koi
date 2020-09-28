@@ -29,7 +29,6 @@ class Utils: public QObject
 	Q_OBJECT
 public:
 
-
 	explicit Utils(Profile *pProfile);
 
 	Utils();

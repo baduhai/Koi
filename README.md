@@ -38,6 +38,9 @@ This is a TODO list
 
 NB: the app is built for the K desktop environment .
 
+on X11 
+    install xsettingsd 
+   
 ### **Ubuntu Based ** 
 
 ##### Dependencies 
@@ -70,7 +73,7 @@ NB: the app is built for the K desktop environment .
 
 
 
-### All Distros
+### From Sources.
 
 `git clone https://github.com/Da-Viper/Koi.git`
 

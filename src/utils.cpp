@@ -260,7 +260,7 @@ void Utils::go()
 {
 	goKvantumStyle();
 	useGlobalTheme();
-	goColors();
+	//goColors();
 	goGtk();
 	goWall();
 	runScript();
@@ -271,14 +271,17 @@ void Utils::go()
 	}
 }
 
+//TODO delete these as it is no longer needed
 void Utils::goColors()
 {
-	colorScheme.setColorScheme(_profile->getColor());
+    QString st(_profile->getColor());
+	colorScheme.setColorScheme(st);
 }
 
 void Utils::goGtk()
 {
-	gtk.setGtk(_profile->getGtk());
+    QString s(_profile->getGtk() );
+	gtk.setGtk(s);
 }
 
 void Utils::goKvantumStyle()

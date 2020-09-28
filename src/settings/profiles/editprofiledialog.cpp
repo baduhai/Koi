@@ -58,16 +58,16 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	connect(_stylesDialog->widgetBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::enableKvantum);
 
 	//Others Page.
-	connect(_othersDialog->wallpaperCheckBox,
-			&QCheckBox::stateChanged,
-			_othersDialog->wallpaperBtn,
-			&QPushButton::setEnabled);
+
+	connect(_othersDialog->wallpaperCheckBox,&QCheckBox::stateChanged,
+            _othersDialog->wallTypeBox, &QComboBox::setEnabled);
 	connect(_othersDialog->scriptCheckBox,
 			&QCheckBox::stateChanged,
 			_othersDialog->scriptBtn,
 			&QPushButton::setEnabled);
+	connect(_othersDialog->wallTypeBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::changeWallType);
 	connect(_othersDialog->scriptBtn, &QPushButton::clicked, this, &EditProfileDialog::selectScript);
-	connect(_othersDialog->wallpaperBtn, &QPushButton::clicked, this, &EditProfileDialog::selectWallpaper);
+	connect(_othersDialog->wallPicBtn, &QPushButton::clicked, this, &EditProfileDialog::selectWallpaper);
 }
 EditProfileDialog::~EditProfileDialog()
 {
@@ -99,7 +99,7 @@ void EditProfileDialog::updatePages()
 	_othersDialog->decorationBox->setCurrentText(_profile->getDecName());
 	_othersDialog->scriptCheckBox->setChecked(_profile->getScriptEnabled());
 	_othersDialog->scriptBtn->setText(_profile->getScript());
-	_othersDialog->wallpaperBtn->setText(_profile->getWallpaper());
+	_othersDialog->wallPicBtn->setText(_profile->getWallpaper());
 	_othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
 }
 void EditProfileDialog::setupPage()
@@ -118,10 +118,11 @@ void EditProfileDialog::setupPage()
 	_othersDialog->iconBox->addItems(Utils::getIcons());
 	_othersDialog->cursorBox->addItems(Utils::getCursorThemes());
 	_othersDialog->decorationBox->addItems(Utils::getWindowDecorationsStyle());
+
 	_othersDialog->scriptCheckBox->setChecked(false);
 	_othersDialog->wallpaperCheckBox->setChecked(false);
-
 }
+
 void EditProfileDialog::saveProfile()
 {
 	//TODO save only stuff that has been changed.
@@ -176,6 +177,17 @@ void EditProfileDialog::enableKvantum(const QString &widgetName)
 		_stylesDialog->kvBox->setHidden(true);
 		_stylesDialog->kvLabel->setHidden(true);
 	}
+}
+void EditProfileDialog::changeWallType(const QString &wallType)
+{
+    if(wallType == "Image"){
+        _othersDialog->unsplashComboBox->setHidden(true);
+        _othersDialog->wallPicBtn->setHidden(false);
+    }
+    if(wallType == "Unsplash"){
+        _othersDialog->unsplashComboBox->setHidden(false);
+        _othersDialog->wallPicBtn->setHidden(true);
+    }
 }
 void EditProfileDialog::enableProfileName(const int &state)
 {

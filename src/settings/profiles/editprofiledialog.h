@@ -38,6 +38,7 @@ public:
 
 	void saveProfile();
 	void enableKvantum(const QString &widgetName);
+	void changeWallType(const QString &wallType);
 	void enableProfileName(const int &state);
 	void selectScript();
 	void selectWallpaper();

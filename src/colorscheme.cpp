@@ -4,6 +4,7 @@ ColorScheme::ColorScheme()
 {
 
 }
+//TODO delete these as it is no longer need anymore
 void ColorScheme::setColorScheme(const QString &colorScheme)
 {
     // Notifying Plasma of changes to color scheme
