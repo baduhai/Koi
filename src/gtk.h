@@ -13,8 +13,6 @@ public:
     void setGtk(const QString& gtkTheme);
     static QStringList getGtkThemes();
 private:
-    QDBusConnection *bus;
-    QDBusInterface *interface;
 };
 
 #endif // GTK_H

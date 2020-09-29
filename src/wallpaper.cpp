@@ -8,7 +8,7 @@ Wallpaper::Wallpaper()
 void Wallpaper::setWallpaper(QString wallFile)
 {
     bus = new QDBusConnection(QDBusConnection::sessionBus());
-    interface = new QDBusInterface("org.kde.plasmashell", "/PlasmaShell", "org.kde.PlasmaShell", *bus);
+    QDBusInterface interface ("org.kde.plasmashell", "/PlasmaShell", "org.kde.PlasmaShell", *bus);
     QString script = "var allDesktops = desktops();";
             script += "print (allDesktops);";
             script += "for (i=0;i<allDesktops.length;i++) {";
@@ -18,5 +18,5 @@ void Wallpaper::setWallpaper(QString wallFile)
             script += "d.writeConfig(\"Image\", \"file://";
             script += wallFile;
             script += "\")}";
-    interface->call("evaluateScript", script);
+    interface.call("evaluateScript", script);
 }

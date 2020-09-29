@@ -1,7 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 // Headers
-#include "colorscheme.h"
 #include "gtk.h"
 #include "wallpaper.h"
 #include "kvantumstyle.h"
@@ -29,7 +28,7 @@ class Utils: public QObject
 	Q_OBJECT
 public:
 
-	explicit Utils(Profile *pProfile);
+	Utils(Profile *pProfile);
 
 	Utils();
 
@@ -50,7 +49,6 @@ public:
 	//this would be used for global theme
 	void useGlobalTheme();
 	void go();
-	void goColors();
 	void goGtk();
 	void goKvantumStyle();
 	void goWall();
@@ -63,10 +61,6 @@ private:
 	Gtk gtk;
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;
-
-	ColorScheme colorScheme;
-
-	QProcess *useGlobalProcess{};
 
 	QDBusConnection *bus{};
 

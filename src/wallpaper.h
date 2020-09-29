@@ -13,7 +13,6 @@ public:
 
 private:
     QDBusConnection *bus;
-    QDBusInterface *interface;
 };
 
 #endif // WALLPAPER_H

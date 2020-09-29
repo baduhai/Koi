@@ -5,7 +5,6 @@ set(CMAKE_AUTOUIC ON)
 
 #The list of all the source files
 set(koi_SRC
-        colorscheme.cpp
         about.cpp
         gtk.cpp
         license.cpp

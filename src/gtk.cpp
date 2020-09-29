@@ -7,10 +7,9 @@ Gtk::Gtk()
 
 void Gtk::setGtk(const QString& gtkTheme)
 {
-    bus = new QDBusConnection(QDBusConnection::sessionBus());
-    interface = new QDBusInterface("org.kde.GtkConfig", "/GtkConfig", "org.kde.GtkConfig", *bus);
-    interface->call("setGtk2Theme", gtkTheme);
-    interface->call("setGtk3Theme", gtkTheme);
+    QDBusInterface interface("org.kde.GtkConfig", "/GtkConfig", "org.kde.GtkConfig");
+    interface.call("setGtk2Theme", gtkTheme);
+    interface.call("setGtk3Theme", gtkTheme);
 }
 
 QStringList Gtk::getGtkThemes() // Get all available gtk themes

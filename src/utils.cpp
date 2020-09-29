@@ -260,7 +260,6 @@ void Utils::go()
 {
 	goKvantumStyle();
 	useGlobalTheme();
-	//goColors();
 	goGtk();
 	goWall();
 	runScript();
@@ -269,13 +268,6 @@ void Utils::go()
 		notify("Switched to " + _profile->name() + " mode!",
 			   "Some applications may need to be restarted for applied changes to take effect.");
 	}
-}
-
-//TODO delete these as it is no longer needed
-void Utils::goColors()
-{
-    QString st(_profile->getColor());
-	colorScheme.setColorScheme(st);
 }
 
 void Utils::goGtk()
