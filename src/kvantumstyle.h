@@ -8,7 +8,6 @@ class KvantumStyle
 {
 public:
     KvantumStyle();
-    ~KvantumStyle();
     void setKvantumStyle(QString KvantumStyle);
     static QStringList getKvantumStyles();
 private:

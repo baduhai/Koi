@@ -11,42 +11,44 @@ MainWindow::MainWindow(QWidget *parent)
 	this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
 	this->trayIcon->setVisible(true);
 	trayMenu = this->createMenu();
-	this->trayIcon->setContextMenu(trayMenu);   // Set tray context menu
+    this->trayIcon->setContextMenu(trayMenu);   // Set tray context menu
 
-	connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
+    ui->setupUi(this);
 
-	ui->setupUi(this);
-	// TODO use an enum for this maybe ?
-	if (m_settings.value("schedule").toString() == "custom time") {
-		QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
-		if (!currentName.isEmpty() || !currentName.isNull()) {
-			auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-			Utils current(currentProfile);
-			current.go();
-		}
+    // TODO use an enum for this maybe ?
+    if (m_settings.value("schedule").toString() == "custom time") {
+        QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
+        if (!currentName.isEmpty() || !currentName.isNull()) {
+            auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+            Utils current(currentProfile);
+            current.go();
+        }
 
-		auto manager = ProfileManager::instance();
-		//Schedule other Profiles.
-		m_settings.beginGroup("Favourites");
-		auto profileSchedList = manager->allProfiles();
+        auto manager = ProfileManager::instance();
+        //Schedule other Profiles.
+        m_settings.beginGroup("Favourites");
+        auto profileSchedList = manager->allProfiles();
 
 
-		for (const auto profile : profileSchedList) {
-			if (manager->isFavourite(profile->name())) {
-				auto *utils = new Utils(profile);
-				auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
-				if (!favTime.isNull()) {
-					schedule(utils, favTime);
-				}
-			}
-		}
-		m_settings.endGroup();
-	}
-	ui->resMsg->hide();
-	auto actionRes = new QAction("Restart", this);
-	actionRes->setIcon(QIcon::fromTheme("view-refresh"));
-	connect(actionRes, &QAction::triggered, this, &MainWindow::on_actionRestart_triggered);
-	ui->resMsg->addAction(actionRes);
+        for (const auto profile : profileSchedList) {
+            if (manager->isFavourite(profile->name())) {
+                auto *utils = new Utils(profile);
+                auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
+                if (!favTime.isNull()) {
+                    schedule(utils, favTime);
+                }
+            }
+        }
+        m_settings.endGroup();
+    }
+
+    ui->hiddenCheckBox->setChecked(m_settings.value("start-hidden").toInt());
+    ui->resMsg->hide();
+    auto actionRes = new QAction("Restart", this);
+    actionRes->setIcon(QIcon::fromTheme("view-refresh"));
+    connect(actionRes, &QAction::triggered, this, &MainWindow::on_actionRestart_triggered);
+    ui->resMsg->addAction(actionRes);
 }
 
 MainWindow::~MainWindow()
@@ -154,7 +156,7 @@ void MainWindow::on_darkBtn_clicked()
 
 void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
 {
-    m_settings.setValue("start-hidden", !(ui->hiddenCheckBox->checkState() == 0));
+    m_settings.setValue("start-hidden", hiddenEnabled);
 	ui->resMsg->setText(tr("To set Hidden , Koi must be restarted."));
 	ui->resMsg->setMessageType(KMessageWidget::Warning);
 	ui->resMsg->animatedShow();

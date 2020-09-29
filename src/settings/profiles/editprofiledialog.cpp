@@ -49,34 +49,30 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 
 
 
-	//update pages
-	setupPage();
+    //update pages
 
-	connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
-	//Styles Page
-	connect(_stylesDialog->nameCheckBox, &QCheckBox::stateChanged, this, &EditProfileDialog::enableProfileName);
-	connect(_stylesDialog->widgetBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::enableKvantum);
+    connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
+    //Styles Page
+    connect(_stylesDialog->nameCheckBox, &QCheckBox::stateChanged, this, &EditProfileDialog::enableProfileName);
+    connect(_stylesDialog->widgetBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::enableKvantum);
 
-	//Others Page.
+    //Others Page.
+    //Wallpaper.
+    connect(_othersDialog->wallpaperCheckBox,&QCheckBox::stateChanged, this, &EditProfileDialog::enableWallpaper);
+    connect(_othersDialog->wallTypeBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::changeWallType);
+    connect(_othersDialog->wallPicBtn, &QPushButton::clicked, this, &EditProfileDialog::selectWallpaper);
 
-	connect(_othersDialog->wallpaperCheckBox,&QCheckBox::stateChanged,
-            _othersDialog->wallTypeBox, &QComboBox::setEnabled);
-	connect(_othersDialog->scriptCheckBox,
+    //script
+    connect(_othersDialog->scriptCheckBox,
 			&QCheckBox::stateChanged,
 			_othersDialog->scriptBtn,
 			&QPushButton::setEnabled);
-	connect(_othersDialog->wallTypeBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::changeWallType);
-	connect(_othersDialog->scriptBtn, &QPushButton::clicked, this, &EditProfileDialog::selectScript);
-	connect(_othersDialog->wallPicBtn, &QPushButton::clicked, this, &EditProfileDialog::selectWallpaper);
+    connect(_othersDialog->scriptBtn, &QPushButton::clicked, this, &EditProfileDialog::selectScript);
+
+    setupPage();
 }
 EditProfileDialog::~EditProfileDialog()
 {
-}
-void EditProfileDialog::setProfile(Profile *p)
-{
-	//checks if it points to anything before using .
-	_profile = p;
-	updatePages();
 }
 //may seperate this in the future
 void EditProfileDialog::updatePages()
@@ -102,6 +98,12 @@ void EditProfileDialog::updatePages()
 	_othersDialog->wallPicBtn->setText(_profile->getWallpaper());
 	_othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
 }
+void EditProfileDialog::setProfile(Profile *p)
+{
+    //checks if it points to anything before using .
+    _profile = p;
+    updatePages();
+}
 void EditProfileDialog::setupPage()
 {
 	//Styles Page.
@@ -120,7 +122,11 @@ void EditProfileDialog::setupPage()
 	_othersDialog->decorationBox->addItems(Utils::getWindowDecorationsStyle());
 
 	_othersDialog->scriptCheckBox->setChecked(false);
-	_othersDialog->wallpaperCheckBox->setChecked(false);
+	_othersDialog->wallTypeBox->addItems({"Image","Unsplash"});
+    _othersDialog->wallTypeBox->setCurrentText("Image");
+    _othersDialog->wallpaperCheckBox->setChecked(false);
+
+    //FixMe: Create the unsplash model and add it ;
 }
 
 void EditProfileDialog::saveProfile()
@@ -178,15 +184,25 @@ void EditProfileDialog::enableKvantum(const QString &widgetName)
 		_stylesDialog->kvLabel->setHidden(true);
 	}
 }
+void EditProfileDialog::enableWallpaper(const bool &isEnabled)
+{
+    _othersDialog->wallTypeBox->setEnabled(isEnabled);
+    _othersDialog->wallPicBtn->setEnabled(isEnabled);
+    _othersDialog->unsplashComboBox->setEnabled(isEnabled);
+}
 void EditProfileDialog::changeWallType(const QString &wallType)
 {
     if(wallType == "Image"){
         _othersDialog->unsplashComboBox->setHidden(true);
         _othersDialog->wallPicBtn->setHidden(false);
+        _othersDialog->unsplashLabel->setHidden(true);
+        _othersDialog->imgLabel->setHidden(false);
     }
     if(wallType == "Unsplash"){
         _othersDialog->unsplashComboBox->setHidden(false);
         _othersDialog->wallPicBtn->setHidden(true);
+        _othersDialog->unsplashLabel->setHidden(false);
+        _othersDialog->imgLabel->setHidden(true);
     }
 }
 void EditProfileDialog::enableProfileName(const int &state)

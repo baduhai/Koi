@@ -104,7 +104,7 @@
      <item row="9" column="2" colspan="2">
       <widget class="QPushButton" name="wallPicBtn">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string>Select Wallpaper ...</string>
@@ -113,16 +113,9 @@
      </item>
      <item row="8" column="2" colspan="2">
       <widget class="QComboBox" name="wallTypeBox">
-       <item>
-        <property name="text">
-         <string>Image</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Unsplash</string>
-        </property>
-       </item>
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item row="8" column="1">
@@ -150,7 +143,11 @@
       </layout>
      </item>
      <item row="10" column="2" colspan="2">
-      <widget class="QComboBox" name="unsplashComboBox"/>
+      <widget class="QComboBox" name="unsplashComboBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item row="7" column="2" colspan="2">
       <widget class="QPushButton" name="scriptBtn">
@@ -159,6 +156,26 @@
        </property>
        <property name="text">
         <string>Select Script ...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QLabel" name="unsplashLabel">
+       <property name="text">
+        <string>Unsplash:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLabel" name="imgLabel">
+       <property name="text">
+        <string>Image:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
