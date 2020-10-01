@@ -2,11 +2,9 @@
 #include "utils.h"
 
 Utils::Utils()
-	:useGlobalProcess(new QProcess(this))
 {
 }
 Utils::Utils(Profile *pProfile)
-	:useGlobalProcess(new QProcess(this))
 {
 	Q_ASSERT(pProfile);
 	_profile = pProfile;
@@ -250,9 +248,10 @@ void Utils::useGlobalTheme()
 {
 	QString command = QStringLiteral("lookandfeeltool");
 	QStringList arguments = {"-a", _profile->pluginName()};
-	useGlobalProcess->start(command, arguments);
+	auto *useGlob = new QProcess();
+	useGlob->start(command, arguments);
 	//TODO recheck this there was memoryleak
-	useGlobalProcess->waitForFinished();
+	QObject::connect(useGlob, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),useGlob, &QProcess::deleteLater);
 }
 
 // Use to switch to a different theme profile
