@@ -6,7 +6,6 @@ set(CMAKE_AUTOUIC ON)
 #The list of all the source files
 set(koi_SRC
         about.cpp
-        gtk.cpp
         license.cpp
         main.cpp
         mainwindow.cpp

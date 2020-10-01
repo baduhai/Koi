@@ -5,6 +5,7 @@ Utils::Utils()
 {
 }
 Utils::Utils(Profile *pProfile)
+    :wallpaper()
 {
 	Q_ASSERT(pProfile);
 	_profile = pProfile;
@@ -18,7 +19,7 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 	notifyInterface = new QDBusInterface("org.freedesktop.Notifications",
 										 "/org/freedesktop/Notifications",
 										 "org.freedesktop.Notifications",
-										 *bus);
+										 QDBusConnection::sessionBus());
 	QString app_name = "Koi";        // What program is the notification coming from?
 	uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
 	QString
@@ -30,6 +31,13 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 	int timeout =
 		timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
 	notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+}
+
+void Utils::setGtk(const QString& gtkTheme)
+{
+    QDBusInterface interface("org.kde.GtkConfig", "/GtkConfig", "org.kde.GtkConfig", QDBusConnection::sessionBus());
+    interface.call("setGtk2Theme", gtkTheme);
+    interface.call("setGtk3Theme", gtkTheme);
 }
 
 QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
@@ -70,8 +78,8 @@ QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 	return nearestName;
 }
 
+//Get all Needed this for a profile.
 //PlasmaStyle
-
 QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
 	QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
@@ -180,6 +188,7 @@ QStringList Utils::getCursorThemes()
 	return cursorThemes;
 }
 
+//Window Decorations.
 QList<Decoration> Utils::getWindowDecorations()
 {
 	/*There are two ways that window decoration is written that i know of
@@ -235,44 +244,48 @@ QList<Decoration> Utils::getWindowDecorations()
 	}
 	return dt;
 }
-
-bool Utils::themeExists(const QString &themeName)
+QStringList Utils::getWindowDecorationsStyle()
 {
-	QFileInfo localTheme(QDir::homePath() + QStringLiteral("/.local/share/plasma/look-and-feel/") + themeName
-							 + QStringLiteral("/contents/defaults"));
-	return localTheme.exists() && localTheme.isFile();
-}
-
-// Manage switching themes functions
-void Utils::useGlobalTheme()
-{
-	QString command = QStringLiteral("lookandfeeltool");
-	QStringList arguments = {"-a", _profile->pluginName()};
-	auto *useGlob = new QProcess();
-	useGlob->start(command, arguments);
-	//TODO recheck this there was memoryleak
-	QObject::connect(useGlob, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),useGlob, &QProcess::deleteLater);
+    QList<Decoration> dt = Utils::getWindowDecorations();
+    QStringList styleList;
+    for (const auto &style: qAsConst(dt)) {
+        styleList.append(style.name);
+    }
+    styleList.sort();
+    return styleList;
 }
 
 // Use to switch to a different theme profile
 void Utils::go()
 {
-	goKvantumStyle();
-	useGlobalTheme();
-	goGtk();
-	goWall();
-	runScript();
-	QSettings s;
-	if (s.value("notify").toBool()) {
-		notify("Switched to " + _profile->name() + " mode!",
-			   "Some applications may need to be restarted for applied changes to take effect.");
-	}
+    goKvantumStyle();
+    useGlobalTheme();
+    setGtk(_profile->getGtk());
+    goWall();
+    runScript();
+    QSettings s;
+    if (s.value("notify").toBool()) {
+        notify("Switched to " + _profile->name() + " mode!",
+               "Some applications may need to be restarted for applied changes to take effect.");
+    }
+
 }
 
-void Utils::goGtk()
+// Manage switching plasma themes
+void Utils::useGlobalTheme()
 {
-    QString s(_profile->getGtk() );
-	gtk.setGtk(s);
+    QString command = QStringLiteral("lookandfeeltool");
+    QStringList arguments = {"-a", _profile->pluginName()};
+    /** i don't know why if i use the below command i get
+     * SIGTRAP error when debugging if above any of the functions that calls Dbus
+     * in the Utils::go() function above.
+     */
+//    auto *useGlob = new QProcess();
+//    QObject::connect(useGlob, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),useGlob, &QProcess::deleteLater);
+//    useGlob->start(command, arguments);
+    if (!QProcess::startDetached(command, arguments)) {
+			qDebug() << "Failed to run " + _profile->name() + " Global theme";
+		}
 }
 
 void Utils::goKvantumStyle()
@@ -295,17 +308,6 @@ void Utils::goWall()
 			   "Koi tried to change your " + _profile->name() + " wallpaper, but no wallpaper fie was selected",
 			   5000);
 	}
-}
-
-QStringList Utils::getWindowDecorationsStyle()
-{
-	QList<Decoration> dt = Utils::getWindowDecorations();
-	QStringList styleList;
-	for (const auto &style: qAsConst(dt)) {
-		styleList.append(style.name);
-	}
-	styleList.sort();
-	return styleList;
 }
 void Utils::runScript()
 {

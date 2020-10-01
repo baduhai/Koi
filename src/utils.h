@@ -1,7 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 // Headers
-#include "gtk.h"
 #include "wallpaper.h"
 #include "kvantumstyle.h"
 
@@ -28,7 +27,7 @@ class Utils: public QObject
 	Q_OBJECT
 public:
 
-	Utils(Profile *pProfile);
+	explicit Utils(Profile *pProfile);
 
 	Utils();
 
@@ -49,7 +48,6 @@ public:
 	//this would be used for global theme
 	void useGlobalTheme();
 	void go();
-	void goGtk();
 	void goKvantumStyle();
 	void goWall();
 
@@ -57,8 +55,7 @@ public:
 	static bool themeExists(const QString &themeName);
 
 private:
-
-	Gtk gtk;
+	void setGtk(const QString &gtkTheme);
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;
 
