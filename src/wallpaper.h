@@ -9,7 +9,7 @@ class Wallpaper
 public:
     Wallpaper();
 
-    void setWallpaper(QString wallFile);
+    void setWallpaper(QVariant wallFile);
 
 private:
     QDBusConnection *bus;

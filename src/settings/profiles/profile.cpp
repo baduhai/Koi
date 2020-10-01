@@ -260,7 +260,7 @@ bool Profile::getScriptEnabled() const
 {
 	return m_scriptEnabled;
 }
-QString Profile::getWallpaper() const
+QVariant Profile::getWallpaper() const
 {
 	return m_wallpaper;
 }
@@ -323,7 +323,7 @@ void Profile::setScriptEnabled(const bool &scriptEnabled)
 {
 	m_scriptEnabled = scriptEnabled;
 }
-void Profile::setWallpaper(const QString &wallpaper)
+void Profile::setWallpaper(QVariant wallpaper)
 {
 	m_wallpaper = wallpaper;
 }
@@ -356,5 +356,5 @@ void Profile::setGlobDir()
 void Profile::setConfigPath()
 {
 	m_configPath = QStandardPaths::writableLocation(
-		QStandardPaths::AppLocalDataLocation) + "/" + m_name + ".koi";
+		QStandardPaths::GenericDataLocation) + "/koi/" + m_name + ".koi";
 }

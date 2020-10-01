@@ -183,13 +183,12 @@ QHash<QString, QString> ProfileManager::listFavourites()
 void ProfileManager::saveProfile(const QString &profileName)
 {
 	Q_ASSERT(_profileList.value(profileName));
-
-	QFileInfo profileInfo(QStandardPaths::writableLocation(
-		QStandardPaths::AppLocalDataLocation) + "/" + profileName + ".koi");
+	auto profile = _profileList.value(profileName);
+	QFileInfo profileInfo(profile->configPath());
 	QSettings s(profileInfo.absoluteFilePath(), QSettings::IniFormat);
-	_profileList.value(profileName)->writeConfig(s);
-	_profileList.value(profileName)->createProfileGlobalDir();
-	_profileList.value(profileName)->writeToGlobal();
+	profile->writeConfig(s);
+	profile->createProfileGlobalDir();
+	profile->writeToGlobal();
 }
 void ProfileManager::deleteProfile()
 {

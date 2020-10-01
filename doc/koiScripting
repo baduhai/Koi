@@ -1,0 +1,33 @@
+var Desktops = desktops();  
+for (i=0;i<Desktops.length;i++) {
+        d = Desktops[i];
+        print(d); 
+        print(d.currentconfigGroup );
+        d.wallpaperPlugin = "org.kde.image";
+        d.currentConfigGroup = Array("Wallpaper",
+                                    "org.kde.potd",
+                                    "General");
+        print(d.currentConfigGroup + "\n");
+        d.writeConfig("Provider", "unsplash");
+        d.writeConfig("Category", "531563");        
+}
+// "4K  ='1339090'
+// "Ultra Wide =1339089'
+// Background = 1339276'
+//the view from in there= 1198107
+// nature = '1065376'
+// galaxy = 1065374
+// black =1101680
+// cool = 1111678
+//darkandmoody=762960
+// walls = 1708734
+// spooky = 1901880
+//pastel = 531563
+//pattern = 175083
+//neon= 2170586 may remove
+//light washed tones = 1020268 
+//blur = 420324
+// monochrome = 400620
+//workspace = 430077
+//topview = 399194
+//ice = 482366

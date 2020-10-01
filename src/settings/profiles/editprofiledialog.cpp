@@ -95,7 +95,8 @@ void EditProfileDialog::updatePages()
 	_othersDialog->decorationBox->setCurrentText(_profile->getDecName());
 	_othersDialog->scriptCheckBox->setChecked(_profile->getScriptEnabled());
 	_othersDialog->scriptBtn->setText(_profile->getScript());
-	_othersDialog->wallPicBtn->setText(_profile->getWallpaper());
+	//FixMe: check if it is unsplash or an image.
+	_othersDialog->wallPicBtn->setText(_profile->getWallpaper().toString());
 	_othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
 }
 void EditProfileDialog::setProfile(Profile *p)
@@ -127,6 +128,7 @@ void EditProfileDialog::setupPage()
     _othersDialog->wallpaperCheckBox->setChecked(false);
 
     //FixMe: Create the unsplash model and add it ;
+    setupUnsplash();
 }
 
 void EditProfileDialog::saveProfile()
@@ -149,6 +151,9 @@ void EditProfileDialog::saveProfile()
 	_profile->setMouse(_othersDialog->cursorBox->currentText());
 	_profile->setScriptEnabled(_othersDialog->scriptCheckBox->isChecked());
 	_profile->setWallEnabled(_othersDialog->wallpaperCheckBox->isChecked());
+	if(!_othersDialog->unsplashComboBox->isHidden()){
+	    _profile->setWallpaper(_othersDialog->unsplashComboBox->currentData());
+	}
 
 	//Decorations.
 	QString decoration(_othersDialog->decorationBox->currentText());
@@ -166,7 +171,7 @@ void EditProfileDialog::saveProfile()
 	}
 	_profile->setConfigPath();
 	_profile->setGlobDir();
-	//this is meant to be in the controller as i currently don't know how.
+    // TODO this is meant to be in the controller as i currently don't know how.
 	ProfileManager::instance()->addProfile(_profile);
 	ProfileManager::instance()->saveProfile(_profile->name());
 
@@ -219,6 +224,20 @@ void EditProfileDialog::selectWallpaper()
 	//todo add the file format here for wallpaper.
 	_profile->setWallpaper(QFileDialog::getOpenFileName(this,
 														tr("Choose wallpaper"), "/home", tr(".png")));
+}
+void EditProfileDialog::setupUnsplash()
+{
+    auto box(_othersDialog->unsplashComboBox);
+    box->clear();
+    box->addItem("4k",133980);
+    box->addItem("Ultra Wide", 1339089);
+    box->addItem("Background", 1339276);
+    box->addItem("Nature", 1065376);
+    box->addItem("Pastel", 531563);
+    box->addItem("Black", 1101680);
+    box->addItem("Ice", 482366);
+    box->addItem("Top View", 399194);
+    //TODO add more from the doc file but not too much .
 }
 
 

@@ -51,6 +51,7 @@ private:
 
 	//sProfile m_tempProfile;
 	Profile *_profile;
+    void setupUnsplash();
 };
 
 
