@@ -21,17 +21,17 @@ void Wallpaper::setWallpaper(QVariant wallFile)
         script += "d.writeConfig(\"Image\", \"file://";
         script += wallFile.toString();
         script += "\");}";
-        qDebug() << "image" << script;
         interface.call("evaluateScript", script);
     }
     else {
         //TODO make this switch automatically.
-        script += "d.wallpaperPlugin = \"org.kde.potd\";";
         script += "d.currentConfigGroup = Array(\"Wallpaper\",\"org.kde.potd\", \"General\");";
         script += "d.writeConfig(\"Provider\", \"unsplash\");";
         script += "d.writeConfig(\"Category\", ";
         script += wallFile.toString();
-        script += ");}";
+        script += ");";
+        script += "d.wallpaperPlugin = \"org.kde.potd\";";
+        script += "}";
         interface.call("evaluateScript", script);
     }
 }

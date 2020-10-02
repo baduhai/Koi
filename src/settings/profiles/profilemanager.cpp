@@ -25,7 +25,7 @@ ProfileManager *ProfileManager::instance()
 QFileInfoList ProfileManager::listProfiles()
 {
 	QFileInfoList pList;
-	QDir dirs(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+    QDir dirs(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/koi");
 	if (!dirs.exists()) {
 		QDir().mkdir(dirs.absolutePath());
 		qDebug() << "no profiles in koi ";

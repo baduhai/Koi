@@ -96,8 +96,20 @@ void EditProfileDialog::updatePages()
 	_othersDialog->scriptCheckBox->setChecked(_profile->getScriptEnabled());
 	_othersDialog->scriptBtn->setText(_profile->getScript());
 	//FixMe: check if it is unsplash or an image.
-	_othersDialog->wallPicBtn->setText(_profile->getWallpaper().toString());
-	_othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
+    _othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
+    if(_othersDialog->wallpaperCheckBox->isChecked()){
+        auto wallpaper = _profile->getWallpaper();
+        if(wallpaper.toInt() == 0){
+            _othersDialog->wallPicBtn->setText(_profile->getWallpaper().toString());
+        }else{
+            _othersDialog->wallTypeBox->setCurrentText("Unsplash");
+            //TODO choose the right one.
+            auto index =  _othersDialog->unsplashComboBox->findData(wallpaper.toString());
+            _othersDialog->unsplashComboBox->setCurrentIndex(index);
+        }
+    }
+
+
 }
 void EditProfileDialog::setProfile(Profile *p)
 {
