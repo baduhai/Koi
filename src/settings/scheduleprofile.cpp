@@ -36,6 +36,7 @@ void ScheduleProfile::createView()
 	//Add Headers this order:  Favorites  ProfileName
 	QStringList headerNames({QString(), "Name"});
 	_profileTimeModel->setHorizontalHeaderLabels({"Profile Name ", "Start Time"});
+    _profileTimeModel->horizontalHeaderItem(1)->setToolTip("The start time of the profile.");
 
 	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(FavNameColumn, QHeaderView::Stretch);
 	ui->profleTimeView->horizontalHeader()->setSectionResizeMode(TimeColumn, QHeaderView::ResizeToContents);

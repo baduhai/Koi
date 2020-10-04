@@ -45,10 +45,19 @@
            </widget>
           </item>
           <item row="4" column="3" colspan="2">
-           <widget class="QComboBox" name="colorBox"/>
+           <widget class="QComboBox" name="colorBox">
+            <property name="toolTip">
+             <string>The colour  used by Qt applications</string>
+            </property>
+           </widget>
           </item>
           <item row="8" column="3" colspan="2">
-           <widget class="QComboBox" name="widgetBox"/>
+           <widget class="QComboBox" name="widgetBox">
+            <property name="toolTip">
+             <string>Select kvantum or kvantum-dark if available,
+ To enable the kvantum option</string>
+            </property>
+           </widget>
           </item>
           <item row="10" column="1" colspan="5">
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -148,6 +157,9 @@
       <widget class="QLineEdit" name="nameTextBox">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Enter the name the profile should be called</string>
        </property>
       </widget>
      </item>

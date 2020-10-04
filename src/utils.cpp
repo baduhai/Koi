@@ -80,8 +80,10 @@ QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 
 //Get all Needed this for a profile.
 //PlasmaStyle
+//TODO use standard paths for all these and make sure that they work.
 QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
+
 	QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
 	QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
 	QStringList plasmaStyles;
@@ -93,6 +95,7 @@ QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 	}
 	plasmaStyles.removeDuplicates();
 	plasmaStyles.append("breeze");
+	plasmaStyles.sort();
 	return plasmaStyles;
 }
 
@@ -118,6 +121,7 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
 		colorSchemesSystemNames.append(i.baseName());
 	}
 	QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
+	colorSchemesNames.sort();
 	return colorSchemesNames;
 }
 
@@ -199,6 +203,9 @@ QList<Decoration> Utils::getWindowDecorations()
 	its kinda hacky but i did it this way , if there is a better way tell me and i would update this  */
 	QList<Decoration> dt;
 	QDir sysLib; //for the library
+	//FixMe : this does not hold true for all distros
+	//notable fix still looking for a better way
+	//qmake -query  | grep -i qt_install_plugins
 	QDir dir("/usr/lib/qt/plugins/org.kde.kdecoration2/");
 	if (dir.exists()) {
 		sysLib = dir;
