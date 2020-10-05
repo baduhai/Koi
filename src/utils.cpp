@@ -130,10 +130,10 @@ QStringList Utils::getGtkThemes() // Get all available gtk themes
 {
 	QDir gtkLocalDir(QDir::homePath() + "/.themes");
 	QDir gtkSystemDir("/usr/share/themes");
-	QStringList gtkThemes = gtkLocalDir.entryList(QDir::Dirs) + gtkSystemDir.entryList(QDir::Dirs);
+	QStringList gtkThemes(gtkLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+	gtkThemes.append(gtkSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
 	gtkThemes.removeDuplicates();
-	gtkThemes.removeFirst();
-	gtkThemes.removeFirst();
+	gtkThemes.sort();
 	return gtkThemes;
 }
 //widget styles
@@ -141,6 +141,7 @@ QStringList Utils::getWidgetStyles()
 {
 	//this literally took me 2 hrs to find.
 	QStringList widgetStyles = QStyleFactory::keys();
+	widgetStyles.sort();
 	return widgetStyles;
 }
 //Kvantum
@@ -156,10 +157,12 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 		kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
 	}
 	kvantumStyles.removeDuplicates();
+	kvantumStyles.sort();
 	return kvantumStyles;
 }
 
 //Icons
+//TODO some of this are not actually icon themes like hicolor /remove them
 QStringList Utils::getIcons() // Get all available icon themes
 {
 	QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
@@ -168,6 +171,7 @@ QStringList Utils::getIcons() // Get all available icon themes
 	iconThemes.removeDuplicates();
 	iconThemes.removeFirst();
 	iconThemes.removeFirst();
+	iconThemes.sort();
 	return iconThemes;
 }
 
@@ -189,6 +193,7 @@ QStringList Utils::getCursorThemes()
 	}
 	//local cursors
 	cursorThemes.append(cursorLocalParentDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+	cursorThemes.sort();
 	return cursorThemes;
 }
 
@@ -203,10 +208,12 @@ QList<Decoration> Utils::getWindowDecorations()
 	its kinda hacky but i did it this way , if there is a better way tell me and i would update this  */
 	QList<Decoration> dt;
 	QDir sysLib; //for the library
-	//FixMe : this does not hold true for all distros
-	//notable fix still looking for a better way
-	//qmake -query  | grep -i qt_install_plugins
-	QDir dir("/usr/lib/qt/plugins/org.kde.kdecoration2/");
+
+	QString pluginDir(QLibraryInfo::location(QLibraryInfo::PluginsPath));
+	QDir dir(pluginDir + "/org.kde.kdecoration2/");
+	//TODO delete path variable just for debugging
+	QString path(dir.absolutePath());
+	qDebug() << "the plugin path " <<  path;
 	if (dir.exists()) {
 		sysLib = dir;
 	}
@@ -265,12 +272,18 @@ QStringList Utils::getWindowDecorationsStyle()
 // Use to switch to a different theme profile
 void Utils::go()
 {
+    QSettings s;
     goKvantumStyle();
     useGlobalTheme();
     setGtk(_profile->getGtk());
     goWall();
     runScript();
-    QSettings s;
+
+    //update colours;
+    auto *krdbProcess = new QProcess();
+    krdbProcess->setProgram(QStringLiteral("krdb"));
+    QObject::connect(krdbProcess, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),krdbProcess, &QProcess::deleteLater);
+    krdbProcess->start();
     if (s.value("notify").toBool()) {
         notify("Switched to " + _profile->name() + " mode!",
                "Some applications may need to be restarted for applied changes to take effect.");
@@ -282,17 +295,18 @@ void Utils::go()
 void Utils::useGlobalTheme()
 {
     QString command = QStringLiteral("lookandfeeltool");
-    QStringList arguments = {"-a", _profile->pluginName()};
-    /** i don't know why if i use the below command i get
+    QStringList arguments = {QStringLiteral("-a"), _profile->pluginName()};
+    /** UPDATE it is a bug in QT version 5.15.1
+     * i don't know why if i use the below command i get
      * SIGTRAP error when debugging if above any of the functions that calls Dbus
      * in the Utils::go() function above.
      */
-//    auto *useGlob = new QProcess();
-//    QObject::connect(useGlob, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),useGlob, &QProcess::deleteLater);
-//    useGlob->start(command, arguments);
-    if (!QProcess::startDetached(command, arguments)) {
-			qDebug() << "Failed to run " + _profile->name() + " Global theme";
-		}
+    auto *useGlob = new QProcess();
+    QObject::connect(useGlob, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),useGlob, &QProcess::deleteLater);
+    useGlob->start(command, arguments);
+//    if (!QProcess::startDetached(command, arguments)) {
+//			qDebug() << "Failed to run " + _profile->name() + " Global theme";
+//		}
 }
 
 void Utils::goKvantumStyle()

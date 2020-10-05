@@ -27,7 +27,8 @@ include(ECMOptionalAddSubdirectory)
 include(ECMAddAppIcon)
 include(ECMInstallIcons)
 
-
+execute_process(COMMAND ${QMAKE_EXECUTABLE} -query QT_VERSION OUTPUT_VARIABLE QT_VERSION)
+MESSAGE("Installed version:" ${QT_VERSION})
 add_definitions(-DQT_DEPRECATED_WARNINGS
         #QT_USE_STRINGBUILDER IS for reducing the footprint of concatenated strings in was used in utils.cpp
         -DQT_USE_QSTRINGBUILDER)
@@ -37,4 +38,3 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS CoreAddons WidgetsAddons
 
 
 add_subdirectory(src)
-

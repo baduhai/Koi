@@ -32,7 +32,7 @@ This is a TODO list
 - [x] make the favourites button work
 - [ ] updating pages 
 - [ ] add Global Shortcut to cycle between themes.//not yet sure on a good way to implement this.
-
+- [ ] replace with qtStringLiteral for static data.
 
 ## **How to Build** 
 
