@@ -24,7 +24,6 @@ void Wallpaper::setWallpaper(QVariant wallFile)
         interface.call("evaluateScript", script);
     }
     else {
-        //TODO make this switch automatically.
         script += "d.currentConfigGroup = Array(\"Wallpaper\",\"org.kde.potd\", \"General\");";
         script += "d.writeConfig(\"Provider\", \"unsplash\");";
         script += "d.writeConfig(\"Category\", ";

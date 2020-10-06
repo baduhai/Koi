@@ -1,9 +1,6 @@
 
 #include "utils.h"
 
-Utils::Utils()
-{
-}
 Utils::Utils(Profile *pProfile)
     :wallpaper()
 {
@@ -320,11 +317,8 @@ void Utils::goKvantumStyle()
 void Utils::goWall()
 {
 	if (_profile->getWallEnabled()) {
-		//TODO check if it is an actually file and a picture.
-		wallpaper.setWallpaper(_profile->getWallpaper());
 	}
 	else {
-		//TODO change the type of error.
 		notify("Error setting Wallpaper",
 			   "Koi tried to change your " + _profile->name() + " wallpaper, but no wallpaper fie was selected",
 			   5000);

@@ -23,7 +23,6 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent)
 	connect(_profileListModel, &QStandardItemModel::itemChanged, this, &ProfileSettingsDialog::itemDataChanged);
 	connect(manager, &ProfileManager::favouritesChanged, manager, &ProfileManager::saveFavourites);
 
-	//TODO when you don't have any profile selected, point to nothing
 	//and disable the edit and delete button.
 	// may use this for double clicked too
 	connect(ui->profilesList->selectionModel(),

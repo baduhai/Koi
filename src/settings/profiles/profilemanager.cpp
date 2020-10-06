@@ -192,7 +192,6 @@ void ProfileManager::saveProfile(const QString &profileName)
 }
 void ProfileManager::deleteProfile()
 {
-	//TODO fix this.
 	qDebug() << "this is the active profile" << _activeProfile->name();
 	Q_ASSERT(_activeProfile);
 	QDir delProfile(_activeProfile->getGlobDir());

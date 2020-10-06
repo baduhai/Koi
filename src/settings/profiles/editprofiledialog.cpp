@@ -45,6 +45,8 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	_extDialog->setupUi(extPageWidget);
 	KPageWidgetItem *extPageItem = addPage(extPageWidget, extPageName);
 	extPageItem->setIcon(QIcon::fromTheme("preferences"));
+	//TODO: enable the External Page when it has been implemented
+	extPageItem->setEnabled(false);
 
 
 
@@ -79,10 +81,10 @@ void EditProfileDialog::updatePages()
 {
 	Q_ASSERT(_profile);
 	//Styles Page.
-	//TODO enable later when you can delete profiles
-	if (_profile->name() == "light" || _profile->name() == "dark") {
+	//TODO enable later when you can rename profiles
+//	if (_profile->name() == "light" || _profile->name() == "dark") {
 		_stylesDialog->nameCheckBox->setHidden(true);
-	}
+//	}
 	_stylesDialog->nameTextBox->setText(_profile->name());
 	_stylesDialog->plasmaBox->setCurrentText(_profile->getPlasma());
 	_stylesDialog->colorBox->setCurrentText(_profile->getColor());
@@ -95,15 +97,15 @@ void EditProfileDialog::updatePages()
 	_othersDialog->decorationBox->setCurrentText(_profile->getDecName());
 	_othersDialog->scriptCheckBox->setChecked(_profile->getScriptEnabled());
 	_othersDialog->scriptBtn->setText(_profile->getScript());
-	//FixMe: check if it is unsplash or an image.
+
     _othersDialog->wallpaperCheckBox->setChecked(_profile->getWallEnabled());
     if(_othersDialog->wallpaperCheckBox->isChecked()){
         auto wallpaper = _profile->getWallpaper();
         if(wallpaper.toInt() == 0){
+             _othersDialog->wallTypeBox->setCurrentText("Image");
             _othersDialog->wallPicBtn->setText(_profile->getWallpaper().toString());
         }else{
             _othersDialog->wallTypeBox->setCurrentText("Unsplash");
-            //TODO choose the right one.
             auto index =  _othersDialog->unsplashComboBox->findData(wallpaper.toString());
             _othersDialog->unsplashComboBox->setCurrentIndex(index);
         }
@@ -139,7 +141,6 @@ void EditProfileDialog::setupPage()
     _othersDialog->wallTypeBox->setCurrentText("Image");
     _othersDialog->wallpaperCheckBox->setChecked(false);
 
-    //FixMe: Create the unsplash model and add it ;
     setupUnsplash();
 }
 

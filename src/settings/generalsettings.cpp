@@ -8,7 +8,11 @@ GeneralSettings::GeneralSettings(QWidget *parent)
 {
 	ui->setupUi(this);
     loadSettings();
-	//connect(ui->notifyCheckBox, &QCheckBox::toggled,this, &GeneralSettings::enableNotification);
+
+    //TODO enable this when you have implemented autostart
+    ui->autostartCheckBox->setHidden(true);
+
+    //TODO move start hidden check box here from the main window
 }
 
 GeneralSettings::~GeneralSettings()
