@@ -12,7 +12,7 @@ GeneralSettings::GeneralSettings(QWidget *parent)
     //TODO enable this when you have implemented autostart
     ui->autostartCheckBox->setHidden(true);
 
-    //TODO move start hidden check box here from the main window
+    ui->generalMes->setHidden(true);
 }
 
 GeneralSettings::~GeneralSettings()

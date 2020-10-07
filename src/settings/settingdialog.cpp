@@ -12,6 +12,7 @@ SettingDialog::SettingDialog(QWidget *parent)
 	_profileUi(nullptr),
 	_scheduleUi(nullptr)
 {
+    this->setMinimumSize(605,353);
 	// KOI Settings Location on the drive
 	buttonBox()->setStandardButtons(QDialogButtonBox::Ok
 										| QDialogButtonBox::Cancel);

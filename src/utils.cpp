@@ -77,7 +77,6 @@ QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 
 //Get all Needed this for a profile.
 //PlasmaStyle
-//TODO use standard paths for all these and make sure that they work.
 QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
     QStringList plasmaStyles;
@@ -89,13 +88,14 @@ QStringList Utils::getPlasmaStyles() // Get all available plasma styles
         }
     }
 
-	plasmaStyles.removeDuplicates();
 	plasmaStyles.append("breeze");
+    plasmaStyles.removeDuplicates();
     plasmaStyles.sort();
 	return plasmaStyles;
 }
 
 //Color Schemes
+//TODO use standard paths
 QStringList Utils::getColorSchemes() // Get all available color schemes
 {
 	QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
@@ -124,18 +124,18 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
 //GTK
 QStringList Utils::getGtkThemes() // Get all available gtk themes
 {
-    //TODO check if it has a gtk 3.0 folder in there
     QStringList gtkThemes;
-    QDir gtkLocalDir(QDir::homePath() + QStringLiteral("/.themes"));
+    QString gtkLocalDir(QDir::homePath() + QStringLiteral("/.themes"));
     //all the possible path of gtkthemes.
     QStringList gtkDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "themes", QStandardPaths::LocateDirectory));
+    gtkDirList.append(gtkLocalDir);
     for( const auto &path: gtkDirList){
         QDir gtkDir(path);
         if(!gtkDir.exists()){
             continue;
         }
         auto themeList(gtkDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot));
-        themeList.append(gtkLocalDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+
         for(const auto &tName: themeList){
             QDir themeDir(tName.absoluteFilePath());
             if(themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot).contains(QStringLiteral("gtk-3.0"))){
@@ -176,12 +176,26 @@ QStringList Utils::getKvantumStyles() // Get all available kvantum styles
 //TODO some of this are not actually icon themes like hicolor /remove them
 QStringList Utils::getIcons() // Get all available icon themes
 {
-	QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
-	QDir iconsSystemDir("/usr/share/icons");
-	QStringList iconThemes = iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
-	iconThemes.removeDuplicates();
-	iconThemes.removeFirst();
-	iconThemes.removeFirst();
+    QStringList iconDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
+                                                      "icons", QStandardPaths::LocateDirectory));
+    QStringList iconThemes;
+
+    for( const auto &path: iconDirList){
+        QDir iconDir(path);
+        if(!iconDir.exists()){
+            continue;
+        }
+        auto themeList(iconDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot));
+        for(const auto &tName: themeList){
+            QDir themeDir(tName.absoluteFilePath());
+            if(themeDir.entryList(QDir::Files | QDir::NoDotAndDotDot).contains(QStringLiteral("index.theme"))){
+                iconThemes.append(themeDir.dirName());
+            }
+        }
+    }
+    //TODO a better way
+    iconThemes.removeAll(QStringLiteral("hicolor"));
+    iconThemes.removeAll(QStringLiteral("default"));
 	iconThemes.sort();
 	return iconThemes;
 }
@@ -189,21 +203,26 @@ QStringList Utils::getIcons() // Get all available icon themes
 //cursor
 QStringList Utils::getCursorThemes()
 {
-	QDir cursorOldLocalParentDir(QDir::homePath() + QStringLiteral("/.local/share/icons/"));
-	QDir cursorLocalParentDir(QDir::homePath() + QStringLiteral("/.icons"));
-	QDir cursorSystemParentDir(QStringLiteral("/usr/share/icons"));
-	QFileInfoList parentDir(cursorOldLocalParentDir.entryInfoList(QDir::Dirs));
-	parentDir.append(cursorSystemParentDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
-	QStringList cursorThemes;
-	//oldlocal and system
-	for (QFileInfo &info : parentDir) {
-		QDir filepath(info.absoluteFilePath() + QStringLiteral("/cursors"));
-		if (filepath.exists()) {
-			cursorThemes.append(info.fileName());
-		}
-	}
-	//local cursors
-	cursorThemes.append(cursorLocalParentDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    QStringList cursorThemes;
+    QString cursorLocalDir(QDir::homePath() + QStringLiteral("/.icons"));
+    //all the possible path of cursors.
+    QStringList cursorDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
+                                                        "icons", QStandardPaths::LocateDirectory));
+    cursorDirList.append(cursorLocalDir);
+    for( const auto &path: cursorDirList){
+        QDir cursorDir(path);
+        if(!cursorDir.exists()){
+            continue;
+        }
+        auto cursorInfoList(cursorDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot));
+        for(const auto &tName: cursorInfoList){
+            QDir themeDir(tName.absoluteFilePath());
+            if(themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot).contains(QStringLiteral("cursors"))){
+                cursorThemes.append(themeDir.dirName());
+            }
+        }
+    }
+
 	cursorThemes.sort();
 	return cursorThemes;
 }
@@ -285,7 +304,7 @@ void Utils::go()
 {
     QSettings s;
     goKvantumStyle();
-
+    useGlobalTheme();
     setGtk(_profile->getGtk());
     goWall();
     runScript();
@@ -299,7 +318,6 @@ void Utils::go()
         notify("Switched to " + _profile->name() + " mode!",
                "Some applications may need to be restarted for applied changes to take effect.");
     }
-    useGlobalTheme();
 }
 
 // Manage switching plasma themes
