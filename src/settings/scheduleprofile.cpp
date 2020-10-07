@@ -17,6 +17,10 @@ ScheduleProfile::ScheduleProfile(QWidget *parent)
 	connect(ui->profleTimeView, &QTableView::doubleClicked, this, &ScheduleProfile::enableProfile);
 	connect(manager, &ProfileManager::favouritesChanged, this, &ScheduleProfile::favouritesChanged);
     connect(ui->schedTypeBox, &QComboBox::currentTextChanged, this, &ScheduleProfile::switchPages );
+
+    //TODO: renable this after implementing the sunset and sunrise
+    ui->schedTypeBox->setEnabled(false);
+
 }
 
 ScheduleProfile::~ScheduleProfile()

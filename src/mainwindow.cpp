@@ -43,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent)
         m_settings.endGroup();
     }
 
-    ui->hiddenCheckBox->setChecked(m_settings.value("start-hidden").toInt());
     ui->resMsg->hide();
     auto actionRes = new QAction("Restart", this);
     actionRes->setIcon(QIcon::fromTheme("view-refresh"));
@@ -154,15 +153,15 @@ void MainWindow::on_darkBtn_clicked()
 	current.go();
 }
 
-void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
-{
-    m_settings.setValue("start-hidden", hiddenEnabled);
-	ui->resMsg->setText(tr("To set Hidden , Koi must be restarted."));
-	ui->resMsg->setMessageType(KMessageWidget::Warning);
-	ui->resMsg->animatedShow();
+//void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
+//{
+//    m_settings.setValue("start-hidden", hiddenEnabled);
+//	ui->resMsg->setText(tr("To set Hidden , Koi must be restarted."));
+//	ui->resMsg->setMessageType(KMessageWidget::Warning);
+//	ui->resMsg->animatedShow();
 //	QTest::qWait(3000);
 //	ui->resMsg->animatedHide();
-}
+//}
 
 // Menubar actions
 void MainWindow::on_actionQuit_triggered() // Quit app

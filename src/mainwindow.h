@@ -58,7 +58,7 @@ private slots:
 	void on_actionAbout_triggered();
 	void on_actionHide_triggered();
 
-	void on_hiddenCheckBox_stateChanged(int arg1);
+//	void on_hiddenCheckBox_stateChanged(int arg1);
 
 	void on_actionRestart_triggered();
 private:

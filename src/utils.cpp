@@ -80,19 +80,18 @@ QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
 //TODO use standard paths for all these and make sure that they work.
 QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
+    QStringList plasmaStyles;
+    QStringList plasmaDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "plasma/desktoptheme", QStandardPaths::LocateDirectory));
+    for (const auto &path: plasmaDirList){
+        QDir plasmaDir(path);
+        if(plasmaDir.exists()){
+            plasmaStyles.append(plasmaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+        }
+    }
 
-	QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
-	QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
-	QStringList plasmaStyles;
-	if (stylesLocalDir.exists()) {
-		plasmaStyles.append(stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-	}
-	if (stylesSystemDir.exists()) {
-		plasmaStyles.append(stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-	}
 	plasmaStyles.removeDuplicates();
 	plasmaStyles.append("breeze");
-	plasmaStyles.sort();
+    plasmaStyles.sort();
 	return plasmaStyles;
 }
 
@@ -125,10 +124,25 @@ QStringList Utils::getColorSchemes() // Get all available color schemes
 //GTK
 QStringList Utils::getGtkThemes() // Get all available gtk themes
 {
-	QDir gtkLocalDir(QDir::homePath() + "/.themes");
-	QDir gtkSystemDir("/usr/share/themes");
-	QStringList gtkThemes(gtkLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-	gtkThemes.append(gtkSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    //TODO check if it has a gtk 3.0 folder in there
+    QStringList gtkThemes;
+    QDir gtkLocalDir(QDir::homePath() + QStringLiteral("/.themes"));
+    //all the possible path of gtkthemes.
+    QStringList gtkDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "themes", QStandardPaths::LocateDirectory));
+    for( const auto &path: gtkDirList){
+        QDir gtkDir(path);
+        if(!gtkDir.exists()){
+            continue;
+        }
+        auto themeList(gtkDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot));
+        themeList.append(gtkLocalDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+        for(const auto &tName: themeList){
+            QDir themeDir(tName.absoluteFilePath());
+            if(themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot).contains(QStringLiteral("gtk-3.0"))){
+                gtkThemes.append(themeDir.dirName());
+            }
+        }
+    }
 	gtkThemes.removeDuplicates();
 	gtkThemes.sort();
 	return gtkThemes;
@@ -271,7 +285,7 @@ void Utils::go()
 {
     QSettings s;
     goKvantumStyle();
-    useGlobalTheme();
+
     setGtk(_profile->getGtk());
     goWall();
     runScript();
@@ -285,7 +299,7 @@ void Utils::go()
         notify("Switched to " + _profile->name() + " mode!",
                "Some applications may need to be restarted for applied changes to take effect.");
     }
-
+    useGlobalTheme();
 }
 
 // Manage switching plasma themes
