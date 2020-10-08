@@ -75,6 +75,11 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 }
 EditProfileDialog::~EditProfileDialog()
 {
+    delete _stylesDialog;
+    delete _othersDialog;
+    delete _extDialog;
+    delete _profile;
+
 }
 //may seperate this in the future
 void EditProfileDialog::updatePages()
@@ -103,7 +108,8 @@ void EditProfileDialog::updatePages()
         auto wallpaper = _profile->getWallpaper();
         if(wallpaper.toInt() == 0){
              _othersDialog->wallTypeBox->setCurrentText("Image");
-            _othersDialog->wallPicBtn->setText(_profile->getWallpaper().toString());
+             QFileInfo imgInfo(_profile->getWallpaper().toString());
+            _othersDialog->wallPicBtn->setText(imgInfo.fileName());
         }else{
             _othersDialog->wallTypeBox->setCurrentText("Unsplash");
             auto index =  _othersDialog->unsplashComboBox->findData(wallpaper.toString());
@@ -229,14 +235,24 @@ void EditProfileDialog::enableProfileName(const int &state)
 }
 void EditProfileDialog::selectScript()
 {
+    //TODO point to ~/.local/share/koi/script
 	_profile->setScript(QFileDialog::getOpenFileName(this,
-													 tr("Run Script"), "/home", tr("Script Files(.sh) (*.sh)")));
+													 tr("Run Script"),
+													 "/home",
+													 tr("Script Files(.sh) (*.sh)")));
 }
 void EditProfileDialog::selectWallpaper()
 {
+    QFileInfo imgPath;
 	//todo add the file format here for wallpaper.
 	_profile->setWallpaper(QFileDialog::getOpenFileName(this,
-														tr("Choose wallpaper"), "/home", tr(".png")));
+                                                     tr("Choose wallpaper"),
+                                                     QDir::homePath()+ "/Pictures",
+                                                     tr(".png",".jpg")));
+	imgPath= _profile->getWallpaper().toString() ;
+	if(imgPath.exists()){
+	    _othersDialog->wallPicBtn->setText(imgPath.fileName());
+	}
 }
 void EditProfileDialog::setupUnsplash()
 {

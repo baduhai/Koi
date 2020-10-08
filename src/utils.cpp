@@ -8,6 +8,11 @@ Utils::Utils(Profile *pProfile)
 	_profile = pProfile;
 
 }
+Utils::~Utils()
+{
+    delete bus;
+    delete notifyInterface;
+}
 
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus

@@ -25,6 +25,7 @@ SettingDialog::SettingDialog(QWidget *parent)
 	const QString generalPageName = ("General");
 	_generalUi = new GeneralSettings(this);
 	KPageWidgetItem *generalPageItem = this->addPage(_generalUi, generalPageName);
+	generalPageItem->setParent(this);
 	generalPageItem->setHeader(generalPageName);
 	generalPageItem->setIcon(QIcon::fromTheme(QStringLiteral("settings-configure")));
 
@@ -32,6 +33,7 @@ SettingDialog::SettingDialog(QWidget *parent)
 	const QString profilePageName = ("Profiles");
 	_profileUi = new ProfileSettingsDialog(this);
 	KPageWidgetItem *profilePageItem = addPage(_profileUi, profilePageName);
+	profilePageItem->setParent(this);
 	profilePageItem->setHeader(profilePageName);
 	profilePageItem->setIcon(QIcon::fromTheme("systemsettings"));
 
@@ -39,6 +41,7 @@ SettingDialog::SettingDialog(QWidget *parent)
 	const QString schedulePageName = ("Schedule");
 	_scheduleUi = new ScheduleProfile(this);
 	KPageWidgetItem *schedulePageItem = addPage(_scheduleUi, schedulePageName);
+	schedulePageItem->setParent(this);
 	schedulePageItem->setHeader(schedulePageName);
 	schedulePageItem->setIcon(QIcon::fromTheme("clock"));
 
@@ -53,6 +56,8 @@ SettingDialog::~SettingDialog()
 {
 	delete _generalUi;
 	delete _profileUi;
+	delete _scheduleUi;
+
 }
 void SettingDialog::slotOkClicked()
 {

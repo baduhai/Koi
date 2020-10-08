@@ -22,7 +22,7 @@ public:
 	bool profileExists(const QString &fileName);
 	QHash<QString, QString> listFavourites();
 	ProfileManager();
-	~ProfileManager();
+	~ProfileManager() override;
 
 
 	static ProfileManager *instance();

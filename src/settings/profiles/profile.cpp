@@ -272,14 +272,6 @@ QString Profile::getDecName() const
 {
 	return m_decorationName;
 }
-QString Profile::getLibrary() const
-{
-	return m_library;
-}
-QString Profile::getTheme() const
-{
-	return m_theme;
-}
 
 QString Profile::getKonsole() const
 {

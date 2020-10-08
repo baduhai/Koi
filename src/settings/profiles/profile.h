@@ -33,7 +33,7 @@ public:
 	void createProfileGlobalDir() const;
 
 	//QString m_vscode;
-	bool globalDefaultExists() const;
+	[[nodiscard]] bool globalDefaultExists() const;
 	// Returns the profile Name
 	QString name() const;
 	QString pluginName() const;
@@ -50,13 +50,11 @@ public:
 	QString getIcon() const;
 	QString getMouse() const;
 	QString getScript() const;
-	bool getScriptEnabled() const;
+	[[nodiscard]] bool getScriptEnabled() const;
 	QVariant getWallpaper() const;
-	bool getWallEnabled() const;
+	[[nodiscard]] bool getWallEnabled() const;
 	//Window Decorations
 	QString getDecName() const;
-	QString getLibrary() const;
-	QString getTheme() const;
 	//External
 	QString getKonsole() const;
 

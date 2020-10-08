@@ -6,7 +6,7 @@
 #include <QLocalSocket>
 #include <QLocalServer>
 
-bool isAlreadyRunning(QString netName) {
+bool isAlreadyRunning(const QString& netName) {
     QLocalSocket socket;
     socket.connectToServer(netName);
     bool isOpen = socket.isOpen();
@@ -14,7 +14,7 @@ bool isAlreadyRunning(QString netName) {
     return isOpen;
 }
 
-void createDummyNetwork(QString netName) {
+void createDummyNetwork(const QString& netName) {
     QLocalServer *server = new QLocalServer;
     server->setSocketOptions(QLocalServer::WorldAccessOption);
     server->listen(netName);

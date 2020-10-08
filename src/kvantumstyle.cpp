@@ -4,16 +4,20 @@
 KvantumStyle::KvantumStyle()
 {
 }
+KvantumStyle::~KvantumStyle()
+{
+}
 /*  enables the kvantum theme by calling the command 
     kvantummanger with the argument "--set"
     */
 void KvantumStyle::setKvantumStyle(QString kvantumStyle)
 {
-    kvantumStyleProcess = new QProcess;
+    kvProcess = new QProcess;
     QString program = "/usr/bin/kvantummanager";
     QStringList arguments{"--set", std::move(kvantumStyle)};
-    kvantumStyleProcess->start(program, arguments);
-    kvantumStyleProcess->waitForFinished();
+    QObject::connect(kvProcess, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),kvProcess, &QProcess::deleteLater);
+    kvProcess->start(program, arguments);
+    kvProcess->waitForFinished();
 }
 
 QStringList KvantumStyle::getKvantumStyles() // Get all available kvantum styles

@@ -62,6 +62,7 @@ private slots:
 
 	void on_actionRestart_triggered();
 private:
+    void runSchedule();
 	Ui::MainWindow *ui;
 	QSystemTrayIcon *trayIcon;
 	QMenu *trayMenu;
@@ -69,6 +70,6 @@ private:
 	QSettings m_settings;
 	QHash<QTime, Utils *> schedProfiles;
 
-	void schedule( Utils *utils,QTime time);
+	void schedule(QExplicitlySharedDataPointer<Utils> ,QTime time);
 };
 #endif // MAINWINDOW_H

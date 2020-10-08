@@ -22,13 +22,12 @@ struct Decoration
 	QString theme;
 	QString name;
 };
-class Utils: public QObject
+class Utils: public QSharedData
 {
-	Q_OBJECT
 public:
 
 	explicit Utils(Profile *pProfile);
-
+    ~Utils();
 	Utils();
 
 	//styles.

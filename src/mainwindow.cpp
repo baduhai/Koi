@@ -18,29 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // TODO use an enum for this maybe ?
     if (m_settings.value("schedule").toString() == "custom time") {
-        QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
-        if (!currentName.isEmpty() || !currentName.isNull()) {
-            auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-            Utils current(currentProfile);
-            current.go();
-        }
-
-        auto manager = ProfileManager::instance();
-        //Schedule other Profiles.
-        m_settings.beginGroup("Favourites");
-        auto profileSchedList = manager->allProfiles();
-
-
-        for (const auto profile : profileSchedList) {
-            if (manager->isFavourite(profile->name())) {
-                auto *utils = new Utils(profile);
-                auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
-                if (!favTime.isNull()) {
-                    schedule(utils, favTime);
-                }
-            }
-        }
-        m_settings.endGroup();
+        runSchedule();
     }
 
     ui->resMsg->hide();
@@ -52,8 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-	this->setVisible(0);
+	this->setVisible(false);
+	delete ui;
 }
+
 
 // Override window managing events
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -62,6 +42,32 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	toggleVisibility();
 }
 
+void MainWindow::runSchedule()
+{
+    QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
+    if (!currentName.isEmpty() || !currentName.isNull()) {
+        auto currentProfile = ProfileManager::instance()->getProfile(currentName);
+        Utils current(currentProfile);
+        current.go();
+    }
+
+    auto manager = ProfileManager::instance();
+    //Schedule other Profiles.
+    m_settings.beginGroup("Favourites");
+    auto profileSchedList = manager->allProfiles();
+
+
+    for (const auto profile : profileSchedList) {
+        if (manager->isFavourite(profile->name())) {
+            auto utils = QExplicitlySharedDataPointer<Utils>(new Utils(profile));
+            auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
+            if (!favTime.isNull()) {
+                schedule(utils, favTime);
+            }
+        }
+    }
+    m_settings.endGroup();
+}
 // SysTray related functionality
 QMenu *MainWindow::createMenu() // Define context menu items for SysTray - R-click to show context menu
 {
@@ -106,15 +112,15 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
 void MainWindow::toggleVisibility()
 {
 	if (this->isVisible() == 0) {
-		this->setVisible(1);
+		this->setVisible(true);
 		this->activateWindow();
 	}
 	else {
-		this->setVisible(0);
+		this->setVisible(false);
 	}
 }
 
-void MainWindow::schedule(Utils *utils, QTime time)
+void MainWindow::schedule(QExplicitlySharedDataPointer<Utils>(utils), QTime time)
 {
 	auto favTime = time;
 
@@ -163,6 +169,7 @@ void MainWindow::on_darkBtn_clicked()
 //	ui->resMsg->animatedHide();
 //}
 
+
 // Menubar actions
 void MainWindow::on_actionQuit_triggered() // Quit app
 {
@@ -182,9 +189,8 @@ void MainWindow::on_actionAbout_triggered() // Open about dialog
 
 void MainWindow::on_actionHide_triggered() // Hide to tray
 {
-	this->setVisible(0);
+	this->setVisible(false);
 }
-
 void MainWindow::on_actionRestart_triggered()
 {
 	QProcess::startDetached(QApplication::applicationFilePath(), QStringList());

@@ -53,6 +53,7 @@ void ProfileManager::loadProfiles()
 		QString path(localProfileName.filePath());
 		QSettings settings(path, QSettings::NativeFormat);
 
+		//TODO fix memory leak here
 		auto *localProfile = new Profile;
 		localProfile->setName(localProfileName.baseName());
 		localProfile->setGlobDir();
@@ -151,7 +152,6 @@ bool ProfileManager::isFavourite(const QString &profileName)
 
 Profile *ProfileManager::getProfile(const QString &profileName)
 {
-	auto s = _profileList.value(profileName);
 	return _profileList.value(profileName);
 }
 
