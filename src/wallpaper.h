@@ -8,11 +8,12 @@ class Wallpaper
 {
 public:
     Wallpaper();
+    ~Wallpaper();
 
-    void setWallpaper(QVariant wallFile);
+    void setWallpaper(const QVariant& wallFile);
 
 private:
-    QDBusConnection *bus;
+    QDBusConnection *bus{};
 };
 
 #endif // WALLPAPER_H

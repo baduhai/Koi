@@ -349,6 +349,7 @@ void Utils::goKvantumStyle()
 void Utils::goWall()
 {
 	if (_profile->getWallEnabled()) {
+	    wallpaper.setWallpaper(_profile->getWallpaper());
 	}
 	else {
 		notify("Error setting Wallpaper",
