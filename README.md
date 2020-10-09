@@ -76,9 +76,7 @@ on X11
 ### From Sources.
 
 `git clone https://github.com/Da-Viper/Koi.git`
-
-`git checkout allInOne` 
-
+ 
 `cd Koi && mkdir build && cd build` 
 
 `cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja`
