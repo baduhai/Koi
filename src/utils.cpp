@@ -6,6 +6,7 @@ Utils::Utils(Profile *pProfile)
 {
 	Q_ASSERT(pProfile);
 	_profile = pProfile;
+	_profile->setParent(reinterpret_cast<QObject *>(this));
 
 }
 Utils::~Utils()
