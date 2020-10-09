@@ -32,7 +32,7 @@ public:
 
 	void saveProfile(const QString &profileName);
 
-	Profile *_activeProfile;
+	Profile *_activeProfile{};
 
 	const Profile *defaultProfile() const;
 
@@ -59,7 +59,7 @@ private:
 
 	//for storing the loaded profiles.
 	QHash<QString, Profile *> _profileList;
-	bool m_loadedAllProfiles;
+	bool m_loadedAllProfiles{};
 	//makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
 	// or don't have and profile set

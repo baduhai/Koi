@@ -12,9 +12,8 @@ ProfileManager::ProfileManager()
 	loadProfiles();
 }
 
-ProfileManager::~ProfileManager()
-{
-}
+ProfileManager::~ProfileManager() = default;
+
 //see https://doc.qt.io/qt-5/qglobalstatic.html#Q_GLOBAL_STATIC
 Q_GLOBAL_STATIC(ProfileManager, theProfileManager);
 ProfileManager *ProfileManager::instance()
@@ -74,8 +73,8 @@ void ProfileManager::loadProfiles()
 //this would add the profile to the hash table.
 bool ProfileManager::addProfile(Profile *profile)
 {
-	QFileInfo profileInfo(QStandardPaths::writableLocation(
-		QStandardPaths::AppLocalDataLocation) + "/" + profile->name() + ".koi");
+	QFileInfo profileInfo(profile->configPath());
+
 	//checks if it is a .koi file and it exists
 	auto filePath = profileInfo.absoluteFilePath();
 
@@ -83,7 +82,7 @@ bool ProfileManager::addProfile(Profile *profile)
 		return false;
 	}
 
-	if (!QFileInfo::exists(filePath)) {
+	if (!profileInfo.exists()) {
 		QFile f(filePath);
 		if (f.open(QIODevice::ReadWrite)) {
 			qDebug() << "file now exists";
@@ -113,34 +112,21 @@ QList<Profile *> ProfileManager::allProfiles()
 	//there should be a better way to do this if iam wrong
 	//this creates default light and dark profile if there are none.
 	//Defaults
-	QString dark("dark");
-	if (!profileExists(dark)) {
-		QFileInfo darkInfo(QDir::homePath() + "/.local/koi/dark.koi");
-		QSettings settings(darkInfo.absoluteFilePath(), QSettings::IniFormat);
-		auto *dProfile = new Profile;
-		dProfile->setName(dark);
-		dProfile->setGlobDir();
-		dProfile->setConfigPath();
-		if (!addProfile(dProfile)) {
-			//qt 5.9.5 does does not support appending qfileinfo in qdebug();
-			qDebug() << "failed to load ";
-		}
-		saveProfile(dark);
-	}
-
-	QString light(QStringLiteral("light"));
-	if (!profileExists(light)) {
-		QFileInfo lightInfo(QDir::homePath() + "/.local/koi/light.koi");
-		QSettings settings(lightInfo.absoluteFilePath(), QSettings::IniFormat);
-		auto *lProfile = new Profile;
-		lProfile->setGlobDir();
-		lProfile->setConfigPath();
-		lProfile->setName(light);
-		if (!addProfile(lProfile)) {
-			//qt 5.9.5 does does not support appending qfileinfo in qdebug();
-			qDebug() << "failed to load ";
-		}
-		saveProfile(light);
+	QStringList defProfileList({"dark","light"});
+	for(const auto &defProfileName: defProfileList){
+	    if (!profileExists(defProfileName)){
+	        QFileInfo defProfileInfo(QDir::homePath() + "/.local/koi/" + defProfileName + ".koi");
+	        QSettings settings(defProfileInfo.absoluteFilePath(), QSettings::IniFormat);
+	        auto *dProfile = new Profile;
+            dProfile->setName(defProfileName);
+            dProfile->setGlobDir();
+            dProfile->setConfigPath();
+            if (!addProfile(dProfile)) {
+                //qt 5.9.5 does does not support appending qfileinfo in qdebug();
+                qDebug() << "failed to load ";
+            }
+            saveProfile(defProfileName);
+	    }
 	}
 	//gotten profiles from disk.
 	return _profileList.values();
