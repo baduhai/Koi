@@ -17,7 +17,6 @@ void KvantumStyle::setKvantumStyle(QString kvantumStyle)
     QStringList arguments{"--set", std::move(kvantumStyle)};
     QObject::connect(kvProcess, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),kvProcess, &QProcess::deleteLater);
     kvProcess->start(program, arguments);
-    kvProcess->waitForFinished();
 }
 
 QStringList KvantumStyle::getKvantumStyles() // Get all available kvantum styles

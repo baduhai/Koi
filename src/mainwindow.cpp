@@ -62,6 +62,7 @@ void MainWindow::runSchedule()
             auto utils = QExplicitlySharedDataPointer<Utils>(new Utils(profile));
             auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
             if (!favTime.isNull()) {
+                //TODO reimplement schedule
                 schedule(utils, favTime);
             }
         }

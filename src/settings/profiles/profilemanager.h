@@ -9,6 +9,7 @@
 #include <QString>
 #include <QDebug>
 #include <KSharedConfig>
+#include <QPointer>
 
 //koi
 #include "profile.h"

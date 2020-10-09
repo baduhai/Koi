@@ -51,17 +51,14 @@ public:
 	void goWall();
 
 	void runScript();
-	static bool themeExists(const QString &themeName);
 
 private:
 	void setGtk(const QString &gtkTheme);
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;
 
-	QDBusConnection *bus{};
 
-	QDBusInterface *notifyInterface{};
-	Profile *_profile;
+	QPointer<Profile> _profile;
 };
 
 #endif // UTILS_H

@@ -6,19 +6,17 @@ Utils::Utils(Profile *pProfile)
 {
 	Q_ASSERT(pProfile);
 	_profile = pProfile;
+	_profile->setParent(reinterpret_cast<QObject *>(this));
 
 }
 Utils::~Utils()
 {
-    delete bus;
-    delete notifyInterface;
 }
 
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
-	bus = new QDBusConnection(QDBusConnection::sessionBus());
-	notifyInterface = new QDBusInterface("org.freedesktop.Notifications",
+	QDBusInterface notifyInterface("org.freedesktop.Notifications",
 										 "/org/freedesktop/Notifications",
 										 "org.freedesktop.Notifications",
 										 QDBusConnection::sessionBus());
@@ -32,7 +30,7 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
 	QVariantMap hints;               // No idea how to use.
 	int timeout =
 		timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
-	notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+	notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
 
 void Utils::setGtk(const QString& gtkTheme)
@@ -328,6 +326,7 @@ void Utils::go()
 // Manage switching plasma themes
 void Utils::useGlobalTheme()
 {
+    auto *useGlob = new QProcess();
     QString command = QStringLiteral("lookandfeeltool");
     QStringList arguments = {QStringLiteral("-a"), _profile->pluginName()};
     /** UPDATE it is a bug in QT version 5.15.1
@@ -335,8 +334,10 @@ void Utils::useGlobalTheme()
      * SIGTRAP error when debugging if above any of the functions that calls Dbus
      * in the Utils::go() function above.
      */
-    auto *useGlob = new QProcess();
-    QObject::connect(useGlob, qOverload<int,QProcess::ExitStatus>(&QProcess::finished),useGlob, &QProcess::deleteLater);
+    QObject::connect(useGlob,
+                     qOverload<int, QProcess::ExitStatus>(&QProcess::finished),
+                     useGlob,
+                     &QProcess::deleteLater);
     useGlob->start(command, arguments);
 //    if (!QProcess::startDetached(command, arguments)) {
 //			qDebug() << "Failed to run " + _profile->name() + " Global theme";
