@@ -12,9 +12,9 @@
 #include <QDir>
 #include <KSharedConfig>
 
-class Profile
+class Profile : public QObject
 {
-
+    Q_OBJECT
 public:
 	Profile();
 	Profile(const Profile &p);

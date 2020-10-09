@@ -54,7 +54,8 @@ void ProfileManager::loadProfiles()
 		QSettings settings(path, QSettings::NativeFormat);
 
 		//TODO fix memory leak here
-		auto *localProfile = new Profile;
+		QPointer<Profile> localProfile = new Profile;
+		localProfile->setParent(this);
 		localProfile->setName(localProfileName.baseName());
 		localProfile->setGlobDir();
 		localProfile->setConfigPath();
