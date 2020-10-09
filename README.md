@@ -2,7 +2,6 @@
 
 **Theme scheduling for the KDE Plasma Desktop**
 
-**use the all in one branch** 
 <p>
   <img alt="profile-dialog" title="Yin & Yang" src="doc/profile_dialog.png">
 </p>
