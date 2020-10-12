@@ -83,14 +83,20 @@ QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 {
     QStringList plasmaStyles;
     QStringList plasmaDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "plasma/desktoptheme", QStandardPaths::LocateDirectory));
-    for (const auto &path: plasmaDirList){
-        QDir plasmaDir(path);
-        if(plasmaDir.exists()){
-            plasmaStyles.append(plasmaDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    for (const auto &dir: plasmaDirList){
+        QStringList plasmaDirs= QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
+        for (const auto &path : plasmaDirs){
+           QFileInfo file(dir + QStringLiteral("/") + path + QStringLiteral("/metadata.desktop"));
+           if(file.exists()) {
+                KSharedConfigPtr config = KSharedConfig::openConfig(file.absoluteFilePath(), KConfig::SimpleConfig);
+                KConfigGroup group(config, "Desktop Entry");
+                const QString name = group.readEntry("Name", QFileInfo(dir + QStringLiteral("/") + path).baseName());
+                plasmaStyles.append(name);
+            }
         }
     }
 
-	plasmaStyles.append("breeze");
+//	plasmaStyles.append("breeze");
     plasmaStyles.removeDuplicates();
     plasmaStyles.sort();
 	return plasmaStyles;
@@ -100,27 +106,19 @@ QStringList Utils::getPlasmaStyles() // Get all available plasma styles
 //TODO use standard paths
 QStringList Utils::getColorSchemes() // Get all available color schemes
 {
-	QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-	colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-	colorsLocalDir.setFilter(QDir::Files);
-	colorsLocalDir.setSorting(QDir::Name);
-	QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-	QStringList colorSchemesLocalNames;
-	for (const auto &color : qAsConst(colorSchemesLocal)) {
-		colorSchemesLocalNames.append(color.baseName());
-	}
-	QDir colorsSystemDir("/usr/share/color-schemes");
-	colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-	colorsSystemDir.setFilter(QDir::Files);
-	colorsSystemDir.setSorting(QDir::Name);
-	QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-	QStringList colorSchemesSystemNames;
-	for (const auto &i : qAsConst(colorSchemesSystem)) {
-		colorSchemesSystemNames.append(i.baseName());
-	}
-	QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
-	colorSchemesNames.sort();
-	return colorSchemesNames;
+    QStringList colorNames;
+    const QStringList colorDir = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("color-schemes"), QStandardPaths::LocateDirectory);
+    for (const auto &dir : colorDir){
+        QStringList colorPaths= QDir(dir).entryList(QStringList({QStringLiteral("*.colors")}),QDir::Files);
+        for( const auto &path: colorPaths) {
+            QFileInfo file(dir + QStringLiteral("/") + path);
+            if(file.exists()) {
+                colorNames.append(file.baseName());
+            }
+        }
+    }
+
+    return colorNames;
 }
 
 //GTK
