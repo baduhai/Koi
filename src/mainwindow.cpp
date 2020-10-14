@@ -140,7 +140,9 @@ void MainWindow::schedule(QExplicitlySharedDataPointer<Utils>(utils), QTime time
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koi.conf// file
 {
 	auto *dialog = new SettingDialog(this);
+	connect(dialog, &QDialog::finished, this, &QMainWindow::show);
 	dialog->setModal(true);
+	this->hide();
 	dialog->show();
 }
 

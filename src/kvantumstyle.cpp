@@ -5,8 +5,7 @@ KvantumStyle::KvantumStyle()
 {
 }
 KvantumStyle::~KvantumStyle()
-{
-}
+= default;
 /*  enables the kvantum theme by calling the command 
     kvantummanger with the argument "--set"
     */

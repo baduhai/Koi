@@ -48,9 +48,6 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	//TODO: enable the External Page when it has been implemented
 	extPageItem->setEnabled(false);
 
-
-
-
     //update pages
 
     connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
@@ -128,7 +125,9 @@ void EditProfileDialog::setProfile(Profile *p)
 void EditProfileDialog::setupPage()
 {
 	//Styles Page.
+	//FixMe: for touch scrolling
 	_stylesDialog->plasmaBox->addItems(Utils::getPlasmaStyles());
+	_stylesDialog->plasmaBox->view()->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 	_stylesDialog->colorBox->addItems(Utils::getColorSchemes());
 	_stylesDialog->gtkBox->addItems(Utils::getGtkThemes());
 	_stylesDialog->widgetBox->addItems(Utils::getWidgetStyles());
@@ -146,6 +145,8 @@ void EditProfileDialog::setupPage()
 	_othersDialog->wallTypeBox->addItems({"Image","Unsplash"});
     _othersDialog->wallTypeBox->setCurrentText("Image");
     _othersDialog->wallpaperCheckBox->setChecked(false);
+
+    //FixMe: when you add the external Page
 
     setupUnsplash();
 }

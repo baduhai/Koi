@@ -16,6 +16,9 @@
 #include <QtWidgets/QStyleFactory>
 #include <settings/profiles/profile.h>
 
+// KDE libs
+#include <KCoreAddons>
+
 struct Decoration
 {
 	QString library;
@@ -56,7 +59,6 @@ private:
 	void setGtk(const QString &gtkTheme);
 	KvantumStyle kvantumStyle;
 	Wallpaper wallpaper;
-
 
 	QPointer<Profile> _profile;
 };
