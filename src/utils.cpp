@@ -22,10 +22,10 @@ Utils::~Utils()
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
-    QDBusInterface notifyInterface("org.freedesktop.Notifications",
-                                   "/org/freedesktop/Notifications",
-                                   "org.freedesktop.Notifications",
-                                   QDBusConnection::sessionBus());
+//    QDBusInterface notifyInterface("org.freedesktop.Notifications",
+//                                   "/org/freedesktop/Notifications",
+//                                   "org.freedesktop.Notifications",
+//                                   QDBusConnection::sessionBus());
     QString app_name = "Koi";        // What program is the notification coming from?
     uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
     QString
@@ -36,20 +36,28 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
     QVariantMap hints;               // No idea how to use.
     int timeout =
         timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
-    notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+//    notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+    QDBusMessage notify;
+    notify.createMethodCall("org.freedesktop.Notifications",
+                                                 "/org/freedesktop/Notifications",
+                                                 "org.freedesktop.Notifications",
+                                                 "Notify");
+    notify.setArguments({app_name, replaces_id, app_icon, summary, body, actions, hints, timeout});
+
+    QDBusConnection::sessionBus().asyncCall(notify);
 }
 
 void Utils::setGtk(const QString &gtkTheme)
 {
     QString method;
-    if (KCoreAddons::version() < QT_VERSION_CHECK(5,75,0)) {
+    if (KCoreAddons::version() < QT_VERSION_CHECK(5, 75, 0)) {
         method = QStringLiteral("setGtk3Theme");
         QDBusConnection::sessionBus().asyncCall(QDBusMessage::createMethodCall("org.kde.GtkConfig",
                                                                                "/GtkConfig",
                                                                                "org.kde.GtkConfig",
                                                                                "setGtk2Theme"));
     }
-    if ( KCoreAddons::version() >= QT_VERSION_CHECK(5, 75, 0)){
+    if (KCoreAddons::version() >= QT_VERSION_CHECK(5, 75, 0)) {
         method = QStringLiteral("setGtkTheme");
     }
 
@@ -58,7 +66,7 @@ void Utils::setGtk(const QString &gtkTheme)
                                                   "org.kde.GtkConfig",
                                                   method);
     message.setArguments({gtkTheme});
-    QDBusConnection::sessionBus().call(message);
+    QDBusConnection::sessionBus().asyncCall(message);
 }
 
 QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
