@@ -68,8 +68,7 @@ private:
 	QMenu *trayMenu;
 	QMenu *createMenu();
 	QSettings m_settings;
-	QHash<QTime, Utils *> schedProfiles;
 
-	void schedule(QExplicitlySharedDataPointer<Utils> ,QTime time);
+	void schedule(Profile*,QTime time);
 };
 #endif // MAINWINDOW_H

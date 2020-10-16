@@ -1,8 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 // Headers
-#include "wallpaper.h"
-#include "kvantumstyle.h"
+#include "styles.h"
+#include "others.h"
 
 // Qt libs
 #include <QtGlobal>
@@ -13,54 +13,24 @@
 #include <QDateTime>
 #include <QTimer>
 #include <QTest>
-#include <QtWidgets/QStyleFactory>
 #include <settings/profiles/profile.h>
 
 // KDE libs
 #include <KCoreAddons>
 
-struct Decoration
+
+namespace utils
 {
-	QString library;
-	QString theme;
-	QString name;
-};
-class Utils: public QSharedData
+
+void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
+QString startupTimeCheck();
+
+namespace noUse
 {
-public:
+//this would be used for global theme
+void useGlobalTheme(const QString &pluginName);
+}
 
-	explicit Utils(Profile *pProfile);
-    ~Utils();
-	Utils();
-
-	//styles.
-	static QStringList getPlasmaStyles();
-	static QStringList getColorSchemes();
-	static QStringList getGtkThemes();
-	static QStringList getKvantumStyles();
-	static QStringList getWidgetStyles();
-	static QStringList getIcons();
-	static QStringList getCursorThemes();
-
-	static QStringList getWindowDecorationsStyle();
-	static QList<Decoration> getWindowDecorations();
-
-	void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
-	static QString startupTimeCheck();
-	//this would be used for global theme
-	void useGlobalTheme();
-	void go();
-	void goKvantumStyle();
-	void goWall();
-
-	void runScript();
-
-private:
-	void setGtk(const QString &gtkTheme);
-	KvantumStyle kvantumStyle;
-	Wallpaper wallpaper;
-
-	QPointer<Profile> _profile;
-};
-
+void go(Profile *p);
+}
 #endif // UTILS_H
