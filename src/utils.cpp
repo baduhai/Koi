@@ -1,26 +1,9 @@
 
 #include "utils.h"
 
-Utils::Utils(Profile *pProfile)
-    : wallpaper()
+namespace utils
 {
-    Q_ASSERT(pProfile);
-    _profile = pProfile;
-//    plasmaVersion = QDBusMessage::createMethodCall(
-//    QStringLiteral("org.kde.plasmashell"),
-//QStringLiteral("/MainApplication"),
-//QStringLiteral("org.freedesktop.DBus.Properties"),
-//QStringLiteral("Get"),
-//{ QStringLiteral("org.qtproject.Qt.QCoreApplication"), QStringLiteral("applicationVersion") },
-
-
-}
-Utils::~Utils()
-{
-}
-
-// Miscelaneous functions
-void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
+void notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
     QDBusInterface notifyInterface("org.freedesktop.Notifications",
                                    "/org/freedesktop/Notifications",
@@ -37,39 +20,9 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
     int timeout =
         timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
     notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
-//    QDBusMessage notify;
-//    notify.createMethodCall("org.freedesktop.Notifications",
-//                                                 "/org/freedesktop/Notifications",
-//                                                 "org.freedesktop.Notifications",
-//                                                 "Notify");
-//    notify.setArguments({app_name, replaces_id, app_icon, summary, body, actions, hints, timeout});
-//
-//    QDBusConnection::sessionBus().asyncCall(notify);
 }
 
-void Utils::setGtk(const QString &gtkTheme)
-{
-    QString method;
-    if (KCoreAddons::version() < QT_VERSION_CHECK(5, 75, 0)) {
-        method = QStringLiteral("setGtk3Theme");
-        QDBusConnection::sessionBus().asyncCall(QDBusMessage::createMethodCall("org.kde.GtkConfig",
-                                                                               "/GtkConfig",
-                                                                               "org.kde.GtkConfig",
-                                                                               "setGtk2Theme"));
-    }
-    if (KCoreAddons::version() >= QT_VERSION_CHECK(5, 75, 0)) {
-        method = QStringLiteral("setGtkTheme");
-    }
-
-    auto message = QDBusMessage::createMethodCall("org.kde.GtkConfig",
-                                                  "/GtkConfig",
-                                                  "org.kde.GtkConfig",
-                                                  method);
-    message.setArguments({gtkTheme});
-    QDBusConnection::sessionBus().asyncCall(message);
-}
-
-QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
+QString startupTimeCheck() // get the nearest earlier favourite theme.
 {
     QSettings settings;
     settings.beginGroup("Favourites");
@@ -107,240 +60,15 @@ QString Utils::startupTimeCheck() // get the nearest earlier favourite theme.
     return nearestName;
 }
 
-//Get all Needed this for a profile.
-//PlasmaStyle
-QStringList Utils::getPlasmaStyles() // Get all available plasma styles
-{
-    QStringList plasmaStyles;
-    QStringList plasmaDirs;
-    QStringList plasmaDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
-                                                        "plasma/desktoptheme",
-                                                        QStandardPaths::LocateDirectory));
-    for (const auto &dir: plasmaDirList) {
-        plasmaDirs += QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
-        for (const auto &path : plasmaDirs) {
-            QFileInfo file(dir + QStringLiteral("/") + path + QStringLiteral("/metadata.desktop"));
-            if (file.exists()) {
-                //TODO: show the pluginName instead in the view ;
-                plasmaStyles.append(path);
-            }
-        }
-    }
-
-    plasmaStyles.removeDuplicates();
-    plasmaStyles.sort();
-    return plasmaStyles;
-}
-
-//Color Schemes
-//TODO use standard paths
-QStringList Utils::getColorSchemes() // Get all available color schemes
-{
-    QStringList colorNames;
-    const QStringList colorDir = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
-                                                           QStringLiteral("color-schemes"),
-                                                           QStandardPaths::LocateDirectory);
-    for (const auto &dir : colorDir) {
-        QStringList colorPaths = QDir(dir).entryList(QStringList({QStringLiteral("*.colors")}), QDir::Files);
-        for (const auto &path: colorPaths) {
-            QFileInfo file(dir + QStringLiteral("/") + path);
-            if (file.exists()) {
-                colorNames.append(file.baseName());
-            }
-        }
-    }
-    colorNames.sort();
-    return colorNames;
-}
-
-//GTK
-QStringList Utils::getGtkThemes() // Get all available gtk themes
-{
-    QStringList gtkThemes;
-    QString gtkLocalDir(QDir::homePath() + QStringLiteral("/.themes"));
-    //all the possible path of gtkthemes.
-    QStringList gtkDirList
-        (QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "themes", QStandardPaths::LocateDirectory));
-    gtkDirList.append(gtkLocalDir);
-    for (const auto &path: gtkDirList) {
-        QDir gtkDir(path);
-        if (!gtkDir.exists()) {
-            continue;
-        }
-        auto themeList(gtkDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
-
-        for (const auto &tName: themeList) {
-            QDir themeDir(tName.absoluteFilePath());
-            if (themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot).contains(QStringLiteral("gtk-3.0"))) {
-                gtkThemes.append(themeDir.dirName());
-            }
-        }
-    }
-    gtkThemes.removeDuplicates();
-    gtkThemes.sort();
-    return gtkThemes;
-}
-//widget styles
-QStringList Utils::getWidgetStyles()
-{
-    //this literally took me 2 hrs to find.
-    QStringList widgetStyles = QStyleFactory::keys();
-    widgetStyles.sort();
-    return widgetStyles;
-}
-//Kvantum
-QStringList Utils::getKvantumStyles() // Get all available kvantum styles
-{
-    QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
-    QDir kvantumStyleSystemDir("/usr/share/Kvantum");
-    QStringList kvantumStyles;
-    if (kvantumStyleLocalDir.exists()) {
-        kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    if (kvantumStyleSystemDir.exists()) {
-        kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    kvantumStyles.removeDuplicates();
-    kvantumStyles.sort();
-    return kvantumStyles;
-}
-
-//Icons
-//TODO some of this are not actually icon themes like hicolor /remove them
-QStringList Utils::getIcons() // Get all available icon themes
-{
-    QStringList iconDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
-                                                      "icons", QStandardPaths::LocateDirectory));
-    QStringList iconThemes;
-
-    for (const auto &path: iconDirList) {
-        QDir iconDir(path);
-        if (!iconDir.exists()) {
-            continue;
-        }
-        auto themeList(iconDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
-        for (const auto &tName: themeList) {
-            QDir themeDir(tName.absoluteFilePath());
-            if (themeDir.entryList(QDir::Files | QDir::NoDotAndDotDot).contains(QStringLiteral("index.theme"))) {
-                iconThemes.append(themeDir.dirName());
-            }
-        }
-    }
-    //TODO a better way
-    iconThemes.removeAll(QStringLiteral("hicolor"));
-    iconThemes.removeAll(QStringLiteral("default"));
-    iconThemes.sort();
-    return iconThemes;
-}
-
-//cursor
-QStringList Utils::getCursorThemes()
-{
-    QStringList cursorThemes;
-    QString cursorLocalDir(QDir::homePath() + QStringLiteral("/.icons"));
-    //all the possible path of cursors.
-    QStringList cursorDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
-                                                        "icons", QStandardPaths::LocateDirectory));
-    cursorDirList.append(cursorLocalDir);
-    for (const auto &path: cursorDirList) {
-        QDir cursorDir(path);
-        if (!cursorDir.exists()) {
-            continue;
-        }
-        auto cursorInfoList(cursorDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
-        for (const auto &tName: cursorInfoList) {
-            QDir themeDir(tName.absoluteFilePath());
-            if (themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot).contains(QStringLiteral("cursors"))) {
-                cursorThemes.append(themeDir.dirName());
-            }
-        }
-    }
-
-    cursorThemes.sort();
-    return cursorThemes;
-}
-
-//Window Decorations.
-QList<Decoration> Utils::getWindowDecorations()
-{
-    /*There are two ways that window decoration is written that i know of
-    using the
-    "library = org.kde.nameofthelibrary"  then the "theme name" stored in /usr/lib/qt/plugins/org.kde.kdecoration2/  or
-    "library =library=org.kde.kwin.aurorae"  then "theme=__aurorae__svg__nameoftheme"
-    but i am not sure how to get the actual name of the library and the theme it uses
-    its kinda hacky but i did it this way , if there is a better way tell me and i would update this  */
-    QList<Decoration> dt;
-    QDir sysLib; //for the library
-
-    QString pluginDir(QLibraryInfo::location(QLibraryInfo::PluginsPath));
-    QDir dir(pluginDir + "/org.kde.kdecoration2/");
-    //TODO delete path variable just for debugging
-    QString path(dir.absolutePath());
-    qDebug() << "the plugin path " << path;
-    if (dir.exists()) {
-        sysLib = dir;
-    }
-    QFileInfoList libInfoTheme = sysLib.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    QStringList libThemes;
-    for (const auto &file : qAsConst(libInfoTheme)) {
-        libThemes.append(file.baseName());
-    }
-    if (libThemes.contains("kwin5_aurorae")) {
-        libThemes.removeAt(libThemes.indexOf("kwin5_aurorae"));
-    }
-    for (auto &theme : libThemes) {
-        if (theme.endsWith("decoration", Qt::CaseInsensitive)) {
-            theme.chop(10);
-        }
-    }
-    //for aurorae styles
-    QStringList auroraeStyles;
-    QDir aurLocalLib(QDir::homePath() + "/.local/share/aurorae/themes");
-    QDir aurSysLib("/usr/share/aurorae/themes/");
-    if (aurSysLib.exists()) {
-        auroraeStyles.append(aurSysLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    if (aurLocalLib.exists()) {
-        auroraeStyles.append(aurLocalLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    auroraeStyles.removeDuplicates();
-
-    for (const auto &th: auroraeStyles) {
-        Decoration d{};
-        d.name = th;
-        d.library = "org.kde.kwin.aurorae";
-        d.theme = "__aurorae__svg__" + th;
-        dt.append(d);
-    }
-    for (const auto &th: libThemes) {
-        Decoration d{};
-        d.name = th;
-        d.name.replace(0, 1, d.name[0].toUpper());
-        d.library = "org.kde." + d.name.toLower();
-        dt.append(d);
-    }
-    return dt;
-}
-QStringList Utils::getWindowDecorationsStyle()
-{
-    QList<Decoration> dt = Utils::getWindowDecorations();
-    QStringList styleList;
-    for (const auto &style: qAsConst(dt)) {
-        styleList.append(style.name);
-    }
-    styleList.sort();
-    return styleList;
-}
-
 // Use to switch to a different theme profile
-void Utils::go()
+void go(Profile *profile)
 {
     QSettings s;
-    goKvantumStyle();
-    useGlobalTheme();
-    setGtk(_profile->getGtk());
-    goWall();
-    runScript();
+    //Kvantum
+    QString widget(profile->getWidget());
+    if (widget == "kvantum" || widget == "kvantum-dark") {
+        noUse::setKvantumStyle(profile->getKvantum());
+    }
 
     //update colours;
     auto *krdbProcess = new QProcess();
@@ -351,17 +79,17 @@ void Utils::go()
                      &QProcess::deleteLater);
     krdbProcess->start();
     if (s.value("notify").toBool()) {
-        notify("Switched to " + _profile->name() + " mode!",
+        notify("Switched to " + profile->name() + " mode!",
                "Some applications may need to be restarted for applied changes to take effect.");
     }
 }
 
 // Manage switching plasma themes
-void Utils::useGlobalTheme()
+void useGlobalTheme(const QString &pluginName)
 {
     auto *useGlob = new QProcess();
     QString command = QStringLiteral("lookandfeeltool");
-    QStringList arguments = {QStringLiteral("-a"), _profile->pluginName()};
+    QStringList arguments = {QStringLiteral("-a"), pluginName};
     /** UPDATE it is a bug in QT version 5.15.1
      * i don't know why if i use the below command i get
      * SIGTRAP error when debugging if above any of the functions that calls Dbus
@@ -372,39 +100,8 @@ void Utils::useGlobalTheme()
                      useGlob,
                      &QProcess::deleteLater);
     useGlob->start(command, arguments);
-//    if (!QProcess::startDetached(command, arguments)) {
-//			qDebug() << "Failed to run " + _profile->name() + " Global theme";
-//		}
 }
-
-void Utils::goKvantumStyle()
-{
-    QString widget(_profile->getWidget());
-    if (widget == "kvantum" || widget == "kvantum-dark") {
-        kvantumStyle.setKvantumStyle(_profile->getKvantum());
-    }
 }
-
-void Utils::goWall()
-{
-    if (_profile->getWallEnabled()) {
-        wallpaper.setWallpaper(_profile->getWallpaper());
-    }
-    else {
-        notify("Error setting Wallpaper",
-               "Koi tried to change your " + _profile->name() + " wallpaper, but no wallpaper fie was selected",
-               5000);
-    }
 }
-void Utils::runScript()
-{
-    if (_profile->getScriptEnabled()) {
-        if (!QProcess::startDetached("/bin/sh", {_profile->getScript()})) {
-            qDebug() << "Failed to run " + _profile->name() + " script";
-        }
-    }
-}
-
-
 
 

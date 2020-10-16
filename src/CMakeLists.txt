@@ -10,8 +10,6 @@ set(koi_SRC
         main.cpp
         mainwindow.cpp
         utils.cpp
-        wallpaper.cpp
-        kvantumstyle.cpp
         #Settings Dir
         settings/settingdialog.cpp
         settings/generalsettings.cpp
@@ -21,7 +19,8 @@ set(koi_SRC
         settings/profiles/editprofiledialog.cpp
         settings/profiles/profile.cpp
         settings/profiles/profilemanager.cpp
-        )
+        styles.cpp
+        others.cpp )
 
 set(koi_RCS
         ../resources/resources.qrc )

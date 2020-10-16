@@ -126,20 +126,20 @@ void EditProfileDialog::setupPage()
 {
 	//Styles Page.
 	//FixMe: for touch scrolling
-	_stylesDialog->plasmaBox->addItems(Utils::getPlasmaStyles());
+	_stylesDialog->plasmaBox->addItems(utils::getPlasmaStyles());
 	_stylesDialog->plasmaBox->view()->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-	_stylesDialog->colorBox->addItems(Utils::getColorSchemes());
-	_stylesDialog->gtkBox->addItems(Utils::getGtkThemes());
-	_stylesDialog->widgetBox->addItems(Utils::getWidgetStyles());
-	_stylesDialog->kvBox->addItems(Utils::getKvantumStyles());
+	_stylesDialog->colorBox->addItems(utils::getColorSchemes());
+	_stylesDialog->gtkBox->addItems(utils::getGtkThemes());
+	_stylesDialog->widgetBox->addItems(utils::getWidgetStyles());
+	_stylesDialog->kvBox->addItems(utils::getKvantumStyles());
 	//Kvantum Specific
 	_stylesDialog->kvBox->setHidden(true);
 	_stylesDialog->kvLabel->setHidden(true);
 
 	//Others page
-	_othersDialog->iconBox->addItems(Utils::getIcons());
-	_othersDialog->cursorBox->addItems(Utils::getCursorThemes());
-	_othersDialog->decorationBox->addItems(Utils::getWindowDecorationsStyle());
+	_othersDialog->iconBox->addItems(utils::getIcons());
+	_othersDialog->cursorBox->addItems(utils::getCursorThemes());
+	_othersDialog->decorationBox->addItems(utils::getWindowDecorationsStyle());
 
 	_othersDialog->scriptCheckBox->setChecked(false);
 	_othersDialog->wallTypeBox->addItems({"Image","Unsplash"});
@@ -177,7 +177,7 @@ void EditProfileDialog::saveProfile()
 
 	//Decorations.
 	QString decoration(_othersDialog->decorationBox->currentText());
-	QList<Decoration> decList = Utils::getWindowDecorations();
+	QList<Decoration> decList = utils::getWindowDecorations();
 	for (const auto &dt : qAsConst(decList)) {
 		if (QString::compare(dt.name, decoration, Qt::CaseInsensitive) == 0) {
 			_profile->setDecName(dt.name);

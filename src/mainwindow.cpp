@@ -44,11 +44,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::runSchedule()
 {
-    QString currentName(Utils::startupTimeCheck()); // get the profile to be used.
+    QString currentName(utils::startupTimeCheck()); // get the profile to be used.
     if (!currentName.isEmpty() || !currentName.isNull()) {
         auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-        Utils current(currentProfile);
-        current.go();
+        utils::go(currentProfile);
     }
 
     auto manager = ProfileManager::instance();
@@ -59,11 +58,10 @@ void MainWindow::runSchedule()
 
     for (const auto profile : profileSchedList) {
         if (manager->isFavourite(profile->name())) {
-            auto utils = QExplicitlySharedDataPointer<Utils>(new Utils(profile));
             auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
             if (!favTime.isNull()) {
                 //TODO reimplement schedule
-                schedule(utils, favTime);
+                schedule(profile, favTime);
             }
         }
     }
@@ -121,7 +119,7 @@ void MainWindow::toggleVisibility()
 	}
 }
 
-void MainWindow::schedule(QExplicitlySharedDataPointer<Utils>(utils), QTime time)
+void MainWindow::schedule(Profile *p, QTime time)
 {
 	auto favTime = time;
 
@@ -130,9 +128,9 @@ void MainWindow::schedule(QExplicitlySharedDataPointer<Utils>(utils), QTime time
 
 	std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
 
-	s.cron(cronJ, [utils]()
+	s.cron(cronJ, [p]()
 	{
-		utils->go();
+		utils::go(p);
 	});
 }
 
@@ -150,16 +148,14 @@ void MainWindow::on_lightBtn_clicked()
 {
 	QString currentName("light"); // get the profile to be used.
 	auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-	Utils current(currentProfile);
-	current.go();
+	utils::go(currentProfile);
 }
 
 void MainWindow::on_darkBtn_clicked()
 {
 	QString currentName("dark"); // get the profile to be used.
 	auto currentProfile = ProfileManager::instance()->getProfile(currentName);
-	Utils current(currentProfile);
-	current.go();
+	utils::go(currentProfile);
 }
 
 //void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
