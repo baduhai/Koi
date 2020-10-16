@@ -22,10 +22,10 @@ Utils::~Utils()
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
 {
-//    QDBusInterface notifyInterface("org.freedesktop.Notifications",
-//                                   "/org/freedesktop/Notifications",
-//                                   "org.freedesktop.Notifications",
-//                                   QDBusConnection::sessionBus());
+    QDBusInterface notifyInterface("org.freedesktop.Notifications",
+                                   "/org/freedesktop/Notifications",
+                                   "org.freedesktop.Notifications",
+                                   QDBusConnection::sessionBus());
     QString app_name = "Koi";        // What program is the notification coming from?
     uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
     QString
@@ -36,15 +36,15 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
     QVariantMap hints;               // No idea how to use.
     int timeout =
         timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
-//    notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
-    QDBusMessage notify;
-    notify.createMethodCall("org.freedesktop.Notifications",
-                                                 "/org/freedesktop/Notifications",
-                                                 "org.freedesktop.Notifications",
-                                                 "Notify");
-    notify.setArguments({app_name, replaces_id, app_icon, summary, body, actions, hints, timeout});
-
-    QDBusConnection::sessionBus().asyncCall(notify);
+    notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+//    QDBusMessage notify;
+//    notify.createMethodCall("org.freedesktop.Notifications",
+//                                                 "/org/freedesktop/Notifications",
+//                                                 "org.freedesktop.Notifications",
+//                                                 "Notify");
+//    notify.setArguments({app_name, replaces_id, app_icon, summary, body, actions, hints, timeout});
+//
+//    QDBusConnection::sessionBus().asyncCall(notify);
 }
 
 void Utils::setGtk(const QString &gtkTheme)
