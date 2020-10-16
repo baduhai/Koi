@@ -69,6 +69,25 @@ void go(Profile *profile)
     if (widget == "kvantum" || widget == "kvantum-dark") {
         noUse::setKvantumStyle(profile->getKvantum());
     }
+    noUse::setGtk(profile->getGtk());
+    noUse::useGlobalTheme(profile->pluginName());
+
+    //script
+    if (profile->getScriptEnabled()) {
+        if (!QProcess::startDetached("/bin/sh", {profile->getScript()})) {
+            qDebug() << "Failed to run " + profile->name() + " script";
+        }
+    }
+
+    //wallpaper
+    if (profile->getWallEnabled()) {
+        noUse::setWallpaper(profile->getWallpaper());
+    }
+    else {
+        notify("Error setting Wallpaper",
+               "Koi tried to change your " + profile->name() + " wallpaper, but no wallpaper fie was selected",
+               5000);
+    }
 
     //update colours;
     auto *krdbProcess = new QProcess();
@@ -84,6 +103,8 @@ void go(Profile *profile)
     }
 }
 
+namespace noUse
+{
 // Manage switching plasma themes
 void useGlobalTheme(const QString &pluginName)
 {

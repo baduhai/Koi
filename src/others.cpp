@@ -162,5 +162,6 @@ void setWallpaper(const QVariant &wallFile)
     script += "\");}";
     interface.asyncCall("evaluateScript", script);
 }
+
 }
 }
