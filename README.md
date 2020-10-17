@@ -2,9 +2,10 @@
 
 **Theme scheduling for the KDE Plasma Desktop**
 
-<p>
-  <img alt="profile-dialog" title="Yin & Yang" src="doc/profile_dialog.png">
-</p>
+<!--- [theme switch](doc/the%20three.png)--->
+![two theme](doc/main.png)
+<!---dd![image info](doc/profile_dialog.png)--->
+
 
 This is a TODO list 
 - [ ] make light and dark profile show first
@@ -13,10 +14,10 @@ This is a TODO list
 - [x]  add window decoration // i am having a hard time figuring out how to get all the window decoration on the system 
 - [x] most of the methods in utils should be static as they have no relation to the actual class Utils and should be movedinto other classes that it is related to like plasma-style, icons etc.
    // i found a way but not sure if it is optimal tho.
-- [ ] some of the classes are now useless it would either need to be deleted or used for other thing like moving some methods from the utils class into there if they are related as the utils class it too large for my liking.
+- [x] some of the classes are now useless it would either need to be deleted or used for other thing like moving some methods from the utils class into there if they are related as the utils class it too large for my liking.
 - [x] include button for running scripts
 - [x] make methods modular this will assist in the ability to add more than just light and dark if it is not hard-coded.  //almost done
-- [ ] add ability to switch konsole terminal themes 
+- [x] add ability to switch konsole terminal themes 
 - [X] The ui/ux is currently a mess i am no ux/ui guy but i don't really know how to make it any better .... for now
 - [x] add install directory for icons in the cmakelists 
 - [x] remove redundant code 
