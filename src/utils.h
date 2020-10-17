@@ -3,6 +3,7 @@
 // Headers
 #include "styles.h"
 #include "others.h"
+#include "external.h"
 
 // Qt libs
 #include <QtGlobal>

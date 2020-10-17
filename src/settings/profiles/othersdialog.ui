@@ -145,7 +145,7 @@
      <item row="10" column="2" colspan="2">
       <widget class="QComboBox" name="unsplashComboBox">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>

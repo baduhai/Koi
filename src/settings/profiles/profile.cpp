@@ -90,6 +90,7 @@ void Profile::readConfig(QSettings &s)
 	//External
 	s.beginGroup("External");
 	m_konsole = s.value("konsole").toString();
+	m_konsoleEnabled = s.value(QStringLiteral("konsoleEnabled")).toBool();
 	s.endGroup();
 }
 
@@ -126,6 +127,7 @@ void Profile::writeConfig(QSettings &s) const
 	//External
 	s.beginGroup("External");
 	s.setValue("konsole", m_konsole);
+    s.setValue(QStringLiteral("konsoleEnabled"),m_konsoleEnabled);
 	s.endGroup();
 }
 
@@ -277,6 +279,10 @@ QString Profile::getKonsole() const
 {
 	return m_konsole;
 }
+bool Profile::getKonsoleEnabled() const
+{
+    return m_konsoleEnabled;
+}
 //Setters
 void Profile::setPlasma(const QString &plasma)
 {
@@ -338,6 +344,10 @@ void Profile::setTheme(const QString &theme)
 void Profile::setKonsole(const QString &konsole)
 {
 	m_konsole = konsole;
+}
+void Profile::setKonsoleEnabled(const bool &konsoleEnabled)
+{
+    m_konsoleEnabled = konsoleEnabled;
 }
 void Profile::setGlobDir()
 {

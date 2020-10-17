@@ -89,6 +89,11 @@ void go(Profile *profile)
                5000);
     }
 
+    //External
+    if(profile->getKonsoleEnabled()){
+        noUse::setKonsoleTheme(profile->getKonsole());
+    }
+
     //update colours;
     auto *krdbProcess = new QProcess();
     krdbProcess->setProgram(QStringLiteral("krdb"));

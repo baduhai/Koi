@@ -40,7 +40,6 @@ public:
 	void enableKvantum(const QString &widgetName);
 	void enableWallpaper(const bool &isEnabled);
 	void changeWallType(const QString &wallType);
-	void enableProfileName(const int &state);
 	void selectScript();
 	void selectWallpaper();
 
@@ -51,6 +50,7 @@ private:
 
 	//sProfile m_tempProfile;
 	Profile *_profile;
+	//adds unsplash categories to the unsplash combobox;
     void setupUnsplash();
 };
 

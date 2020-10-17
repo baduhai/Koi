@@ -45,14 +45,17 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	_extDialog->setupUi(extPageWidget);
 	KPageWidgetItem *extPageItem = addPage(extPageWidget, extPageName);
 	extPageItem->setIcon(QIcon::fromTheme("preferences"));
-	//TODO: enable the External Page when it has been implemented
-	extPageItem->setEnabled(false);
+
+	//TODO: enable the vscode when it has been implemented
+	_extDialog->checkBox->setHidden(true);
+	_extDialog->comboBox->setHidden(true);
+	_extDialog->label_2->setHidden(true);
 
     //update pages
 
     connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
     //Styles Page
-    connect(_stylesDialog->nameCheckBox, &QCheckBox::stateChanged, this, &EditProfileDialog::enableProfileName);
+    connect(_stylesDialog->nameCheckBox, &QCheckBox::stateChanged,_stylesDialog->nameTextBox, &QLineEdit::setEnabled);
     connect(_stylesDialog->widgetBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::enableKvantum);
 
     //Others Page.
@@ -67,6 +70,9 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 			_othersDialog->scriptBtn,
 			&QPushButton::setEnabled);
     connect(_othersDialog->scriptBtn, &QPushButton::clicked, this, &EditProfileDialog::selectScript);
+
+    //External Page
+    connect(_extDialog->konsoleChkBox, &QCheckBox::stateChanged,_extDialog->konsoleBox, &QComboBox::setEnabled);
 
     setupPage();
 }
@@ -113,6 +119,9 @@ void EditProfileDialog::updatePages()
             _othersDialog->unsplashComboBox->setCurrentIndex(index);
         }
     }
+    //external Page
+    _extDialog->konsoleChkBox->setChecked(_profile->getKonsoleEnabled());
+    _extDialog->konsoleBox->setCurrentText(_profile->getKonsole());
 
 
 }
@@ -131,8 +140,8 @@ void EditProfileDialog::setupPage()
 	_stylesDialog->colorBox->addItems(utils::getColorSchemes());
 	_stylesDialog->gtkBox->addItems(utils::getGtkThemes());
 	_stylesDialog->widgetBox->addItems(utils::getWidgetStyles());
-	_stylesDialog->kvBox->addItems(utils::getKvantumStyles());
-	//Kvantum Specific
+    //Kvantum Specific
+    _stylesDialog->kvBox->addItems(utils::getKvantumStyles());
 	_stylesDialog->kvBox->setHidden(true);
 	_stylesDialog->kvLabel->setHidden(true);
 
@@ -141,10 +150,10 @@ void EditProfileDialog::setupPage()
 	_othersDialog->cursorBox->addItems(utils::getCursorThemes());
 	_othersDialog->decorationBox->addItems(utils::getWindowDecorationsStyle());
 
-	_othersDialog->scriptCheckBox->setChecked(false);
 	_othersDialog->wallTypeBox->addItems({"Image","Unsplash"});
-    _othersDialog->wallTypeBox->setCurrentText("Image");
-    _othersDialog->wallpaperCheckBox->setChecked(false);
+
+    //External Page
+    _extDialog->konsoleBox->addItems(utils::getKonsoleThemes());
 
     //FixMe: when you add the external Page
 
@@ -185,6 +194,10 @@ void EditProfileDialog::saveProfile()
 			_profile->setTheme(dt.theme);
 		}
 	}
+
+	//External
+	_profile->setKonsole(_extDialog->konsoleBox->currentText());
+	_profile->setKonsoleEnabled(_extDialog->konsoleChkBox->isChecked());
 
 	if (!ProfileManager::instance()->profileExists(_profile->name())) {
 		emit addNewProfile(_profile);
@@ -230,10 +243,7 @@ void EditProfileDialog::changeWallType(const QString &wallType)
         _othersDialog->imgLabel->setHidden(true);
     }
 }
-void EditProfileDialog::enableProfileName(const int &state)
-{
-	_stylesDialog->nameTextBox->setEnabled(state);
-}
+
 void EditProfileDialog::selectScript()
 {
     //TODO point to ~/.local/share/koi/script

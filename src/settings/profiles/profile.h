@@ -57,6 +57,7 @@ public:
 	QString getDecName() const;
 	//External
 	QString getKonsole() const;
+	[[nodiscard]] bool getKonsoleEnabled() const;
 
 	//Maybe i don't need setters ?
 	//Setters
@@ -77,7 +78,7 @@ public:
 	void setLibrary(const QString &library);
 	void setTheme(const QString &theme);
 	void setKonsole(const QString &konsole);
-
+    void setKonsoleEnabled(const bool &konsoleEnabled);
 private:
 
 	//name of the profile that will be used for its location
@@ -111,6 +112,7 @@ private:
 
 	//External ;
 	QString m_konsole;
+	bool m_konsoleEnabled;
 };
 
 

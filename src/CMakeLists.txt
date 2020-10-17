@@ -20,7 +20,7 @@ set(koi_SRC
         settings/profiles/profile.cpp
         settings/profiles/profilemanager.cpp
         styles.cpp
-        others.cpp )
+        others.cpp external.cpp external.h)
 
 set(koi_RCS
         ../resources/resources.qrc )
