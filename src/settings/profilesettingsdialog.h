@@ -33,9 +33,15 @@ public:
 	ProfileSettingsDialog(QWidget *parent);
 	~ProfileSettingsDialog() override;
 
-
+signals:
+    //hides the settings Dialog if enabled
+    void hideSettingsDialog(bool isHidden);
 private slots:
+    //Creates a EditProfile Dialog with a new profile
 	void addNewProfile();
+    /***Creates a EditProfileDialog with the current selected
+    profile in the ProfileList tableview
+    */
 	void editCurrentProfile();
 	void deleteCurrentProfile();
 	void tableSelectionChanged();
@@ -48,6 +54,7 @@ private:
 	QStandardItemModel *_profileListModel;
 	QString currentIndex;
 
+	//Table View Column types
 	enum Column
 	{
 		FavouriteStatusColumn = 0,

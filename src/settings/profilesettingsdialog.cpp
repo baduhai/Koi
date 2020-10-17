@@ -45,9 +45,11 @@ void ProfileSettingsDialog::addNewProfile()
 {
 	Profile *newProfile = new Profile();
 	EditProfileDialog *dialog = new EditProfileDialog(this);
-	connect(dialog, &EditProfileDialog::addNewProfile, this, &ProfileSettingsDialog::addItems);
-	dialog->setProfile(newProfile);
-	dialog->open();
+    connect(dialog, &EditProfileDialog::addNewProfile, this, &ProfileSettingsDialog::addItems);
+    dialog->setProfile(newProfile);
+    connect(dialog, &QDialog::finished, this , &ProfileSettingsDialog::hideSettingsDialog);
+    emit hideSettingsDialog(true);
+    dialog->open();
 }
 
 void ProfileSettingsDialog::editCurrentProfile()
@@ -56,9 +58,11 @@ void ProfileSettingsDialog::editCurrentProfile()
 
 	qDebug() << "the profile selected before editing:\n " << currentIndex;
 	auto *dialog = new EditProfileDialog(this);
-	dialog->setProfile(ProfileManager::instance()->_activeProfile);
+    dialog->setProfile(ProfileManager::instance()->_activeProfile);
 	qDebug() << "the glob path " << ProfileManager::instance()->_activeProfile->getGlobDir();
 	qDebug() << "the config path " << ProfileManager::instance()->_activeProfile->configPath();
+	connect(dialog, &QDialog::finished, this , &ProfileSettingsDialog::hideSettingsDialog);
+	emit hideSettingsDialog(true);
 	dialog->open();
 }
 

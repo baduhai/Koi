@@ -6,9 +6,10 @@
 #include <QLoggingCategory>
 
 ProfileManager::ProfileManager()
-	: _profileList()
+	: _profileList(),
+	m_favourites()
 {
-	m_favourites = listFavourites();
+	loadFavourites();
 	loadProfiles();
 }
 
@@ -63,7 +64,7 @@ void ProfileManager::loadProfiles()
 		if (!addProfile(localProfile)) {
 			//qt 5.9.5 does does not support appending qfileinfo
 			//in qdebug();
-			qDebug() << "failed to load ";
+			qDebug() << "failed to load " << localProfile->name();
 		}
 	}
 
@@ -147,24 +148,22 @@ QHash<QString, QString> ProfileManager::getFavouritesList() const
 	return m_favourites;
 }
 
-QHash<QString, QString> ProfileManager::listFavourites()
+void ProfileManager::loadFavourites()
 {
-	QHash<QString, QString> favourites;
 	QSettings s;
 	s.beginGroup("Favourites");
 	QStringList keys(s.allKeys());
 	for (const auto &key : keys) {
-		if (!favourites.contains(key)) {
-			favourites.insert(key, s.value(key).toString());
+		if (!m_favourites.contains(key)) {
+			m_favourites.insert(key, s.value(key).toString());
 		}
 	}
-	if (!favourites.contains("light")) {
-		favourites.insert("light", QString());
+	if (!m_favourites.contains("light")) {
+		m_favourites.insert("light", QString());
 	}
-	if (!favourites.contains("dark")) {
-		favourites.insert("dark", QString());
+	if (!m_favourites.contains("dark")) {
+		m_favourites.insert("dark", QString());
 	}
-	return favourites;
 }
 
 void ProfileManager::saveProfile(const QString &profileName)
@@ -179,8 +178,8 @@ void ProfileManager::saveProfile(const QString &profileName)
 }
 void ProfileManager::deleteProfile()
 {
-	qDebug() << "this is the active profile" << _activeProfile->name();
 	Q_ASSERT(_activeProfile);
+	//TODO add more safety traps here
 	QDir delProfile(_activeProfile->getGlobDir());
 	if (delProfile.exists()) {
 		qDebug() << "deleting dir" << _activeProfile->getGlobDir();
@@ -214,4 +213,15 @@ void ProfileManager::saveFavourites()
 		s.setValue(i.key(), i.value());
 	}
 	s.endGroup();
+	s.sync();
+}
+QStringList ProfileManager::favouriteNames() const
+{
+    QStringList favs;
+    QHashIterator<QString, QString> i(m_favourites);
+	while (i.hasNext()) {
+		i.next();
+		favs.append(i.key());
+	}
+    return favs;
 }

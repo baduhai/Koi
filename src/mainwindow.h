@@ -26,49 +26,47 @@ class MainWindow: public QMainWindow
 Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = nullptr);
-	~MainWindow();
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+signals:
+    //Signal to hide setting from systemTray.
+    void hideSettingsTray(bool isHidden);
 
 public slots:
 
 private slots:
-	void closeEvent(QCloseEvent *event);
+    //Hides the Main Window instead of closing/destroying it
+    void closeEvent(QCloseEvent *event);
 
-	void iconActivated(QSystemTrayIcon::ActivationReason);
+    void iconActivated(QSystemTrayIcon::ActivationReason);
 
-	void toggleVisibility();
+    void toggleVisibility();
 
-	//Main Page
-	void on_prefsBtn_clicked();
-	void on_lightBtn_clicked();
-	void on_darkBtn_clicked();
+    //Main Page
+    void on_prefsBtn_clicked();
+    void on_lightBtn_clicked();
+    void on_darkBtn_clicked();
 
-	//Settings page 1
+    void on_actionQuit_triggered();
+    void on_actionPrefs_triggered();
 
-	//Plasma Buttons
+    void on_actionAbout_triggered();
+    void on_actionHide_triggered();
 
-	//  void on_autoCheckBox_stateChanged(int arg1);
-
-
-	//void on_scheduleRadioBtn_toggled(bool checked);
-	//Global Menu Settings
-	void on_actionQuit_triggered();
-	void on_actionPrefs_triggered();
-
-	void on_actionAbout_triggered();
-	void on_actionHide_triggered();
-
-//	void on_hiddenCheckBox_stateChanged(int arg1);
-
-	void on_actionRestart_triggered();
+    void on_actionRestart_triggered();
 private:
     void runSchedule();
-	Ui::MainWindow *ui;
-	QSystemTrayIcon *trayIcon;
-	QMenu *trayMenu;
-	QMenu *createMenu();
-	QSettings m_settings;
+    Ui::MainWindow *ui;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayMenu;
+    QMenu *createMenu();
+    QSettings m_settings;
 
-	void schedule(Profile*,QTime time);
+    QList<Profile *> favList;
+
+    void schedule(Profile *, QTime time);
+    void loadSystemTray();
+    void profileEnabled(const QString &name);
 };
 #endif // MAINWINDOW_H

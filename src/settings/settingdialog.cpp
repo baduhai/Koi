@@ -50,6 +50,8 @@ SettingDialog::SettingDialog(QWidget *parent)
 			&QAbstractButton::clicked,
 			this,
 			&SettingDialog::cancelClicked);
+	//hide the dialog
+	connect(_profileUi, &ProfileSettingsDialog::hideSettingsDialog, this , &SettingDialog::setHidden);
 }
 
 SettingDialog::~SettingDialog()

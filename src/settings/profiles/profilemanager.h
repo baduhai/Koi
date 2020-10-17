@@ -20,32 +20,31 @@ class ProfileManager: public QObject
 Q_SIGNALS:
 	void favouritesChanged(const QString &profileName,const bool &isFav);
 public:
-	bool profileExists(const QString &fileName);
-	QHash<QString, QString> listFavourites();
-	ProfileManager();
-	~ProfileManager() override;
+    ProfileManager();
+    ~ProfileManager() override;
+    static ProfileManager *instance();
 
+    bool profileExists(const QString &fileName);
 
-	static ProfileManager *instance();
-	//loads all profile including the defaults.
-	QList<Profile *> allProfiles();
-
+    //TODO fix favourites
+    //loads all profile including the defaults.
+    QList<Profile *> allProfiles();
+    QHash<QString, QString> getFavouritesList() const;
+    QStringList favouriteNames()const;
 	void saveProfile(const QString &profileName);
 
 	Profile *_activeProfile{};
 
 	const Profile *defaultProfile() const;
 
-	bool addProfile(Profile *profile);
 
-	//can only delete the active profile.
+    bool addProfile(Profile *profile);
+    //can only delete the active profile.
 	void deleteProfile();
-	bool isFavourite(const QString &profileName);
-	Profile *getProfile(const QString &profileName);
-	QHash<QString, QString> getFavouritesList() const;
-	void setFavourite(const QString& profileName, bool favourite);
-	void saveFavourites();
-
+    bool isFavourite(const QString &profileName);
+    Profile *getProfile(const QString &profileName);
+    void setFavourite(const QString& profileName, bool favourite);
+    void saveFavourites();
 private:
 
 	//load the profile to the qhash. hashed with their filename
@@ -57,14 +56,16 @@ private:
 	//get the list of profiles
 	QFileInfoList listProfiles();
 
+    void loadFavourites();
+
 	//for storing the loaded profiles.
 	QHash<QString, Profile *> _profileList;
-	bool m_loadedAllProfiles{};
-	//makes sure it is only one instance of the class
+    bool m_loadedAllProfiles{};
+    //makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
 	// or don't have and profile set
 	static const Profile _defaultProfile;
-	Q_DISABLE_COPY(ProfileManager);
+    Q_DISABLE_COPY(ProfileManager);
 };
 
 
