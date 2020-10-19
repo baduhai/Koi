@@ -4,18 +4,17 @@
 Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow),
-      favList(ProfileManager::instance()->allProfiles())
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      _trayIcon(new QSystemTrayIcon(this)),
+      _trayMenu(new QMenu(this)),
+      favList(ProfileManager::instance()->allProfiles()),
+      _settingDialog(new SettingDialog(this)),
+      isSetup(false)
 {
-
-    trayIcon = new QSystemTrayIcon(this);
-    this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
-    this->trayIcon->setVisible(true);
-    trayMenu = this->createMenu();
-    this->trayIcon->setContextMenu(trayMenu);   // Set tray context menu
-
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated); // System tray interaction
-    ui->setupUi(this);
+    //won't tile if you are using a tiling script or wm.
+    setAttribute(Qt::WA_X11NetWmWindowTypeDialog, true);
+    loadSystemTray();
 
     // TODO use an enum for this maybe ?
     if (m_settings.value("schedule").toString() == "custom time") {
@@ -129,20 +128,23 @@ void MainWindow::toggleVisibility()
 
 }
 
-void MainWindow::schedule(Profile *p, QTime time)
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Define actions for SysTray L&M-click
 {
-
-    auto favTime = time;
-
-    int cronMin = (favTime.minute() < 0) ? 0 : favTime.minute();
-    int cronHr = (favTime.hour() < 0) ? 0 : favTime.hour();
-
-    std::string cronJ = std::to_string(cronMin) + " " + std::to_string(cronHr) + " * * *";
-
-    s.cron(cronJ, [p]()
-    {
-        utils::go(p);
-    });
+    switch (reason) {
+        case QSystemTrayIcon::Trigger: // Left-click to toggle window visibility
+            if (!isSetup) {
+                setupUi();
+                isSetup = true;
+            }
+            toggleVisibility();
+            break;
+        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
+            utils::notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
+            break;
+            // Must understand tray better - Why can't right click be part of switch statement?
+        default: // Need to understand switch statements better - Why is this required?
+            break;
+    }
 }
 
 // Functionality of buttons - Related to program navigation, interaction and saving settings

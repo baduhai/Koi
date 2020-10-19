@@ -39,6 +39,8 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent)
 ProfileSettingsDialog::~ProfileSettingsDialog()
 {
 	delete ui;
+	delete _editProfileUi;
+	delete _profileListModel;
 }
 
 void ProfileSettingsDialog::addNewProfile()
@@ -48,7 +50,7 @@ void ProfileSettingsDialog::addNewProfile()
     _editProfileUi->setProfile(newProfile);
     connect(_editProfileUi, &QDialog::finished, [this](){emit hideSettingsDialog(false);});
     emit hideSettingsDialog(true);
-    dialog->open();
+    _editProfileUi->open();
 }
 
 void ProfileSettingsDialog::editCurrentProfile()
@@ -56,18 +58,18 @@ void ProfileSettingsDialog::editCurrentProfile()
 	Q_ASSERT(!currentIndex.isEmpty());
 
 	qDebug() << "the profile selected before editing:\n " << currentIndex;
-	auto *dialog = new EditProfileDialog(this);
-    dialog->setProfile(ProfileManager::instance()->_activeProfile);
+    _editProfileUi->setProfile(ProfileManager::instance()->_activeProfile);
 	qDebug() << "the glob path " << ProfileManager::instance()->_activeProfile->getGlobDir();
 	qDebug() << "the config path " << ProfileManager::instance()->_activeProfile->configPath();
 	connect(_editProfileUi, &QDialog::finished, [this](){emit hideSettingsDialog(false);});
 	emit hideSettingsDialog(true);
-	dialog->open();
+	_editProfileUi->open();
 }
 
 void ProfileSettingsDialog::deleteCurrentProfile()
 {
 	auto delManager = ProfileManager::instance();
+	Q_ASSERT(delManager->_activeProfile);
 	auto name = delManager->_activeProfile->name();
 
 	QMessageBox::StandardButton reply;
@@ -86,7 +88,7 @@ void ProfileSettingsDialog::deleteCurrentProfile()
 		for (const auto &item : isMatch) {
 			_profileListModel->removeRow(item->row());
 		}
-		delManager->favouritesChanged(name, isDelFav);
+		emit delManager->favouritesChanged(name, isDelFav);
 	}
 }
 

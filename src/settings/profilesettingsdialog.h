@@ -43,6 +43,7 @@ private slots:
     profile in the ProfileList tableview
     */
 	void editCurrentProfile();
+	// Deletes the current active profile in the view
 	void deleteCurrentProfile();
 	void tableSelectionChanged();
 	void itemDataChanged(QStandardItem *item);

@@ -86,6 +86,7 @@ void ScheduleProfile::timeChanged(QStandardItem *item)
 {
     qDebug() << "the item " << item;
     if (item->column() == TimeColumn) {
+        //TODO Just change only the time
         QString favTime = item->model()->data(item->index(), Qt::DisplayRole).toString();
         QString profileName = item->model()->item(item->row(), FavNameColumn)->data(Qt::DisplayRole).toString();
         //don't know a better way to do this .
@@ -119,8 +120,8 @@ void ScheduleProfile::switchPages(const QString &schedType)
     else if (schedType == enumToQString(SunsetSunrisePage)) {
         ui->stackedWidget->setCurrentIndex(SunsetSunrisePage);
     }
-
 }
+
 void ScheduleProfile::enableProfile(const QModelIndex &index)
 {
     auto s = index.data(Qt::DisplayRole);
