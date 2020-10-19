@@ -31,7 +31,7 @@ public:
 
 signals:
     //Signal to hide setting from systemTray.
-    void hideSettingsTray(bool isHidden);
+    void showSettingsTray(bool isHidden);
 
 public slots:
 

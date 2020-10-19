@@ -3,23 +3,22 @@
 
 namespace utils
 {
-void notify(QString notifySummary, QString notifyBody, int timeoutms) // Push notification through DBus
+void notify(const QString &title, const QString &body, int timeoutms) // Push notification through DBus
 {
-    QDBusInterface notifyInterface("org.freedesktop.Notifications",
-                                   "/org/freedesktop/Notifications",
-                                   "org.freedesktop.Notifications",
-                                   QDBusConnection::sessionBus());
-    QString app_name = "Koi";        // What program is the notification coming from?
-    uint replaces_id = 0;            // Not sure what this is. Think it has something to do with pid.
-    QString
-        app_icon;                // Not actually specifying app icon, this is if you'd like to push an image alog with notification.
-    QString summary = std::move(notifySummary); // Title of notification.
-    QString body = std::move(notifyBody);       // Notification body.
-    QStringList actions;             // No idea how to use.
-    QVariantMap hints;               // No idea how to use.
-    int timeout =
-        timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
-    notifyInterface.call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
+    QDBusMessage m = QDBusMessage::createMethodCall("org.freedesktop.Notifications",
+                                                    "/org/freedesktop/Notifications",
+                                                    "org.freedesktop.Notifications",
+                                                    "Notify");
+    m.setArguments({QCoreApplication::applicationName(), //Name
+                    uint(0), //Pid
+                    QStringLiteral("/usr/share/icons/hicolor/scalable/apps/koi.svg"), //iconPath set in the src/cmakeLists.txt
+                    title, //Notification Title
+                    body, //Notification Body
+                    QStringList(), // Action
+                    QVariantMap(), //Hints
+                    timeoutms // Notification time length
+                   });
+    QDBusConnection::sessionBus().send(m);
 }
 
 QString startupTimeCheck() // get the nearest earlier favourite theme.
@@ -90,7 +89,7 @@ void go(Profile *profile)
     }
 
     //External
-    if(profile->getKonsoleEnabled()){
+    if (profile->getKonsoleEnabled()) {
         noUse::setKonsoleTheme(profile->getKonsole());
     }
 
@@ -104,7 +103,7 @@ void go(Profile *profile)
     krdbProcess->start();
     if (s.value("notify").toBool()) {
         notify("Switched to " + profile->name() + " mode!",
-               "Some applications may need to be restarted for applied changes to take effect.");
+               "Some applications may need to be restarted for applied changes to take effect.", 4000);
     }
 }
 

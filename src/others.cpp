@@ -139,8 +139,10 @@ namespace noUse
 {
 void setWallpaper(const QVariant &wallFile)
 {
-    QDBusInterface
-        interface("org.kde.plasmashell", "/PlasmaShell", "org.kde.PlasmaShell", QDBusConnection::sessionBus());
+    QDBusMessage m = QDBusMessage::createMethodCall("org.kde.plasmashell",
+                                                    "/PlasmaShell",
+                                                    "org.kde.PlasmaShell",
+                                                    "evaluateScript");
     QString script;
     script = "var Desktops = desktops();";
     script += "for (i=0;i<Desktops.length;i++) {";
@@ -160,7 +162,8 @@ void setWallpaper(const QVariant &wallFile)
     }
     script += wallFile.toString();
     script += "\");}";
-    interface.asyncCall("evaluateScript", script);
+    m.setArguments({script});
+    QDBusConnection::sessionBus().send(m);
 }
 
 }

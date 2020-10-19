@@ -15,7 +15,7 @@ class GeneralSettings: public QWidget
 {
 Q_OBJECT
 public:
-	GeneralSettings(QWidget *parent);
+	explicit GeneralSettings(QWidget *parent);
 	~GeneralSettings() override;
 
 	void saveSettings();

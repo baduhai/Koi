@@ -9,10 +9,10 @@
 
 ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent)
 	:
-	QWidget(parent),
-	ui(new Ui::ProfileSettingsDialog),
-	_ProfileDGUi(nullptr),
-	_profileListModel(new QStandardItemModel(this))
+    QWidget(parent),
+    ui(new Ui::ProfileSettingsDialog),
+    _editProfileUi(new EditProfileDialog(this)),
+    _profileListModel(new QStandardItemModel(this))
 {
 	ui->setupUi(this);
 	connect(ui->newProfileBtn, &QPushButton::clicked, this, &ProfileSettingsDialog::addNewProfile);
@@ -43,11 +43,10 @@ ProfileSettingsDialog::~ProfileSettingsDialog()
 
 void ProfileSettingsDialog::addNewProfile()
 {
-	Profile *newProfile = new Profile();
-	EditProfileDialog *dialog = new EditProfileDialog(this);
-    connect(dialog, &EditProfileDialog::addNewProfile, this, &ProfileSettingsDialog::addItems);
-    dialog->setProfile(newProfile);
-    connect(dialog, &QDialog::finished, this , &ProfileSettingsDialog::hideSettingsDialog);
+	QPointer<Profile> newProfile = new Profile();
+    connect(_editProfileUi, &EditProfileDialog::addNewProfile, this, &ProfileSettingsDialog::addItems);
+    _editProfileUi->setProfile(newProfile);
+    connect(_editProfileUi, &QDialog::finished, [this](){emit hideSettingsDialog(false);});
     emit hideSettingsDialog(true);
     dialog->open();
 }
@@ -61,7 +60,7 @@ void ProfileSettingsDialog::editCurrentProfile()
     dialog->setProfile(ProfileManager::instance()->_activeProfile);
 	qDebug() << "the glob path " << ProfileManager::instance()->_activeProfile->getGlobDir();
 	qDebug() << "the config path " << ProfileManager::instance()->_activeProfile->configPath();
-	connect(dialog, &QDialog::finished, this , &ProfileSettingsDialog::hideSettingsDialog);
+	connect(_editProfileUi, &QDialog::finished, [this](){emit hideSettingsDialog(false);});
 	emit hideSettingsDialog(true);
 	dialog->open();
 }

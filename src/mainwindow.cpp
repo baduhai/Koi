@@ -56,7 +56,7 @@ void MainWindow::runSchedule()
     //Schedule other Profiles.
     m_settings.beginGroup("Favourites");
 
-    for (const auto profile : favList) {
+    for (const auto profile : qAsConst(favList)) {
         if (manager->isFavourite(profile->name())) {
             auto favTime = QTime::fromString(m_settings.value(profile->name()).toString());
             if (!favTime.isNull()) {
@@ -77,7 +77,7 @@ QMenu *MainWindow::createMenu() // Define context menu items for SysTray - R-cli
     auto actionMenuToggle = new QAction("&Settings", this);
     connect(actionMenuToggle, &QAction::triggered, this, &MainWindow::on_prefsBtn_clicked);
     //disable when settings page is shown
-    connect(this, &MainWindow::hideSettingsTray, actionMenuToggle, &QAction::setEnabled);
+    connect(this, &MainWindow::showSettingsTray, actionMenuToggle, &QAction::setEnabled);
     actionMenuToggle->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other-symbolic")));
     trayMenu1->addAction(actionMenuToggle);
     trayMenu1->addSeparator();
@@ -149,10 +149,9 @@ void MainWindow::schedule(Profile *p, QTime time)
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koi.conf// file
 {
     auto *dialog = new SettingDialog(this);
-    connect(dialog, &QDialog::finished, [this](){emit hideSettingsTray(true);});
-    dialog->setModal(true);
-    dialog->show();
-    emit hideSettingsTray(false);
+    connect(dialog, &QDialog::finished, [this](){emit showSettingsTray(true);});
+    dialog->open();
+    emit showSettingsTray(false);
 }
 //TODO replace this later
 void MainWindow::on_lightBtn_clicked()

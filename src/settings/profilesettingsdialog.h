@@ -30,7 +30,7 @@ class ProfileSettingsDialog: public QWidget
 {
 Q_OBJECT
 public:
-	ProfileSettingsDialog(QWidget *parent);
+	explicit ProfileSettingsDialog(QWidget *parent);
 	~ProfileSettingsDialog() override;
 
 signals:
@@ -50,7 +50,7 @@ private slots:
 private:
 	Ui::ProfileSettingsDialog *ui;
 
-	EditProfileDialog *_ProfileDGUi;
+	EditProfileDialog *_editProfileUi;
 	QStandardItemModel *_profileListModel;
 	QString currentIndex;
 

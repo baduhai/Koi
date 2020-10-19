@@ -2,3 +2,8 @@ build
 src/build
 *.user
 *.autosave
+*.idea
+*.kdev4
+Toolery
+.vscode
+

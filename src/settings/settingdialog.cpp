@@ -8,9 +8,9 @@
 SettingDialog::SettingDialog(QWidget *parent)
 	:
 	KPageDialog(parent),
-	_generalUi(nullptr),
-	_profileUi(nullptr),
-	_scheduleUi(nullptr)
+	_generalUi(new GeneralSettings(this)),
+	_profileUi(new ProfileSettingsDialog(this)),
+	_scheduleUi(new ScheduleProfile(this))
 {
     this->setMinimumSize(605,353);
 	// KOI Settings Location on the drive
@@ -23,7 +23,6 @@ SettingDialog::SettingDialog(QWidget *parent)
 	//Adding Pages
 	// General page
 	const QString generalPageName = ("General");
-	_generalUi = new GeneralSettings(this);
 	KPageWidgetItem *generalPageItem = this->addPage(_generalUi, generalPageName);
 	generalPageItem->setParent(this);
 	generalPageItem->setHeader(generalPageName);
@@ -31,7 +30,6 @@ SettingDialog::SettingDialog(QWidget *parent)
 
 	// Profiles Page
 	const QString profilePageName = ("Profiles");
-	_profileUi = new ProfileSettingsDialog(this);
 	KPageWidgetItem *profilePageItem = addPage(_profileUi, profilePageName);
 	profilePageItem->setParent(this);
 	profilePageItem->setHeader(profilePageName);
@@ -39,7 +37,6 @@ SettingDialog::SettingDialog(QWidget *parent)
 
 	//Schedule Page
 	const QString schedulePageName = ("Schedule");
-	_scheduleUi = new ScheduleProfile(this);
 	KPageWidgetItem *schedulePageItem = addPage(_scheduleUi, schedulePageName);
 	schedulePageItem->setParent(this);
 	schedulePageItem->setHeader(schedulePageName);
@@ -59,7 +56,6 @@ SettingDialog::~SettingDialog()
 	delete _generalUi;
 	delete _profileUi;
 	delete _scheduleUi;
-
 }
 void SettingDialog::slotOkClicked()
 {

@@ -8,20 +8,18 @@
 EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile here.
 	:
 	KPageDialog(parent),
-	_stylesDialog(nullptr),
-	_othersDialog(nullptr),
-	_extDialog(nullptr),
+	_stylesDialog(new Ui::StylesDialog()),
+	_othersDialog(new Ui::OthersDialog()),
+	_extDialog(new Ui::ExternalDialog()),
 	_profile(nullptr)
 {
 	setWindowTitle("Edit"  " profile");
 	this->setMinimumHeight(480);
 	//try the one below for a different style, i currently prefer this fn;
 	setFaceType(KPageDialog::List);
-//	setFaceType(KPageDialog::Tabbed);
 	//Adding Pages
 	//Styles page
 	const QString stylePageName("Styles");
-	_stylesDialog = new Ui::StylesDialog();
 	auto *stylePageWidget = new QWidget(this);
 	_stylesDialog->setupUi(stylePageWidget);
 
@@ -32,7 +30,6 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 
 	//otherPage
 	const QString othersPageName("Other");
-	_othersDialog = new Ui::OthersDialog();
 	auto *othersPageWidget = new QWidget(this);
 	_othersDialog->setupUi(othersPageWidget);
 	KPageWidgetItem *othersPageItem = addPage(othersPageWidget, othersPageName);
@@ -40,7 +37,6 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 
 	//External Page
 	const QString extPageName("External");
-	_extDialog = new Ui::ExternalDialog();
 	auto *extPageWidget = new QWidget(this);
 	_extDialog->setupUi(extPageWidget);
 	KPageWidgetItem *extPageItem = addPage(extPageWidget, extPageName);
@@ -90,9 +86,12 @@ void EditProfileDialog::updatePages()
 	Q_ASSERT(_profile);
 	//Styles Page.
 	//TODO enable later when you can rename profiles
-//	if (_profile->name() == "light" || _profile->name() == "dark") {
-		_stylesDialog->nameCheckBox->setHidden(true);
-//	}
+	//TODO write this better
+    if (!_profile->name().isEmpty() || !_profile->name().isNull()) {
+        _stylesDialog->nameCheckBox->setHidden(true);
+	}else {
+        _stylesDialog->nameCheckBox->setHidden(false);
+    }
 	_stylesDialog->nameTextBox->setText(_profile->name());
 	_stylesDialog->plasmaBox->setCurrentText(_profile->getPlasma());
 	_stylesDialog->colorBox->setCurrentText(_profile->getColor());

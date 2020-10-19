@@ -11,7 +11,8 @@
 #include <QLibraryInfo>
 #include <QStandardPaths>
 #include <QDebug>
-#include <QDBusInterface>
+#include <QDBusConnection>
+#include <QDBusMessage>
 
 struct Decoration
 {
