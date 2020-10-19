@@ -114,7 +114,7 @@ QList<Profile *> ProfileManager::allProfiles()
 	//this creates default light and dark profile if there are none.
 	//Defaults
 	QStringList defProfileList({"dark","light"});
-	for(const auto &defProfileName: defProfileList){
+	for(const auto &defProfileName: qAsConst(defProfileList)){
 	    if (!profileExists(defProfileName)){
 	        QFileInfo defProfileInfo(QDir::homePath() + "/.local/koi/" + defProfileName + ".koi");
 	        QSettings settings(defProfileInfo.absoluteFilePath(), QSettings::IniFormat);

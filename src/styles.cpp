@@ -19,7 +19,7 @@ QStringList getPlasmaStyles() // Get all available plasma styles
                                                         QStandardPaths::LocateDirectory));
     for (const auto &dir: plasmaDirList) {
         plasmaDirs += QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
-        for (const auto &path : plasmaDirs) {
+        for (const auto &path : qAsConst(plasmaDirs)) {
             QFileInfo file(dir + QStringLiteral("/") + path + QStringLiteral("/metadata.desktop"));
             if (file.exists()) {
                 //TODO: show the pluginName instead in the view ;

@@ -124,7 +124,6 @@ void ScheduleProfile::switchPages(const QString &schedType)
 
 void ScheduleProfile::enableProfile(const QModelIndex &index)
 {
-    auto s = index.data(Qt::DisplayRole);
     if (index.column() == FavNameColumn) {
         QPointer<Profile> profile(ProfileManager::instance()->getProfile(index.data(Qt::DisplayRole).toString()));
         utils::go(profile);

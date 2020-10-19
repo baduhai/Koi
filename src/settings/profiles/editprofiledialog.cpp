@@ -48,7 +48,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	_extDialog->label_2->setHidden(true);
 
     //update pages
-
+    //Save Changes Made to the profile
     connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
     //Styles Page
     connect(_stylesDialog->nameCheckBox, &QCheckBox::stateChanged,_stylesDialog->nameTextBox, &QLineEdit::setEnabled);
@@ -153,8 +153,6 @@ void EditProfileDialog::setupPage()
 
     //External Page
     _extDialog->konsoleBox->addItems(utils::getKonsoleThemes());
-
-    //FixMe: when you add the external Page
 
     setupUnsplash();
 }
@@ -271,11 +269,13 @@ void EditProfileDialog::setupUnsplash()
     box->addItem("4k",133980);
     box->addItem("Ultra Wide", 1339089);
     box->addItem("Background", 1339276);
+    box->addItem("Black", 1101680);
+    box->addItem("Blur", 420324);
+    box->addItem("Ice", 482366);
     box->addItem("Nature", 1065376);
     box->addItem("Pastel", 531563);
-    box->addItem("Black", 1101680);
-    box->addItem("Ice", 482366);
     box->addItem("Top View", 399194);
+    box->addItem("Galaxy",1065374 );
     //TODO add more from the doc file but not too much .
 }
 

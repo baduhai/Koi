@@ -5,8 +5,6 @@
 #include "utils.h"
 #include "settings/settingdialog.h"
 //Qt libs
-#include <QFileDialog>
-#include <QFileInfo>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QMessageBox>
@@ -24,8 +22,9 @@ QT_END_NAMESPACE
 class MainWindow: public QMainWindow
 {
 Q_OBJECT
-
 public:
+
+    void showWindow();
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -38,35 +37,36 @@ public slots:
 private slots:
     //Hides the Main Window instead of closing/destroying it
     void closeEvent(QCloseEvent *event);
-
     void iconActivated(QSystemTrayIcon::ActivationReason);
-
     void toggleVisibility();
 
     //Main Page
-    void on_prefsBtn_clicked();
-    void on_lightBtn_clicked();
-    void on_darkBtn_clicked();
-
-    void on_actionQuit_triggered();
-    void on_actionPrefs_triggered();
-
+    void showSettingsDialog();
     void on_actionAbout_triggered();
-    void on_actionHide_triggered();
-
     void on_actionRestart_triggered();
 private:
+    //schedules the profiles that are in favList
     void runSchedule();
-    Ui::MainWindow *ui;
-    QSystemTrayIcon *trayIcon;
-    QMenu *trayMenu;
-    QMenu *createMenu();
-    QSettings m_settings;
-
-    QList<Profile *> favList;
-
     void schedule(Profile *, QTime time);
+
     void loadSystemTray();
-    void profileEnabled(const QString &name);
+    static void profileEnabled(const QString &name);
+
+    void createMenu();
+
+    /**most times the app is started hidden and there is no
+     * need for a UI so setupUI os only called when the GUI needs to be shown
+     */
+    void setupUi();
+    /*** the Ui is not created/setup when the class is
+     * instantiated isSetup stores if the the UI is setup
+     */
+    bool isSetup;
+    Ui::MainWindow *ui;
+    QSystemTrayIcon *_trayIcon;
+    QMenu *_trayMenu;
+    QSettings m_settings;
+    SettingDialog *_settingDialog;
+    QList<Profile *> favList;
 };
 #endif // MAINWINDOW_H

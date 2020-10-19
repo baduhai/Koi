@@ -31,10 +31,8 @@ int main(int argc, char *argv[]) {
 
         QApplication a(argc, argv);
         MainWindow w;
-        QSettings s;
-        if (!s.value("start-hidden").toBool()) {
-            w.show();
-        }
+        w.showWindow();
+
         return a.exec();
     }
 }
