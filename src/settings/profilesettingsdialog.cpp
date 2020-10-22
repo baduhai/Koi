@@ -57,10 +57,10 @@ void ProfileSettingsDialog::editCurrentProfile()
 {
 	Q_ASSERT(!currentIndex.isEmpty());
 
-	qDebug() << "the profile selected before editing:\n " << currentIndex;
+//	qDebug() << "the profile selected before editing:\n " << currentIndex;
     _editProfileUi->setProfile(ProfileManager::instance()->_activeProfile);
-	qDebug() << "the glob path " << ProfileManager::instance()->_activeProfile->getGlobDir();
-	qDebug() << "the config path " << ProfileManager::instance()->_activeProfile->configPath();
+//	qDebug() << "the glob path " << ProfileManager::instance()->_activeProfile->getGlobDir();
+//	qDebug() << "the config path " << ProfileManager::instance()->_activeProfile->configPath();
 	connect(_editProfileUi, &QDialog::finished, [this](){emit hideSettingsDialog(false);});
 	emit hideSettingsDialog(true);
 	_editProfileUi->open();
@@ -173,13 +173,13 @@ void ProfileSettingsDialog::updateItemsForProfile(const Profile *p, const QList<
 }
 void ProfileSettingsDialog::tableSelectionChanged()
 {
-	currentIndex = ui->profilesList->selectionModel()->currentIndex().data().toString();
+    currentIndex = ui->profilesList->selectionModel()->currentIndex().data().toString();
 	auto manager = ProfileManager::instance();
 	manager->_activeProfile = manager->getProfile(currentIndex);
 	bool isDefault = (currentIndex == ("dark") || (currentIndex == ("light")));
 	bool isDeletable = !isDefault && !currentIndex.isEmpty();
 	auto noOfRows = _profileListModel->rowCount();
-
+    //increase the below to increase the amount of profiles allowed
 	ui->newProfileBtn->setEnabled(noOfRows < 5);
 	ui->editProfileBtn->setEnabled(!currentIndex.isEmpty());
 	ui->deleteProfileBtn->setEnabled(isDeletable);

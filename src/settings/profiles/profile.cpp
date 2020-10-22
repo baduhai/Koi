@@ -12,7 +12,7 @@ Profile::Profile()
 	m_name(), m_pluginName(), m_plasma(), m_color(), //name=themeName pluginName= koi-themeName
 	m_gtk(), m_kvantum(), m_widget(),
 	m_icon(), m_mouse(), m_script(),m_scriptEnabled(false), m_wallpaper(), m_wallEnabled(false),
-	m_library(), m_theme(), m_konsole()
+	m_library(), m_theme(), m_konsole(), m_konsoleEnabled()
 {
 
 	// KSharedconfig would source from the QStandardPath::configLocation if no path is given.
@@ -131,8 +131,8 @@ void Profile::writeConfig(QSettings &s) const
 	s.endGroup();
 }
 
-/*  data is never read from global
-    *this is only for inbuilt kde configs
+/*  data written to the below location is never read by this app
+    *it is for applying kde specific styles with the command lookandfeel
     *theme global configs is always prefixed with Koi-$nameoftheme
 */
 void Profile::writeToGlobal() const

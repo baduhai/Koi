@@ -110,9 +110,9 @@ private:
 	QString m_library;
 	QString m_theme;
 
-	//External ;
+    //External ;
 	QString m_konsole;
-	bool m_konsoleEnabled;
+    bool m_konsoleEnabled;
 };
 
 

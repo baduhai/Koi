@@ -5,12 +5,12 @@ Bosma::Scheduler s(2);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
+      isSetup(false),
       ui(new Ui::MainWindow),
       _trayIcon(new QSystemTrayIcon(this)),
       _trayMenu(new QMenu(this)),
-      favList(ProfileManager::instance()->allProfiles()),
       _settingDialog(new SettingDialog(this)),
-      isSetup(false)
+      favList(ProfileManager::instance()->allProfiles())
 {
     //won't tile if you are using a tiling script or wm.
     setAttribute(Qt::WA_X11NetWmWindowTypeDialog, true);
@@ -111,7 +111,7 @@ void MainWindow::createMenu() // Define context menu items for SysTray - R-click
 
 void MainWindow::loadSystemTray()
 {
-    _trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
+    _trayIcon->setIcon(QPixmap(":/resources/icons/koi_tray.svg")); // Set tray icon - Not sure why svg doesn't work
     _trayIcon->setVisible(true);
     createMenu();
     _trayIcon->setContextMenu(_trayMenu);   // Set tray context menu

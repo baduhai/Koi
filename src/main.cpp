@@ -1,12 +1,11 @@
 #include "mainwindow.h"
-#include "utils.h"
 
-#include <iostream>
 #include <QApplication>
 #include <QLocalSocket>
 #include <QLocalServer>
 
-bool isAlreadyRunning(const QString& netName) {
+bool isAlreadyRunning(const QString &netName)
+{
     QLocalSocket socket;
     socket.connectToServer(netName);
     bool isOpen = socket.isOpen();
@@ -14,25 +13,32 @@ bool isAlreadyRunning(const QString& netName) {
     return isOpen;
 }
 
-void createDummyNetwork(const QString& netName) {
+void createDummyNetwork(const QString &netName)
+{
     QLocalServer *server = new QLocalServer;
     server->setSocketOptions(QLocalServer::WorldAccessOption);
     server->listen(netName);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     QCoreApplication::setOrganizationName("koi");
     QCoreApplication::setApplicationName("koi");
+    QApplication a(argc, argv);
 
     if (isAlreadyRunning("koiDummyNetwork")) {
-        std::cout << "Another instance of Koi is already running" << std::endl;
-    } else {
+        qDebug() << "Another instance of Koi is already running";
+        QMessageBox msgBox;
+        msgBox.setIconPixmap(QPixmap(":/resources/icons/koi.svg"));
+        msgBox.setText("Another instance of Koi is already running \n Check your system tray.");
+        return msgBox.exec();
+    }
+    else {
         createDummyNetwork("koiDummyNetwork");
 
-        QApplication a(argc, argv);
         MainWindow w;
         w.showWindow();
 
-        return a.exec();
+        return QApplication::exec();
     }
 }

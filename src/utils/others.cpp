@@ -14,24 +14,28 @@ QStringList getIcons() // Get all available icon themes
     QStringList iconDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
                                                       "icons", QStandardPaths::LocateDirectory));
     QStringList iconThemes;
+    QFileInfoList themeList;
 
     for (const auto &path: iconDirList) {
         QDir iconDir(path);
-        if (!iconDir.exists()) {
-            continue;
-        }
-        auto themeList(iconDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
-        for (const auto &tName: themeList) {
-            QDir themeDir(tName.absoluteFilePath());
-            if (themeDir.entryList(QDir::Files | QDir::NoDotAndDotDot).contains(QStringLiteral("index.theme"))) {
-                iconThemes.append(themeDir.dirName());
-            }
+        if (iconDir.exists()) {
+            themeList.append(iconDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
         }
     }
-    //TODO a better way
-    iconThemes.removeAll(QStringLiteral("hicolor"));
+
+    for (const auto &tName: themeList) {
+        QDir themeDir(tName.absoluteFilePath());
+        QSettings indexFile(themeDir.absolutePath() + QStringLiteral("/index.theme"), QSettings::IniFormat);
+        indexFile.beginGroup("Icon Theme");
+        if(indexFile.allKeys().contains(QStringLiteral("Directories"))){
+            iconThemes.append(tName.baseName());
+        }
+    }
+    iconThemes.removeAll(QStringLiteral("hicolor"));// not meant to be shown
     iconThemes.removeAll(QStringLiteral("default"));
+    iconThemes.removeDuplicates();
     iconThemes.sort();
+
     return iconThemes;
 }
 
@@ -57,7 +61,7 @@ QStringList getCursorThemes()
             }
         }
     }
-
+    cursorThemes.removeDuplicates();
     cursorThemes.sort();
     return cursorThemes;
 }
@@ -73,14 +77,15 @@ QList<Decoration> getWindowDecorations()
     its kinda hacky but i did it this way , if there is a better way tell me and i would update this  */
     QList<Decoration> dt;
     QDir sysLib; //for the library
+    QStringList auroraeStyles;
 
     QString pluginDir(QLibraryInfo::location(QLibraryInfo::PluginsPath));
     QDir dir(pluginDir + "/org.kde.kdecoration2/");
-    //TODO delete path variable just for debugging
-    QString path(dir.absolutePath());
-    qDebug() << "the plugin path " << path;
     if (dir.exists()) {
         sysLib = dir;
+//        qDebug() << "reading system path" ;
+    } else {
+        qDebug() << "window decoraton in systempath is not used ";
     }
     QFileInfoList libInfoTheme = sysLib.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     QStringList libThemes;
@@ -96,14 +101,12 @@ QList<Decoration> getWindowDecorations()
         }
     }
     //for aurorae styles
-    QStringList auroraeStyles;
-    QDir aurLocalLib(QDir::homePath() + "/.local/share/aurorae/themes");
-    QDir aurSysLib("/usr/share/aurorae/themes/");
-    if (aurSysLib.exists()) {
-        auroraeStyles.append(aurSysLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
-    }
-    if (aurLocalLib.exists()) {
-        auroraeStyles.append(aurLocalLib.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    QStringList auroraeDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
+                                                        "aurorae/themes", QStandardPaths::LocateDirectory));
+    
+    for (const auto &dirName: auroraeDirList)
+    {
+       auroraeStyles.append(QDir(dirName).entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     }
     auroraeStyles.removeDuplicates();
 
@@ -132,6 +135,7 @@ QStringList getWindowDecorationsStyle()
         styleList.append(style.name);
     }
     styleList.sort();
+    styleList.removeDuplicates();
     return styleList;
 }
 

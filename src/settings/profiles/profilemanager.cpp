@@ -99,12 +99,6 @@ bool ProfileManager::addProfile(Profile *profile)
 	return true;
 }
 
-const Profile ProfileManager::_defaultProfile;
-
-const Profile *ProfileManager::defaultProfile() const
-{
-	return &_defaultProfile;
-}
 QList<Profile *> ProfileManager::allProfiles()
 {
 	if (!m_loadedAllProfiles) {

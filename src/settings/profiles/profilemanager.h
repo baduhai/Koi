@@ -35,9 +35,6 @@ public:
 
 	Profile *_activeProfile{};
 
-	const Profile *defaultProfile() const;
-
-
     bool addProfile(Profile *profile);
     //can only delete the active profile.
 	void deleteProfile();
@@ -64,7 +61,6 @@ private:
     //makes sure it is only one instance of the class
 	//this is loaded when you use koi for the first time
 	// or don't have and profile set
-	static const Profile _defaultProfile;
     Q_DISABLE_COPY(ProfileManager);
 };
 

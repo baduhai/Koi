@@ -32,7 +32,7 @@ This is a TODO list
 - [ ] updating pages 
 - [ ] add Global Shortcut to cycle between themes.//not yet sure on a good way to implement this.
 - [ ] replace with qtStringLiteral for static data.
-
+- [ ] flatpak support
 ## **How to Build** 
 
 NB: the app is built for the K desktop environment .
