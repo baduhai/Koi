@@ -11,7 +11,7 @@
 
 //Koi
 #include "profiles/profilemanager.h"
-#include "utils.h"
+#include "utils/utils.h"
 
 enum scheduleColumns {
     FavNameColumn = 0,

@@ -13,21 +13,23 @@ namespace utils
 QStringList getPlasmaStyles() // Get all available plasma styles
 {
     QStringList plasmaStyles;
-    QStringList plasmaDirs;
+    QFileInfoList plasmaDirs;
     QStringList plasmaDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
                                                         "plasma/desktoptheme",
                                                         QStandardPaths::LocateDirectory));
     for (const auto &dir: plasmaDirList) {
-        plasmaDirs += QDir(dir).entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
-        for (const auto &path : qAsConst(plasmaDirs)) {
-            QFileInfo file(dir + QStringLiteral("/") + path + QStringLiteral("/metadata.desktop"));
-            if (file.exists()) {
-                //TODO: show the pluginName instead in the view ;
-                plasmaStyles.append(path);
-            }
+        plasmaDirs.append(QDir(dir).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden));
+    }
+
+    for (const auto &path : qAsConst(plasmaDirs)) {
+        QFileInfo file(path.absoluteFilePath() + QStringLiteral("/metadata.desktop"));
+        if (file.exists()) {
+            //TODO: show the pluginName instead in the view ;
+            plasmaStyles.append(path.baseName());
         }
     }
 
+    plasmaStyles.removeAll(QStringLiteral("default"));//should not be included
     plasmaStyles.removeDuplicates();
     plasmaStyles.sort();
     return plasmaStyles;
@@ -38,17 +40,17 @@ QStringList getPlasmaStyles() // Get all available plasma styles
 QStringList getColorSchemes() // Get all available color schemes
 {
     QStringList colorNames;
+    QFileInfoList cList;
     const QStringList colorDir = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
                                                            QStringLiteral("color-schemes"),
                                                            QStandardPaths::LocateDirectory);
     for (const auto &dir : colorDir) {
-        QStringList colorPaths = QDir(dir).entryList(QStringList({QStringLiteral("*.colors")}), QDir::Files);
-        for (const auto &path: colorPaths) {
-            QFileInfo file(dir + QStringLiteral("/") + path);
-            if (file.exists()) {
-                colorNames.append(file.baseName());
-            }
-        }
+        QDir s(dir);
+        s.setFilter(QDir::Files);
+        cList.append(s.entryInfoList({QStringLiteral("*.colors")}));
+    }
+    for (const auto &path: cList) {
+        colorNames.append(path.baseName());
     }
     colorNames.sort();
     return colorNames;
@@ -77,6 +79,8 @@ QStringList getGtkThemes() // Get all available gtk themes
             }
         }
     }
+    gtkThemes.removeAll(QStringLiteral("Default"));
+    gtkThemes.removeAll(QStringLiteral("Breeze-Dark"));//same as Breeze
     gtkThemes.removeDuplicates();
     gtkThemes.sort();
     return gtkThemes;
@@ -94,8 +98,17 @@ QStringList getWidgetStyles()
 //Kvantum
 QStringList getKvantumStyles() // Get all available kvantum styles
 {
+    /***FixMe: there are other kvantum dirs to check for here is the list
+     * use the config file for parsing
+     * /usr/share/Kvantum
+     * /usr/share/themes/Kvantum
+     * ~/.config/Kvantum/$THEME_NAME/
+     * ~/.themes/$THEME_NAME/Kvantum/
+     * ~/.local/share/themes/$THEME_NAME/Kvantum/
+     */
+
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
-    QDir kvantumStyleSystemDir("/usr/share/Kvantum");
+    QDir kvantumStyleSystemDir(QDir::rootPath() + "usr/share/Kvantum");
     QStringList kvantumStyles;
     if (kvantumStyleLocalDir.exists()) {
         kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
@@ -136,7 +149,7 @@ void setGtk(const QString &gtkTheme)
 void setKvantumStyle(QString kvantumStyle)
 {
     auto kvProcess = new QProcess;
-    QString program = "/usr/bin/kvantummanager";
+    QString program = "kvantummanager";
     QStringList arguments{"--set", std::move(kvantumStyle)};
     QObject::connect(kvProcess,
                      qOverload<int, QProcess::ExitStatus>(&QProcess::finished),

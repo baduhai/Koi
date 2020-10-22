@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QDBusConnection>
 #include <QDBusMessage>
+#include <QSettings>
 
 struct Decoration
 {

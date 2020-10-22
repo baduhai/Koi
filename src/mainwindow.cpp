@@ -47,6 +47,7 @@ void MainWindow::setupUi()
     actionRes->setIcon(QIcon::fromTheme("view-refresh"));
     connect(actionRes, &QAction::triggered, this, &MainWindow::on_actionRestart_triggered);
     ui->resMsg->addAction(actionRes);
+
 }
 // Override window managing events
 void MainWindow::closeEvent(QCloseEvent *event)

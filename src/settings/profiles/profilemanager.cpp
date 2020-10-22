@@ -3,7 +3,6 @@
 //
 
 #include "profilemanager.h"
-#include <QLoggingCategory>
 
 ProfileManager::ProfileManager()
 	: _profileList(),

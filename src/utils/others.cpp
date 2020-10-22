@@ -124,6 +124,7 @@ QList<Decoration> getWindowDecorations()
         d.library = "org.kde." + d.name.toLower();
         dt.append(d);
     }
+
     return dt;
 }
 

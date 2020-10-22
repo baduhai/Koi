@@ -9,7 +9,7 @@ set(koi_SRC
         license.cpp
         main.cpp
         mainwindow.cpp
-        utils.cpp
+        utils/utils.cpp
         #Settings Dir
         settings/settingdialog.cpp
         settings/generalsettings.cpp
@@ -19,8 +19,8 @@ set(koi_SRC
         settings/profiles/editprofiledialog.cpp
         settings/profiles/profile.cpp
         settings/profiles/profilemanager.cpp
-        styles.cpp
-        others.cpp external.cpp external.h)
+        utils/styles.cpp
+        utils/others.cpp utils/external.cpp utils/external.h)
 
 set(koi_RCS
         ../resources/resources.qrc )

@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 //Headers
 #include "about.h"
-#include "utils.h"
+#include "utils/utils.h"
 #include "settings/settingdialog.h"
 //Qt libs
 #include <QMainWindow>

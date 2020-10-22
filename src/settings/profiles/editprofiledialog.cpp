@@ -17,6 +17,9 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	this->setMinimumHeight(480);
 	//try the one below for a different style, i currently prefer this fn;
 	setFaceType(KPageDialog::List);
+
+	buttonBox()->setStandardButtons(QDialogButtonBox::Ok
+										| QDialogButtonBox::Cancel);
 	//Adding Pages
 	//Styles page
 	const QString stylePageName("Styles");
@@ -47,9 +50,11 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 	_extDialog->comboBox->setHidden(true);
 	_extDialog->label_2->setHidden(true);
 
+
     //update pages
     //Save Changes Made to the profile
-    connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
+//    connect(this, &EditProfileDialog::accepted, this, &EditProfileDialog::saveProfile);
+    connect(buttonBox()->button(QDialogButtonBox::Ok), &QAbstractButton::clicked, this, &EditProfileDialog::saveProfile);
     //Styles Page
     connect(_stylesDialog->nameCheckBox, &QCheckBox::stateChanged,_stylesDialog->nameTextBox, &QLineEdit::setEnabled);
     connect(_stylesDialog->widgetBox, &QComboBox::currentTextChanged, this, &EditProfileDialog::enableKvantum);
@@ -72,6 +77,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)//cannot pass in a profile 
 
     setupPage();
 }
+
 EditProfileDialog::~EditProfileDialog()
 {
     delete _stylesDialog;
@@ -124,6 +130,7 @@ void EditProfileDialog::updatePages()
 
 
 }
+
 void EditProfileDialog::setProfile(Profile *p)
 {
     //checks if it points to anything before using .
@@ -160,7 +167,6 @@ void EditProfileDialog::setupPage()
 void EditProfileDialog::saveProfile()
 {
 	//TODO save only stuff that has been changed.
-
 	//TODO check if the name has been changed so it can be updated and the previous deleted.
 	//Style Page
 	_profile->setName(_stylesDialog->nameTextBox->text());
@@ -193,18 +199,23 @@ void EditProfileDialog::saveProfile()
 	}
 
 	//External
-	_profile->setKonsole(_extDialog->konsoleBox->currentText());
-	_profile->setKonsoleEnabled(_extDialog->konsoleChkBox->isChecked());
-
-	if (!ProfileManager::instance()->profileExists(_profile->name())) {
-		emit addNewProfile(_profile);
+    if (!_profile->name().isEmpty()) {
+        _profile->setKonsole(_extDialog->konsoleBox->currentText());
+        _profile->setKonsoleEnabled(_extDialog->konsoleChkBox->isChecked());
+        if (!ProfileManager::instance()->profileExists(_profile->name())) {
+            emit addNewProfile(_profile);
+        }
+        _profile->setConfigPath();
+        _profile->setGlobDir();
+        // TODO this is meant to be in the controller as i currently don't know how.
+        ProfileManager::instance()->addProfile(_profile);
+        ProfileManager::instance()->saveProfile(_profile->name());
+    } else {
+	    QMessageBox msgBox(QMessageBox::Information,
+                        "No Profile Name ",
+                        "You Need to enter a profile name");
+        msgBox.exec();
 	}
-	_profile->setConfigPath();
-	_profile->setGlobDir();
-    // TODO this is meant to be in the controller as i currently don't know how.
-	ProfileManager::instance()->addProfile(_profile);
-	ProfileManager::instance()->saveProfile(_profile->name());
-
 }
 void EditProfileDialog::enableKvantum(const QString &widgetName)
 {

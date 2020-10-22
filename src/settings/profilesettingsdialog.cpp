@@ -19,6 +19,7 @@ ProfileSettingsDialog::ProfileSettingsDialog(QWidget *parent)
 	createTable();
 	ProfileManager *manager = ProfileManager::instance();
 	populateTable();
+	tableSelectionChanged();
 
 	connect(_profileListModel, &QStandardItemModel::itemChanged, this, &ProfileSettingsDialog::itemDataChanged);
 	connect(manager, &ProfileManager::favouritesChanged, manager, &ProfileManager::saveFavourites);

@@ -2,7 +2,6 @@
 // Created by da-viper on 05/09/2020.
 //
 
-#include <QDebug>
 #include "profile.h"
 
 //This is used for getting the current active plasma style settings
@@ -67,8 +66,8 @@ void Profile::readConfig(QSettings &s)
 	m_widget = s.value("widgetStyle").toString();
 
 
-	qDebug() << "the setting param " << s.value("plasmaStyle").toString() << s.value("colorScheme").toString()
-			 << s.value("kvantum").toString();
+//	qDebug() << "the setting param " << s.value("plasmaStyle").toString() << s.value("colorScheme").toString()
+//			 << s.value("kvantum").toString();
 	s.endGroup();
 	//Others;
 	s.beginGroup("Others");

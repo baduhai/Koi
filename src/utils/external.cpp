@@ -3,8 +3,6 @@
 //
 
 #include "external.h"
-//Qt
-
 
 namespace utils
 {

@@ -14,7 +14,7 @@
 #include "ui_stylesdialog.h"
 #include "ui_othersdialog.h"
 #include "profile.h"
-#include "utils.h"
+#include "utils/utils.h"
 #include "profilemanager.h"
 
 namespace Ui
