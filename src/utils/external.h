@@ -11,7 +11,7 @@
 #include <QStandardPaths>
 #include <QDir>
 
-namespace  utils
+namespace utils
 {
 /**when adding other features this is where you put them
  * just to make it neat

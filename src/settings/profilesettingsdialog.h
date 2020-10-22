@@ -30,42 +30,42 @@ class ProfileSettingsDialog: public QWidget
 {
 Q_OBJECT
 public:
-	explicit ProfileSettingsDialog(QWidget *parent);
-	~ProfileSettingsDialog() override;
+    explicit ProfileSettingsDialog(QWidget *parent);
+    ~ProfileSettingsDialog() override;
 
 signals:
     //hides the settings Dialog if enabled
     void hideSettingsDialog(bool isHidden);
 private slots:
     //Creates a EditProfile Dialog with a new profile
-	void addNewProfile();
+    void addNewProfile();
     /***Creates a EditProfileDialog with the current selected
     profile in the ProfileList tableview
     */
-	void editCurrentProfile();
-	// Deletes the current active profile in the view
-	void deleteCurrentProfile();
-	void tableSelectionChanged();
-	void itemDataChanged(QStandardItem *item);
+    void editCurrentProfile();
+    // Deletes the current active profile in the view
+    void deleteCurrentProfile();
+    void tableSelectionChanged();
+    void itemDataChanged(QStandardItem *item);
 
 private:
-	Ui::ProfileSettingsDialog *ui;
+    Ui::ProfileSettingsDialog *ui;
 
-	EditProfileDialog *_editProfileUi;
-	QStandardItemModel *_profileListModel;
-	QString currentIndex;
+    EditProfileDialog *_editProfileUi;
+    QStandardItemModel *_profileListModel;
+    QString currentIndex;
 
-	//Table View Column types
-	enum Column
-	{
-		FavouriteStatusColumn = 0,
-		ProfileNameColumn = 1,
-	};
+    //Table View Column types
+    enum Column
+    {
+        FavouriteStatusColumn = 0,
+        ProfileNameColumn = 1,
+    };
 
-	void createTable();
-	void populateTable();
-	void addItems(const Profile *p);
-	void updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const;
+    void createTable();
+    void populateTable();
+    void addItems(const Profile *p);
+    void updateItemsForProfile(const Profile *p, const QList<QStandardItem *> &items) const;
 };
 
 

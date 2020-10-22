@@ -15,16 +15,16 @@ class GeneralSettings: public QWidget
 {
 Q_OBJECT
 public:
-	explicit GeneralSettings(QWidget *parent);
-	~GeneralSettings() override;
+    explicit GeneralSettings(QWidget *parent);
+    ~GeneralSettings() override;
 
-	void saveSettings();
-	void loadSettings();
+    void saveSettings();
+    void loadSettings();
 private slots:
 
 private:
-	Ui::GeneralSettings *ui;
-	QSettings m_settings;
+    Ui::GeneralSettings *ui;
+    QSettings m_settings;
 };
 
 #endif // GENERALSETTINGS_H

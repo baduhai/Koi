@@ -27,7 +27,7 @@ QStringList getIcons() // Get all available icon themes
         QDir themeDir(tName.absoluteFilePath());
         QSettings indexFile(themeDir.absolutePath() + QStringLiteral("/index.theme"), QSettings::IniFormat);
         indexFile.beginGroup("Icon Theme");
-        if(indexFile.allKeys().contains(QStringLiteral("Directories"))){
+        if (indexFile.allKeys().contains(QStringLiteral("Directories"))) {
             iconThemes.append(tName.baseName());
         }
     }
@@ -84,7 +84,8 @@ QList<Decoration> getWindowDecorations()
     if (dir.exists()) {
         sysLib = dir;
 //        qDebug() << "reading system path" ;
-    } else {
+    }
+    else {
         qDebug() << "window decoraton in systempath is not used ";
     }
     QFileInfoList libInfoTheme = sysLib.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
@@ -102,11 +103,10 @@ QList<Decoration> getWindowDecorations()
     }
     //for aurorae styles
     QStringList auroraeDirList(QStandardPaths::locateAll(QStandardPaths::GenericDataLocation,
-                                                        "aurorae/themes", QStandardPaths::LocateDirectory));
-    
-    for (const auto &dirName: auroraeDirList)
-    {
-       auroraeStyles.append(QDir(dirName).entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+                                                         "aurorae/themes", QStandardPaths::LocateDirectory));
+
+    for (const auto &dirName: auroraeDirList) {
+        auroraeStyles.append(QDir(dirName).entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     }
     auroraeStyles.removeDuplicates();
 

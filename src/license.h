@@ -3,13 +3,14 @@
 // Qt libs
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class License;
 }
 
-class License : public QDialog
+class License: public QDialog
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit License(QWidget *parent = nullptr);

@@ -13,21 +13,24 @@
 #include "profiles/profilemanager.h"
 #include "utils/utils.h"
 
-enum scheduleColumns {
+enum scheduleColumns
+{
     FavNameColumn = 0,
     TimeColumn,
 };
-enum schedulePages {
+enum schedulePages
+{
     CustomPage,
     SunsetSunrisePage,
 };
 
-
-namespace Ui {
-    class ScheduleProfile;
+namespace Ui
+{
+class ScheduleProfile;
 }
 
-class ScheduleProfile : public QWidget {
+class ScheduleProfile: public QWidget
+{
 Q_OBJECT
 
 public:
@@ -64,7 +67,8 @@ private:
     QStandardItemModel *_profileTimeModel;
     void addItems(const QString &favName, const QString &favTime, const QList<QStandardItem *> &item);
 
-    static QString enumToQString(schedulePages type) {
+    static QString enumToQString(schedulePages type)
+    {
         switch (type) {
             case CustomPage:
                 return "custom time";
@@ -77,7 +81,8 @@ private:
 };
 
 ///For the Time column spinbox to be able to be edited, and shown.
-class FavTimeDelegate : public QStyledItemDelegate {
+class FavTimeDelegate: public QStyledItemDelegate
+{
 Q_OBJECT
 
 public:

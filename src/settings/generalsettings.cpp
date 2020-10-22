@@ -2,11 +2,11 @@
 
 
 GeneralSettings::GeneralSettings(QWidget *parent)
-	:
-        QWidget(parent),
-        ui(new Ui::GeneralSettings)
+    :
+    QWidget(parent),
+    ui(new Ui::GeneralSettings)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
     loadSettings();
 
     //TODO enable this when you have implemented autostart
@@ -17,18 +17,18 @@ GeneralSettings::GeneralSettings(QWidget *parent)
 
 GeneralSettings::~GeneralSettings()
 {
-	delete ui;
+    delete ui;
 }
 void GeneralSettings::saveSettings()
 {
-	//notification.
-	//by default the general group is created if there is no group declared.
-	m_settings.setValue("notify", ui->notifyCheckBox->isChecked());
-	m_settings.setValue("start-hidden",ui->hiddenCheckBox->isChecked());
+    //notification.
+    //by default the general group is created if there is no group declared.
+    m_settings.setValue("notify", ui->notifyCheckBox->isChecked());
+    m_settings.setValue("start-hidden", ui->hiddenCheckBox->isChecked());
 }
 void GeneralSettings::loadSettings()
 {
-	ui->notifyCheckBox->setChecked(m_settings.value("notify").toBool());
-	ui->hiddenCheckBox->setChecked(m_settings.value("start-hidden").toBool());
+    ui->notifyCheckBox->setChecked(m_settings.value("notify").toBool());
+    ui->hiddenCheckBox->setChecked(m_settings.value("start-hidden").toBool());
 }
 

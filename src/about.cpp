@@ -4,7 +4,8 @@
 #include <QUrl>
 #include <QDesktopServices>
 
-About::About(QWidget *parent) :
+About::About(QWidget *parent)
+    :
     QDialog(parent),
     ui(new Ui::About)
 {
@@ -16,13 +17,13 @@ About::About(QWidget *parent) :
     QApplication::setApplicationVersion("0.1.1");
     ui->verLabel->setText(pgrmVersion + QApplication::applicationVersion());
     QString qtVersion = "<ul><li>Qt ";
-            qtVersion += qVersion();
-            qtVersion += "</li></ul>";
+    qtVersion += qVersion();
+    qtVersion += "</li></ul>";
     ui->qtVerLabel->setText(qtVersion);
     ui->qtVerLabel->setTextFormat(Qt::RichText);
     QString kfVersion = "<ul><li>KDE Frameworks ";
-            kfVersion += KCoreAddons::versionString();
-            kfVersion += "</li></ul>";
+    kfVersion += KCoreAddons::versionString();
+    kfVersion += "</li></ul>";
     ui->kf5Version->setText(kfVersion);
     ui->kf5Version->setTextFormat(Qt::RichText);
     QString bosmaLabel = "<ul><li><a href=\"https://github.com/Bosma/Scheduler\">Bosma Scheduler</a></li></ul>";
@@ -48,7 +49,7 @@ void About::on_closeBtn_clicked()
 
 void About::on_licenseBtn_clicked()
 {
-    auto* licence = new License(this);
+    auto *licence = new License(this);
     licence->open();
 }
 

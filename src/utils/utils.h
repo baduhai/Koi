@@ -23,7 +23,7 @@
 namespace utils
 {
 
-void notify(const QString& notifySummary = "", const QString& notifyBody = "", int timeoutms = 5000);
+void notify(const QString &notifySummary = "", const QString &notifyBody = "", int timeoutms = 5000);
 QString startupTimeCheck();
 
 namespace noUse

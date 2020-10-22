@@ -21,17 +21,17 @@ class SettingDialog: public KPageDialog
 Q_OBJECT
 
 public:
-	explicit SettingDialog(QWidget *parent = nullptr);
-	~SettingDialog() override;
+    explicit SettingDialog(QWidget *parent = nullptr);
+    ~SettingDialog() override;
 
 private slots:
-	void slotOkClicked();
-	void cancelClicked();
+    void slotOkClicked();
+    void cancelClicked();
 
 private:
-	GeneralSettings *_generalUi;
-	ProfileSettingsDialog *_profileUi;
-	ScheduleProfile *_scheduleUi;
+    GeneralSettings *_generalUi;
+    ProfileSettingsDialog *_profileUi;
+    ScheduleProfile *_scheduleUi;
 };
 
 #endif // SETTINGDIALOG_H

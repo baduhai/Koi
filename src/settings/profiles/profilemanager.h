@@ -16,9 +16,9 @@
 
 class ProfileManager: public QObject
 {
-	Q_OBJECT
+Q_OBJECT
 Q_SIGNALS:
-	void favouritesChanged(const QString &profileName,const bool &isFav);
+    void favouritesChanged(const QString &profileName, const bool &isFav);
 public:
     ProfileManager();
     ~ProfileManager() override;
@@ -30,37 +30,37 @@ public:
     //loads all profile including the defaults.
     QList<Profile *> allProfiles();
     QHash<QString, QString> getFavouritesList() const;
-    QStringList favouriteNames()const;
-	void saveProfile(const QString &profileName);
+    QStringList favouriteNames() const;
+    void saveProfile(const QString &profileName);
 
-	Profile *_activeProfile{};
+    Profile *_activeProfile{};
 
     bool addProfile(Profile *profile);
     //can only delete the active profile.
-	void deleteProfile();
+    void deleteProfile();
     bool isFavourite(const QString &profileName);
     Profile *getProfile(const QString &profileName);
-    void setFavourite(const QString& profileName, bool favourite);
+    void setFavourite(const QString &profileName, bool favourite);
     void saveFavourites();
 private:
 
-	//load the profile to the qhash. hashed with their filename
-	void loadProfiles();
+    //load the profile to the qhash. hashed with their filename
+    void loadProfiles();
 
-	//////Name-----time
-	QHash<QString, QString> m_favourites;
+    //////Name-----time
+    QHash<QString, QString> m_favourites;
 
-	//get the list of profiles
-	QFileInfoList listProfiles();
+    //get the list of profiles
+    QFileInfoList listProfiles();
 
     void loadFavourites();
 
-	//for storing the loaded profiles.
-	QHash<QString, Profile *> _profileList;
+    //for storing the loaded profiles.
+    QHash<QString, Profile *> _profileList;
     bool m_loadedAllProfiles{};
     //makes sure it is only one instance of the class
-	//this is loaded when you use koi for the first time
-	// or don't have and profile set
+    //this is loaded when you use koi for the first time
+    // or don't have and profile set
     Q_DISABLE_COPY(ProfileManager);
 };
 

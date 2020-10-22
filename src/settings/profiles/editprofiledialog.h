@@ -27,30 +27,30 @@ class EditProfileDialog: public KPageDialog
 {
 Q_OBJECT
 Q_SIGNALS:
-	void addNewProfile(const Profile*);
+    void addNewProfile(const Profile *);
 public:
-	explicit EditProfileDialog(QWidget *parent = nullptr);
-	~EditProfileDialog() override;
+    explicit EditProfileDialog(QWidget *parent = nullptr);
+    ~EditProfileDialog() override;
 
-	void setupPage();
-	void setProfile(Profile *p);
-	void updatePages();
+    void setupPage();
+    void setProfile(Profile *p);
+    void updatePages();
 
-	void saveProfile();
-	void enableKvantum(const QString &widgetName);
-	void enableWallpaper(const bool &isEnabled);
-	void changeWallType(const QString &wallType);
-	void selectScript();
-	void selectWallpaper();
+    void saveProfile();
+    void enableKvantum(const QString &widgetName);
+    void enableWallpaper(const bool &isEnabled);
+    void changeWallType(const QString &wallType);
+    void selectScript();
+    void selectWallpaper();
 
 private:
-	Ui::StylesDialog *_stylesDialog;
-	Ui::OthersDialog *_othersDialog;
-	Ui::ExternalDialog *_extDialog;
+    Ui::StylesDialog *_stylesDialog;
+    Ui::OthersDialog *_othersDialog;
+    Ui::ExternalDialog *_extDialog;
 
-	//sProfile m_tempProfile;
-	Profile *_profile;
-	//adds unsplash categories to the unsplash combobox;
+    //sProfile m_tempProfile;
+    Profile *_profile;
+    //adds unsplash categories to the unsplash combobox;
     void setupUnsplash();
 };
 

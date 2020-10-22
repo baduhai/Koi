@@ -36,7 +36,7 @@ void MainWindow::setupUi()
     { profileEnabled(ui->lightBtn->text().toLower()); });
     connect(ui->darkBtn, &QPushButton::clicked, [this]()
     { profileEnabled(ui->darkBtn->text().toLower()); });
-    connect(ui->prefsBtn, &QPushButton::clicked, this , &MainWindow::showSettingsDialog);
+    connect(ui->prefsBtn, &QPushButton::clicked, this, &MainWindow::showSettingsDialog);
     //Menubar Actions
     connect(ui->actionPrefs, &QAction::triggered, this, &MainWindow::showSettingsDialog);//Preferences
     connect(ui->actionHide, &QAction::triggered, this, &QMainWindow::hide);//Hide
