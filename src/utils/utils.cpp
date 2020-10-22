@@ -11,7 +11,8 @@ void notify(const QString &title, const QString &body, int timeoutms) // Push no
                                                     "Notify");
     m.setArguments({QCoreApplication::applicationName(), //Name
                     uint(0), //Pid
-                    QStringLiteral("/usr/share/icons/hicolor/scalable/apps/koi.svg"), //iconPath set in the src/cmakeLists.txt
+                    QString(QDir::rootPath()
+                                + QStringLiteral("usr/share/icons/hicolor/scalable/apps/koi.svg")), //iconPath set in the src/cmakeLists.txt
                     title, //Notification Title
                     body, //Notification Body
                     QStringList(), // Action
@@ -68,8 +69,10 @@ void go(Profile *profile)
     if (widget == "kvantum" || widget == "kvantum-dark") {
         noUse::setKvantumStyle(profile->getKvantum());
     }
-    noUse::setGtk(profile->getGtk());
     noUse::useGlobalTheme(profile->pluginName());
+    //this need to be above useGlobal as breeze changes the gtk theme
+    // and causes theme mismatch
+    noUse::setGtk(profile->getGtk());
 
     //script
     if (profile->getScriptEnabled()) {
