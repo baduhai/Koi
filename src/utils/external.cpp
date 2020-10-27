@@ -34,7 +34,7 @@ void setKonsoleTheme(const QString &name)
         profileList.append(QDir(path).entryInfoList(QStringList({QStringLiteral("*.profile")}), QDir::Files));
     }
     for (const auto &profileInfo : profileList) {
-        if (profileInfo.baseName() == kProfileName) {
+        if (profileInfo.fileName() == kProfileName) {
             QSettings cs(profileInfo.absoluteFilePath(), QSettings::IniFormat);
             cs.setValue("Appearance/ColorScheme", name);
         }
