@@ -65,6 +65,10 @@ NB: the app is built for the K desktop environment .
 `sudo pacman -S cmake gcc extra-cmake-modules ninja xsettingsd` 
 
 
+### OpenSuse
+`sudo zypper install git-core gcc-c++ cmake extra-cmake-modules xsettingsd ninja`
+
+`sudo zypper install libqt5-qtdeclarative-devel libqt5-qtbase-devel  kcoreaddons-devel kwidgetsaddons-devel kconfig-devel kpackage-devel  kservice-devel`
 
 // I have not gotten the dependencies for other distros currently will be added later 
 
