@@ -37,8 +37,6 @@ This is a TODO list
 
 NB: the app is built for the K desktop environment .
 
-on X11 
-    install xsettingsd 
    
 ### **Ubuntu Based ** 
 
@@ -50,7 +48,7 @@ on X11
 
 
 
-`sudo apt install git cmake ninja-build g++ extra-cmake-modules qtbase5-dev`
+`sudo apt install git cmake ninja-build g++ extra-cmake-modules qtbase5-dev xsettingsd`
 
 
 
@@ -64,7 +62,7 @@ on X11
 
 `sudo pacman -Syu` 
 
-`sudo pacman -S cmake gcc extra-cmake-modules ninja` 
+`sudo pacman -S cmake gcc extra-cmake-modules ninja xsettingsd` 
 
 
 
@@ -80,25 +78,13 @@ on X11
 
 `cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja`
 
-
-
-###### To run the app enter 
-
-from the build folder 
-
-`cd src  && ./koi` 
-
-
-
-if you insist on installing the app   go the build folder and run 
+`ninja`
 
 `sudo ninja install` 
 
 to uninstall run 
 
-`sudo ninja uninstall`  
-
-
+`sudo ninja uninstall`  from the build folder 
 
 then you can delete the directory 
 

@@ -74,7 +74,8 @@ QStringList getGtkThemes() // Get all available gtk themes
 
         for (const auto &tName: themeList) {
             QDir themeDir(tName.absoluteFilePath());
-            if (themeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot).contains(QStringLiteral("gtk-3.0"))) {
+            static const QStringList gtk3DirName(QStringLiteral("gtk-3.*"));
+            if (!themeDir.entryList(gtk3DirName, QDir::Dirs | QDir::NoDotAndDotDot).isEmpty()) {
                 gtkThemes.append(themeDir.dirName());
             }
         }
@@ -129,10 +130,10 @@ void setGtk(const QString &gtkTheme)
     QString method;
     if (KCoreAddons::version() < QT_VERSION_CHECK(5, 75, 0)) {
         method = QStringLiteral("setGtk3Theme");
-        QDBusConnection::sessionBus().asyncCall(QDBusMessage::createMethodCall("org.kde.GtkConfig",
-                                                                               "/GtkConfig",
-                                                                               "org.kde.GtkConfig",
-                                                                               "setGtk2Theme"));
+        QDBusConnection::sessionBus().send(QDBusMessage::createMethodCall("org.kde.GtkConfig",
+                                                                          "/GtkConfig",
+                                                                          "org.kde.GtkConfig",
+                                                                          "setGtk2Theme"));
     }
     if (KCoreAddons::version() >= QT_VERSION_CHECK(5, 75, 0)) {
         method = QStringLiteral("setGtkTheme");
@@ -143,7 +144,7 @@ void setGtk(const QString &gtkTheme)
                                                   "org.kde.GtkConfig",
                                                   method);
     message.setArguments({gtkTheme});
-    QDBusConnection::sessionBus().asyncCall(message);
+    QDBusConnection::sessionBus().send(message);
 }
 
 void setKvantumStyle(QString kvantumStyle)
@@ -151,10 +152,14 @@ void setKvantumStyle(QString kvantumStyle)
     auto kvProcess = new QProcess;
     QString program = "kvantummanager";
     QStringList arguments{"--set", std::move(kvantumStyle)};
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
+    QObject::connect(kvProcess, static_cast<void (QProcess::*)(int)>(&QProcess::finished),kvProcess ,&QProcess::deleteLater);
+#else
     QObject::connect(kvProcess,
                      qOverload<int, QProcess::ExitStatus>(&QProcess::finished),
                      kvProcess,
                      &QProcess::deleteLater);
+#endif
     kvProcess->start(program, arguments);
 }
 }

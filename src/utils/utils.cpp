@@ -99,10 +99,14 @@ void go(Profile *profile)
     //update colours;
     auto *krdbProcess = new QProcess();
     krdbProcess->setProgram(QStringLiteral("krdb"));
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
+    QObject::connect(krdbProcess, static_cast<void (QProcess::*)(int)>(&QProcess::finished),krdbProcess ,&QProcess::deleteLater);
+#else
     QObject::connect(krdbProcess,
                      qOverload<int, QProcess::ExitStatus>(&QProcess::finished),
                      krdbProcess,
                      &QProcess::deleteLater);
+#endif
     krdbProcess->start();
     if (s.value("notify").toBool()) {
         notify("Switched to " + profile->name() + " mode!",
@@ -123,10 +127,14 @@ void useGlobalTheme(const QString &pluginName)
      * SIGTRAP error when debugging if above any of the functions that calls Dbus
      * in the Utils::go() function above.
      */
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
+    QObject::connect(useGlob, static_cast<void (QProcess::*)(int)>(&QProcess::finished),useGlob ,&QProcess::deleteLater);
+#else
     QObject::connect(useGlob,
                      qOverload<int, QProcess::ExitStatus>(&QProcess::finished),
                      useGlob,
                      &QProcess::deleteLater);
+#endif
     useGlob->start(command, arguments);
 }
 }
