@@ -11,4 +11,5 @@ void Gtk::setGtk(QString gtkTheme)
     interface = new QDBusInterface("org.kde.GtkConfig", "/GtkConfig", "org.kde.GtkConfig", *bus);
     interface->call("setGtk2Theme", gtkTheme);
     interface->call("setGtk3Theme", gtkTheme);
+    interface->call("setGtkTheme", gtkTheme);
 }
