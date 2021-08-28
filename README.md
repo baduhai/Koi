@@ -4,8 +4,6 @@
 
 <h3 align="center">Theme scheduling for the KDE Plasma Desktop</h3>
 
-**No longer maintained.**
-
 Koi is a program designed to provide the KDE Plasma Desktop functionality to automatically switch between light and dark themes. Koi is under active development, and while it is stable enough to use daily, expect bugs. Koi is designed to be used with Plasma, and while some features may function under different desktop environments, they are unlikely to work and untested.
 
 **Disclaimer:** Koi was written as a project to practice Qt by a novice programmer,  expect code to be written sloppily.
@@ -19,15 +17,6 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 - Change GTK theme.
 - Change wallpaper.
 - Hide application to system tray.
-
-#### Planned features
-
-- [ ] Toggle between light and dark presets based on sunset and sunrise.
-- [ ] Change Kate schema.
-- [ ] Change Atom theme.
-- [ ] Rewrite of scheduling system.
-
-Want Koi to support changing themes for another application? Open a [feature request!](https://github.com/baduhai/Koi/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=%5BREQUEST%5D)
 
 ### Screenshots
 
@@ -43,7 +32,7 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ### Get Koi
 
-Lastest Koi version: 0.1.1 [beta]
+Lastest Koi version: 0.1.2 [beta]
 
 #### Dependencies
 
