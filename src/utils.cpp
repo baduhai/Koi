@@ -22,7 +22,8 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
     QString summary = notifySummary; // Title of notification.
     QString body = notifyBody;       // Notification body.
     QStringList actions;             // No idea how to use.
-    QVariantMap hints;               // No idea how to use.
+    QVariantMap hints;               // Provide .desktop file for notification sorting in the DE
+    hints.insert("desktop-entry", "koi");
     int timeout = timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
     notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }

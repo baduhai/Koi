@@ -70,9 +70,9 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason) // Defi
         toggleVisibility();
         break;
 
-        //        case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
-        //            utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
-        //            break;
+                //case QSystemTrayIcon::MiddleClick: // Middle-click to toggle between light and dark
+                //    utils.notify("Hello!", "You middle-clicked me", 0); // Must implement toggle
+                //    break;
 
         // Must understand tray better - Why can't right click be part of switch statement?
 
