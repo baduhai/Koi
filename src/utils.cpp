@@ -27,7 +27,7 @@ void Utils::notify(QString notifySummary, QString notifyBody, int timeoutms) // 
     int timeout = timeoutms;         // Notification timeout, there's no way to assume system has a default timeout unfortunately.
     notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary, body, actions, hints, timeout);
 }
-void Utils::startupTimeCheck() // Check if switching is needed based on time.
+void Utils::startupTimeCheck() // Switch to the theme set for the current time
 {
     QTime lightTime = QTime::fromString(settings->value("time-light").toString(), "hh:mm:ss");
     QTime darkTime = QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
@@ -57,6 +57,24 @@ void Utils::startupTimeCheck() // Check if switching is needed based on time.
         QTest::qWait(1000);
         goDark();
     }
+}
+
+void Utils::startupSunCheck() { // Switch to the theme set for the current sun status
+  
+  double latitude = settings->value("latitude").toDouble();
+  double longitude = settings->value("longitude").toDouble();
+  time_t t = time(NULL);
+  
+  SunRise sr;
+  sr.calculate(latitude, longitude, t);
+
+  if (sr.isVisible) {
+    QTest::qWait(1000);
+    goLight();
+  } else {
+    QTest::qWait(1000);
+    goDark();
+  }
 }
 
 // Get stuff

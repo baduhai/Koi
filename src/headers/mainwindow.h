@@ -42,6 +42,7 @@ private slots:
     int prefsSaved();
     void scheduleLight();
     void scheduleDark();
+    void scheduleSunEvent();
 
     void on_prefsBtn_clicked();
     void on_backBtn_clicked();

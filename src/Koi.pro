@@ -27,6 +27,7 @@ SOURCES += \
     utils.cpp \
     wallpaper.cpp \
     kvantumstyle.cpp \
+    libs/SunRise.cpp
     
 
 HEADERS += \
@@ -42,7 +43,8 @@ HEADERS += \
     headers/kvantumstyle.h \ \
     libs/Cron.h \
     libs/InterruptableSleep.h \
-    libs/Scheduler.h
+    libs/Scheduler.h \
+    libs/SunRise.h
 
 FORMS += \
     ui/about.ui \

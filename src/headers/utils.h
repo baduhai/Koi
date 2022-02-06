@@ -19,6 +19,9 @@
 #include <QTest>
 #include <QProcess>
 
+// Misc libs
+#include "../libs/SunRise.h"
+
 class Utils : public QObject
 {
     Q_OBJECT
@@ -39,6 +42,7 @@ public:
 
     void notify(QString notifySummary = "", QString notifyBody = "", int timeoutms = 5000);
     void startupTimeCheck();
+    void startupSunCheck();
 
     void goLight();
     void goDark();

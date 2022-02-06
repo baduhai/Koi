@@ -17,11 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainStack->setCurrentIndex(0); // Always start window on main view
     refreshDirs();
     loadPrefs(); // Load prefs on startup
-    if (utils.settings->value("schedule").toBool())
-    {
-        utils.startupTimeCheck(); // Switch themes on startup
-        scheduleLight();
-        scheduleDark();
+    if (utils.settings->value("schedule").toBool()) {
+        if (utils.settings->value("schedule-type").toString() == "time") { //Scheduled switch
+            utils.startupTimeCheck(); // Switch themes on startup
+            scheduleLight();
+            scheduleDark();
+        } else { //Auto sun switch
+            utils.startupSunCheck(); // Switch themes on startup
+            scheduleSunEvent();
+        }
     }
     ui->resMsg->hide();
     auto actionRes = new QAction("Restart", this);
@@ -481,7 +485,48 @@ void MainWindow::scheduleDark()
     });
 }
 
-// Funtionality of buttons - Related to program navigation, interaction and saving settings
+void MainWindow::scheduleSunEvent() {
+    // Schedules a theme change for the next sunrise or sunfall
+    double latitude = utils.settings->value("latitude").toDouble();
+    double longitude = utils.settings->value("longitude").toDouble();
+
+    time_t t = time(NULL);
+
+    SunRise sr;
+    sr.calculate(latitude, longitude, t);
+
+    char buffer[20];
+    struct tm *timeinfo;
+
+    if ((!sr.hasRise || (sr.hasRise && sr.riseTime < sr.queryTime)) && (!sr.hasSet || (sr.hasSet && sr.setTime < sr.queryTime))) {
+        //No events found in the next SR_WINDOW/2 hours, check again later - may happen in polar regions
+        s.in(std::chrono::hours(SR_WINDOW/2), [this]() {
+            scheduleSunEvent();
+        });
+    } else if (sr.hasRise && sr.riseTime > sr.queryTime) {
+        timeinfo = localtime (&sr.riseTime);
+        strftime (buffer,20,"%Y-%m-%d %H:%M:%S",timeinfo);
+        //puts("Scheduling Light Theme for:");
+        //puts(buffer);
+        std::string sunEventCron = buffer;
+        s.at(sunEventCron, [this]() {
+            utils.goLight();
+            scheduleSunEvent();
+        });
+    } else if (sr.hasSet && sr.setTime > sr.queryTime) {
+        timeinfo = localtime (&sr.setTime);
+        strftime (buffer,20,"%Y-%m-%d %H:%M:%S",timeinfo);
+        //puts("Scheduling Dark Theme for:");
+        //puts(buffer);
+        std::string sunEventCron = buffer;
+        s.at(sunEventCron, [this]() {
+            utils.goDark();
+            scheduleSunEvent();
+        });
+    }
+}
+
+// Functionality of buttons - Related to program navigation, interaction and saving settings
 void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferences as found in koirc file
 {
     lightWall = utils.settings->value("Wallpaper/light").toString();
@@ -661,36 +706,19 @@ void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for
     ui->latitudeDSB->setEnabled(automaticEnabled);
     ui->longitudeDSB->setEnabled(automaticEnabled);
     
-
-    /*
-    if (automaticEnabled) {
-
-    } else {
-
-    }*/
-
-
-/*
-    if (utils.settings->value("schedule-type").toString() == "time")
-    {
-       
-    }
-    else
-    {
-
-    }
-
-*/
-    
     utils.settings->setValue("schedule", automaticEnabled);
     utils.settings->sync();
-    ui->resMsg->setText(tr("To disable automatic mode, Koi must be restarted."));
+    if (automaticEnabled) {
+        ui->resMsg->setText(tr("To enable automatic mode, Koi must be restarted."));
+    } else {
+        ui->resMsg->setText(tr("To disable automatic mode, Koi must be restarted."));
+    }
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
 void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between manual schedule, and sun schedule
 {
-    if(ui->sunRadioBtn->isChecked() == 0)
+    if(scheduleSun)
 	{
     	scheduleType = "time";
 
@@ -719,6 +747,10 @@ void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between
 	}
 	utils.settings->setValue("schedule-type", scheduleType);
 	utils.settings->sync();
+
+    ui->resMsg->setText(tr("To change automatic mode, Koi must be restarted."));    
+    ui->resMsg->setMessageType(KMessageWidget::Warning);
+    ui->resMsg->animatedShow();
 }
 void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set light time
 {
