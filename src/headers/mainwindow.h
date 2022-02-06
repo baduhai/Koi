@@ -79,6 +79,8 @@ private slots:
     void on_darkDropKvantumStyle_currentIndexChanged(const QString &arg1);
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
+    void on_latitudeDSB_valueChanged(double lat);    
+    void on_longitudeDSB_valueChanged(double lon);  
     void on_hiddenCheckBox_stateChanged(int arg1);
     void on_notifyCheckBox_stateChanged(int arg1);
 

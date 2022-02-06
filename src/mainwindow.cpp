@@ -115,13 +115,33 @@ void MainWindow::loadPrefs()
     if (utils.settings->value("schedule-type") == "time")
     {
         ui->scheduleRadioBtn->setChecked(1);
+        ui->lightTimeLabel->setVisible(true);
+        ui->darkTimeLabel->setVisible(true);
+        ui->lightTimeEdit->setVisible(true);
+        ui->darkTimeEdit->setVisible(true);            
+        ui->latitudeLabel->setVisible(false);
+        ui->longitudeLabel->setVisible(false);
+        ui->latitudeDSB->setVisible(false);
+        ui->longitudeDSB->setVisible(false);
     }
     else
     {
         ui->sunRadioBtn->setChecked(1);
+        ui->lightTimeLabel->setVisible(false);
+        ui->darkTimeLabel->setVisible(false);
+        ui->lightTimeEdit->setVisible(false);
+        ui->darkTimeEdit->setVisible(false);            
+        ui->latitudeLabel->setVisible(true);
+        ui->longitudeLabel->setVisible(true);
+        ui->latitudeDSB->setVisible(true);
+        ui->longitudeDSB->setVisible(true);
     }
+
     ui->lightTimeEdit->setTime(utils.settings->value("time-light").toTime());
     ui->darkTimeEdit->setTime(utils.settings->value("time-dark").toTime());
+
+    ui->latitudeDSB->setValue(utils.settings->value("latitude").toDouble());
+    ui->longitudeDSB->setValue(utils.settings->value("longitude").toDouble());
 
     // Load Plasma style prefs
     if (utils.settings->value("PlasmaStyle/enabled").toBool())
@@ -629,29 +649,73 @@ void MainWindow::on_darkWallBtn_clicked() // Set dark wallpaper
 }
 void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for enabling scheduling of themes
 {
-       ui->scheduleRadioBtn->setEnabled(automaticEnabled);
-        ui->lightTimeLabel->setEnabled(automaticEnabled);
-        ui->darkTimeLabel->setEnabled(automaticEnabled);
-        ui->lightTimeEdit->setEnabled(automaticEnabled);
-        ui->darkTimeEdit->setEnabled(automaticEnabled);
-        utils.settings->setValue("schedule", automaticEnabled);
-        utils.settings->sync();
-        ui->resMsg->setText(tr("To disable automatic mode , Koi must be restarded."));
-        ui->resMsg->setMessageType(KMessageWidget::Warning);
-        ui->resMsg->animatedShow();
+    ui->scheduleRadioBtn->setEnabled(automaticEnabled);
+    ui->sunRadioBtn->setEnabled(automaticEnabled);
+
+    ui->lightTimeLabel->setEnabled(automaticEnabled);
+    ui->darkTimeLabel->setEnabled(automaticEnabled);
+    ui->lightTimeEdit->setEnabled(automaticEnabled);
+    ui->darkTimeEdit->setEnabled(automaticEnabled);
+    ui->latitudeLabel->setEnabled(automaticEnabled);
+    ui->longitudeLabel->setEnabled(automaticEnabled);
+    ui->latitudeDSB->setEnabled(automaticEnabled);
+    ui->longitudeDSB->setEnabled(automaticEnabled);
+    
+
+    /*
+    if (automaticEnabled) {
+
+    } else {
+
+    }*/
+
+
+/*
+    if (utils.settings->value("schedule-type").toString() == "time")
+    {
+       
+    }
+    else
+    {
+
+    }
+
+*/
+    
+    utils.settings->setValue("schedule", automaticEnabled);
+    utils.settings->sync();
+    ui->resMsg->setText(tr("To disable automatic mode, Koi must be restarted."));
+    ui->resMsg->setMessageType(KMessageWidget::Warning);
+    ui->resMsg->animatedShow();
 }
 void MainWindow::on_scheduleRadioBtn_toggled(bool scheduleSun) // Toggle between manual schedule, and sun schedule
 {
-	ui->lightTimeLabel->setEnabled(scheduleSun);
-	ui->darkTimeLabel->setEnabled(scheduleSun);
-	ui->lightTimeEdit->setEnabled(scheduleSun);
-	ui->darkTimeEdit->setEnabled(scheduleSun);
     if(ui->sunRadioBtn->isChecked() == 0)
 	{
     	scheduleType = "time";
+
+        ui->lightTimeLabel->setVisible(true);
+        ui->darkTimeLabel->setVisible(true);
+        ui->lightTimeEdit->setVisible(true);
+        ui->darkTimeEdit->setVisible(true);            
+        ui->latitudeLabel->setVisible(false);
+        ui->longitudeLabel->setVisible(false);
+        ui->latitudeDSB->setVisible(false);
+        ui->longitudeDSB->setVisible(false);
+
 	} else
 	{
     	scheduleType = "sun";
+
+        ui->lightTimeLabel->setVisible(false);
+        ui->darkTimeLabel->setVisible(false);
+        ui->lightTimeEdit->setVisible(false);
+        ui->darkTimeEdit->setVisible(false);            
+        ui->latitudeLabel->setVisible(true);
+        ui->longitudeLabel->setVisible(true);
+        ui->latitudeDSB->setVisible(true);
+        ui->longitudeDSB->setVisible(true);
+
 	}
 	utils.settings->setValue("schedule-type", scheduleType);
 	utils.settings->sync();
@@ -671,6 +735,22 @@ void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark 
     utils.settings->setValue("time-dark", darkTime);
     utils.settings->sync();
     ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
+    ui->resMsg->setMessageType(KMessageWidget::Warning);
+    ui->resMsg->animatedShow();
+}
+void MainWindow::on_latitudeDSB_valueChanged(double lat) 
+{
+    utils.settings->setValue("latitude", lat);
+    utils.settings->sync();
+    ui->resMsg->setText(tr("Koi must be restarted for new lat&long to be used."));
+    ui->resMsg->setMessageType(KMessageWidget::Warning);
+    ui->resMsg->animatedShow();
+}
+void MainWindow::on_longitudeDSB_valueChanged(double lon) 
+{
+    utils.settings->setValue("longitude", lon);
+    utils.settings->sync();
+    ui->resMsg->setText(tr("Koi must be restarted for new lat&long to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
