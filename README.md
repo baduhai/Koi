@@ -75,7 +75,7 @@ Support for AppImage dropped. Considering Flatpak.
 
 4. `cd build`
 
-5. `qmake ../src/koi.pro`
+5. `qmake ../src/Koi.pro`
 
 6. `make`
 
