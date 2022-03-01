@@ -32,7 +32,7 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ### Get Koi
 
-Lastest Koi version: 0.1.2 [beta]
+Lastest Koi version: 0.1.3 [beta]
 
 #### Dependencies
 
@@ -44,7 +44,7 @@ Lastest Koi version: 0.1.2 [beta]
 
 - qmake [build dependency]
 
-Koi targets the latest version of the above deps. As of writing this file, these are; Qt 5.14.2, KDE Plasma 5.18.5, KDE Frameworks 5.70 and qmake 3.1.
+Koi targets the latest version of the above deps. As of writing this file, these are; Qt 5.15.2, KDE Plasma 5.24.2, KDE Frameworks 5.91 and qmake 3.1.
 
 #### Ubuntu Based 
 `sudo apt update` 
@@ -75,7 +75,7 @@ Support for AppImage dropped. Considering Flatpak.
 
 4. `cd build`
 
-5. `qmake ../src/koi.pro`
+5. `qmake ../src/Koi.pro`
 
 6. `make`
 

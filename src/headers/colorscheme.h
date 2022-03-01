@@ -2,12 +2,7 @@
 #define COLORSCHEME_H
 // Qt libs
 #include <QString>
-#include <QtDBus>
-#include <QFileInfo>
 #include <QProcess>
-// KF5 libs
-#include <KSharedConfig>
-#include <KConfigGroup>
 
 class ColorScheme
 {
@@ -17,7 +12,7 @@ public:
     void setColorScheme(QString colorScheme);
 
 private:
-    QProcess *breezeGtkProcess;
+    QProcess *colorSchemeProcess;
 };
 
 #endif // COLORSCHEME_H

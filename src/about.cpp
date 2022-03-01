@@ -13,7 +13,7 @@ About::About(QWidget *parent) :
     QApplication::setApplicationName("Koi");
     ui->titleLabel->setText(QApplication::applicationName());
     QString pgrmVersion = "Version ";
-    QApplication::setApplicationVersion("0.1.1");
+    QApplication::setApplicationVersion("0.1.3");
     ui->verLabel->setText(pgrmVersion + QApplication::applicationVersion());
     QString qtVersion = "<ul><li>Qt ";
             qtVersion += qVersion();
@@ -33,6 +33,10 @@ About::About(QWidget *parent) :
     ui->ctpLib->setText(ctplLabel);
     ui->ctpLib->setTextFormat(Qt::RichText);
     ui->ctpLib->setOpenExternalLinks(1);
+    QString sunriseLabel = "<ul><li><a href=\"https://github.com/signetica/SunRise\">SunRise</a></li></ul>";
+    ui->sunriseLib->setText(sunriseLabel);
+    ui->sunriseLib->setTextFormat(Qt::RichText);
+    ui->sunriseLib->setOpenExternalLinks(1);
     ui->tabWidget->setCurrentIndex(0);
 }
 
