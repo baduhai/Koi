@@ -7,6 +7,7 @@ ColorScheme::ColorScheme()
 
 void ColorScheme::setColorScheme(QString colorScheme)
 {
+    colorSchemeProcess = new QProcess;
 
     QString locateProgram = "whereis";
     QStringList programToLocate = {"plasma-apply-colorscheme"};
