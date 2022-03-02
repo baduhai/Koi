@@ -7,8 +7,17 @@ ColorScheme::ColorScheme()
 
 void ColorScheme::setColorScheme(QString colorScheme)
 {
-    colorSchemeProcess = new QProcess;
-    QString program = "/usr/bin/plasma-apply-colorscheme";
+
+    QString locateProgram = "whereis";
+    QStringList programToLocate = {"plasma-apply-colorscheme"};
+
+    colorSchemeProcess->start(locateProgram, programToLocate);
+    colorSchemeProcess->waitForFinished();
+
+    QString program(colorSchemeProcess->readAllStandardOutput());
+    program.replace("plasma-apply-colorscheme: ", "");
+    program.replace("\n", "");
+
     QStringList arguments{colorScheme};
     colorSchemeProcess->start(program, arguments);
 }
