@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     trayIcon = new QSystemTrayIcon(this);
-    this->trayIcon->setIcon(QIcon(":/resources/icons/koi_tray.png")); // Set tray icon - Not sure why svg doesn't work
+    QIcon icon = QIcon::fromTheme("koi_tray", QIcon(":/resources/icons/koi_tray.png"));
+    this->trayIcon->setIcon(icon);
     this->trayIcon->setVisible(true);
     trayMenu = this->createMenu();
     this->trayIcon->setContextMenu(trayMenu);                                         // Set tray context menu
