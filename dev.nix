@@ -15,8 +15,7 @@ mkDerivation rec{
   buildInputs = [ wrapQtAppsHook kcoreaddons kwidgetsaddons kconfig ];
   
   installPhase = ''
-    mkdir -p $out/bin
-    mv Koi $out/bin
+    make install DESTDIR=appdir
   '';
   
   meta = with lib; {
