@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Koi VERSION 0.1.5 LANGUAGES CXX)
+project(Koi VERSION 0.2.0 LANGUAGES CXX)
 
 configure_file(headers/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -10,11 +10,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-if(NOT DEFINED INSTALL_EXAMPLESDIR)
-    set(INSTALL_EXAMPLESDIR "examples")
-endif()
-
-set(INSTALL_EXAMPLEDIR "/usr/bin/")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION /usr/share/applications)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION /usr/share/icons/hicolor/scalable)
 
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)

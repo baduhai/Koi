@@ -32,7 +32,7 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ## Get Koi
 
-Lastest Koi version: 0.1.5
+Lastest Koi version: 0.2.0
 
 ### Arch Linux
 
@@ -40,7 +40,7 @@ Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 
 ### Other Distros
 
-Install with nix or download the [latest appimage](https://github.com/baduhai/Koi/releases/).
+Install with [nix](https://nixos.org/download.html).
 
 ### Build from source
 
@@ -66,7 +66,7 @@ Koi targets the latest version of the above deps. Since I can't know the name of
 
 4. `cd build`
 
-5. `cmake ../src/CMakeLists.txt`
+5. `cmake ../src/`
 
 6. `make`
 
