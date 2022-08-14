@@ -97,7 +97,7 @@
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="descLabel">
          <property name="text">
-          <string>Schedule your themes for the KDE Plasma Desktop</string>
+          <string>Theme scheduling for the KDE Plasma Desktop</string>
          </property>
         </widget>
        </item>
