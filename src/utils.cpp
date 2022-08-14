@@ -7,7 +7,6 @@ Utils::Utils()
 // Global settings stuff
 void Utils::initialiseSettings()
 {
-    //settings = new QSettings("koirc", QSettings::IniFormat); // Line used for testing !Must comment before pushing!
     settings = new QSettings(QDir::homePath() + "/.config/koirc", QSettings::IniFormat); // Setting config path and format
 }
 
@@ -80,98 +79,177 @@ void Utils::startupSunCheck() { // Switch to the theme set for the current sun s
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 {
+    QStringList plasmaStyles;
     QDir stylesLocalDir(QDir::homePath() + "/.local/share/plasma/desktoptheme");
     QDir stylesSystemDir("/usr/share/plasma/desktoptheme");
-    QStringList plasmaStyles = stylesLocalDir.entryList(QDir::Dirs) + stylesSystemDir.entryList(QDir::Dirs);
+    QDir stylesNixDir("/var/run/current-system/sw/share/plasma/desktoptheme");
+    if (stylesLocalDir.exists()) {
+        plasmaStyles = plasmaStyles + stylesLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
+    }
+    if (stylesSystemDir.exists()) {
+        plasmaStyles = plasmaStyles + stylesSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
+    };
+    if (stylesNixDir.exists()) {
+        plasmaStyles = plasmaStyles + stylesNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
+    }
     plasmaStyles.removeDuplicates();
     plasmaStyles.removeFirst();
     plasmaStyles.removeFirst();
     plasmaStyles.append("breeze");
+    plasmaStyles.sort();
     return plasmaStyles;
 }
 QStringList Utils::getColorSchemes(void) // Get all available color schemes
 {
+    QStringList colorSchemesNames;
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-    colorsLocalDir.setFilter(QDir::Files);
-    colorsLocalDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-    QStringList colorSchemesLocalNames;
-    for (int i = 0; i < colorSchemesLocal.size(); i++)
-    {
-        colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
-    }
     QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-    colorsSystemDir.setFilter(QDir::Files);
-    colorsSystemDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-    QStringList colorSchemesSystemNames;
-    for (int i = 0; i < colorSchemesSystem.size(); i++)
-    {
-        colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
+    QDir colorsNixDir("/var/run/current-system/sw/share/color-schemes");
+    if (colorsLocalDir.exists()) {
+        colorsLocalDir.setNameFilters(QStringList() << "*.colors");
+        colorsLocalDir.setFilter(QDir::Files);
+        colorsLocalDir.setSorting(QDir::Name);
+        QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
+        QStringList colorSchemesLocalNames;
+        for (int i = 0; i < colorSchemesLocal.size(); i++)
+        {
+            colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
+        }
+        colorSchemesNames = colorSchemesNames + colorSchemesLocalNames;
     }
-    QStringList colorSchemesNames = colorSchemesSystemNames + colorSchemesLocalNames;
+    if (colorsSystemDir.exists()){
+        colorsSystemDir.setNameFilters(QStringList() << "*.colors");
+        colorsSystemDir.setFilter(QDir::Files);
+        colorsSystemDir.setSorting(QDir::Name);
+        QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
+        QStringList colorSchemesSystemNames;
+        for (int i = 0; i < colorSchemesSystem.size(); i++)
+        {
+            colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
+        }
+        colorSchemesNames = colorSchemesNames + colorSchemesSystemNames;
+    }
+    if (colorsNixDir.exists()){
+        colorsNixDir.setNameFilters(QStringList() << "*.colors");
+        colorsNixDir.setFilter(QDir::Files);
+        colorsNixDir.setSorting(QDir::Name);
+        QList<QFileInfo> colorSchemesNix = colorsNixDir.entryInfoList();
+        QStringList colorSchemesNixNames;
+        for (int i = 0; i < colorSchemesNix.size(); i++)
+        {
+            colorSchemesNixNames.append(colorSchemesNix.at(i).baseName());
+        }
+        colorSchemesNames = colorSchemesNames + colorSchemesNixNames;
+    }
+    colorSchemesNames.removeDuplicates();
     return colorSchemesNames;
 }
 QStringList Utils::getColorSchemesPath(void) // Get all available color schemes
 {
+    QStringList colorSchemesPath;
     QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-    colorsLocalDir.setFilter(QDir::Files);
-    colorsLocalDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-    QStringList colorSchemesLocalPath;
-    for (int i = 0; i < colorSchemesLocal.size(); i++)
-    {
-        colorSchemesLocalPath.append(colorSchemesLocal.at(i).absoluteFilePath());
-    }
     QDir colorsSystemDir("/usr/share/color-schemes");
-    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-    colorsSystemDir.setFilter(QDir::Files);
-    colorsSystemDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-    QStringList colorSchemesSystemPath;
-    for (int i = 0; i < colorSchemesSystem.size(); i++)
-    {
-        colorSchemesSystemPath.append(colorSchemesSystem.at(i).absoluteFilePath());
+    QDir colorsNixDir("/var/run/current-system/sw/share/color-schemes");
+    if (colorsLocalDir.exists()) {
+        colorsLocalDir.setNameFilters(QStringList() << "*.colors");
+        colorsLocalDir.setFilter(QDir::Files);
+        colorsLocalDir.setSorting(QDir::Name);
+        QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
+        QStringList colorSchemesLocalPath;
+        for (int i = 0; i < colorSchemesLocal.size(); i++)
+        {
+            colorSchemesLocalPath.append(colorSchemesLocal.at(i).absoluteFilePath());
+        }
+        colorSchemesPath = colorSchemesPath + colorSchemesLocalPath;
     }
-    QStringList colorSchemesPath = colorSchemesSystemPath + colorSchemesLocalPath;
+    if (colorsSystemDir.exists()) {
+        colorsSystemDir.setNameFilters(QStringList() << "*.colors");
+        colorsSystemDir.setFilter(QDir::Files);
+        colorsSystemDir.setSorting(QDir::Name);
+        QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
+        QStringList colorSchemesSystemPath;
+        for (int i = 0; i < colorSchemesSystem.size(); i++)
+        {
+            colorSchemesSystemPath.append(colorSchemesSystem.at(i).absoluteFilePath());
+        }
+        colorSchemesPath = colorSchemesPath + colorSchemesSystemPath;
+    }
+    if (colorsNixDir.exists()) {
+        colorsNixDir.setNameFilters(QStringList() << "*.colors");
+        colorsNixDir.setFilter(QDir::Files);
+        colorsNixDir.setSorting(QDir::Name);
+        QList<QFileInfo> colorSchemesNix = colorsNixDir.entryInfoList();
+        QStringList colorSchemesNixPath;
+        for (int i = 0; i < colorSchemesNix.size(); i++)
+        {
+            colorSchemesNixPath.append(colorSchemesNix.at(i).absoluteFilePath());
+        }
+        colorSchemesPath = colorSchemesPath + colorSchemesNixPath;
+    }
+    colorSchemesPath.removeDuplicates();
     return colorSchemesPath;
 }
-QStringList Utils::getIconThemes(void) // Get all available icont themes
+QStringList Utils::getIconThemes(void) // Get all available icon themes
 {
     QDir iconsOldLocalDir(QDir::homePath() + "/.icons");
     QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
     QDir iconsSystemDir("/usr/share/icons");
-    QStringList iconThemes = iconsOldLocalDir.entryList(QDir::Dirs) + iconsLocalDir.entryList(QDir::Dirs) + iconsSystemDir.entryList(QDir::Dirs);
+    QDir iconsNixDir("/var/run/current-system/sw/share/icons");
+    QStringList iconThemes;
+    if (iconsOldLocalDir.exists()) {
+        iconThemes = iconThemes + iconsOldLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    }
+    if (iconsLocalDir.exists()) {
+        iconThemes = iconThemes + iconsLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    }
+    if (iconsSystemDir.exists()) {
+        iconThemes = iconThemes + iconsSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    }
+    if (iconsNixDir.exists()) {
+        iconThemes = iconThemes + iconsNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    }
     iconThemes.removeDuplicates();
-    iconThemes.removeFirst();
-    iconThemes.removeFirst();
+    iconThemes.sort();
     return iconThemes;
 }
 QStringList Utils::getGtkThemes(void) // Get all available gtk themes
 {
     QDir gtkLocalDir(QDir::homePath() + "/.themes");
     QDir gtkSystemDir("/usr/share/themes");
-    QStringList gtkThemes = gtkLocalDir.entryList(QDir::Dirs) + gtkSystemDir.entryList(QDir::Dirs);
+    QDir gtkNixDir("/var/run/current-system/sw/share/themes");
+    QStringList gtkThemes;
+    if (gtkLocalDir.exists()) {
+        gtkThemes = gtkThemes + gtkLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
+    }
+    if (gtkSystemDir.exists()) {
+        gtkThemes = gtkThemes + gtkSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
+    };
+    if (gtkNixDir.exists()) {
+        gtkThemes = gtkThemes + gtkNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
+    }
     gtkThemes.removeDuplicates();
     gtkThemes.removeFirst();
     gtkThemes.removeFirst();
+    gtkThemes.sort();
     return gtkThemes;
 }
 QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
 {
     QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
     QDir kvantumStyleSystemDir("/usr/share/Kvantum");
+    QDir kvantumStyleNixDir("/var/run/current-system/sw/Kvantum");
     QStringList kvantumStyles;
-    if(kvantumStyleLocalDir.exists()){
+    if (kvantumStyleLocalDir.exists()) {
         kvantumStyles.append(kvantumStyleLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     }
-    if(kvantumStyleSystemDir.exists()){
+    if (kvantumStyleSystemDir.exists()) {
         kvantumStyles.append(kvantumStyleSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
     }
+    if (kvantumStyleNixDir.exists()) {
+        kvantumStyles.append(kvantumStyleNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
+    }
     kvantumStyles.removeDuplicates();
+    kvantumStyles.sort();
     return kvantumStyles;
 }
 // Manage switching themes functions
