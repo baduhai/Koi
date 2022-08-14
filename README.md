@@ -40,7 +40,7 @@ Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
 
 ### Other Distros
 
-Install with [nix](https://nixos.org/download.html).
+Install with [nix](https://nixos.org/download.html). See *building with nix* below.
 
 ### Build from source
 
