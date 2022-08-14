@@ -1,5 +1,3 @@
-# Generated from Koi.pro.
-
 cmake_minimum_required(VERSION 3.16)
 project(Koi VERSION 0.1.5 LANGUAGES CXX)
 
@@ -64,12 +62,6 @@ target_link_libraries(Koi PUBLIC
     Qt::Test
     Qt::Widgets
 )
-
-#if((QT_VERSION_MAJOR GREATER 4))
-    #target_link_libraries(Koi PUBLIC
-        #Qt::Widgets
-    #)
-#endif()
 
 install(TARGETS Koi
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
