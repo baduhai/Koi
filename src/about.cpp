@@ -1,5 +1,5 @@
 #include "headers/about.h"
-#include "ui_about.h"
+#include "ui/ui_about.h"
 
 #include <QUrl>
 #include <QDesktopServices>

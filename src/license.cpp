@@ -1,5 +1,5 @@
 #include "headers/license.h"
-#include "ui_license.h"
+#include "ui/ui_license.h"
 
 License::License(QWidget *parent) :
     QDialog(parent),
