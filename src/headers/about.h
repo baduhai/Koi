@@ -2,6 +2,7 @@
 #define ABOUT_H
 // Headers
 #include "license.h"
+#include "config.h"
 // Qt libs
 #include <QDialog>
 //KF5 libs

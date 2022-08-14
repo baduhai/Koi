@@ -1,5 +1,6 @@
 #include "headers/about.h"
 #include "ui/ui_about.h"
+#include "config.h"
 
 #include <QUrl>
 #include <QDesktopServices>
@@ -10,10 +11,10 @@ About::About(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(505, 330);
-    QApplication::setApplicationName("Koi");
+    QApplication::setApplicationName(PROJECT_NAME);
     ui->titleLabel->setText(QApplication::applicationName());
     QString pgrmVersion = "Version ";
-    QApplication::setApplicationVersion("0.1.3");
+    QApplication::setApplicationVersion(PROJECT_VER);
     ui->verLabel->setText(pgrmVersion + QApplication::applicationVersion());
     QString qtVersion = "<ul><li>Qt ";
             qtVersion += qVersion();

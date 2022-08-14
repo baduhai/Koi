@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 project(Koi VERSION 0.1.5 LANGUAGES CXX)
 
+configure_file(headers/config.h.in config.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -34,6 +37,7 @@ add_executable(Koi
     
     about.cpp headers/about.h
     colorscheme.cpp headers/colorscheme.h
+    headers/config.h.in
     gtk.cpp headers/gtk.h
     icons.cpp headers/icons.h
     kvantumstyle.cpp headers/kvantumstyle.h
