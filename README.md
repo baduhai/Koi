@@ -36,7 +36,15 @@ Lastest Koi version: 0.2.0
 
 ### Arch Linux
 
-Install it from the [AUR](https://aur.archlinux.org/packages/koi/).
+Install it from the [AUR](https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier](https://aur.archlinux.org/account/dasbaumwolltier), bug them if it's out of date, not me.
+
+### OpenSUSE Tumbleweed
+
+Available from [OBS](https://build.opensuse.org/package/show/home:VaiTon/koi). Packaged by [VaiTon](https://github.com/VaiTon), bug them if it's out of date, not me.
+
+### Fedora
+
+Availabel from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), bug them if it's out of date, not me.
 
 ### Other Distros
 
