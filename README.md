@@ -90,20 +90,6 @@ The following is a list of resources that I used as reference and inspiration fo
 - [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
 - [This blog post from Zren](https://zren.github.io/2020/04/28/how-to-change-plasma-icon-theme-in-the-terminal) - For teaching me how to set the icon theme.
 
-## Contributors
-
-<table style="width=100%">
-	<tr>
-		<td align="center">
-			<a href="https://github.com/jandreski"><img src="https://avatars3.githubusercontent.com/u/47537097?s=460&v=4" width="40px;" alt=""/><sub><b>Jakov Andreski</b></sub></a>
-		</td>
-		<td align="center">
-			<a href="https://github.com/Da-Viper"><img src="https://avatars3.githubusercontent.com/u/57949090?s=460&v=4" width="40px;" alt=""/><sub><b>Da-Viper</b></sub></a>
-		</td>
-	</tr>
-</table>
-
-
 ## License
 
 [**LGPL**](LICENSE)
