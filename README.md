@@ -44,7 +44,7 @@ Available from [OBS](https://build.opensuse.org/package/show/home:VaiTon/koi). P
 
 ### Fedora
 
-Availabel from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), bug them if it's out of date, not me.
+Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), bug them if it's out of date, not me.
 
 ### Other Distros
 
