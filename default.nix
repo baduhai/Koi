@@ -8,7 +8,7 @@ mkDerivation rec{
     owner = "baduhai";
     repo = "Koi";
     rev = "${version}";
-    sha256 = "AWag7VSPQ3I2/9v2WuYR1gJqEAF/xfMJBoW3pZ7fhCs=";
+    sha256 = "Q6atI8+Nb4euqCSEwWzpeyhFlV2SbeMm/nIO0r+uG9o=";
   };
   
   nativeBuildInputs = [ cmake ];
@@ -16,22 +16,10 @@ mkDerivation rec{
   buildInputs = [ wrapQtAppsHook kcoreaddons kwidgetsaddons kconfig ];
   
   sourceRoot = "source/src";
-  
-  installPhase = ''
-    mkdir -p $out/bin
-    mv Koi $out/bin
-  '';
-  
-  files = {
-    desktop = {
-      name = "koi.desktop";
-      path = ;
-    };
-    icon = {
-      name = "icon.svg";
-      path = ;
-    };
-  };
+
+#   installPhase = ''
+#     cp -r ./ $out/
+#   '';
   
   meta = with lib; {
     description = "Theme scheduling for the KDE Plasma Desktop";
