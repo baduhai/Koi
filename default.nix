@@ -7,8 +7,8 @@ mkDerivation rec{
   src = fetchFromGitHub {
     owner = "baduhai";
     repo = "Koi";
-    rev = "${version}";
-    sha256 = "Q6atI8+Nb4euqCSEwWzpeyhFlV2SbeMm/nIO0r+uG9o=";
+    rev = "f89d3a6723eb85e0255d985e868573781d38def8";
+    sha256 = "j86XAJbB8E0P4KT2mAaf4BtaMar2riXct7qcvwxZJ1Y=";
   };
   
   nativeBuildInputs = [ cmake ];
@@ -16,10 +16,6 @@ mkDerivation rec{
   buildInputs = [ wrapQtAppsHook kcoreaddons kwidgetsaddons kconfig ];
   
   sourceRoot = "source/src";
-
-#   installPhase = ''
-#     cp -r ./ $out/
-#   '';
   
   meta = with lib; {
     description = "Theme scheduling for the KDE Plasma Desktop";
