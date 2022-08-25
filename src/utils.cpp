@@ -93,9 +93,6 @@ QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
         plasmaStyles = plasmaStyles + stylesNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
     }
     plasmaStyles.removeDuplicates();
-    plasmaStyles.removeFirst();
-    plasmaStyles.removeFirst();
-    plasmaStyles.append("breeze");
     plasmaStyles.sort();
     return plasmaStyles;
 }
@@ -228,8 +225,6 @@ QStringList Utils::getGtkThemes(void) // Get all available gtk themes
         gtkThemes = gtkThemes + gtkNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
     }
     gtkThemes.removeDuplicates();
-    gtkThemes.removeFirst();
-    gtkThemes.removeFirst();
     gtkThemes.sort();
     return gtkThemes;
 }
