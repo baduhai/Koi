@@ -32,7 +32,7 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ## Get Koi
 
-Lastest Koi version: 0.2.1
+Lastest Koi version: 0.2.2
 
 ### Arch Linux
 
