@@ -46,9 +46,13 @@ Available from [OBS](https://build.opensuse.org/package/show/home:VaiTon/koi). P
 
 Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), bug them if it's out of date, not me.
 
+### NixOS
+
+Available from my [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.
+
 ### Other Distros
 
-Install with [nix](https://nixos.org/download.html). See *building with nix* below.
+Install with [nix](https://nixos.org/download.html). See *NixOS* above.
 
 ### Build from source
 
@@ -84,9 +88,7 @@ These instructions also apply to building the latest release version of Koi. Ins
 
 **Building with nix**
 
-`nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'` if building local version.
-
-`nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./default.nix {}'` to build from github source.
+`nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'`
 
 ## References
 
