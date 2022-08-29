@@ -48,7 +48,8 @@ Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Pack
 
 ### NixOS
 
-Available from my [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.
+Available from my [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
+Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions](https://github.com/nix-community/nur#installation) on the NUR repo.
 
 ### Other Distros
 
