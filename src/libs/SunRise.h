@@ -26,8 +26,7 @@ class SunRise {
     void calculate(double latitude, double longitude, time_t t);
 
   private:
-    void testSunRiseSet(int i, double offsetDays, double latitude, double longitude,
-			struct skyCoordinates *mp);
+    void testSunRiseSet(int i, double offsetDays, double latitude, double longitude, struct skyCoordinates *mp);
     struct skyCoordinates sun(double dayOffset);
     double interpolate(double f0, double f1, double f2, double p);
     double julianDate(time_t t);
