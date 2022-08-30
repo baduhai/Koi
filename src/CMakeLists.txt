@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Koi VERSION 0.2.2 LANGUAGES CXX)
+project(koi VERSION 0.2.2 LANGUAGES CXX)
 
 configure_file(headers/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -25,7 +25,7 @@ find_package(KF5Config)
 find_package(KF5CoreAddons)
 find_package(KF5WidgetsAddons)
 
-add_executable(Koi
+add_executable(koi
     libs/Cron.h
     libs/InterruptableSleep.h
     libs/Scheduler.h
@@ -52,11 +52,11 @@ add_executable(Koi
     main.cpp
 )
 
-target_compile_definitions(Koi PUBLIC
+target_compile_definitions(koi PUBLIC
     QT_DEPRECATED_WARNINGS
 )
 
-target_link_libraries(Koi PUBLIC
+target_link_libraries(koi PUBLIC
     KF5::ConfigCore
     KF5::ConfigGui
     KF5::CoreAddons
@@ -69,7 +69,7 @@ target_link_libraries(Koi PUBLIC
     Qt::Widgets
 )
 
-install(TARGETS Koi
+install(TARGETS koi
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
     BUNDLE DESTINATION "${INSTALL_EXAMPLEDIR}"
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"

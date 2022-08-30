@@ -1,7 +1,7 @@
 [Desktop Entry]
 Categories=Utility;
 Comment=Switch between light and dark.
-Exec=Koi
+Exec=koi
 Icon=koi
 Name=Koi
 StartupNotify=true

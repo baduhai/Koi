@@ -93,7 +93,6 @@ QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
         plasmaStyles = plasmaStyles + stylesNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);;
     }
     plasmaStyles.removeDuplicates();
-    plasmaStyles.append("breeze");
     plasmaStyles.sort();
     return plasmaStyles;
 }

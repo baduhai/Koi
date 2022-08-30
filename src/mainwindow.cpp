@@ -758,7 +758,7 @@ void MainWindow::on_lightTimeEdit_userTimeChanged(const QTime &time) // Set ligh
     lightTime = time.toString();
     utils.settings->setValue("time-light", lightTime);
     utils.settings->sync();
-    ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
+    ui->resMsg->setText(tr("Koi must be restarted for new schedule to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
@@ -767,7 +767,7 @@ void MainWindow::on_darkTimeEdit_userTimeChanged(const QTime &time) // Set dark 
     darkTime = time.toString();
     utils.settings->setValue("time-dark", darkTime);
     utils.settings->sync();
-    ui->resMsg->setText(tr("Koi must be restarted for new times to be used."));
+    ui->resMsg->setText(tr("Koi must be restarted for new schedule to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
@@ -775,7 +775,7 @@ void MainWindow::on_latitudeDSB_valueChanged(double lat)
 {
     utils.settings->setValue("latitude", lat);
     utils.settings->sync();
-    ui->resMsg->setText(tr("Koi must be restarted for new lat&long to be used."));
+    ui->resMsg->setText(tr("Koi must be restarted for new coordinates to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
@@ -783,7 +783,7 @@ void MainWindow::on_longitudeDSB_valueChanged(double lon)
 {
     utils.settings->setValue("longitude", lon);
     utils.settings->sync();
-    ui->resMsg->setText(tr("Koi must be restarted for new lat&long to be used."));
+    ui->resMsg->setText(tr("Koi must be restarted for new coordinates to be used."));
     ui->resMsg->setMessageType(KMessageWidget::Warning);
     ui->resMsg->animatedShow();
 }
