@@ -789,12 +789,11 @@ void MainWindow::on_longitudeDSB_valueChanged(double lon)
 }
 void MainWindow::on_hiddenCheckBox_stateChanged(int hiddenEnabled)
 {
-    ui->resMsg->animatedShow();
-        utils.settings->setValue("start-hidden", hiddenEnabled);
+    utils.settings->setValue("start-hidden", hiddenEnabled);
 }
 void MainWindow::on_notifyCheckBox_stateChanged(int notifyEnabled)
 {
-        utils.settings->setValue("notify", notifyEnabled);
+    utils.settings->setValue("notify", notifyEnabled);
 }
 
 // Menubar actions
