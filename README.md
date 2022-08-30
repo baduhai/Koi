@@ -53,7 +53,7 @@ Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/
 
 ### Other Distros
 
-Install with [nix](https://nixos.org/download.html). See *NixOS* above.
+Install with [nix](https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
 
 ### Build from source
 
