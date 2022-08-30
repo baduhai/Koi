@@ -11,7 +11,7 @@ About::About(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(505, 330);
-    QApplication::setApplicationName(Koi);
+    QApplication::setApplicationName(PROJECT_NAME);
     ui->titleLabel->setText(QApplication::applicationName());
     QString pgrmVersion = "Version ";
     QApplication::setApplicationVersion(PROJECT_VER);

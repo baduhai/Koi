@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(koi VERSION 0.2.2 LANGUAGES CXX)
+project(Koi VERSION 0.2.2 LANGUAGES CXX)
 
 configure_file(headers/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
