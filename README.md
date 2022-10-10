@@ -128,7 +128,7 @@ _Koi targets the latest version of the above deps. Since I can't know the name o
 
 The following is a list of resources that I used as reference and inspiration for writing Koi.
 
-- [Yin-Yang(https://github.com/daehruoydeef/Yin-Yang)] - For UI layout and features inspiration.
+- [Yin-Yang (https://github.com/daehruoydeef/Yin-Yang)] - For UI layout and features inspiration.
 - [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
 - [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt colour scheme.
 - [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
