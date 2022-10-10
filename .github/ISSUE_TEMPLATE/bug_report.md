@@ -25,7 +25,9 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
  - Distro: [e.g. KDE Neon]
- - Version [e.g. 0.1]
+ - Koi Version: [e.g. 0.1]
+ - Plasma Version: [e.g. 5.25.5]
+ - Intallation method: [e.g. AppImage/nix/aur/copr/OBS/compiled from source]
 
 **Additional context**
 Add any other context about the problem here.
