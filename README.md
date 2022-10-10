@@ -64,7 +64,7 @@ Lastest version: 0.2.3
 
 These instructions also apply to building the latest release version of Koi. Instead of cloning the repository, download and extract the latest *Source Code* archive, from then follow step 2 and beyond.
 
-**Building with nix**
+**Building with NIX**
 
 `nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'`
 
@@ -78,7 +78,7 @@ These instructions also apply to building the latest release version of Koi. Ins
 
 **Download**
 
-Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier (https://aur.archlinux.org/account/dasbaumwolltier)], let them know if it's out of date, not "him".
+Install it from the [AUR](https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier](https://aur.archlinux.org/account/dasbaumwolltier), let them know if it's out of date, not me.
 
 ### openSUSE Tumbleweed + Leap
 
@@ -89,7 +89,7 @@ Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by
 
 **Download**
 
-Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi | https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari (https://github.com/fpesari) + Martin von Reichenberg (https://github.com/MartinVonReichenberg)], let them know if it's out of date, not "him".
+Available from [OBS](https://build.opensuse.org/package/show/home:ozu/koi) | [REPO](https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari](https://github.com/fpesari) + [Martin von Reichenberg](https://github.com/MartinVonReichenberg), let them know if it's out of date, not me.
 
 ### Fedora
 
@@ -97,7 +97,7 @@ Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi 
 - `cmake | desktop-file-utils`
 
 **Download**
-Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
+Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), let them know if it's out of date, not me.
 
 ### NixOS
 
@@ -106,8 +106,8 @@ Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Pac
 
 **Download**
 
-Available from "his" [NUR] (https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
-Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions] (https://github.com/nix-community/nur#installation) on the NUR repo.
+Available from me [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
+Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.
 
 ### Debian/Ubuntu
 
@@ -119,7 +119,7 @@ _Not yet available . . ._
 
 ### Other Distributions
 
-Install with [nix] (https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
+Install with [NIX](https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
 
 _Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distribution . . ._
 
