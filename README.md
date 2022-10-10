@@ -65,8 +65,8 @@ Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by
 
 **Dependencies**
 
-`cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
-`patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
+- `cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
+- `patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
 
 **Downloads**
 
