@@ -32,28 +32,34 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ## Get Koi
 
-Lastest Koi version: 0.2.3
+Lastest version: 0.2.3
 
 ### Arch Linux
 
-Install it from the [AUR](https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier](https://aur.archlinux.org/account/dasbaumwolltier), bug them if it's out of date, not me.
+Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier (https://aur.archlinux.org/account/dasbaumwolltier)], let them know if it's out of date, not "him".
 
-### OpenSUSE Tumbleweed
+### openSUSE Tumbleweed + Leap
 
-Available from [OBS](https://build.opensuse.org/package/show/home:VaiTon/koi). Packaged by [VaiTon](https://github.com/VaiTon), bug them if it's out of date, not me.
+**Dependencies**
+
+'cmake cmake-full extra-cmake-modules patterns-kde-devel_kde_frameworks patterns-kde-devel_qt5 fdupes'
+'patterns-kde-kde patterns-kde-kde_plasma desktop-file-utils'
+
+**Downloads**
+Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi | https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari (https://github.com/fpesari) + Martin von Reichenberg (https://github.com/MartinVonReichenberg)], let them know if it's out of date, not "him".
 
 ### Fedora
 
-Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), bug them if it's out of date, not me.
+Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
 
 ### NixOS
 
-Available from my [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
-Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions](https://github.com/nix-community/nur#installation) on the NUR repo.
+Available from "his" [NUR] (https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
+Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions] (https://github.com/nix-community/nur#installation) on the NUR repo.
 
 ### Other Distros
 
-Install with [nix](https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
+Install with [nix] (https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
 
 ### Build from source
 
@@ -81,9 +87,9 @@ Koi targets the latest version of the above deps. Since I can't know the name of
 
 5. `cmake ../src/`
 
-6. `make`
+6. `sudo make`
 
-7. `make install`
+7. `sudo make install`
 
 These instructions also apply to building the latest release version of Koi. Instead of cloning the repository, download and extract the latest *Source Code* archive, from then follow step 2 and beyond.
 
