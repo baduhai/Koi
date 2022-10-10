@@ -34,47 +34,6 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 Lastest version: 0.2.3
 
-### Arch Linux
-
-Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier (https://aur.archlinux.org/account/dasbaumwolltier)], let them know if it's out of date, not "him".
-
-### openSUSE Tumbleweed + Leap
-
-**Dependencies**
-
-`cmake cmake-full extra-cmake-modules patterns-kde-devel_kde_frameworks patterns-kde-devel_qt5 fdupes`
-`patterns-kde-kde patterns-kde-kde_plasma desktop-file-utils`
-
-**Downloads**
-Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi | https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari (https://github.com/fpesari) + Martin von Reichenberg (https://github.com/MartinVonReichenberg)], let them know if it's out of date, not "him".
-
-### Fedora
-
-Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
-
-### NixOS
-
-Available from "his" [NUR] (https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
-Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions] (https://github.com/nix-community/nur#installation) on the NUR repo.
-
-### Other Distros
-
-Install with [nix] (https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
-
-### Build from source
-
-**Dependencies**
-
-- Qt
-
-- Plasma
-
-- KDE Frameworks
-
-- cmake [build dependency]
-
-Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distro, these are the dependencies on ubuntu: `g++ qtbase5-dev cmake libkf5coreaddons-dev libkf5widgetsaddons-dev libkf5config-dev libkf5package-dev libkf5service-dev`
-
 **Build Instructions**
 
 1. `git clone https://github.com/baduhai/Koi.git`
@@ -96,6 +55,53 @@ These instructions also apply to building the latest release version of Koi. Ins
 **Building with nix**
 
 `nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'`
+## Downloads
+
+### Arch Linux
+
+Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier (https://aur.archlinux.org/account/dasbaumwolltier)], let them know if it's out of date, not "him".
+
+### openSUSE Tumbleweed + Leap
+
+**Dependencies**
+`cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
+`patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
+
+**Downloads**
+Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi | https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari (https://github.com/fpesari) + Martin von Reichenberg (https://github.com/MartinVonReichenberg)], let them know if it's out of date, not "him".
+
+### Fedora
+
+**Dependencies**
+`cmake | desktop-file-utils
+
+**Downloads**
+Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
+
+### NixOS
+
+Available from "his" [NUR] (https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
+Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions] (https://github.com/nix-community/nur#installation) on the NUR repo.
+
+### Other Distros
+
+Install with [nix] (https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
+
+### Build from source
+
+**GENERIC Dependencies**
+
+- Qt
+
+- Plasma
+
+- KDE Frameworks
+
+- cmake [build dependency]
+
+Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distro, these are the dependencies on ubuntu: `g++ qtbase5-dev cmake libkf5coreaddons-dev libkf5widgetsaddons-dev libkf5config-dev libkf5package-dev libkf5service-dev`
+
+
 
 ## References
 
