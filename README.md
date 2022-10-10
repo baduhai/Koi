@@ -38,13 +38,13 @@ Lastest version: 0.2.3
 
 **GENERIC Dependencies**
 
-- Qt
+- Qt [Development files]
 
-- Plasma
+- KDE Plasma Desktop Environment
 
-- KDE Frameworks
+- KDE Frameworks [Development files]
 
-- cmake [build dependencies]
+- cmake [Build dependencies]
 
 **Build Instructions**
 
