@@ -64,16 +64,18 @@ Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by
 ### openSUSE Tumbleweed + Leap
 
 **Dependencies**
+
 `cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
 `patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
 
 **Downloads**
+
 Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi | https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari (https://github.com/fpesari) + Martin von Reichenberg (https://github.com/MartinVonReichenberg)], let them know if it's out of date, not "him".
 
 ### Fedora
 
 **Dependencies**
-`cmake | desktop-file-utils
+`cmake | desktop-file-utils`
 
 **Downloads**
 Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
