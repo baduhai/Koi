@@ -94,7 +94,7 @@ Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi 
 ### Fedora
 
 **Dependencies**
-`cmake | desktop-file-utils`
+- `cmake | desktop-file-utils`
 
 **Download**
 Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
@@ -102,7 +102,7 @@ Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Pac
 ### NixOS
 
 **Dependencies**
----
+- ----
 
 **Download**
 
@@ -112,7 +112,7 @@ Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/
 ### Debian/Ubuntu
 
 **Dependencies**
-`g++ | qtbase5-dev | cmake | libkf5coreaddons-dev | libkf5widgetsaddons-dev | libkf5config-dev | libkf5package-dev | libkf5service-dev`
+- `g++ | qtbase5-dev | cmake | libkf5coreaddons-dev | libkf5widgetsaddons-dev | libkf5config-dev | libkf5package-dev | libkf5service-dev`
 
 **Download**
 _Not yet available . . ._
