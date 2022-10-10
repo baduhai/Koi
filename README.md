@@ -34,6 +34,18 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 Lastest version: 0.2.3
 
+### Build from source
+
+**GENERIC Dependencies**
+
+- Qt
+
+- Plasma
+
+- KDE Frameworks
+
+- cmake [build dependencies]
+
 **Build Instructions**
 
 1. `git clone https://github.com/baduhai/Koi.git`
@@ -55,9 +67,16 @@ These instructions also apply to building the latest release version of Koi. Ins
 **Building with nix**
 
 `nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'`
+
 ## Downloads
 
 ### Arch Linux
+
+**Dependencies**
+- `qt5-base`
+- `plasma-desktop | kconfig | kcoreaddons | kwidgetsaddons`
+
+**Download**
 
 Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier (https://aur.archlinux.org/account/dasbaumwolltier)], let them know if it's out of date, not "him".
 
@@ -68,7 +87,7 @@ Install it from the [AUR] (https://aur.archlinux.org/packages/koi/). Packaged by
 - `cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
 - `patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
 
-**Downloads**
+**Download**
 
 Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi | https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari (https://github.com/fpesari) + Martin von Reichenberg (https://github.com/MartinVonReichenberg)], let them know if it's out of date, not "him".
 
@@ -77,39 +96,39 @@ Available from [OBS+REPO] (https://build.opensuse.org/package/show/home:ozu/koi 
 **Dependencies**
 `cmake | desktop-file-utils`
 
-**Downloads**
+**Download**
 Available from [copr] (https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66 (https://github.com/h3o66)], let them know if it's out of date, not "him".
 
 ### NixOS
 
+**Dependencies**
+---
+
+**Download**
+
 Available from "his" [NUR] (https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
 Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions] (https://github.com/nix-community/nur#installation) on the NUR repo.
 
-### Other Distros
+### Debian/Ubuntu
+
+**Dependencies**
+`g++ | qtbase5-dev | cmake | libkf5coreaddons-dev | libkf5widgetsaddons-dev | libkf5config-dev | libkf5package-dev | libkf5service-dev`
+
+**Download**
+_Not yet available . . ._
+
+### Other Distributions
 
 Install with [nix] (https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
 
-### Build from source
-
-**GENERIC Dependencies**
-
-- Qt
-
-- Plasma
-
-- KDE Frameworks
-
-- cmake [build dependency]
-
-Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distro, these are the dependencies on ubuntu: `g++ qtbase5-dev cmake libkf5coreaddons-dev libkf5widgetsaddons-dev libkf5config-dev libkf5package-dev libkf5service-dev`
-
+_Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distribution . . ._
 
 
 ## References
 
 The following is a list of resources that I used as reference and inspiration for writing Koi.
 
-- [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
+- [Yin-Yang(https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
 - [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
 - [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt colour scheme.
 - [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
