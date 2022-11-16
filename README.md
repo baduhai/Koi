@@ -99,10 +99,7 @@ Available from [OBS](https://build.opensuse.org/package/show/home:ozu/koi) | [RE
 **Download**
 Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), let them know if it's out of date, not me.
 
-### NixOS
-
-**Dependencies**
-- ----
+### NixOS and distro with nix.
 
 **Download**
 
