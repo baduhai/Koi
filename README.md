@@ -32,42 +32,19 @@ In order to have Koi start at login, you can do so with the Plasma System Settin
 
 ## Get Koi
 
-Lastest Koi version: 0.2.3
-
-### Arch Linux
-
-Install it from the [AUR](https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier](https://aur.archlinux.org/account/dasbaumwolltier), bug them if it's out of date, not me.
-
-### OpenSUSE Tumbleweed
-
-Available from [OBS](https://build.opensuse.org/package/show/home:VaiTon/koi). Packaged by [VaiTon](https://github.com/VaiTon), bug them if it's out of date, not me.
-
-### Fedora
-
-Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), bug them if it's out of date, not me.
-
-### NixOS
-
-Available from my [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
-Install to your nix profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [instructions](https://github.com/nix-community/nur#installation) on the NUR repo.
-
-### Other Distros
-
-Install with [nix](https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
+Lastest version: 0.2.3
 
 ### Build from source
 
-**Dependencies**
+**GENERIC Dependencies**
 
-- Qt
+- Qt [Development files]
 
-- Plasma
+- KDE Plasma Desktop Environment
 
-- KDE Frameworks
+- KDE Frameworks [Development files]
 
-- cmake [build dependency]
-
-Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distro, these are the dependencies on ubuntu: `g++ qtbase5-dev cmake libkf5coreaddons-dev libkf5widgetsaddons-dev libkf5config-dev libkf5package-dev libkf5service-dev`
+- cmake [Build dependencies]
 
 **Build Instructions**
 
@@ -81,15 +58,71 @@ Koi targets the latest version of the above deps. Since I can't know the name of
 
 5. `cmake ../src/`
 
-6. `make`
+6. `sudo make`
 
-7. `make install`
+7. `sudo make install`
 
 These instructions also apply to building the latest release version of Koi. Instead of cloning the repository, download and extract the latest *Source Code* archive, from then follow step 2 and beyond.
 
-**Building with nix**
+**Building with NIX**
 
 `nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'`
+
+## Downloads
+
+### Arch Linux
+
+**Dependencies**
+- `qt5-base`
+- `plasma-desktop | kconfig | kcoreaddons | kwidgetsaddons`
+
+**Download**
+
+Install it from the [AUR](https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier](https://aur.archlinux.org/account/dasbaumwolltier), let them know if it's out of date, not me.
+
+### openSUSE Tumbleweed + Leap
+
+**Dependencies**
+
+- `cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
+- `patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
+
+**Download**
+
+Available from [OBS](https://build.opensuse.org/package/show/home:ozu/koi) | [REPO](https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari](https://github.com/fpesari) + [Martin von Reichenberg](https://github.com/MartinVonReichenberg), let them know if it's out of date, not me.
+
+### Fedora
+
+**Dependencies**
+- `cmake | desktop-file-utils`
+
+**Download**
+Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), let them know if it's out of date, not me.
+
+### NixOS
+
+**Dependencies**
+- ----
+
+**Download**
+
+Available from me [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
+Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.
+
+### Debian/Ubuntu
+
+**Dependencies**
+- `g++ | qtbase5-dev | cmake | libkf5coreaddons-dev | libkf5widgetsaddons-dev | libkf5config-dev | libkf5package-dev | libkf5service-dev`
+
+**Download**
+_Not yet available . . ._
+
+### Other Distributions
+
+Install with [NIX](https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
+
+_Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distribution . . ._
+
 
 ## References
 
