@@ -15,8 +15,6 @@ public:
 
     void setPlasmaStyle(QString plasmaStyle);
 
-    void setPlasmaStyleBreeze();
-
 private:
     QProcess *styleProcess;
 };

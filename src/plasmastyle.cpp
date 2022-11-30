@@ -7,12 +7,10 @@ PlasmaStyle::PlasmaStyle()
 
 void PlasmaStyle::setPlasmaStyle(QString plasmaStyle)
 {
-    KSharedConfigPtr plasmarc = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericConfigLocation, "plasmarc"), KSharedConfig::CascadeConfig);
-    KConfigGroup(plasmarc, "Theme").writeEntry("name", plasmaStyle);
-}
-
-void PlasmaStyle::setPlasmaStyleBreeze()
-{
-    KSharedConfigPtr plasmarc = KSharedConfig::openConfig(QStandardPaths::locate(QStandardPaths::GenericConfigLocation, "plasmarc"), KSharedConfig::CascadeConfig);
-    KConfigGroup(plasmarc, "Theme").deleteGroup();
+    styleProcess = new QProcess;
+    QString style = "/usr/bin/plasma-apply-desktoptheme";
+    QStringList styleArgs = {plasmaStyle};
+    styleProcess->start(style, styleArgs);
+    styleProcess->waitForFinished();
+    styleProcess->close();
 }
