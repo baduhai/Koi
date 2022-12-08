@@ -280,28 +280,14 @@ void Utils::goLightStyle()
 {
     if (settings->value("PlasmaStyle/enabled").toBool())
     {
-        if (settings->value("PlasmaStyle/light") == "breeze") // Breeze style is set differently from others
-        {
-            plasmastyle.setPlasmaStyleBreeze();
-        }
-        else
-        {
-            plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/light").toString());
-        }
+        plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/light").toString());
     }
 }
 void Utils::goDarkStyle()
 {
     if (settings->value("PlasmaStyle/enabled").toBool())
     {
-        if (settings->value("PlasmaStyle/dark") == "breeze") // Breeze style is set differently from others
-        {
-            plasmastyle.setPlasmaStyleBreeze();
-        }
-        else
-        {
-            plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/dark").toString());
-        }
+        plasmastyle.setPlasmaStyle(settings->value("PlasmaStyle/dark").toString());
     }
 }
 void Utils::goLightColors()
@@ -389,20 +375,31 @@ void Utils::goDarkWall()
     }
 }
 /* this updates the style of both the plasma shell and latte dock if it is available 
+ * It also restart krunner to force the theme on it
 */
 void Utils::restartProcess()
 {
     if (settings->value("KvantumStyle/enabled").toBool())
     {
-        killAllProcess = new QProcess;
-        QString killAll = "/usr/bin/killall"; //used to kill a process
+        kquitapp5Process = new QProcess;
+        QString kquitapp5 = "/usr/bin/kquitapp5";
 
         kstart5Process = new QProcess;
         QString kstart5 = "/usr/bin/kstart5";
         QStringList plasmashell = {"plasmashell"};
 
-        killAllProcess->start(killAll, plasmashell);
-        kstart5Process->start(kstart5, plasmashell);
+        // kill plasma shell and wait for it
+        kquitapp5Process->start(kquitapp5, plasmashell);
+        kquitapp5Process->waitForFinished();
+        kquitapp5Process->close();
 
+        // start new process
+        kstart5Process->start(kstart5, plasmashell);
     }
+
+    // restart krunner
+    krunnerProcess = new QProcess;
+    QString krunner = "/usr/bin/krunner";
+    QStringList krunner_args = {"--replace", "-d"};
+    krunnerProcess->start(krunner, krunner_args);
 }
