@@ -76,6 +76,16 @@ void Utils::startupSunCheck() { // Switch to the theme set for the current sun s
   }
 }
 
+void Utils::toggle()
+{
+  const auto current = settings->value("current", QVariant::fromValue(Mode::Undefined)).value<Mode>();
+  if (current == Mode::Light) {
+    goDark();
+  } else if (current == Mode::Dark) {
+    goLight();
+  }
+}
+
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) // Get all available plasma styles
 {
@@ -261,6 +271,7 @@ void Utils::goLight()
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
+    settings->setValue("current", QVariant::fromValue(Mode::Light));
 }
 void Utils::goDark()
 {
@@ -275,6 +286,7 @@ void Utils::goDark()
     {
         notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
+    settings->setValue("current", QVariant::fromValue(Mode::Dark));
 }
 void Utils::goLightStyle()
 {
