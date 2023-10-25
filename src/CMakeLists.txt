@@ -19,12 +19,14 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION share/applicat
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)
-find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(KF5Config)
 find_package(KF5CoreAddons)
 find_package(KF5WidgetsAddons)
+find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)
+find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
+
 
 add_executable(koi
     libs/Cron.h
@@ -68,6 +70,7 @@ target_link_libraries(koi PUBLIC
     Qt::Network
     Qt::Test
     Qt::Widgets
+    Qt5::Xml
 )
 
 install(TARGETS koi
