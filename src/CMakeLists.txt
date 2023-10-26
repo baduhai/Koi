@@ -70,7 +70,7 @@ target_link_libraries(koi PUBLIC
     Qt::Network
     Qt::Test
     Qt::Widgets
-    Qt5::Xml
+    Qt::Xml
 )
 
 install(TARGETS koi
