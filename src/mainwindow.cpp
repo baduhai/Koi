@@ -211,7 +211,7 @@ void MainWindow::loadPrefs()
     }
     // sets the displayed text on the combo box of the kvantum style.
     ui->lightDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/light").toString());
-    ui->darkDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/Dark").toString());
+    ui->darkDropKvantumStyle->setCurrentText(utils.settings->value("KvantumStyle/dark").toString());
 
     // Load Wallpaper prefs
     if (utils.settings->value("Wallpaper/enabled").toBool())
