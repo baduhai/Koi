@@ -1,6 +1,9 @@
 #include "headers/license.h"
 #include "ui/ui_license.h"
 
+#include <QFile>
+#include <QString>
+
 License::License(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::License)
