@@ -72,8 +72,8 @@ private:
     QDBusInterface *notifyInterface;
     QProcess *plasmaDesktopProcess;
     QProcess *latteProcess;
-    QProcess *kquitapp5Process;
-    QProcess *kstart5Process;
+    QProcess *kquitappProcess;
+    QProcess *kstartProcess;
     QProcess *krunnerProcess;
 };
 

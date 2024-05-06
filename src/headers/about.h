@@ -4,7 +4,7 @@
 #include "license.h"
 // Qt libs
 #include <QDialog>
-//KF5 libs
+// KF libs
 #include <KCoreAddons>
 
 namespace Ui {

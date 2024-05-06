@@ -19,10 +19,10 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION share/applicat
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
 
-find_package(KF5Config)
-find_package(KF5CoreAddons)
-find_package(KF5WidgetsAddons)
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+find_package(KF6Config)
+find_package(KF6CoreAddons)
+find_package(KF6WidgetsAddons)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
@@ -60,10 +60,10 @@ target_compile_definitions(koi PUBLIC
 )
 
 target_link_libraries(koi PUBLIC
-    KF5::ConfigCore
-    KF5::ConfigGui
-    KF5::CoreAddons
-    KF5::WidgetsAddons
+    KF6::ConfigCore
+    KF6::ConfigGui
+    KF6::CoreAddons
+    KF6::WidgetsAddons
     Qt::Core
     Qt::DBus
     Qt::Gui

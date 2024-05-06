@@ -4,7 +4,7 @@
 #include <QString>
 #include <QProcess>
 #include <QDir>
-// KF5 libs
+// KF libs
 #include <KSharedConfig>
 #include <KConfigGroup>
 

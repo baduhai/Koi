@@ -381,20 +381,20 @@ void Utils::restartProcess()
 {
     if (settings->value("KvantumStyle/enabled").toBool())
     {
-        kquitapp5Process = new QProcess;
-        QString kquitapp5 = "/usr/bin/kquitapp5";
+        kquitappProcess = new QProcess;
+        QString kquitapp = "/usr/bin/kquitapp6";
 
-        kstart5Process = new QProcess;
-        QString kstart5 = "/usr/bin/kstart5";
+        kstartProcess = new QProcess;
+        QString kstart = "/usr/bin/kstart";
         QStringList plasmashell = {"plasmashell"};
 
         // kill plasma shell and wait for it
-        kquitapp5Process->start(kquitapp5, plasmashell);
-        kquitapp5Process->waitForFinished();
-        kquitapp5Process->close();
+        kquitappProcess->start(kquitapp, plasmashell);
+        kquitappProcess->waitForFinished();
+        kquitappProcess->close();
 
         // start new process
-        kstart5Process->start(kstart5, plasmashell);
+        kstartProcess->start(kstart, plasmashell);
     }
 
     // restart krunner
