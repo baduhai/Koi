@@ -621,29 +621,29 @@ void MainWindow::on_kvantumStyleCheckBox_stateChanged(int kvantumStyleEnabled) /
         ui->darkDropKvantumStyle->setEnabled(kvantumStyleEnabled);
         ui->darkKvantumStyle->setEnabled(kvantumStyleEnabled);
 }
-void MainWindow::on_lightDropStyle_currentIndexChanged(const QString &lightStyleUN) // Set light plasma style
+void MainWindow::on_lightDropStyle_currentTextChanged(const QString &lightStyleUN) // Set light plasma style
 {
     lightStyle = lightStyleUN;
 }
-void MainWindow::on_darkDropStyle_currentIndexChanged(const QString &darkStyleUN) // Set dark plasma style
+void MainWindow::on_darkDropStyle_currentTextChanged(const QString &darkStyleUN) // Set dark plasma style
 {
     darkStyle = darkStyleUN;
 }
-void MainWindow::on_lightDropColor_currentIndexChanged(const QString &lightColorUN) // Set light color scheme
+void MainWindow::on_lightDropColor_currentIndexChanged(int index) // Set light color scheme
 {
     QStringList colorSchemesPaths = utils.getColorSchemesPath();
-    lightColor = colorSchemesPaths.at(ui->lightDropColor->currentIndex());
+    lightColor = colorSchemesPaths.at(index);
 }
-void MainWindow::on_darkDropColor_currentIndexChanged(const QString &darkColorUN) // Set dark color scheme
+void MainWindow::on_darkDropColor_currentIndexChanged(int index) // Set dark color scheme
 {
     QStringList colorSchemesPaths = utils.getColorSchemesPath();
-    darkColor = colorSchemesPaths.at(ui->darkDropColor->currentIndex());
+    darkColor = colorSchemesPaths.at(index);
 }
-void MainWindow::on_lightDropIcon_currentIndexChanged(const QString &lightIconUN) // Set light icon theme
+void MainWindow::on_lightDropIcon_currentTextChanged(const QString &lightIconUN) // Set light icon theme
 {
     lightIcon = lightIconUN;
 }
-void MainWindow::on_darkDropIcon_currentIndexChanged(const QString &darkIconUN) // Set dark icon theme
+void MainWindow::on_darkDropIcon_currentTextChanged(const QString &darkIconUN) // Set dark icon theme
 {
     darkIcon = darkIconUN;
 }
@@ -654,19 +654,19 @@ void MainWindow::on_gtkCheckBox_stateChanged(int gtkEnabled) // GTK theme checkb
         ui->darkDropGtk->setEnabled(gtkEnabled);
         ui->lightDropGtk->setEnabled(gtkEnabled);
 }
-void MainWindow::on_lightDropGtk_currentIndexChanged(const QString &lightGtkUN) // Set light gtk theme
+void MainWindow::on_lightDropGtk_currentTextChanged(const QString &lightGtkUN) // Set light gtk theme
 {
     lightGtk = lightGtkUN;
 }
-void MainWindow::on_darkDropGtk_currentIndexChanged(const QString &darkGtkUN) // Set dark gtk theme
+void MainWindow::on_darkDropGtk_currentTextChanged(const QString &darkGtkUN) // Set dark gtk theme
 {
     darkGtk = darkGtkUN;
 }
-void MainWindow::on_lightDropKvantumStyle_currentIndexChanged(const QString &lightKvantumStyleUN) //sets the kvantum style from the drop menu
+void MainWindow::on_lightDropKvantumStyle_currentTextChanged(const QString &lightKvantumStyleUN) //sets the kvantum style from the drop menu
 {
     lightKvantumStyle = lightKvantumStyleUN;
 }
-void MainWindow::on_darkDropKvantumStyle_currentIndexChanged(const QString &darkKvantumStyleUN)
+void MainWindow::on_darkDropKvantumStyle_currentTextChanged(const QString &darkKvantumStyleUN)
 {
     darkKvantumStyle = darkKvantumStyleUN;
 }

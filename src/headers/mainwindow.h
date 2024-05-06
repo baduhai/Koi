@@ -68,16 +68,16 @@ private slots:
 
     void on_lightWallBtn_clicked();
     void on_darkWallBtn_clicked();
-    void on_lightDropStyle_currentIndexChanged(const QString &arg1);
-    void on_darkDropStyle_currentIndexChanged(const QString &arg1);
-    void on_lightDropColor_currentIndexChanged(const QString &arg1);
-    void on_darkDropColor_currentIndexChanged(const QString &arg1);
-    void on_lightDropGtk_currentIndexChanged(const QString &arg1);
-    void on_darkDropGtk_currentIndexChanged(const QString &arg1);
-    void on_lightDropIcon_currentIndexChanged(const QString &arg1);
-    void on_darkDropIcon_currentIndexChanged(const QString &arg1);
-    void on_lightDropKvantumStyle_currentIndexChanged(const QString &arg1);
-    void on_darkDropKvantumStyle_currentIndexChanged(const QString &arg1);
+    void on_lightDropStyle_currentTextChanged(const QString &arg1);
+    void on_darkDropStyle_currentTextChanged(const QString &arg1);
+    void on_lightDropColor_currentIndexChanged(int index);
+    void on_darkDropColor_currentIndexChanged(int index);
+    void on_lightDropGtk_currentTextChanged(const QString &arg1);
+    void on_darkDropGtk_currentTextChanged(const QString &arg1);
+    void on_lightDropIcon_currentTextChanged(const QString &arg1);
+    void on_darkDropIcon_currentTextChanged(const QString &arg1);
+    void on_lightDropKvantumStyle_currentTextChanged(const QString &arg1);
+    void on_darkDropKvantumStyle_currentTextChanged(const QString &arg1);
     void on_lightTimeEdit_userTimeChanged(const QTime &time);
     void on_darkTimeEdit_userTimeChanged(const QTime &time);
     void on_latitudeDSB_valueChanged(double lat);    
