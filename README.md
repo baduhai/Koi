@@ -2,11 +2,11 @@
 
 <h1 align="center">Koi</h1> 
 
-<h3 align="center">Theme scheduling for the KDE Plasma Desktop</h3>
+<h3 align="center">Scheduling LIGHT/DARK Theme Converter for the KDE Plasma Desktop</h3>
 
-Koi is a program designed to provide the KDE Plasma Desktop functionality to automatically switch between light and dark themes. Koi is under active development, and while it is stable enough to use daily, expect bugs. Koi is designed to be used with Plasma, and while some features may function under different desktop environments, they are unlikely to work and untested.
+Koi is a program designed to provide the KDE Plasma Desktop functionality to automatically switch between light and dark themes. Koi is under semi-active development, and while it is stable enough to use daily, expect bugs. Koi is designed to be used with Plasma, and while some features may function under different desktop environments, they are unlikely to work and untested.
 
-**Disclaimer:** Koi was written as a project to practice Qt by a novice programmer,  expect code to be written sloppily.
+*Koi was written as a project to practice QT by a novice programmer, expect code to be written sloppily.*
 
 ## Features
 
@@ -18,115 +18,155 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 - Change wallpaper.
 - Hide application to system tray.
 
+___
+
 ## Screenshots
 
-![Screenshot](screenshot.png)
+![Screenshots](Screenshot.png)
+
+___
 
 ## Using Koi
 
-Koi is designed to be very simple to use. When you first open Koi, settings for the light and dark presets will be empty, all you need to do is select which themes you'd like for Koi to manage and select your desired themes by clicking the *Preferences* button. 
+Koi is designed to be very simple to use. After the initial run of Koi, settings for the **light** and **dark** presets will be empty, all you need to do is select which themes you would like for Koi to manage and select your desired themes by clicking the *Preferences* button.
 
-If you would like that Koi switch between your light and dark settings automatically, you can select this option in the main page of the program, and choose between following a user set schedule, or at sunrise and sunset (planned feature). To switch between light and dark manually right click the tray icon and select the desired preset, or do so from Koi's main window.
+If you would like that Koi switch between your light and dark settings automatically, you can select this option in the main page of the program, and choose between following a user set schedule, or at **sunrise** and **sunset** *(planned/scheduled feature)*. To switch between **light** and **dark** manually right click the tray icon and select the desired preset, or do so from Koi's main window.
 
-In order to have Koi start at login, you can do so with the Plasma System Settings. Simply navigate to *Startup and Shutdown* > *Autostart*, and select *Add Program...*. If you are to do this, I recommend that you also check the option to start Koi hidden, so not to be annoyed by Koi popping up every time you start your system.
+#### Startup/Autostart
+In order to have Koi started at login, you can do so with the *KDE Plasma System Settings*. Either search for: ***Autostart*** or for **Plasma version 5** navigate to ***System Settings*** -> ***Startup and Shutdown*** -> ***Autostart***; for **Plasma version 6** navigate to ***System Settings*** -> ***System*** -> ***Autostart***, and select *+ Add...*. In addition, it is recommended having the option to *Start Koi hidden* checked, this will prevent Koi from popping up every time you start your operating system.
+
+___
 
 ## Get Koi
 
-Lastest version: 0.2.3
+*Latest version: 0.3*
 
-### Build from source
+### Building from SOURCE
 
 **GENERIC Dependencies**
 
-- Qt [Development files]
+<ins>KDE Frameworks [Development files]:</ins>
 
-- KDE Plasma Desktop Environment
+ * KF6 Config
+ * KF6 Core Addons
+ * KF6 Widgets Addons
 
-- KDE Frameworks [Development files]
+<ins>KDE Plasma Desktop Environment</ins>
 
-- cmake [Build dependencies]
+<ins>Qt [Development files]:</ins>
+
+ * QT Core
+ * QT DBus
+ * QT Gui
+ * QT Network
+ * QT Test
+ * QT Widgets *(Optional)*
+ * QT Xml *(Optional)*
+
+<ins>CMake Program</ins>
+
 
 **Build Instructions**
 
-1. `git clone https://github.com/baduhai/Koi.git`
+1. `git clone https://github.com/baduhai/Koi.git` | `git clone git@github.com:baduhai/Koi.git` | `gh repo clone baduhai/Koi`
 
-2. `cd Koi`
+2. `cmake -S "./Koi/src/" -B "./Koi/src/build/"`
 
-3. `mkdir build`
+3. `sudo make -C "./Koi/src/build/"`
 
-4. `cd build`
+4. `sudo make -C "./Koi/src/build/" install`   *# This will 'install' Koi into `/usr/local/bin/`*
 
-5. `cmake ../src/`
 
-6. `sudo make`
-
-7. `sudo make install`
-
-These instructions also apply to building the latest release version of Koi. Instead of cloning the repository, download and extract the latest *Source Code* archive, from then follow step 2 and beyond.
-
-**Building with NIX**
+***Building with NIX (OS)***
 
 `nix-build -E 'with import <nixpkgs> {}; pkgs.libsForQt5.callPackage ./dev.nix {}'`
 
-## Downloads
 
-### Arch Linux
+### Prerequisites:
 
-**Dependencies**
-- `qt5-base`
-- `plasma-desktop | kconfig | kcoreaddons | kwidgetsaddons`
+### Arch Linux - [[AUR]](https://aur.archlinux.org/packages/koi/)
 
-**Download**
+**Build Dependencies:**
 
-Install it from the [AUR](https://aur.archlinux.org/packages/koi/). Packaged by AUR user [dasbaumwolltier](https://aur.archlinux.org/account/dasbaumwolltier), let them know if it's out of date, not me.
+- ``` 'gcc' 'qt6-base' 'qt6-tools' 'qt6-svg' 'cmake' 'extra-cmake-modules' ```
 
-### openSUSE Tumbleweed + Leap
+**Run Dependencies:**
 
-**Dependencies**
+- ``` 'plasma-desktop' 'plasma-integration' ```
 
-- `cmake | cmake-full | extra-cmake-modules | patterns-kde-devel_kde_frameworks | patterns-kde-devel_qt5 | fdupes`
-- `patterns-kde-kde | patterns-kde-kde_plasma | desktop-file-utils`
+### openSUSE TumbleWeed - [[OBS]](https://build.opensuse.org/package/show/KDE:Extra/koi)
 
-**Download**
+**Build Dependencies:**
 
-Available from [OBS](https://build.opensuse.org/package/show/home:ozu/koi) | [REPO](https://download.opensuse.org/repositories/home:/ozu:/). Packaged by [Fabio Pesari-fpesari](https://github.com/fpesari) + [Martin von Reichenberg](https://github.com/MartinVonReichenberg), let them know if it's out of date, not me.
+- ``` 'cmake' 'cmake-extras' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'qt6-dbus-devel' 'qt6-gui-devel' 'qt6-network-devel' 'qt6-test-devel' 'qt6-widgets-devel' 'qt6-xml-devel' 'hicolor-icon-theme' ```
 
-### Fedora
+**Run Dependencies:**
 
-**Dependencies**
-- `cmake | desktop-file-utils`
+- ``` 'plasma6-desktop' ```
 
-**Download**
-Available from [copr](https://copr.fedorainfracloud.org/coprs/birkch/Koi/). Packaged by [h3o66](https://github.com/h3o66), let them know if it's out of date, not me.
+### openSUSE Leap - [[OBS]](https://build.opensuse.org/package/show/KDE:Extra/koi)
 
-### NixOS and distros with nix.
+**Build Dependencies:**
 
-**Download**
+- ``` 'cmake' 'cmake-extras' 'kf5-kconfigwidgets-devel' 'kf5-kconfig-devel' 'kf5-kcoreaddons-devel' 'qt5-dbus-devel' 'qt5-gui-devel' 'qt5-network-devel' 'qt5-test-devel' 'qt5-widgets-devel' 'qt5-xml-devel' 'hicolor-icon-theme' ```
 
-Available from me [NUR](https://nur.nix-community.org/repos/baduhai/) repo. Packaged by yours truly.  
-Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.
+**Run Dependencies:**
+
+- ``` 'plasma5-desktop' 'plasma-framework-components' 'plasma-framework-desktoptheme' ```
+
+### Fedora - [[COPR]](https://copr.fedorainfracloud.org/coprs/birkch/Koi/)
+
+**Build Dependencies:**
+
+- ``` 'cmake' 'extra-cmake-modules' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'qt6qt-base' 'hicolor-icon-theme' ```
+
+**Run Dependencies:**
+
+- ``` 'plasma-desktop' 'plasma-integration' 'plasma-workspace' ```
+
+### *NixOS - [[NUR]](https://nur.nix-community.org/repos/baduhai/)*
+
+- *Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.*
 
 ### Debian/Ubuntu
 
-**Dependencies**
-- `g++ | qtbase5-dev | cmake | libkf5coreaddons-dev | libkf5widgetsaddons-dev | libkf5config-dev | libkf5package-dev | libkf5service-dev`
+**Build Dependencies:**
 
-**Download**
-_Not yet available . . ._
+- ``` 'g++' 'cmake' 'cmake-extras' 'libkf5config-dev' 'libkf5coreaddons-dev' 'libkf5dbusaddons-dev' 'libkf5widgetsaddons-dev' 'qtbase5-dev' ```
 
-### Other Distributions
+**Run Dependencies:**
 
-Install with [NIX](https://nixos.org/download.html) (See *NixOS* above) or grab the AppImage of the latest release.
+- ``` 'kde-plasma-desktop' 'plasma-framework' 'plasma-integration' 'plasma-workspace' ```
 
-_Koi targets the latest version of the above deps. Since I can't know the name of every dependency for every distribution . . ._
+### KDE Neon
+
+**Build Dependencies:**
+
+- ``` 'g++' 'cmake' 'cmake-extras' 'libkf6config-dev' 'libkf6coreaddons-dev' 'libkf6dbusaddons-dev' 'libkf6widgetsaddons-dev' 'qtbase6-dev' ```
+
+**Run Dependencies:**
+
+- ``` 'kde-plasma-desktop' 'plasma-desktop' ```
+
+___
+
+## Credits:
+
+* William Franco Abdul Hai [(baduhai)](https://github.com/baduhai)
+* Martin Stibor [(Martin von Reichenberg)](https://github.com/MartinVonReichenberg)
+* [ducvietcao](https://github.com/ducvietcao)
+* [toboil-features](https://github.com/toboil-features)
 
 
 ## References
 
-The following is a list of resources that I used as reference and inspiration for writing Koi.
+The following is a list of resources that was used as reference and inspiration for writing Koi.
 
 - [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
 - [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
-- [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt colour scheme.
+- [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt color scheme.
 - [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
+- [SunRise](https://github.com/signetica/SunRise) - For scheduled sunrise/sunset light/dark theme switching.
+- [CTPL](https://github.com/vit-vit/CTPL) - Extra library for parallel job execution.
+- [Scheduler](https://github.com/Bosma/Scheduler) - For timed light/dark theme switching.
 - [This blog post from Zren](https://zren.github.io/2020/04/28/how-to-change-plasma-icon-theme-in-the-terminal) - For teaching me how to set the icon theme.

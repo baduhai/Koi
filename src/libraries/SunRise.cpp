@@ -1,4 +1,4 @@
-// Compute times of sunise and sunset at a specified latitude and longitude.
+// Compute times of sunrise and sunset at a specified latitude and longitude.
 //
 // This software minimizes computational work by performing the full calculation
 // of the solar position three times, at the beginning, middle, and end of the
@@ -163,11 +163,11 @@ SunRise::testSunRiseSet(int k, double offsetDays, double latitude, double longit
   //
   if ((VHz[0] < 0) && (VHz[2] > 0)) {
     if (!hasRise ||
-	(signbit(riseTime - queryTime) == signbit(eventTime - queryTime) &&
+	((riseTime < queryTime) == (eventTime < queryTime) &&
 	 fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
-	(signbit(riseTime - queryTime) != signbit(eventTime - queryTime) &&
+	((riseTime < queryTime) != (eventTime < queryTime) &&
 	 (hasSet && 
-	  signbit(riseTime - queryTime) == signbit(setTime - queryTime)))) {
+	  (riseTime < queryTime) == (setTime < queryTime)))) {
       riseTime = eventTime;
       riseAz = az;
       hasRise = true;
@@ -175,11 +175,11 @@ SunRise::testSunRiseSet(int k, double offsetDays, double latitude, double longit
   }
   if ((VHz[0] > 0) && (VHz[2] < 0)) {
     if (!hasSet ||
-	(signbit(setTime - queryTime) == signbit(eventTime - queryTime) &&
+	((setTime < queryTime) == (eventTime < queryTime) &&
 	 fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
-	(signbit(setTime - queryTime) != signbit(eventTime - queryTime) &&
+	((setTime < queryTime) != (eventTime < queryTime) &&
 	 (hasRise && 
-	  signbit(setTime - queryTime) == signbit(riseTime - queryTime)))) {
+	  (setTime < queryTime) == (riseTime < queryTime)))) {
       setTime = eventTime;
       setAz = az;
       hasSet = true;

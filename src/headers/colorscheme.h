@@ -1,6 +1,6 @@
 #ifndef COLORSCHEME_H
 #define COLORSCHEME_H
-// Qt libs
+// Qt libraries
 #include <QString>
 #include <QProcess>
 

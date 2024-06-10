@@ -1,14 +1,17 @@
 [Desktop Entry]
 Type=Application
-Version=1.4
+Version=1.5
 Name=Koi
-GenericName=Theme Switcher
-Comment=Scheduled LIGHT/DARK Theme Switching for the KDE Plasma Desktop
+GenericName=Theme Switcher:Theme Scheduler
+Comment=Scheduling LIGHT/DARK Theme Switcher for the KDE Plasma Desktop
 Icon=koi
+DBusActivatable=false
+TryExec=koi
 Exec=koi
-Path=/usr/bin
+Path=/usr/bin/:/usr/local/bin
 Terminal=false
 Categories=Utility
-Keywords=Theme; Switch; Light; Dark; Schedule; Sunrise; Sunset; Dusk; Dawn; Timer; Kvantum
+Keywords=Theme; Switch; Light; Dark; Schedule; Sunrise; Sunset; Dusk; Dawn; Timer; Kvantum; Set;
 StartupNotify=true
-StartupWMClass=koi
+SingleMainWindow=true
+StartupWMClass=Koi

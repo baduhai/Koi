@@ -2,9 +2,9 @@
 #define ABOUT_H
 // Headers
 #include "license.h"
-// Qt libs
+// Qt libraries
 #include <QDialog>
-//KF5 libs
+// KF libraries
 #include <KCoreAddons>
 
 namespace Ui {

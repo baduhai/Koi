@@ -24,8 +24,8 @@ About::About(QWidget *parent) :
     QString kfVersion = "<ul><li>KDE Frameworks ";
             kfVersion += KCoreAddons::versionString();
             kfVersion += "</li></ul>";
-    ui->kf5Version->setText(kfVersion);
-    ui->kf5Version->setTextFormat(Qt::RichText);
+    ui->kfVersion->setText(kfVersion);
+    ui->kfVersion->setTextFormat(Qt::RichText);
     QString bosmaLabel = "<ul><li><a href=\"https://github.com/Bosma/Scheduler\">Bosma Scheduler</a></li></ul>";
     ui->bosmaLib->setText(bosmaLabel);
     ui->bosmaLib->setTextFormat(Qt::RichText);

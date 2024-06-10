@@ -8,7 +8,7 @@
 #include "icons.h"
 #include "kvantumstyle.h"
 
-// Qt libs
+// Qt libraries
 #include <QtGlobal>
 #include <QObject>
 #include <QDir>
@@ -19,8 +19,8 @@
 #include <QTest>
 #include <QProcess>
 
-// Misc libs
-#include "../libs/SunRise.h"
+// Misc libraries
+#include "../libraries/SunRise.h"
 
 class Utils : public QObject
 {
@@ -72,8 +72,8 @@ private:
     QDBusInterface *notifyInterface;
     QProcess *plasmaDesktopProcess;
     QProcess *latteProcess;
-    QProcess *kquitapp5Process;
-    QProcess *kstart5Process;
+    QProcess *kquitappProcess;
+    QProcess *kstartProcess;
     QProcess *krunnerProcess;
 };
 

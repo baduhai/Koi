@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>600</height>
+    <width>540</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,55 +19,16 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0">
-     <widget class="KMessageWidget" name="resMsg"/>
-    </item>
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QStackedWidget" name="mainStack">
       <property name="currentIndex">
        <number>0</number>
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="4" column="0">
-         <layout class="QHBoxLayout" name="radioBtns">
-          <item>
-           <widget class="QRadioButton" name="scheduleRadioBtn">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Schedule</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="sunRadioBtn">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Planned feature</string>
-            </property>
-            <property name="text">
-             <string>Sunset/Sunrise</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="8" column="0">
+        <item row="15" column="0">
          <layout class="QHBoxLayout" name="latitude">
-          <item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QLabel" name="latitudeLabel">
             <property name="enabled">
              <bool>false</bool>
@@ -77,7 +38,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QDoubleSpinBox" name="latitudeDSB">
             <property name="enabled">
              <bool>false</bool>
@@ -98,8 +59,86 @@
           </item>
          </layout>
         </item>
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="topSettings">
+        <item row="11" column="0">
+         <layout class="QHBoxLayout" name="radioBtns">
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <widget class="QRadioButton" name="scheduleRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Schedule</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <widget class="QRadioButton" name="sunRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Planned feature</string>
+            </property>
+            <property name="text">
+             <string>Sunset/Sunrise</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="13" column="0">
+         <layout class="QHBoxLayout" name="darkTime">
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <widget class="QLabel" name="darkTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Dark:</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <widget class="QTimeEdit" name="darkTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="12" column="0">
+         <layout class="QHBoxLayout" name="lightTime">
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <widget class="QLabel" name="lightTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Light:</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+           <widget class="QTimeEdit" name="lightTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
            <widget class="QCheckBox" name="hiddenCheckBox">
             <property name="text">
@@ -110,7 +149,7 @@
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -130,29 +169,39 @@
          </layout>
         </item>
         <item row="5" column="0">
-         <layout class="QHBoxLayout" name="lightTime">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0">
+         <layout class="QHBoxLayout" name="lightDarkBtns">
           <item>
-           <widget class="QLabel" name="lightTimeLabel">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+           <widget class="QPushButton" name="lightBtn">
             <property name="text">
-             <string>Light:</string>
+             <string>Light</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QTimeEdit" name="lightTimeEdit">
-            <property name="enabled">
-             <bool>false</bool>
+           <widget class="QPushButton" name="darkBtn">
+            <property name="text">
+             <string>Dark</string>
             </property>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="10" column="0">
+        <item row="17" column="0">
          <layout class="QHBoxLayout" name="longitude">
-          <item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QLabel" name="longitudeLabel">
             <property name="enabled">
              <bool>false</bool>
@@ -162,7 +211,7 @@
             </property>
            </widget>
           </item>
-          <item>
+          <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QDoubleSpinBox" name="longitudeDSB">
             <property name="enabled">
              <bool>false</bool>
@@ -183,10 +232,10 @@
           </item>
          </layout>
         </item>
-        <item row="11" column="0">
-         <spacer name="verticalSpacer">
+        <item row="18" column="0">
+         <spacer name="verticalSpacer_2">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -196,25 +245,7 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0">
-         <layout class="QHBoxLayout" name="lightDarkBtns">
-          <item>
-           <widget class="QPushButton" name="lightBtn">
-            <property name="text">
-             <string>Light</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="darkBtn">
-            <property name="text">
-             <string>Dark</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="0">
+        <item row="6" column="0" alignment="Qt::AlignmentFlag::AlignHCenter">
          <widget class="QCheckBox" name="autoCheckBox">
           <property name="text">
            <string>Automatic</string>
@@ -223,40 +254,6 @@
            <bool>false</bool>
           </property>
          </widget>
-        </item>
-        <item row="6" column="0">
-         <layout class="QHBoxLayout" name="darkTime">
-          <item>
-           <widget class="QLabel" name="darkTimeLabel">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Dark:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTimeEdit" name="darkTimeEdit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </widget>
@@ -280,7 +277,7 @@
           <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -304,7 +301,7 @@
           <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -333,42 +330,42 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>196</width>
-             <height>590</height>
+             <width>491</width>
+             <height>644</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0" colspan="2">
              <layout class="QVBoxLayout" name="plasmaStyle">
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
                <widget class="QCheckBox" name="styleCheckBox">
                 <property name="toolTip">
                  <string>This option supersedes Color Scheme and Icon Theme</string>
                 </property>
                 <property name="text">
-                 <string>Plasma Style</string>
+                 <string>Global Theme</string>
                 </property>
                </widget>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="lightStyle">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Light:</string>
+                   <string>LIGHT:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="darkStyle">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark:</string>
+                   <string>DARK:</string>
                   </property>
                  </widget>
                 </item>
@@ -396,32 +393,32 @@
             </item>
             <item row="1" column="0" colspan="2">
              <layout class="QVBoxLayout" name="colorScheme">
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
                <widget class="QCheckBox" name="colorCheckBox">
                 <property name="text">
-                 <string>Color Scheme</string>
+                 <string>Colors</string>
                 </property>
                </widget>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="lightColor">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Light:</string>
+                   <string>LIGHT:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="darkColor">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark:</string>
+                   <string>DARK:</string>
                   </property>
                  </widget>
                 </item>
@@ -449,32 +446,32 @@
             </item>
             <item row="2" column="0" colspan="2">
              <layout class="QVBoxLayout" name="iconTheme">
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
                <widget class="QCheckBox" name="iconCheckBox">
                 <property name="text">
-                 <string>Icon Theme</string>
+                 <string>Icons</string>
                 </property>
                </widget>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="lightIcon">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Light:</string>
+                   <string>LIGHT:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="darkIcon">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark:</string>
+                   <string>DARK:</string>
                   </property>
                  </widget>
                 </item>
@@ -502,35 +499,35 @@
             </item>
             <item row="3" column="0" colspan="2">
              <layout class="QVBoxLayout" name="gtkTheme">
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
                <widget class="QCheckBox" name="gtkCheckBox">
                 <property name="toolTip">
                  <string>GTK applications must be restarted for changes to take effect.</string>
                 </property>
                 <property name="text">
-                 <string>GTK Theme</string>
+                 <string>GNOME/GTK Application Style</string>
                 </property>
                </widget>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_11">
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="lightGtk">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Light:</string>
+                   <string>LIGHT:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="darkGtk">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark:</string>
+                   <string>DARK:</string>
                   </property>
                  </widget>
                 </item>
@@ -558,7 +555,7 @@
             </item>
             <item row="6" column="0" colspan="2">
              <layout class="QVBoxLayout" name="wallpaper">
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
                <widget class="QCheckBox" name="wallCheckBox">
                 <property name="text">
                  <string>Wallpaper</string>
@@ -567,23 +564,23 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_13">
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="lightWall">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Light:</string>
+                   <string>LIGHT:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="darkWall">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark:</string>
+                   <string>DARK:</string>
                   </property>
                  </widget>
                 </item>
@@ -629,7 +626,7 @@
             </item>
             <item row="5" column="0" colspan="2">
              <layout class="QVBoxLayout" name="kvantumStyle">
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
                <widget class="QCheckBox" name="kvantumStyleCheckBox">
                 <property name="text">
                  <string>Kvantum Style</string>
@@ -638,23 +635,23 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="lightKvantumStyle">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Light:</string>
+                   <string>LIGHT:</string>
                   </property>
                  </widget>
                 </item>
-                <item>
+                <item alignment="Qt::AlignmentFlag::AlignHCenter">
                  <widget class="QLabel" name="darkKvantumStyle">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark:</string>
+                   <string>DARK:</string>
                   </property>
                  </widget>
                 </item>
@@ -688,6 +685,9 @@
       </widget>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="KMessageWidget" name="resMsg"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -695,8 +695,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>450</width>
-     <height>30</height>
+     <width>540</width>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -783,7 +783,7 @@
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Restart</string>
+    <string>&amp;Restart</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>

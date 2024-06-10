@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Koi VERSION 0.2.4 LANGUAGES CXX)
+project(Koi VERSION 0.3 LANGUAGES CXX)
 
 configure_file(headers/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -19,20 +19,20 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION share/applicat
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
 
-find_package(KF5Config)
-find_package(KF5CoreAddons)
-find_package(KF5WidgetsAddons)
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+find_package(KF6Config)
+find_package(KF6CoreAddons)
+find_package(KF6WidgetsAddons)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
 
 
 add_executable(koi
-    libs/Cron.h
-    libs/InterruptableSleep.h
-    libs/Scheduler.h
-    libs/SunRise.cpp libs/SunRise.h
+    libraries/Cron.h
+    libraries/InterruptableSleep.h
+    libraries/Scheduler.h
+    libraries/SunRise.cpp libraries/SunRise.h
     
     resources/resources.qrc
     
@@ -60,10 +60,10 @@ target_compile_definitions(koi PUBLIC
 )
 
 target_link_libraries(koi PUBLIC
-    KF5::ConfigCore
-    KF5::ConfigGui
-    KF5::CoreAddons
-    KF5::WidgetsAddons
+    KF6::ConfigCore
+    KF6::ConfigGui
+    KF6::CoreAddons
+    KF6::WidgetsAddons
     Qt::Core
     Qt::DBus
     Qt::Gui
