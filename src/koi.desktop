@@ -1,3 +1,4 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
 Type=Application
 Version=1.5
@@ -8,7 +9,6 @@ Icon=koi
 DBusActivatable=false
 TryExec=koi
 Exec=koi
-Path=/usr/bin/:/usr/local/bin
 Terminal=false
 Categories=Utility
 Keywords=Theme; Switch; Light; Dark; Schedule; Sunrise; Sunset; Dusk; Dawn; Timer; Kvantum; Set;

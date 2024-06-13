@@ -33,7 +33,15 @@ Koi is designed to be very simple to use. After the initial run of Koi, settings
 If you would like that Koi switch between your light and dark settings automatically, you can select this option in the main page of the program, and choose between following a user set schedule, or at **sunrise** and **sunset** *(planned/scheduled feature)*. To switch between **light** and **dark** manually right click the tray icon and select the desired preset, or do so from Koi's main window.
 
 #### Startup/Autostart
-In order to have Koi started at login, you can do so with the *KDE Plasma System Settings*. Either search for: ***Autostart*** or for **Plasma version 5** navigate to ***System Settings*** -> ***Startup and Shutdown*** -> ***Autostart***; for **Plasma version 6** navigate to ***System Settings*** -> ***System*** -> ***Autostart***, and select *+ Add...*. In addition, it is recommended having the option to *Start Koi hidden* checked, this will prevent Koi from popping up every time you start your operating system.
+In order to have Koi started at login, you can do so with the *KDE Plasma System Settings*.
+
+Search for: ***Autostart***
+
+**Plasma** version **5** navigate to ***System Settings*** -> ***Startup and Shutdown*** -> ***Autostart***;
+
+**Plasma** version **6** navigate to ***System Settings*** -> ***System*** -> ***Autostart***, and select "`+ Add...`"
+
+In addition, it is recommended having the option to *Start Koi hidden* checked, this will prevent Koi from popping up every time you start your operating system.
 
 ___
 
@@ -47,21 +55,21 @@ ___
 
 <ins>KDE Frameworks [Development files]:</ins>
 
- * KF6 Config
- * KF6 Core Addons
- * KF6 Widgets Addons
+ * KF 6 Config
+ * KF 6 Core Addons
+ * KF 6 Widgets Addons
 
 <ins>KDE Plasma Desktop Environment</ins>
 
-<ins>Qt [Development files]:</ins>
+<ins>QT [Development files]:</ins>
 
- * QT Core
- * QT DBus
- * QT Gui
- * QT Network
- * QT Test
- * QT Widgets *(Optional)*
- * QT Xml *(Optional)*
+ * QT 6 Core
+ * QT 6 DBus
+ * QT 6 Gui
+ * QT 6 Network
+ * QT 6 Test
+ * QT 6 Widgets *(Optional)*
+ * QT 6 Xml *(Optional)*
 
 <ins>CMake Program</ins>
 
@@ -98,7 +106,7 @@ ___
 
 **Build Dependencies:**
 
-- ``` 'cmake' 'cmake-extras' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'qt6-dbus-devel' 'qt6-gui-devel' 'qt6-network-devel' 'qt6-test-devel' 'qt6-widgets-devel' 'qt6-xml-devel' 'hicolor-icon-theme' ```
+- ``` 'cmake' 'cmake-extras' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'qt6-base'  'qt6-dbus-devel' 'qt6-gui-devel' 'qt6-network-devel' 'qt6-test-devel' 'qt6-widgets-devel' 'qt6-xml-devel' 'hicolor-icon-theme' ```
 
 **Run Dependencies:**
 
@@ -118,15 +126,11 @@ ___
 
 **Build Dependencies:**
 
-- ``` 'cmake' 'extra-cmake-modules' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'qt6qt-base' 'hicolor-icon-theme' ```
+- ``` 'cmake' 'extra-cmake-modules' 'kf6-kconfigwidgets-devel'  'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'kf6-kwidgetsaddons-devel' 'qt6-qtbase-devel' 'hicolor-icon-theme' ```
 
 **Run Dependencies:**
 
 - ``` 'plasma-desktop' 'plasma-integration' 'plasma-workspace' ```
-
-### *NixOS - [[NUR]](https://nur.nix-community.org/repos/baduhai/)*
-
-- *Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.*
 
 ### Debian/Ubuntu
 
@@ -147,6 +151,10 @@ ___
 **Run Dependencies:**
 
 - ``` 'kde-plasma-desktop' 'plasma-desktop' ```
+
+### *NixOS - [[NUR]](https://nur.nix-community.org/repos/baduhai/)*
+
+- *Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.*
 
 ___
 
