@@ -3,7 +3,7 @@
 Type=Application
 Version=1.5
 Name=Koi
-GenericName=Theme Switcher:Theme Scheduler
+GenericName=Theme Switcher
 Comment=Scheduling LIGHT/DARK Theme Switcher for the KDE Plasma Desktop
 Icon=koi
 DBusActivatable=false

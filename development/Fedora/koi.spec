@@ -44,6 +44,7 @@ automatically switch between light and dark themes.
 
 %check
 desktop-file-validate "%{buildroot}/%{_datadir}/applications/koi.desktop"
+%fdupes -s %{buildroot}
 
 %files
 %license LICENSE
@@ -51,8 +52,6 @@ desktop-file-validate "%{buildroot}/%{_datadir}/applications/koi.desktop"
 %{_bindir}/koi
 %{_datadir}/applications/koi.desktop
 %{_datadir}/icons/hicolor/scalable/apps/{koi.svg,koi_tray.svg}
-
-%fdupes
 
 %changelog
 * Thu Jun 13 2024 Martin Stibor <martin.von.reichenberg@proton.me>
