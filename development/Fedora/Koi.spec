@@ -1,10 +1,10 @@
-Name:                Koi
-Version:             0.3
-Release:             1%{?dist}
-Summary:         Scheduling LIGHT/DARK Theme Converter for the KDE Plasma Desktop
-License:             LGPL-3.0-only
-URL:                   https://github.com/baduhai/%{name}
-Source0:            %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Name:           Koi
+Version:        0.3
+Release:        1%{?dist}
+Summary:        Scheduling LIGHT/DARK Theme Converter for the KDE Plasma Desktop
+License:        LGPL-3.0-only
+URL:            https://github.com/baduhai/%{name}
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake
 BuildRequires:  extra-cmake-modules
@@ -26,7 +26,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  fdupes
 BuildRequires:  hicolor-icon-theme
 
-Requires:           plasma-desktop plasma-integration plasma-workspace
+Requires:       plasma-desktop plasma-integration plasma-workspace
 
 %description
 Koi is a program designed to provide the KDE Plasma Desktop functionality to
