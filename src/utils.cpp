@@ -248,6 +248,16 @@ QStringList Utils::getKvantumStyles(void) // Get all available kvantum styles
     return kvantumStyles;
 }
 // Manage switching themes functions
+void Utils::toggle()
+{
+  QMetaEnum metaEnum = QMetaEnum::fromType<Mode>();
+  const auto current = settings->value("current", QVariant::fromValue(Mode::Undefined)).value<Mode>();
+  if (current == Mode::Light) {
+    goDark();
+  } else if (current == Mode::Dark) {
+    goLight();
+  }
+}
 void Utils::goLight()
 {
     goLightStyle();
@@ -261,6 +271,7 @@ void Utils::goLight()
     {
         notify("Switched to light mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
+    settings->setValue("current", QVariant::fromValue(Mode::Light).toString());
 }
 void Utils::goDark()
 {
@@ -275,6 +286,7 @@ void Utils::goDark()
     {
         notify("Switched to dark mode!", "Some applications may need to be restarted for applied changes to take effect.");
     }
+    settings->setValue("current", QVariant::fromValue(Mode::Dark).toString());
 }
 void Utils::goLightStyle()
 {
