@@ -156,6 +156,16 @@ ___
 
 - *Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.*
 
+### Void Linux
+
+**Build Dependencies:**
+
+- ``` 'gcc' 'cmake' 'extra-cmake-modules' 'qt6-base' 'qt6-base-devel' 'kf6-kcoreaddons-devel' 'kf6-kconfig-devel' 'kf6-kwidgetsaddons-devel' ```
+
+**Run Dependencies:**
+
+- ``` 'plasma-desktop' 'plasma-integration' ```
+
 ___
 
 ## Credits:
