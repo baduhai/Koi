@@ -160,7 +160,7 @@ ___
 
 **Build Dependencies:**
 
-- ``` 'gcc' 'cmake' 'extra-cmake-modules' 'kf6-kcoreaddons-devel' 'kf6-kconfig-devel' 'kf6-kwidgetsaddons-devel' ```
+- ``` 'gcc' 'cmake' 'extra-cmake-modules' 'qt6-base' 'qt6-base-devel' 'kf6-kcoreaddons-devel' 'kf6-kconfig-devel' 'kf6-kwidgetsaddons-devel' ```
 
 **Run Dependencies:**
 
