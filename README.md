@@ -10,13 +10,14 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 ## Features
 
-- Toggle between light and dark presets based on time.
-- Change Plasma style.
-- Change Qt colour scheme.
-- Change Icon theme.
-- Change GTK theme.
-- Change wallpaper.
-- Hide application to system tray.
+- Toggle between light and dark presets based on time
+- Change Plasma style
+- Change Qt colour scheme
+- Change Icon theme
+- Change GTK theme
+- Change wallpaper
+- Hide application to system tray
+- Toggle between LIGHT/DARK themes by clicking mouse wheel
 
 ___
 
@@ -37,9 +38,10 @@ In order to have Koi started at login, you can do so with the *KDE Plasma System
 
 Search for: ***Autostart***
 
-**Plasma** version **5** navigate to ***System Settings*** -> ***Startup and Shutdown*** -> ***Autostart***;
+**Plasma** version **5** navigate to ***System Settings*** -> ***Startup and Shutdown*** -> ***Autostart***; and select "`+ Add...` -> `+ Add Application` -> `Utilities` -> `Koi`"
 
-**Plasma** version **6** navigate to ***System Settings*** -> ***System*** -> ***Autostart***, and select "`+ Add...`"
+
+**Plasma** version **6** navigate to ***System Settings*** -> ***System*** -> ***Autostart***, and select "`+ Add...` -> `+ Add Application` -> `Utilities` -> `Koi`"
 
 In addition, it is recommended having the option to *Start Koi hidden* checked, this will prevent Koi from popping up every time you start your operating system.
 
@@ -47,7 +49,7 @@ ___
 
 ## Get Koi
 
-*Latest version: 0.3*
+*Latest version: 0.3.1*
 
 ### Building from SOURCE
 
@@ -152,19 +154,19 @@ ___
 
 - ``` 'kde-plasma-desktop' 'plasma-desktop' ```
 
-### *NixOS - [[NUR]](https://nur.nix-community.org/repos/baduhai/)*
-
-- *Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.*
-
 ### Void Linux
 
 **Build Dependencies:**
 
-- ``` 'gcc' 'cmake' 'extra-cmake-modules' 'qt6-base' 'qt6-base-devel' 'kf6-kcoreaddons-devel' 'kf6-kconfig-devel' 'kf6-kwidgetsaddons-devel' ```
+- ``` 'gcc' 'cmake' 'extra-cmake-modules' 'qt6-base-devel' 'kf6-kcoreaddons-devel' 'kf6-kconfig-devel' 'kf6-kwidgetsaddons-devel' ```
 
 **Run Dependencies:**
 
-- ``` 'plasma-desktop' 'plasma-integration' ```
+- ``` 'plasma-desktop' 'plasma-integration' 'qt6-base' ```
+
+### *NixOS - [[NUR]](https://nur.nix-community.org/repos/baduhai/)*
+
+- *Install to your NIX profile with `nix-env -iA koi -f https://github.com/baduhai/nur/tarball/master`, to add to you nixos configuration, follow the [Instructions](https://github.com/nix-community/nur#installation) on the NUR repo.*
 
 ___
 
@@ -173,7 +175,10 @@ ___
 * William Franco Abdul Hai [(baduhai)](https://github.com/baduhai)
 * Martin Stibor [(Martin von Reichenberg)](https://github.com/MartinVonReichenberg)
 * [ducvietcao](https://github.com/ducvietcao)
+* [financelurker](https://github.com/financelurker)
+* [ari melody](https://github.com/arimelody)
 * [toboil-features](https://github.com/toboil-features)
+
 
 
 ## References
