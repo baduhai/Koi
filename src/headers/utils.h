@@ -27,6 +27,13 @@ class Utils : public QObject
     Q_OBJECT
 
 public:
+    enum Mode {
+        Undefined = 0,
+        Dark = 1,
+        Light = 2,
+    };
+    Q_ENUM(Mode)
+
     Utils();
 
     QSettings *settings;
@@ -44,6 +51,7 @@ public:
     void startupTimeCheck();
     void startupSunCheck();
 
+    void toggle();
     void goLight();
     void goDark();
     void goLightStyle();
