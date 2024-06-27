@@ -47,7 +47,7 @@ In addition, it is recommended having the option to *Start Koi hidden* checked, 
 
 ___
 
-## Get Koi
+## Getting Koi
 
 *Latest version: 0.3.1*
 
@@ -181,7 +181,7 @@ ___
 
 
 
-## References
+## References:
 
 The following is a list of resources that was used as reference and inspiration for writing Koi.
 
