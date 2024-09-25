@@ -8,9 +8,18 @@ Script::Script()
 void Script::runScript(QString scriptFile)
 {
     scriptProcess = new QProcess;
-    QString bash = "/bin/bash";
+
+    QString locateProgram = "which";
+    QStringList programToLocate = {"bash"};
+
+    scriptProcess->start(locateProgram, programToLocate);
+    scriptProcess->waitForFinished();
+
+    QString program(scriptProcess->readAllStandardOutput());
+    program.replace("\n", "");
+    
     QStringList arguments{"-c", scriptFile};
-    scriptProcess->start(bash, arguments);
+    scriptProcess->start(program, arguments);
     scriptProcess->waitForFinished();
     scriptProcess->close();
 }

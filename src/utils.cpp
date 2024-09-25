@@ -398,7 +398,7 @@ void Utils::goLightScript()
         }
         else
         {
-            notify("Error setting script", "Koi tried to run your script, but no script file was selected", 0);
+            notify("Error running script", "Koi tried to run your script, but no script file was selected", 0);
         }
     }
 }
