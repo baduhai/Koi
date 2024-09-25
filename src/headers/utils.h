@@ -7,6 +7,7 @@
 #include "wallpaper.h"
 #include "icons.h"
 #include "kvantumstyle.h"
+#include "script.h"
 
 // Qt libraries
 #include <QtGlobal>
@@ -66,6 +67,8 @@ public:
     void goDarkKvantumStyle();
     void goLightWall();
     void goDarkWall();
+    void goLightScript();
+    void goDarkScript();
     void restartProcess();
 
 private:
@@ -75,6 +78,7 @@ private:
     Gtk gtk;
     Wallpaper wallpaper;
     KvantumStyle kvantumStyle;
+    Script script;
 
     QDBusConnection *bus;
     QDBusInterface *notifyInterface;

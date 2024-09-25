@@ -245,7 +245,39 @@ void MainWindow::loadPrefs()
     {
         ui->darkWallBtn->setText(darkWallBtnText);
     }
+
+    // Load Script prefs
+    if (utils.settings->value("Script/enabled").toBool())
+    {
+        ui->scriptCheckBox->setChecked(true);
+    }
+    else
+    {
+        ui->scriptCheckBox->setChecked(false);
+    }
+    QFileInfo ls(utils.settings->value("Script/light").toString());
+    QString lightScriptBtnText = ls.fileName();
+    if (lightScript.isEmpty())
+    {
+        ui->lightScriptBtn->setText("Select...");
+    }
+    else
+    {
+        ui->lightScriptBtn->setText(lightScriptBtnText);
+    }
+    QFileInfo ds(utils.settings->value("Script/dark").toString());
+    QString darkScriptBtnText = ds.fileName();
+    if (darkScript.isEmpty())
+    {
+        ui->darkScriptBtn->setText("Select...");
+    }
+    else
+    {
+        ui->darkScriptBtn->setText(darkScriptBtnText);
+    }
+    
 }
+
 void MainWindow::savePrefs()
 {
     // Plasma Style enabling
@@ -325,6 +357,20 @@ void MainWindow::savePrefs()
     // Wallpaper saving prefs
     utils.settings->setValue("Wallpaper/light", lightWall);
     utils.settings->setValue("Wallpaper/dark", darkWall);
+    utils.settings->sync();
+
+    // Script enabling
+    if (ui->scriptCheckBox->isChecked() == 0)
+    {
+        utils.settings->setValue("Script/enabled", false);
+    }
+    else
+    {
+        utils.settings->setValue("Script/enabled", true);
+    }
+    // Script saving prefs
+    utils.settings->setValue("Script/light", lightScript);
+    utils.settings->setValue("Script/dark", darkScript);
     utils.settings->sync();
 }
 void MainWindow::refreshDirs() // Refresh function to find new themes
@@ -452,6 +498,18 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other w
     {
         return 0;
     }
+    if (ui->scriptCheckBox->isChecked() != utils.settings->value("Script/enabled").toBool())
+    {
+        return 0;
+    }
+    if (lightScript != utils.settings->value("Script/light").toString())
+    {
+        return 0;
+    }
+    if (darkScript != utils.settings->value("Script/dark").toString())
+    {
+        return 0;
+    }
     return 1;
 }
 void MainWindow::scheduleLight()
@@ -540,6 +598,9 @@ void MainWindow::on_prefsBtn_clicked() // Preferences button - Sets all preferen
      * the wallpapers, the wallpaper preferences would be set as empty strings, and not stay
      * the same, as is expected behaviour. Unsure why this fixes said bug... ¯\_(ツ)_/¯
      */
+    lightScript = utils.settings->value("Script/light").toString();
+    darkScript = utils.settings->value("Script/dark").toString();
+    // Added the above lines in just in case the same bug affects setting the script properly
     loadPrefs();
     ui->mainStack->setCurrentIndex(1);
 }
@@ -568,6 +629,8 @@ void MainWindow::on_backBtn_clicked() // Back button in preferences view - Must 
             ui->mainStack->setCurrentIndex(0);
             lightWall = utils.settings->value("Wallpaper/light").toString();
             darkWall = utils.settings->value("Wallpaper/dark").toString();
+            lightScript = utils.settings->value("Script/light").toString();
+            darkScript = utils.settings->value("Script/dark").toString();
             loadPrefs();
             break;
         case QMessageBox::Cancel: // Do nothin  //probably dont need this case
@@ -695,6 +758,29 @@ void MainWindow::on_darkWallBtn_clicked() // Set dark wallpaper
     QString darkWallName = dw.fileName();
     ui->darkWallBtn->setText(darkWallName);
     ui->darkWallBtn->setToolTip(darkWall);
+}
+void MainWindow::on_scriptCheckBox_stateChanged(int scriptEnabled) // Script checkbox logic
+{
+        ui->darkScript->setEnabled(scriptEnabled);
+        ui->lightScript->setEnabled(scriptEnabled);
+        ui->darkScriptBtn->setEnabled(scriptEnabled);
+        ui->lightScriptBtn->setEnabled(scriptEnabled);
+}
+void MainWindow::on_lightScriptBtn_clicked() // Set light script
+{
+    lightScript = QFileDialog::getOpenFileName(this, tr("Select Script"), QDir::homePath(), tr("Bash script files(*.sh)"));
+    QFileInfo lw(lightScript);
+    QString lightScriptName = lw.fileName();
+    ui->lightScriptBtn->setText(lightScriptName);
+    ui->lightScriptBtn->setToolTip(lightScript);
+}
+void MainWindow::on_darkScriptBtn_clicked() // Set dark script
+{
+    darkScript = QFileDialog::getOpenFileName(this, tr("Select Script"), QDir::homePath(), tr("Bash script files(*.sh)"));
+    QFileInfo dw(darkScript);
+    QString darkScriptName = dw.fileName();
+    ui->darkScriptBtn->setText(darkScriptName);
+    ui->darkScriptBtn->setToolTip(darkScript);
 }
 void MainWindow::on_autoCheckBox_stateChanged(int automaticEnabled) // Logic for enabling scheduling of themes
 {

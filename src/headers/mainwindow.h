@@ -57,6 +57,7 @@ private slots:
     void on_gtkCheckBox_stateChanged(int arg1);
     void on_kvantumStyleCheckBox_stateChanged(int arg1);
     void on_wallCheckBox_stateChanged(int arg1);
+    void on_scriptCheckBox_stateChanged(int arg1);
     void on_autoCheckBox_stateChanged(int arg1);
     void on_scheduleRadioBtn_toggled(bool checked);
 
@@ -68,6 +69,8 @@ private slots:
 
     void on_lightWallBtn_clicked();
     void on_darkWallBtn_clicked();
+    void on_lightScriptBtn_clicked();
+    void on_darkScriptBtn_clicked();
     void on_lightDropStyle_currentTextChanged(const QString &arg1);
     void on_darkDropStyle_currentTextChanged(const QString &arg1);
     void on_lightDropColor_currentIndexChanged(int index);
@@ -103,6 +106,8 @@ private:
     QString darkGtk;
     QString lightWall;
     QString darkWall;
+    QString lightScript;
+    QString darkScript;
     QString lightKvantumStyle;
     QString darkKvantumStyle;
     QString lightTime;

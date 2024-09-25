@@ -51,6 +51,7 @@ add_executable(koi
     plasmastyle.cpp headers/plasmastyle.h
     utils.cpp headers/utils.h
     wallpaper.cpp headers/wallpaper.h
+    script.cpp headers/script.h
     
     main.cpp
 )

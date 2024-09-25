@@ -266,6 +266,7 @@ void Utils::goLight()
     goLightGtk();
     goLightKvantumStyle();
     goLightWall();
+    goLightScript();
     restartProcess();
     if (settings->value("notify").toBool())
     {
@@ -281,6 +282,7 @@ void Utils::goDark()
     goDarkGtk();
     goDarkKvantumStyle();
     goDarkWall();
+    goDarkScript();
     restartProcess();
     if (settings->value("notify").toBool())
     {
@@ -368,7 +370,7 @@ void Utils::goLightWall()
         }
         else
         {
-            notify("Error setting Wallpaper", "Koi tried to change your wallpaper, but no wallpaper fie was selected", 0);
+            notify("Error setting Wallpaper", "Koi tried to change your wallpaper, but no wallpaper file was selected", 0);
         }
     }
 }
@@ -386,7 +388,35 @@ void Utils::goDarkWall()
         }
     }
 }
-/* this updates the style of both the plasma shell and latte dock if it is available 
+void Utils::goLightScript()
+{
+    if (settings->value("Script/enabled").toBool())
+    {
+        if (!settings->value("Script/light").isNull())
+        {
+            script.runScript(settings->value("Script/light").toString());
+        }
+        else
+        {
+            notify("Error setting script", "Koi tried to run your script, but no script file was selected", 0);
+        }
+    }
+}
+void Utils::goDarkScript()
+{
+    if (settings->value("Script/enabled").toBool())
+    {
+        if (!settings->value("Script/dark").isNull())
+        {
+            script.runScript(settings->value("Script/dark").toString());
+        }
+        else
+        {
+            notify("Error running script", "Koi tried to run your script, but no script file was selected", 0);
+        }
+    }
+}
+/* this updates the style of both the plasma shell and latte  dock if it is available 
  * It also restart krunner to force the theme on it
 */
 void Utils::restartProcess()
