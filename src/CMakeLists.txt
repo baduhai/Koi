@@ -6,8 +6,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -19,6 +17,9 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION share/applicat
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 find_package(KF6Config)
 find_package(KF6CoreAddons)
 find_package(KF6WidgetsAddons)
@@ -29,30 +30,32 @@ find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
 
 
 add_executable(koi
-    libraries/Cron.h
-    libraries/InterruptableSleep.h
-    libraries/Scheduler.h
-    libraries/SunRise.cpp libraries/SunRise.h
-    
+    # Main app stuff.
+    about.cpp
+    license.cpp
+    mainwindow.cpp
+    utils.cpp
+    # QObject headers needs to be added as sources to properly run MOC and UIC.
+    headers/about.h
+    headers/license.h
+    headers/mainwindow.h
+    headers/utils.h
+    # UI items
     resources/resources.qrc
-    
     ui/about.ui
     ui/license.ui
     ui/mainwindow.ui
-    
-    about.cpp headers/about.h
-    colorscheme.cpp headers/colorscheme.h
-    headers/config.h.in
-    gtk.cpp headers/gtk.h
-    icons.cpp headers/icons.h
-    kvantumstyle.cpp headers/kvantumstyle.h
-    license.cpp headers/license.h
-    mainwindow.cpp headers/mainwindow.h
-    plasmastyle.cpp headers/plasmastyle.h
-    utils.cpp headers/utils.h
-    wallpaper.cpp headers/wallpaper.h
-    script.cpp headers/script.h
-    
+    # Libraries for additional stuff
+    libraries/SunRise.cpp
+    # All plugins
+    plugins/colorscheme.cpp
+    plugins/gtk.cpp
+    plugins/icons.cpp
+    plugins/kvantumstyle.cpp
+    plugins/plasmastyle.cpp
+    plugins/wallpaper.cpp
+    plugins/script.cpp
+    # Main entrypoint
     main.cpp
 )
 
@@ -72,6 +75,7 @@ target_link_libraries(koi PUBLIC
     Qt::Test
     Qt::Widgets
     Qt::Xml
+    Threads::Threads
 )
 
 install(TARGETS koi
