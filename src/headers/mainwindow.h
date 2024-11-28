@@ -69,8 +69,8 @@ private slots:
   void on_darkScriptBtn_clicked();
   void on_lightDropStyle_currentTextChanged(const QString &arg1);
   void on_darkDropStyle_currentTextChanged(const QString &arg1);
-  void on_lightDropColor_currentIndexChanged(int index);
-  void on_darkDropColor_currentIndexChanged(int index);
+  void on_lightDropColor_currentTextChanged(const QString &arg1);
+  void on_darkDropColor_currentTextChanged(const QString &arg1);
   void on_lightDropGtk_currentTextChanged(const QString &arg1);
   void on_darkDropGtk_currentTextChanged(const QString &arg1);
   void on_lightDropIcon_currentTextChanged(const QString &arg1);

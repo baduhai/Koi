@@ -632,17 +632,15 @@ void MainWindow::on_darkDropStyle_currentTextChanged(
 {
   darkStyle = darkStyleUN;
 }
-void MainWindow::on_lightDropColor_currentIndexChanged(
-    int index) // Set light color scheme
+void MainWindow::on_lightDropColor_currentTextChanged(
+    const QString &lightColorUN) // Set light color scheme
 {
-  QStringList colorSchemesPaths = utils.getColorSchemesPath();
-  lightColor = colorSchemesPaths.at(index);
+  lightColor = lightColorUN;
 }
-void MainWindow::on_darkDropColor_currentIndexChanged(
-    int index) // Set dark color scheme
+void MainWindow::on_darkDropColor_currentTextChanged(
+    const QString &darkColorUN) // Set dark color scheme
 {
-  QStringList colorSchemesPaths = utils.getColorSchemesPath();
-  darkColor = colorSchemesPaths.at(index);
+  darkColor = darkColorUN;
 }
 void MainWindow::on_lightDropIcon_currentTextChanged(
     const QString &lightIconUN) // Set light icon theme

@@ -3,3 +3,5 @@ src/build
 *.user
 *.autosave
 .vscode
+.clangd
+.cache/clangd/*

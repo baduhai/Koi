@@ -5,4 +5,5 @@
 class Icons : ProcessPlugin {
 public:
   void setTheme(QString iconTheme) override;
+  QStringList getThemes() override;
 };

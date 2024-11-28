@@ -37,7 +37,6 @@ public:
 
   QStringList getPlasmaStyles(void);
   QStringList getColorSchemes(void);
-  QStringList getColorSchemesPath(void);
   QStringList getIconThemes(void);
   QStringList getCursorThemes(void);
   QStringList getGtkThemes(void);
