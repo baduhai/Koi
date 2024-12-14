@@ -1,5 +1,5 @@
-#ifndef LICENSE_H
-#define LICENSE_H
+#pragma once
+
 // Qt libraries
 #include <QDialog>
 
@@ -7,19 +7,16 @@ namespace Ui {
 class License;
 }
 
-class License : public QDialog
-{
-    Q_OBJECT
+class License : public QDialog {
+  Q_OBJECT
 
 public:
-    explicit License(QWidget *parent = nullptr);
-    ~License();
+  explicit License(QWidget *parent = nullptr);
+  ~License();
 
 private slots:
-    void on_closeBtn_clicked();
+  void on_closeBtn_clicked();
 
 private:
-    Ui::License *ui;
+  Ui::License *ui;
 };
-
-#endif // LICENSE_H
