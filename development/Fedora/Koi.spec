@@ -1,5 +1,5 @@
 Name:           Koi
-Version:        0.3.1
+Version:        0.4
 Release:        1%{?dist}
 Summary:        Scheduling LIGHT/DARK Theme Converter for the KDE Plasma Desktop
 License:        LGPL-3.0-only
@@ -52,19 +52,3 @@ desktop-file-validate "%{buildroot}/%{_datadir}/applications/koi.desktop"
 %{_datadir}/icons/hicolor/scalable/apps/{koi.svg,koi_tray.svg}
 
 %changelog
-* Thu Jun 27 2024 Martin Stibor <martin.von.reichenberg@proton.me>
-- Koi - 0.3.1 -- Added Click Mouse to Switch
- - Click mouse wheel to switch LIGHT/DARK themes
- - Updated README; Added Void Linux build dependencies
- - Added Koi.spec for FEDORA/SUSE
-
-- Full Changelog: https://github.com/baduhai/Koi/compare/0.3...0.3.1
-
-* Thu Jun 13 2024 Martin Stibor <martin.von.reichenberg@proton.me>
-- Koi - 0.3 -- Complete Overhaul
- - Update to QT 6 Build Tools / KF 6 libraries
- - Updated bundled libraries to their latest changes
- - Updated UI; Updated Screenshot
- - Updated README with appropriate build instructions and more . . .
-
-- Full Changelog: https://github.com/baduhai/Koi/compare/0.2.4...0.3

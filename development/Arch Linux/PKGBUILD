@@ -4,7 +4,7 @@
 
 pkgname='koi'
 _pkgname='Koi'
-pkgver=0.3.1
+pkgver=0.4
 pkgrel=1
 pkgdesc="Scheduled LIGHT/DARK Theme Switching for the KDE Plasma Desktop"
 arch=('x86_64' 'aarch64')
@@ -19,10 +19,10 @@ sha256sums=('SKIP')
 
 build() {
     cmake -S "${srcdir}/${_pkgname}-${pkgver}/src/" \
-          -B "${srcdir}/${_pkgname}-${pkgver}/src/build/" \
+          -B "${srcdir}/${_pkgname}-${pkgver}/build/" \
           -DCMAKE_INSTALL_PREFIX="/usr/"
 
-    make -C "${srcdir}/${_pkgname}-${pkgver}/src/build/"
+    cmake --build "${srcdir}/${_pkgname}-${pkgver}/build/"
 }
 
 check() {
@@ -31,7 +31,7 @@ check() {
 }
 
 package() {
-    make -C "${srcdir}/${_pkgname}-${pkgver}/src/build/" DESTDIR="${pkgdir}" install
+    cmake --install "${srcdir}/${_pkgname}-${pkgver}/build/"
 
     install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/src/${pkgname}.desktop" -t "${pkgdir}/usr/share/applications/"
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>768</height>
+    <width>608</width>
+    <height>858</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,120 +26,19 @@
       </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="15" column="0">
-         <layout class="QHBoxLayout" name="latitude">
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QLabel" name="latitudeLabel">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Latitude:</string>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QDoubleSpinBox" name="latitudeDSB">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="decimals">
-             <number>3</number>
-            </property>
-            <property name="minimum">
-             <double>-90.000000000000000</double>
-            </property>
-            <property name="maximum">
-             <double>90.000000000000000</double>
-            </property>
-            <property name="singleStep">
-             <double>0.050000000000000</double>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="11" column="0">
-         <layout class="QHBoxLayout" name="radioBtns">
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QRadioButton" name="scheduleRadioBtn">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Schedule</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QRadioButton" name="sunRadioBtn">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Planned feature</string>
-            </property>
-            <property name="text">
-             <string>Sunset/Sunrise</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="13" column="0">
-         <layout class="QHBoxLayout" name="darkTime">
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QLabel" name="darkTimeLabel">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Dark:</string>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QTimeEdit" name="darkTimeEdit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="12" column="0">
-         <layout class="QHBoxLayout" name="lightTime">
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QLabel" name="lightTimeLabel">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Light:</string>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
-           <widget class="QTimeEdit" name="lightTimeEdit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+        <item row="6" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QCheckBox" name="autoCheckBox">
+          <property name="text">
+           <string>Automatic</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
            <widget class="QCheckBox" name="hiddenCheckBox">
             <property name="text">
              <string>Start Koi hidden</string>
@@ -149,7 +48,7 @@
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -161,6 +60,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="prefsBtn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Preferences</string>
             </property>
@@ -168,56 +73,97 @@
           </item>
          </layout>
         </item>
-        <item row="5" column="0">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="4" column="0">
-         <layout class="QHBoxLayout" name="lightDarkBtns">
+        <item row="15" column="0">
+         <layout class="QHBoxLayout" name="LatitudeLongitude">
           <item>
-           <widget class="QPushButton" name="lightBtn">
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+           <widget class="QLabel" name="latitudeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>Light</string>
+             <string>Latitude:</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QPushButton" name="darkBtn">
-            <property name="text">
-             <string>Dark</string>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+           <widget class="QDoubleSpinBox" name="latitudeDSB">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="decimals">
+             <number>4</number>
+            </property>
+            <property name="minimum">
+             <double>-90.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>90.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.050000000000000</double>
+            </property>
+            <property name="stepType">
+             <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item row="17" column="0">
-         <layout class="QHBoxLayout" name="longitude">
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+          <item alignment="Qt::AlignRight">
            <widget class="QLabel" name="longitudeLabel">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
             <property name="text">
              <string>Longitude:</string>
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignmentFlag::AlignHCenter">
+          <item alignment="Qt::AlignLeft">
            <widget class="QDoubleSpinBox" name="longitudeDSB">
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="decimals">
-             <number>3</number>
+             <number>4</number>
             </property>
             <property name="minimum">
              <double>-180.000000000000000</double>
@@ -232,10 +178,43 @@
           </item>
          </layout>
         </item>
-        <item row="18" column="0">
-         <spacer name="verticalSpacer_2">
+        <item row="4" column="0">
+         <layout class="QHBoxLayout" name="lightDarkBtns">
+          <item>
+           <widget class="QPushButton" name="lightBtn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Light</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="darkBtn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Dark</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="5" column="0">
+         <spacer name="verticalSpacer">
           <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -245,15 +224,176 @@
           </property>
          </spacer>
         </item>
-        <item row="6" column="0" alignment="Qt::AlignmentFlag::AlignHCenter">
-         <widget class="QCheckBox" name="autoCheckBox">
-          <property name="text">
-           <string>Automatic</string>
+        <item row="17" column="0">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="checked">
-           <bool>false</bool>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
           </property>
-         </widget>
+         </spacer>
+        </item>
+        <item row="12" column="0">
+         <layout class="QHBoxLayout" name="radioBtns">
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QRadioButton" name="scheduleRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Time Schedule</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QRadioButton" name="sunRadioBtn">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Planned feature</string>
+            </property>
+            <property name="text">
+             <string>Sunrise/Sunset Coordinates</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="13" column="0">
+         <layout class="QHBoxLayout" name="LightTimeDarkTime">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+           <widget class="QLabel" name="lightTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Light:</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+           <widget class="QTimeEdit" name="lightTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="displayFormat">
+             <string>HH:mm</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignRight">
+           <widget class="QLabel" name="darkTimeLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Dark:</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="QTimeEdit" name="darkTimeEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="displayFormat">
+             <string>HH:mm</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item row="7" column="0">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -261,7 +401,7 @@
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
+          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
            <widget class="QCheckBox" name="notifyCheckBox">
             <property name="toolTip">
              <string>If this option is enabled, Koi will notify you when themes change.</string>
@@ -277,7 +417,7 @@
           <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -289,6 +429,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="backBtn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Back</string>
             </property>
@@ -298,19 +444,6 @@
         </item>
         <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
           <item>
            <widget class="QPushButton" name="applyBtn">
             <property name="text">
@@ -330,14 +463,14 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>491</width>
-             <height>644</height>
+             <width>559</width>
+             <height>772</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0" colspan="2">
              <layout class="QVBoxLayout" name="plasmaStyle">
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                <widget class="QCheckBox" name="styleCheckBox">
                 <property name="toolTip">
                  <string>This option supersedes Color Scheme and Icon Theme</string>
@@ -349,7 +482,7 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="lightStyle">
                   <property name="enabled">
                    <bool>false</bool>
@@ -359,7 +492,7 @@
                   </property>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="darkStyle">
                   <property name="enabled">
                    <bool>false</bool>
@@ -393,7 +526,7 @@
             </item>
             <item row="1" column="0" colspan="2">
              <layout class="QVBoxLayout" name="colorScheme">
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                <widget class="QCheckBox" name="colorCheckBox">
                 <property name="text">
                  <string>Colors</string>
@@ -402,7 +535,7 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="lightColor">
                   <property name="enabled">
                    <bool>false</bool>
@@ -412,7 +545,7 @@
                   </property>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="darkColor">
                   <property name="enabled">
                    <bool>false</bool>
@@ -446,7 +579,7 @@
             </item>
             <item row="2" column="0" colspan="2">
              <layout class="QVBoxLayout" name="iconTheme">
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                <widget class="QCheckBox" name="iconCheckBox">
                 <property name="text">
                  <string>Icons</string>
@@ -455,7 +588,7 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="lightIcon">
                   <property name="enabled">
                    <bool>false</bool>
@@ -465,7 +598,7 @@
                   </property>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="darkIcon">
                   <property name="enabled">
                    <bool>false</bool>
@@ -499,7 +632,7 @@
             </item>
             <item row="3" column="0" colspan="2">
              <layout class="QVBoxLayout" name="gtkTheme">
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                <widget class="QCheckBox" name="gtkCheckBox">
                 <property name="toolTip">
                  <string>GTK applications must be restarted for changes to take effect.</string>
@@ -511,7 +644,7 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_11">
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="lightGtk">
                   <property name="enabled">
                    <bool>false</bool>
@@ -521,7 +654,7 @@
                   </property>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="darkGtk">
                   <property name="enabled">
                    <bool>false</bool>
@@ -555,7 +688,7 @@
             </item>
             <item row="6" column="0" colspan="2">
              <layout class="QVBoxLayout" name="wallpaper">
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                <widget class="QCheckBox" name="wallCheckBox">
                 <property name="text">
                  <string>Wallpaper</string>
@@ -564,7 +697,7 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_13">
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="lightWall">
                   <property name="enabled">
                    <bool>false</bool>
@@ -574,7 +707,7 @@
                   </property>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="darkWall">
                   <property name="enabled">
                    <bool>false</bool>
@@ -626,7 +759,7 @@
             </item>
             <item row="5" column="0" colspan="2">
              <layout class="QVBoxLayout" name="kvantumStyle">
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                <widget class="QCheckBox" name="kvantumStyleCheckBox">
                 <property name="text">
                  <string>Kvantum Style</string>
@@ -635,7 +768,7 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="lightKvantumStyle">
                   <property name="enabled">
                    <bool>false</bool>
@@ -645,7 +778,7 @@
                   </property>
                  </widget>
                 </item>
-                <item alignment="Qt::AlignmentFlag::AlignHCenter">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
                  <widget class="QLabel" name="darkKvantumStyle">
                   <property name="enabled">
                    <bool>false</bool>
@@ -678,76 +811,76 @@
              </layout>
             </item>
             <item row="7" column="0" colspan="2">
-              <layout class="QVBoxLayout" name="script">
-               <item alignment="Qt::AlignmentFlag::AlignHCenter">
-                <widget class="QCheckBox" name="scriptCheckBox">
-                 <property name="text">
-                  <string>Run bash script</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_16">
-                 <item alignment="Qt::AlignmentFlag::AlignHCenter">
-                  <widget class="QLabel" name="lightScript">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>LIGHT:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item alignment="Qt::AlignmentFlag::AlignHCenter">
-                  <widget class="QLabel" name="darkScript">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>DARK:</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_17">
-                 <item>
-                  <widget class="QPushButton" name="lightScriptBtn">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Select...</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="darkScriptBtn">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Select...</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
+             <layout class="QVBoxLayout" name="script">
+              <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+               <widget class="QCheckBox" name="scriptCheckBox">
+                <property name="text">
+                 <string>Custom BASH Script</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_16">
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                 <widget class="QLabel" name="lightScript">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>LIGHT:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                 <widget class="QLabel" name="darkScript">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>DARK:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_17">
+                <item>
+                 <widget class="QPushButton" name="lightScriptBtn">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Select...</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="darkScriptBtn">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Select...</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -766,8 +899,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>540</width>
-     <height>33</height>
+     <width>608</width>
+     <height>34</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -866,6 +999,7 @@
    <class>KMessageWidget</class>
    <extends>QFrame</extends>
    <header>kmessagewidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

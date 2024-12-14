@@ -1,0 +1,11 @@
+--- a/src/utils.cpp
++++ b/src/utils.cpp
+@@ -235,7 +235,7 @@ void Utils::goDarkScript() {
+ void Utils::restartProcess() {
+   if (settings->value("KvantumStyle/enabled").toBool()) {
+     kquitappProcess = new QProcess;
+-    QString kquitapp = "/usr/bin/kquitapp5";
++    QString kquitapp = "/usr/bin/kquitapp6";
+
+     kstartProcess = new QProcess;
+     QString kstart = "/usr/bin/kstart";

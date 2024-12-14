@@ -17,30 +17,29 @@
    <item row="0" column="0" colspan="2">
     <widget class="QPlainTextEdit" name="licenseField">
      <property name="textInteractionFlags">
-      <set>Qt::TextInteractionFlag::LinksAccessibleByKeyboard|Qt::TextInteractionFlag::LinksAccessibleByMouse|Qt::TextInteractionFlag::TextBrowserInteraction|Qt::TextInteractionFlag::TextSelectableByKeyboard|Qt::TextInteractionFlag::TextSelectableByMouse</set>
+      <set>Qt::TextInteractionFlag::NoTextInteraction</set>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>445</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="1">
     <widget class="QPushButton" name="closeBtn">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Close</string>
      </property>
      <property name="icon">
-      <iconset theme="dialog-close"/>
+      <iconset theme="QIcon::ThemeIcon::WindowClose"/>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

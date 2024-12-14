@@ -10,14 +10,15 @@ Koi is a program designed to provide the KDE Plasma Desktop functionality to aut
 
 ## Features
 
-- Toggle between light and dark presets based on time
-- Change Plasma style
-- Change Qt colour scheme
-- Change Icon theme
-- Change GTK theme
-- Change wallpaper
-- Hide application to system tray
-- Toggle between LIGHT/DARK themes by clicking mouse wheel
+- Toggle between **Light** and **Dark** presets based on **time** / **coordinated** schedule
+- Change **Plasma style**
+- Change **QT Colour scheme**
+- Change **Icon theme**
+- Change **GTK/GNOME theme**
+- Change **Light/Dark wallpapers**
+- **Hide application** to system tray
+- **Enable/Disable notifications** about Light/Dark theme switching
+- Toggle between LIGHT/DARK themes by clicking **middle mouse button** *(wheel)*
 
 ___
 
@@ -49,7 +50,7 @@ ___
 
 ## Getting Koi
 
-*Latest version: 0.3.1*
+*Latest version: 0.4*
 
 ### Building from SOURCE
 
@@ -80,11 +81,11 @@ ___
 
 1. `git clone https://github.com/baduhai/Koi.git` | `git clone git@github.com:baduhai/Koi.git` | `gh repo clone baduhai/Koi`
 
-2. `cmake -S "./Koi/src/" -B "./Koi/src/build/"`
+2. `sudo cmake -S "./Koi/src/" -B "./Koi/build/"`
 
-3. `sudo make -C "./Koi/src/build/"`
+3. `sudo cmake --build "./Koi/build/"`
 
-4. `sudo make -C "./Koi/src/build/" install`   *# This will 'install' Koi into `/usr/local/bin/`*
+4. `sudo cmake --install "./Koi/build/"`   *# This will **install** Koi into '/usr/local/bin/'*
 
 
 ***Building with NIX (OS)***
@@ -134,7 +135,7 @@ ___
 
 - ``` 'plasma-desktop' 'plasma-integration' 'plasma-workspace' ```
 
-### Debian/Ubuntu
+### Debian/Ubuntu <= 24.04
 
 **Build Dependencies:**
 
@@ -144,7 +145,7 @@ ___
 
 - ``` 'kde-plasma-desktop' 'plasma-framework' 'plasma-integration' 'plasma-workspace' ```
 
-### KDE Neon
+### KDE Neon/Ubuntu >= 24.10
 
 **Build Dependencies:**
 
@@ -152,7 +153,7 @@ ___
 
 **Run Dependencies:**
 
-- ``` 'kde-plasma-desktop' 'plasma-desktop' ```
+- ``` 'kde-plasma-desktop' 'plasma-desktop' 'plasma-integration' 'plasma-workspace' ```
 
 ### Void Linux
 
@@ -174,10 +175,12 @@ ___
 
 * William Franco Abdul Hai [(baduhai)](https://github.com/baduhai)
 * Martin Stibor [(Martin von Reichenberg)](https://github.com/MartinVonReichenberg)
-* [ducvietcao](https://github.com/ducvietcao)
-* [financelurker](https://github.com/financelurker)
-* [ari melody](https://github.com/arimelody)
-* [toboil-features](https://github.com/toboil-features)
+* [DucVietCao](https://github.com/ducvietcao)
+* [PassportMidi](https://github.com/passportmidi)
+* Giovanni Santini [(Itachi San)](https://github.com/ItachiSan)
+* [FinanceLurker](https://github.com/financelurker)
+* [Ari Melody](https://github.com/arimelody)
+* [ToBoil-Features](https://github.com/toboil-features)
 
 
 
