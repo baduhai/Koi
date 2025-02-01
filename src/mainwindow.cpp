@@ -207,7 +207,7 @@ void MainWindow::loadPrefs() {
   ui->lightDropKvantumStyle->setCurrentText(
       utils.settings->value("KvantumStyle/light").toString());
   ui->darkDropKvantumStyle->setCurrentText(
-      utils.settings->value("KvantumStyle/Dark").toString());
+      utils.settings->value("KvantumStyle/dark").toString());
 
   // Load Wallpaper prefs
   if (utils.settings->value("Wallpaper/enabled").toBool()) {
