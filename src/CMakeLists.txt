@@ -82,11 +82,6 @@ target_compile_definitions(koi PUBLIC
     QT_DEPRECATED_WARNINGS
 )
 
-target_include_directories(koi PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 target_link_libraries(koi PUBLIC
     KF6::ConfigCore
     KF6::ConfigGui
