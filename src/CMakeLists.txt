@@ -28,8 +28,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
 
-
-add_executable(koi
+set(koi_SRC
     # Main app stuff.
     about.cpp
     license.cpp
@@ -40,6 +39,13 @@ add_executable(koi
     headers/license.h
     headers/mainwindow.h
     headers/utils.h
+    # DBus interface stuff
+    dbusinterface.cpp
+    headers/dbusinterface.h
+    # DBus interface XML file -- generated at build time
+    ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml
+    # DBus interface adapter -- generated at build time from the XML file
+    ${CMAKE_CURRENT_BINARY_DIR}/koiadaptor.h
     # UI items
     resources/resources.qrc
     ui/about.ui
@@ -59,8 +65,26 @@ add_executable(koi
     main.cpp
 )
 
+qt_generate_dbus_interface(headers/dbusinterface.h
+    dev.baduhai.Koi.xml
+    OPTIONS -A
+)
+
+qt_add_dbus_adaptor(koi_SRC ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml
+                     headers/dbusinterface.h KoiDbusInterface)
+
+
+add_executable(koi
+    ${koi_SRC}
+)
+
 target_compile_definitions(koi PUBLIC
     QT_DEPRECATED_WARNINGS
+)
+
+target_include_directories(koi PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 target_link_libraries(koi PUBLIC
@@ -82,4 +106,5 @@ install(TARGETS koi
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
     BUNDLE DESTINATION "${INSTALL_EXAMPLEDIR}"
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
 )
