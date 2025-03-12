@@ -7,7 +7,7 @@ KoiDbusInterface::KoiDbusInterface(QObject* parent) : QObject(parent) {
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/Koi", this);
     dbus.registerService("dev.baduhai.Koi");
-    this->utils.initialiseSettings();
+    utils.initialiseSettings();
 }
 
 KoiDbusInterface::~KoiDbusInterface() {
