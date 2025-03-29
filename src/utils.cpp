@@ -1,6 +1,8 @@
 #include "headers/utils.h"
 #include "libraries/SunRise.h"
 
+#include <QThread>
+
 Utils::Utils() {}
 
 // Global settings stuff
@@ -41,21 +43,21 @@ void Utils::startupTimeCheck() // Switch to the theme set for the current time
       QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
   QTime now = QTime::currentTime();
   if (now < lightTime && now < darkTime) {
-    QTest::qWait(1000); // Needed delay, or Koi may use the wrong color scheme.
+    QThread::msleep(1000); // Needed delay, or Koi may use the wrong color scheme.
     goDark();
   } else if (now == lightTime) // Highly unlikely
   {
-    QTest::qWait(1000);
+    QThread::msleep(1000);
     goLight();
   } else if (now > lightTime && now < darkTime) {
-    QTest::qWait(1000);
+    QThread::msleep(1000);
     goLight();
   } else if (now == darkTime) // Highly unlikely
   {
-    QTest::qWait(1000);
+    QThread::msleep(1000);
     goDark();
   } else {
-    QTest::qWait(1000);
+    QThread::msleep(1000);
     goDark();
   }
 }
@@ -71,10 +73,10 @@ void Utils::startupSunCheck() { // Switch to the theme set for the current sun
   sr.calculate(latitude, longitude, t);
 
   if (sr.isVisible) {
-    QTest::qWait(1000);
+    QThread::msleep(1000);
     goLight();
   } else {
-    QTest::qWait(1000);
+    QThread::msleep(1000);
     goDark();
   }
 }
