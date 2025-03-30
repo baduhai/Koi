@@ -40,7 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::on_actionRestart_triggered);
   ui->resMsg->addAction(actionRes);
 }
-MainWindow::~MainWindow() { this->setVisible(0); }
+MainWindow::~MainWindow() {
+    this->setVisible(0);
+    delete ui;
+}
 
 // Override window managing events
 void MainWindow::closeEvent(QCloseEvent *event) { // Overide close event

@@ -1,20 +1,21 @@
 #include "colorscheme.h"
 
-void ColorScheme::setTheme(QString themeName) {
-  process = new QProcess;
+#include <QProcess>
 
+void ColorScheme::setTheme(QString themeName) {
+  QProcess process;
   QString locateProgram = "whereis";
   QStringList programToLocate = {"plasma-apply-colorscheme"};
 
-  process->start(locateProgram, programToLocate);
-  process->waitForFinished();
+  process.start(locateProgram, programToLocate);
+  process.waitForFinished();
 
-  QString program(process->readAllStandardOutput());
+  QString program(process.readAllStandardOutput());
   program.replace("plasma-apply-colorscheme: ", "");
   program.replace("\n", "");
 
   QStringList arguments{themeName};
-  process->start(program, arguments);
+  QProcess::startDetached(program, arguments);
 }
 
 QStringList ColorScheme::getThemes() {

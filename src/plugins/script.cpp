@@ -1,19 +1,19 @@
 #include "script.h"
 
-void Script::setTheme(QString scriptFile) {
-  process = new QProcess;
+#include <QProcess>
 
+void Script::setTheme(QString scriptFile) {
+
+  QProcess process;
   QString locateProgram = "which";
   QStringList programToLocate = {"bash"};
 
-  process->start(locateProgram, programToLocate);
-  process->waitForFinished();
+  process.start(locateProgram, programToLocate);
+  process.waitForFinished();
 
-  QString program(process->readAllStandardOutput());
+  QString program(process.readAllStandardOutput());
   program.replace("\n", "");
 
   QStringList arguments{"-c", scriptFile};
-  process->start(program, arguments);
-  process->waitForFinished();
-  process->close();
+  QProcess::execute(program, arguments);
 }

@@ -1,9 +1,12 @@
 #include "wallpaper.h"
 
 void Wallpaper::setTheme(QString wallFile) {
-  bus = new QDBusConnection(QDBusConnection::sessionBus());
-  interface = new QDBusInterface("org.kde.plasmashell", "/PlasmaShell",
-                                 "org.kde.PlasmaShell", *bus);
+
+  if(!interface)
+  {
+    interface = new QDBusInterface("org.kde.plasmashell", "/PlasmaShell",
+                        "org.kde.PlasmaShell", QDBusConnection::sessionBus());
+  }
   QString script = "var allDesktops = desktops();";
   script += "print (allDesktops);";
   script += "for (i=0;i<allDesktops.length;i++) {";
