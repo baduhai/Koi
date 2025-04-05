@@ -1,5 +1,6 @@
 #include "headers/mainwindow.h"
 #include "headers/utils.h"
+#include "headers/dbusinterface.h"
 
 #include <iostream>
 #include <QApplication>
@@ -39,7 +40,7 @@ int main(int argc, char *argv[])
         {
             w.show();
         }
+        KoiDbusInterface dbusIf(&a);
         return a.exec();
     }
 }
-
