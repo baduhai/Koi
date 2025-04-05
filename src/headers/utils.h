@@ -77,5 +77,5 @@ private:
   KvantumStyle kvantumStyle;
   Script script;
 
-  QDBusInterface* notifyInterface;
+  QDBusInterface* notifyInterface = nullptr;
 };
