@@ -70,7 +70,6 @@ ___
  * QT 6 DBus
  * QT 6 Gui
  * QT 6 Network
- * QT 6 Test
  * QT 6 Widgets *(Optional)*
  * QT 6 Xml *(Optional)*
 

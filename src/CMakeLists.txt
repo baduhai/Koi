@@ -29,7 +29,7 @@ find_package(KF6Config)
 find_package(KF6CoreAddons)
 find_package(KF6WidgetsAddons)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network Test)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
 
@@ -96,7 +96,6 @@ target_link_libraries(koi PUBLIC
     Qt::DBus
     Qt::Gui
     Qt::Network
-    Qt::Test
     Qt::Widgets
     Qt::Xml
     Threads::Threads

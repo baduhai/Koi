@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QProcess>
 #include <QSettings>
-#include <QTest>
 #include <QTimer>
 #include <QtGlobal>
 
