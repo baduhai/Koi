@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Koi VERSION 0.4 LANGUAGES CXX)
+project(Koi VERSION 0.5 LANGUAGES CXX)
 
 configure_file(headers/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -13,6 +13,11 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+# Define *SYSTEM-WIDE* DBUS_INTERFACES_INSTALL_DIR variable
+set(DBUS_INTERFACES_INSTALL_DIR share/dbus-1/interfaces)
+
+# Install files not being a part of INSTALL TARGETS section
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION share/applications)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
@@ -101,5 +106,4 @@ install(TARGETS koi
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
     BUNDLE DESTINATION "${INSTALL_EXAMPLEDIR}"
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
 )
