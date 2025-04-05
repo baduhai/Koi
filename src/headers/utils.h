@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 // Qt libraries
 #include <QDateTime>
 #include <QDir>
@@ -31,7 +33,7 @@ public:
 
   Utils();
 
-  QSettings *settings;
+  std::unique_ptr<QSettings> settings;
   void initialiseSettings();
 
   QStringList getPlasmaStyles(void);
@@ -74,11 +76,5 @@ private:
   KvantumStyle kvantumStyle;
   Script script;
 
-  QDBusConnection *bus;
-  QDBusInterface *notifyInterface;
-  QProcess *plasmaDesktopProcess;
-  QProcess *latteProcess;
-  QProcess *kquitappProcess;
-  QProcess *kstartProcess;
-  QProcess *krunnerProcess;
+  QDBusInterface* notifyInterface = nullptr;
 };

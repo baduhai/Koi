@@ -8,7 +8,7 @@ Utils::Utils() {}
 // Global settings stuff
 void Utils::initialiseSettings() {
   settings =
-      new QSettings(QDir::homePath() + "/.config/koirc",
+      std::make_unique<QSettings>(QDir::homePath() + "/.config/koirc",
                     QSettings::IniFormat); // Setting config path and format
 }
 
@@ -16,10 +16,12 @@ void Utils::initialiseSettings() {
 void Utils::notify(QString notifySummary, QString notifyBody,
                    int timeoutms) // Push notification through DBus
 {
-  bus = new QDBusConnection(QDBusConnection::sessionBus());
-  notifyInterface = new QDBusInterface("org.freedesktop.Notifications",
+  if (!notifyInterface)
+  {
+    notifyInterface = new QDBusInterface("org.freedesktop.Notifications",
                                        "/org/freedesktop/Notifications",
-                                       "org.freedesktop.Notifications", *bus);
+                                       "org.freedesktop.Notifications", QDBusConnection::sessionBus());
+  }
   QString app_name = "Koi"; // What program is the notification coming from?
   uint replaces_id =
       0; // Not sure what this is. Think it has something to do with pid.
@@ -93,7 +95,6 @@ QStringList Utils::getGtkThemes(void) { return gtk.getThemes(); }
 QStringList Utils::getKvantumStyles(void) { return kvantumStyle.getThemes(); }
 // Manage switching themes functions
 void Utils::toggle() {
-  QMetaEnum metaEnum = QMetaEnum::fromType<Mode>();
   const auto current =
       settings->value("current", QVariant::fromValue(Mode::Undefined))
           .value<Mode>();
@@ -236,25 +237,13 @@ void Utils::goDarkScript() {
  */
 void Utils::restartProcess() {
   if (settings->value("KvantumStyle/enabled").toBool()) {
-    kquitappProcess = new QProcess;
-    QString kquitapp = "/usr/bin/kquitapp6";
 
-    kstartProcess = new QProcess;
-    QString kstart = "/usr/bin/kstart";
+    // restart plasmashell
     QStringList plasmashell = {"plasmashell"};
-
-    // kill plasma shell and wait for it
-    kquitappProcess->start(kquitapp, plasmashell);
-    kquitappProcess->waitForFinished();
-    kquitappProcess->close();
-
-    // start new process
-    kstartProcess->start(kstart, plasmashell);
+    QProcess::execute("/usr/bin/kquitapp6", plasmashell);
+    QProcess::startDetached("/usr/bin/kstart", plasmashell);
   }
 
-  // restart krunner
-  krunnerProcess = new QProcess;
-  QString krunner = "/usr/bin/krunner";
-  QStringList krunner_args = {"--replace", "-d"};
-  krunnerProcess->start(krunner, krunner_args);
+  // stop krunner, it will be restarted when it is requested again
+  QProcess::startDetached("/usr/bin/kquitapp6", {"krunner"});
 }

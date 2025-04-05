@@ -1,12 +1,10 @@
 #include "plasmastyle.h"
 
+#include <QProcess>
+
 void PlasmaStyle::setTheme(QString plasmaStyle) {
-  process = new QProcess;
-  QString style = "/usr/bin/plasma-apply-desktoptheme";
   QStringList styleArgs = {plasmaStyle};
-  process->start(style, styleArgs);
-  process->waitForFinished();
-  process->close();
+    QProcess::execute("/usr/bin/plasma-apply-desktoptheme", styleArgs);
 }
 
 QStringList PlasmaStyle::getThemes(void) {

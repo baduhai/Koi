@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QProcess>
 #include <QString>
 #include <QStringList>
 #include <QtDBus>
@@ -15,12 +14,5 @@ public:
 // Plugin that handles theme switching via DBus communication.
 class DbusPlugin : Plugin {
 protected:
-  QDBusConnection *bus;
-  QDBusInterface *interface;
-};
-
-// Plugin that handles theme switching via an external process.
-class ProcessPlugin : Plugin {
-protected:
-  QProcess *process;
+  QDBusInterface* interface = nullptr;
 };

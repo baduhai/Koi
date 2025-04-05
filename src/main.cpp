@@ -3,6 +3,7 @@
 #include "headers/dbusinterface.h"
 
 #include <iostream>
+#include <memory>
 #include <QApplication>
 #include <QLocalSocket>
 #include <QLocalServer>
@@ -16,11 +17,12 @@ bool isAlreadyRunning(QString netName)
     return isOpen;
 }
 
-void createDummyNetwork(QString netName)
+std::unique_ptr<QLocalServer> createDummyNetwork(QString netName)
 {
-    QLocalServer* server = new QLocalServer;
+    auto server = std::make_unique<QLocalServer>();
     server->setSocketOptions(QLocalServer::WorldAccessOption);
     server->listen(netName);
+    return server;
 }
 
 int main(int argc, char *argv[])
@@ -31,7 +33,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        createDummyNetwork("koiDummyNetwork");
+        const auto dummyServer = createDummyNetwork("koiDummyNetwork");
         Utils utils;
         utils.initialiseSettings();
         QApplication a(argc, argv);
