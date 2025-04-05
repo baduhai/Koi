@@ -243,5 +243,5 @@ void Utils::restartProcess() {
   }
 
   // stop krunner, it will be restarted when it is requested again
-  QProcess::execute("/usr/bin/kquitapp6", {"krunner"});
+  QProcess::startDetached("/usr/bin/kquitapp6", {"krunner"});
 }
