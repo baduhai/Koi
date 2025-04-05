@@ -11,6 +11,10 @@
 // Headers
 #include "utils.h"
 
+namespace Bosma{
+class Scheduler;
+}
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -36,9 +40,9 @@ private slots:
   void savePrefs();
   void toggleVisibility();
   int prefsSaved();
-  void scheduleLight();
-  void scheduleDark();
-  void scheduleSunEvent();
+  void scheduleLight(Bosma::Scheduler& s);
+  void scheduleDark(Bosma::Scheduler& s);
+  void scheduleSunEvent(Bosma::Scheduler& s);
 
   void on_prefsBtn_clicked();
   void on_backBtn_clicked();
@@ -109,6 +113,7 @@ private:
   QString lightTime;
   QString darkTime;
   Utils utils;
+  std::unique_ptr<Bosma::Scheduler> scheduler;
 
 protected:
 };
