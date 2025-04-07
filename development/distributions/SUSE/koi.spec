@@ -1,7 +1,7 @@
 #
 # spec file for package koi
 #
-# Copyright (c) 2024 SUSE LLC
+# Copyright (c) 2025 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -16,19 +16,21 @@
 #
 
 
+%define original_name Koi
+
+
 Name:           koi
-Version:        0.4
+Version:        0.5
 Release:        0%{?dist}
-Summary:        Theme scheduling for the KDE Plasma Desktop
+Summary:        Scheduled LIGHT/DARK Theme Switching for the KDE Plasma Desktop
 License:        LGPL-3.0-only
 URL:            https://github.com/baduhai/Koi
-Source0:        %{url}/archive/%{version}.tar.gz #%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake(Qt6Core)
 BuildRequires:  cmake(Qt6DBus)
 BuildRequires:  cmake(Qt6Gui)
 BuildRequires:  cmake(Qt6Network)
-BuildRequires:  cmake(Qt6Test)
 BuildRequires:  cmake(Qt6Widgets)
 BuildRequires:  cmake(Qt6Xml)
 
@@ -42,18 +44,22 @@ BuildRequires:  kf6-extra-cmake-modules
 BuildRequires:  desktop-file-utils
 BuildRequires:  fdupes
 
+
 Requires:       hicolor-icon-theme
-Requires:       libplasma6-components
-Requires:       libplasma6-desktoptheme
 Requires:       plasma6-desktop
 Requires:       plasma6-workspace
+
 
 %description
 Koi is a program designed to provide the KDE Plasma Desktop functionality
 to automatically switch between light and dark themes.
+Koi allows users to automate and manage their desktop themes,
+providing a convenient way to schedule theme changes on the KDE Plasma Desktop,
+enhancing the user experience with timely and automated visual adjustments.
+It supports running custom Bash scripts and provides a full DBus service integration.
 
 %prep
-%autosetup -p1 -n Koi-%{version}
+%autosetup -p1 -n %{original_name}-%{version}
 
 %build
 pushd src
@@ -69,14 +75,16 @@ popd
 
 %check
 desktop-file-validate "%{buildroot}/%{_datadir}/applications/koi.desktop"
-%fdupes -s %{buildroot}
-
+%fdupes -s             %{buildroot}
 
 %files
 %license LICENSE
-%doc README.md
-%{_bindir}/koi
-%{_datadir}/applications/koi.desktop
-%{_datadir}/icons/hicolor/scalable/apps/{koi.svg,koi_tray.svg}
+%doc    "README.md"
+
+"%{_bindir}/%{name}"
+
+"%{_datadir}/applications/%{name}.desktop"
+"%{_datadir}/dbus-1/interfaces/dev.baduhai.%{original_name}.xml"
+ %{_datadir}/icons/hicolor/scalable/apps/{%{name}.svg,%{name}_tray.svg}
 
 %changelog

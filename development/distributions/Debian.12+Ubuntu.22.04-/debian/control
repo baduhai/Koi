@@ -1,0 +1,19 @@
+Source: koi
+Section: kde
+Priority: optional
+Maintainer: Martin Stibor <martin.von.reichenberg@proton.me>
+Build-Depends: debhelper (>= 9), g++, cmake, cmake-extras, extra-cmake-modules, libkf5config-dev, libkf5coreaddons-dev, libkf5dbusaddons-dev, libkf5widgetsaddons-dev, qtbase5-dev
+Standards-Version: 0.5
+Vcs-Git: https://github.com/baduhai/Koi.git
+Homepage: https://github.com/baduhai/Koi/
+
+Package: koi
+Architecture: any
+Depends: \${shlibs:Depends}, \${misc:Depends}, libc6, libgcc-s1, libkf5coreaddons5, libkf5widgetsaddons5, libqt5core5a, libqt5dbus5, libqt5gui5, libqt5network5, libqt5widgets5, libstdc++6, libkf5configcore5, libkf5config-data, libkf5configgui5, libkf5guiaddons5, libkf5guiaddons-data, libkf5coreaddons-data, libkf5dbusaddons5, libkf5dbusaddons-data, libqt5test5, libkf5widgetsaddons-data, libqt5xml5, libqt5xmlpatterns5
+Description: Scheduled Light/Dark Theme Switcher for the KDE Plasma Desktop.
+ Koi is a program designed to provide the KDE Plasma Desktop functionality
+ to automatically switch between light and dark themes. Koi is under active development,
+ and while it is stable enough to use daily, expect bugs.
+ Koi is designed to be used with Plasma,
+ and while some features may function under different desktop environments,
+ they are unlikely to work and untested.

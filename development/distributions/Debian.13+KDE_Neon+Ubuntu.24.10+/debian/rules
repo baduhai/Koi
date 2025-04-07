@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+%:
+	dh \$@
+
+override_dh_auto_configure:
+	dh_auto_configure --builddirectory=../build
+
+override_dh_auto_build:
+	dh_auto_build --builddirectory=../build
+
+override_dh_auto_install:
+	dh_auto_install --builddirectory=../build
+	make install DESTDIR=\$(CURDIR)/debian/koi

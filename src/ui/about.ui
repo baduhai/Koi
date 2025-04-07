@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
-    <height>500</height>
+    <width>657</width>
+    <height>456</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -23,58 +23,17 @@
    <enum>Qt::LayoutDirection::LeftToRight</enum>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
-      <widget class="QPushButton" name="iconNonBtn">
-       <property name="styleSheet">
-        <string notr="true">border: none</string>
-       </property>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="closeBtn">
        <property name="text">
-        <string/>
+        <string>Close</string>
        </property>
        <property name="icon">
-        <iconset resource="../resources/resources.qrc">
-         <normaloff>:/resources/icons/koi.svg</normaloff>:/resources/icons/koi.svg</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>40</width>
-         <height>40</height>
-        </size>
+        <iconset theme="window-close"/>
        </property>
       </widget>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
-        <widget class="QLabel" name="titleLabel">
-         <property name="text">
-          <string>App Name</string>
-         </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
-        <widget class="QLabel" name="verLabel">
-         <property name="text">
-          <string>Version NO</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
@@ -91,43 +50,24 @@
        <string>About</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="0" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
-        <widget class="QLabel" name="projectLabel">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LayoutDirection::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Project's [HOME](https://github.com/baduhai/Koi)</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::TextFormat::MarkdownText</enum>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
+       <item row="1" column="0" colspan="2">
         <widget class="QLabel" name="copyLabel">
          <property name="text">
-          <string>(c) 2020-2024, William Franco Abdul Hai</string>
+          <string>(C) 2020-2025, William Franco Abdul Hai + Martin von Reichenberg</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
+       <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="descLabel">
          <property name="text">
           <string>Scheduling LIGHT/DARK Theme Switcher for KDE Plasma Desktop</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
+       <item row="5" column="0" colspan="2">
         <widget class="QLabel" name="bugLabel">
          <property name="text">
-          <string>*Please report bugs and request new features on [GitHub](https://github.com/baduhai/Koi/issues)*</string>
+          <string>Please report bugs and request new features on [GitHub](https://github.com/baduhai/Koi/issues)</string>
          </property>
          <property name="textFormat">
           <enum>Qt::TextFormat::MarkdownText</enum>
@@ -137,7 +77,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
+       <item row="4" column="0" colspan="2">
         <widget class="QPushButton" name="licenseBtn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -168,13 +108,32 @@ text-align: left;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0" alignment="Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter">
+       <item row="3" column="0" colspan="2">
         <widget class="QLabel" name="ThanksLabel">
          <property name="text">
-          <string>*We want to thank everyone for their support &amp; contribution*</string>
+          <string>***We want to thank everyone for their support &amp; contribution***</string>
          </property>
          <property name="textFormat">
           <enum>Qt::TextFormat::MarkdownText</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="projectLabel">
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Project's [HOME](https://github.com/baduhai/Koi)</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::TextFormat::MarkdownText</enum>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -238,12 +197,37 @@ li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2020-2024, &lt;a href=&quot;https://github.com/baduhai&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;William Franco Abdul Hai&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2023-2024, Martin Stibor (&lt;a href=&quot;https://github.com/MartinVonReichenberg&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Martin von reichenberg&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(C) 2020-2024, &lt;a href=&quot;https://github.com/baduhai&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;William Franco Abdul Hai&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2023-2025, Martin Stibor (&lt;a href=&quot;https://github.com/MartinVonReichenberg&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Martin von reichenberg&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2024, &lt;a href=&quot;https://github.com/ducvietcao&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;ducvietcao&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2024, &lt;a href=&quot;https://github.com/financelurker&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;financelurker&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2024, &lt;a href=&quot;https://github.com/passportmidi&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;passportmidi&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2024, Giovanni Santini (&lt;a href=&quot;https://github.com/ItachiSan&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;ItachiSan&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; color:#2980b9;&quot;&gt;)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2024, Giovanni Santini (&lt;a href=&quot;https://github.com/ItachiSan&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;ItachiSan&lt;/span&gt;&lt;/a&gt;)&lt;br /&gt;2025, &lt;a href=&quot;https://github.com/miaouwu&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;miaouwu&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2025, Andrea Spelgatti (&lt;a href=&quot;https://github.com/Ourouk&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Ourouk&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2025, Spencer Williams (&lt;a href=&quot;https://github.com/spencerwi&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;spencerwi&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2025, Matthias Möller (&lt;a href=&quot;https://github.com/TinyTinni&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;TinyTinni&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="williamLabel">
+         <property name="minimumSize">
+          <size>
+           <width>65</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>**All participants:**</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::TextFormat::MarkdownText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -254,37 +238,78 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
-        <widget class="QLabel" name="williamLabel">
-         <property name="minimumSize">
-          <size>
-           <width>65</width>
-           <height>21</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>**All participants:**</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::TextFormat::MarkdownText</enum>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="closeBtn">
+      <widget class="QPushButton" name="iconNonBtn">
+       <property name="styleSheet">
+        <string notr="true">border: none</string>
+       </property>
        <property name="text">
-        <string>Close</string>
+        <string/>
        </property>
        <property name="icon">
-        <iconset theme="window-close"/>
+        <iconset resource="../resources/resources.qrc">
+         <normaloff>:/resources/icons/koi.svg</normaloff>:/resources/icons/koi.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="titleLabel">
+         <property name="text">
+          <string>App Name</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="verLabel">
+         <property name="text">
+          <string>Version NO</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Policy::Minimum</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

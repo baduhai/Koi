@@ -4,7 +4,7 @@
 
 pkgname='koi'
 _pkgname='Koi'
-pkgver=0.4
+pkgver=0.5
 pkgrel=1
 pkgdesc="Scheduled LIGHT/DARK Theme Switching for the KDE Plasma Desktop"
 arch=('x86_64' 'aarch64')
@@ -14,27 +14,28 @@ depends=('gcc-libs' 'plasma-desktop' 'plasma-integration' 'plasma-workspace' 'qt
 makedepends=('gcc' 'qt6-base' 'qt6-tools' 'cmake' 'extra-cmake-modules' 'desktop-file-utils' 'fdupes')
 optdepends=('xsettingsd: Apply settings to GTK applications on the fly'
             'kvantum: Powerful extra customisable themes')
-source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz")
-sha256sums=('SKIP')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/${pkgver}.tar.gz")
+md5sums=('SKIP')
 
 build() {
-    cmake -S "${srcdir}/${_pkgname}-${pkgver}/src/" \
-          -B "${srcdir}/${_pkgname}-${pkgver}/build/" \
+    cmake -S      "${srcdir}/${_pkgname}-${pkgver}/src/" \
+          -B      "${srcdir}/${_pkgname}-${pkgver}/build/" \
           -DCMAKE_INSTALL_PREFIX="/usr/"
 
     cmake --build "${srcdir}/${_pkgname}-${pkgver}/build/"
 }
 
 check() {
-    desktop-file-validate "${srcdir}/${_pkgname}-${pkgver}/src/${pkgname}.desktop"
-    fdupes -r -s "${srcdir}/"
+    desktop-file-validate "${srcdir}/${_pkgname}-${pkgver}/src/${_pkgname}.desktop"
+    fdupes -r -s          "${srcdir}/"
 }
 
 package() {
     cmake --install "${srcdir}/${_pkgname}-${pkgver}/build/"
 
-    install -Dm644 "${srcdir}/${_pkgname}-${pkgver}/src/${pkgname}.desktop" -t "${pkgdir}/usr/share/applications/"
+    install -Dm644  "${srcdir}/${_pkgname}-${pkgver}/src/${_pkgname}.desktop" \
+            -t      "${pkgdir}/usr/share/applications/"
 
-    desktop-file-validate "${pkgdir}/usr/share/applications/${pkgname}.desktop"
-    fdupes -r -s "${pkgdir}/"
+    desktop-file-validate "${pkgdir}/usr/share/applications/${_pkgname}.desktop"
+    fdupes -r -s          "${pkgdir}/"
 }
