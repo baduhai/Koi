@@ -53,7 +53,7 @@ It supports running custom Bash scripts and provides a full DBus service integra
 %cmake_install 
 
 %check
-desktop-file-validate "%{buildroot}/%{_datadir}/applications/%{name}.desktop"
+desktop-file-validate "%{buildroot}/%{_datadir}/applications/local.%{original_name}DbusInterface.desktop"
 %fdupes -s             %{buildroot}/
 
 %files
@@ -62,7 +62,7 @@ desktop-file-validate "%{buildroot}/%{_datadir}/applications/%{name}.desktop"
 
 "%{_bindir}/%{name}"
 
-"%{_datadir}/applications/%{name}.desktop"
+"%{_datadir}/applications/local.%{original_name}DbusInterface.desktop"
 "%{_datadir}/dbus-1/interfaces/dev.baduhai.%{original_name}.xml"
  %{_datadir}/icons/hicolor/scalable/apps/{%{name}.svg,%{name}_tray.svg}
 

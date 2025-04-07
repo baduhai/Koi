@@ -74,7 +74,7 @@ pushd src
 popd
 
 %check
-desktop-file-validate "%{buildroot}/%{_datadir}/applications/koi.desktop"
+desktop-file-validate "%{buildroot}/%{_datadir}/applications/local.%{original_name}DbusInterface.desktop"
 %fdupes -s             %{buildroot}
 
 %files
@@ -83,7 +83,7 @@ desktop-file-validate "%{buildroot}/%{_datadir}/applications/koi.desktop"
 
 "%{_bindir}/%{name}"
 
-"%{_datadir}/applications/%{name}.desktop"
+"%{_datadir}/applications/local.%{original_name}DbusInterface.desktop"
 "%{_datadir}/dbus-1/interfaces/dev.baduhai.%{original_name}.xml"
  %{_datadir}/icons/hicolor/scalable/apps/{%{name}.svg,%{name}_tray.svg}
 

@@ -26,16 +26,16 @@ build() {
 }
 
 check() {
-    desktop-file-validate "${srcdir}/${_pkgname}-${pkgver}/src/${_pkgname}.desktop"
+    desktop-file-validate "${srcdir}/${_pkgname}-${pkgver}/src/local.${_pkgname}DbusInterface.desktop"
     fdupes -r -s          "${srcdir}/"
 }
 
 package() {
     cmake --install "${srcdir}/${_pkgname}-${pkgver}/build/"
 
-    install -Dm644  "${srcdir}/${_pkgname}-${pkgver}/src/${_pkgname}.desktop" \
+    install -Dm644  "${srcdir}/${_pkgname}-${pkgver}/src/local.${_pkgname}DbusInterface.desktop" \
             -t      "${pkgdir}/usr/share/applications/"
 
-    desktop-file-validate "${pkgdir}/usr/share/applications/${_pkgname}.desktop"
+    desktop-file-validate "${pkgdir}/usr/share/applications/local.${_pkgname}DbusInterface.desktop"
     fdupes -r -s          "${pkgdir}/"
 }

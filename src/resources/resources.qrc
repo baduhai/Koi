@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/resources">
+        <file>dbus/services/dev.baduhai.Koi.service</file>
         <file>icons/koi.svg</file>
         <file>icons/koi_tray.svg</file>
         <file>icons/koi_tray.png</file>
         <file>icons/koi.png</file>
-        <file>sunrise-library.properties</file>
         <file>license.txt</file>
+        <file>sunrise-library.properties</file>
     </qresource>
 </RCC>

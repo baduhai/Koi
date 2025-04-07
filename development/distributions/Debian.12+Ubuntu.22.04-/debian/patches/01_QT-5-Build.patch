@@ -1,6 +1,6 @@
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -25,10 +25,10 @@
+@@ -35,10 +35,10 @@
  set(THREADS_PREFER_PTHREAD_FLAG ON)
  find_package(Threads REQUIRED)
  
@@ -15,7 +15,7 @@
  find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network)
  find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
  find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
-@@ -88,10 +88,10 @@
+@@ -98,10 +98,10 @@
  )
  
  target_link_libraries(koi PUBLIC

@@ -13,14 +13,24 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Define Installation Data-Root Directory
+set(CMAKE_INSTALL_DATAROOTDIR   share)
 # Define *SYSTEM-WIDE* DBUS_INTERFACES_INSTALL_DIR variable
 set(DBUS_INTERFACES_INSTALL_DIR share/dbus-1/interfaces)
+# Define *SYSTEM-WIDE* DBUS_SERVICES_INSTALL_DIR variable
+set(DBUS_SERVICES_INSTALL_DIR share/dbus-1/services)
+
+# Configure DBus Service File
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/resources/dbus/services/dev.baduhai.Koi.service ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.service)
 
 # Install files not being a part of INSTALL TARGETS section
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/dev.baduhai.Koi.desktop DESTINATION share/applications)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml                             DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop                                     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+        RENAME local.KoiDbusInterface.desktop)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/dbus/services/dev.baduhai.Koi.service DESTINATION ${DBUS_SERVICES_INSTALL_DIR})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg                         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg                    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
