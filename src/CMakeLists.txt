@@ -18,7 +18,7 @@ set(DBUS_INTERFACES_INSTALL_DIR share/dbus-1/interfaces)
 
 # Install files not being a part of INSTALL TARGETS section
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/koi.desktop DESTINATION share/applications)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/dev.baduhai.Koi.desktop DESTINATION share/applications)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi.svg DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/koi_tray.svg DESTINATION share/icons/hicolor/scalable/apps)
 
