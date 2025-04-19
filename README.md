@@ -72,7 +72,6 @@ ___
  * QT 6 Core
  * QT 6 DBus
  * QT 6 Gui
- * QT 6 Network
  * QT 6 Widgets
  * QT 6 Xml
 
