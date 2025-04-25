@@ -39,7 +39,7 @@ find_package(KF6Config)
 find_package(KF6CoreAddons)
 find_package(KF6WidgetsAddons)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
 
@@ -49,11 +49,13 @@ set(koi_SRC
     license.cpp
     mainwindow.cpp
     utils.cpp
+    runguard.cpp
     # QObject headers needs to be added as sources to properly run MOC and UIC.
     headers/about.h
     headers/license.h
     headers/mainwindow.h
     headers/utils.h
+    headers/runguard.h
     # DBus interface stuff
     dbusinterface.cpp
     headers/dbusinterface.h
@@ -105,7 +107,6 @@ target_link_libraries(koi PUBLIC
     Qt::Core
     Qt::DBus
     Qt::Gui
-    Qt::Network
     Qt::Widgets
     Qt::Xml
     Threads::Threads
