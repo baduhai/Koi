@@ -85,21 +85,21 @@ Copy all:
 
 ```
 # 1. 
-git clone "https://github.com/baduhai/Koi.git" # *Or gh repo clone "baduhai/Koi"*
+git clone "https://github.com/baduhai/Koi.git"  # Or: gh repo clone "baduhai/Koi"
 
 # 2. 
 cmake -S "./Koi/" -B "./Koi/build/"
 
 # 3.
-cmake --build "./Koi/build/"
+cmake --build "./Koi/build/" --parallel  # Remove [--parallel] Option on Weaker Hardware
 
 # 4.
 # a)
-sudo cmake --install "./Koi/build/"  # *This will **install** Koi into [/usr/local/bin/]*
-# b) Or sudo cmake --install "./Koi/build/" --prefix="/usr/" # *This will **install** Koi into [/usr/bin/]*
+sudo cmake --install "./Koi/build/"  # This Will Install Koi into [/usr/local/bin/] Directory
+# b) Or: sudo cmake --install "./Koi/build/" --prefix="/usr/"  # This Will Install Koi into [/usr/bin/] Directory
 
-# 5. 
-sudo make uninstall -C "./Koi/build/"
+# (5.) 
+# sudo make uninstall -C "./Koi/build/"
 ```
 
 ### Prerequisites:
@@ -190,9 +190,9 @@ ___
 ## Credits:
 
 * William Franco Abdul Hai [(baduhai)](https://github.com/baduhai)
-* Martin Stibor [(Martin von Reichenberg)](https://github.com/MartinVonReichenberg)
+* Martin Stibor    [(Martin von Reichenberg)](https://github.com/MartinVonReichenberg)
+* Matthias Möller  [(TinyTinni)](https://github.com/TinyTinni)
 * Spencer Williams [(spencerwi)](https://github.com/spencerwi)
-* Matthias Möller [(TinyTinni)](https://github.com/TinyTinni)
 * Andrea Spelgatti [(Ourouk)](https://github.com/Ourouk)
 * Giovanni Santini [(Itachi San)](https://github.com/ItachiSan)
 * [DucVietCao](https://github.com/ducvietcao)
