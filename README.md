@@ -20,6 +20,7 @@ ___
 - **Enable/Disable notifications** about Light/Dark theme switching
 - Toggle between LIGHT/DARK themes by clicking **middle mouse button** *(wheel)*
 - Full **DBus** service integration*; when setup correctly, enables possibility using Koi and theme switching using custom commands & keyboard shortcuts*
+- Run custom **BASH scripts** when switching between Light/Dark themes
 
 ___
 
@@ -53,7 +54,7 @@ ___
 
 ## Getting Koi
 
-*Latest version: 0.5*
+*Latest version: 0.5.1*
 
 ### Building from SOURCE
 
@@ -80,18 +81,26 @@ ___
 
 **Build Instructions**
 
-1. `git clone https://github.com/baduhai/Koi.git` | `git clone git@github.com:baduhai/Koi.git` | `gh repo clone baduhai/Koi`
+Copy all:
 
-2. `sudo cmake -S "./Koi/src/" -B "./Koi/build/"` | `cd "./Koi/" && sudo cmake -S "./src/" -B "./build/"`
+```
+# 1. 
+git clone "https://github.com/baduhai/Koi.git" # *Or gh repo clone "baduhai/Koi"*
 
-3. `sudo cmake --build "./Koi/build/"` | `sudo cmake --build "./build/"`
+# 2. 
+cmake -S "./Koi/" -B "./Koi/build/"
 
-4. a) `sudo cmake --install "./Koi/build/"` | `sudo cmake --install "./build/"`  *# This will **install** Koi into `/usr/local/bin/`* 
+# 3.
+cmake --build "./Koi/build/"
 
-   or
+# 4.
+# a)
+sudo cmake --install "./Koi/build/"  # *This will **install** Koi into [/usr/local/bin/]*
+# b) Or sudo cmake --install "./Koi/build/" --prefix="/usr/" # *This will **install** Koi into [/usr/bin/]*
 
-   b) `sudo cmake --install "./Koi/build/" --prefix="/usr/"` | `sudo cmake --install "./build/" --prefix="/usr/"`  *# This will **install** Koi into `/usr/bin/`*
-
+# 5. 
+sudo make uninstall -C "./Koi/build/"
+```
 
 ### Prerequisites:
 
@@ -109,23 +118,23 @@ ___
 
 **Build Dependencies:**
 
-- ``` 'cmake' 'cmake-extras' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'qt6-base'  'qt6-dbus-devel' 'qt6-gui-devel' 'qt6-network-devel' 'qt6-widgets-devel' 'qt6-xml-devel' 'hicolor-icon-theme' ```
+- ``` 'cmake' 'cmake-extras' 'kf6-kconfigwidgets-devel' 'kf6-kconfig-devel' 'kf6-kcoreaddons-devel' 'kf6-kdbusaddons-devel' 'qt6-base'  'qt6-dbus-devel' 'qt6-gui-devel' 'qt6-widgets-devel' 'qt6-xml-devel' 'hicolor-icon-theme' ```
 
 **Run Dependencies:**
 
-- ``` 'plasma6-desktop' ```
+- ``` 'plasma6-desktop' 'plasma6-workspace' ```
 
 ### openSUSE Leap <= 15.6 - [[OBS]](https://build.opensuse.org/package/show/KDE:Extra/koi)
 
 **Build Dependencies:**
 
-- ``` 'cmake' 'cmake-extras' 'kf5-kconfigwidgets-devel' 'kf5-kconfig-devel' 'kf5-kcoreaddons-devel' 'qt5-dbus-devel' 'qt5-gui-devel' 'qt5-network-devel' 'qt5-widgets-devel' 'qt5-xml-devel' 'hicolor-icon-theme' ```
+- ``` 'cmake' 'cmake-extras' 'kf5-kconfigwidgets-devel' 'kf5-kconfig-devel' 'kf5-kcoreaddons-devel' 'kf5-kdbusaddons-devel' 'qt5-dbus-devel' 'qt5-gui-devel' 'qt5-widgets-devel' 'qt5-xml-devel' 'hicolor-icon-theme' ```
 
 **Run Dependencies:**
 
-- ``` 'plasma5-desktop' 'plasma-framework-components' 'plasma-framework-desktoptheme' ```
+- ``` 'plasma5-desktop' 'plasma5-workspace' 'plasma-framework' ```
 
-### Fedora >= 41 - [[COPR]](https://copr.fedorainfracloud.org/coprs/birkch/Koi/)
+### Fedora >= 40 - [[COPR]](https://copr.fedorainfracloud.org/coprs/birkch/Koi/)
 
 **Build Dependencies:**
 
@@ -163,7 +172,7 @@ ___
 
 **Run Dependencies:**
 
-- ``` 'plasma-desktop' 'plasma-integration' 'qt6-base' ```
+- ``` 'kf6-kcoreaddons' 'kf6-kconfig' 'kf6-kconfigwidgets' 'kf6-kdbusaddons' 'plasma-desktop' 'plasma-integration' 'plasma-workspace' 'qt6-base' 'qt6-core' ```
 
 ### *NixOS - [[NixPKGs]](https://github.com/NixOS/nixpkgs/blob/master/pkgs/kde/third-party/koi/default.nix)*
 

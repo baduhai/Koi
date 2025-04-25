@@ -4,7 +4,7 @@
 
 pkgname='koi'
 _pkgname='Koi'
-pkgver=0.5
+pkgver=0.5.1
 pkgrel=1
 pkgdesc="Scheduled LIGHT/DARK Theme Switching for the KDE Plasma Desktop"
 arch=('x86_64' 'aarch64')
@@ -18,24 +18,18 @@ source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/${pkgver}.tar.gz"
 md5sums=('SKIP')
 
 build() {
-    cmake -S      "${srcdir}/${_pkgname}-${pkgver}/src/" \
-          -B      "${srcdir}/${_pkgname}-${pkgver}/build/" \
-          -DCMAKE_INSTALL_PREFIX="/usr/"
+    cmake -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX="${pkgdir}/usr/" \
+          -S "${srcdir}/${_pkgname}-${pkgver}/" \
+          -B "${srcdir}/${_pkgname}-${pkgver}/build/"
 
-    cmake --build "${srcdir}/${_pkgname}-${pkgver}/build/"
-}
-
-check() {
-    desktop-file-validate "${srcdir}/${_pkgname}-${pkgver}/src/local.${_pkgname}DbusInterface.desktop"
-    fdupes -r -s          "${srcdir}/"
+    cmake --build "${srcdir}/${_pkgname}-${pkgver}/build/" --parallel
 }
 
 package() {
     cmake --install "${srcdir}/${_pkgname}-${pkgver}/build/"
 
-    install -Dm644  "${srcdir}/${_pkgname}-${pkgver}/src/local.${_pkgname}DbusInterface.desktop" \
-            -t      "${pkgdir}/usr/share/applications/"
-
+# Check the Application .DESKTOP file & Look for Duplicates within `pkgdir` ...
     desktop-file-validate "${pkgdir}/usr/share/applications/local.${_pkgname}DbusInterface.desktop"
     fdupes -r -s          "${pkgdir}/"
 }

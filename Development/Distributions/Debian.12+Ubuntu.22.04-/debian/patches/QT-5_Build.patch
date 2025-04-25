@@ -1,0 +1,48 @@
+--- a/CMakeLists.txt	2025-04-25 13:21:37.000000000 +0200
++++ b/CMakeLists.txt	2025-04-25 19:42:24.382427433 +0200
+@@ -36,10 +36,10 @@
+ set(THREADS_PREFER_PTHREAD_FLAG ON)
+ find_package(Threads REQUIRED)
+ 
+-find_package(KF6Config)
+-find_package(KF6CoreAddons)
+-find_package(KF6WidgetsAddons)
+-find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
++find_package(KF5Config)
++find_package(KF5CoreAddons)
++find_package(KF5WidgetsAddons)
++find_package(QT NAMES Qt5 REQUIRED COMPONENTS Core)
+ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui)
+ find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
+ find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Xml)
+@@ -103,10 +103,10 @@
+ 
+ # Link SYSTEM libraries with the Koi project
+ target_link_libraries(koi PUBLIC
+-    KF6::ConfigCore
+-    KF6::ConfigGui
+-    KF6::CoreAddons
+-    KF6::WidgetsAddons
++    KF5::ConfigCore
++    KF5::ConfigGui
++    KF5::CoreAddons
++    KF5::WidgetsAddons
+     Qt::Core
+     Qt::DBus
+     Qt::Gui
+
+--- a/src/utils.cpp	2025-04-25 12:02:54.000000000 +0200
++++ b/src/utils.cpp	2025-04-25 19:42:22.094127893 +0200
+@@ -240,10 +240,10 @@
+ 
+     // restart plasmashell
+     QStringList plasmashell = {"plasmashell"};
+-    QProcess::execute("/usr/bin/kquitapp6", plasmashell);
++    QProcess::execute("/usr/bin/kquitapp5", plasmashell);
+     QProcess::startDetached("/usr/bin/kstart", plasmashell);
+   }
+ 
+   // stop krunner, it will be restarted when it is requested again
+-  QProcess::startDetached("/usr/bin/kquitapp6", {"krunner"});
++  QProcess::startDetached("/usr/bin/kquitapp5", {"krunner"});
+ }

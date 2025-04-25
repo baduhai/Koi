@@ -1,5 +1,5 @@
 #include <QObject>
-#include "headers/utils.h"
+#include "utils.h"
 
 class KoiDbusInterface : public QObject {
     Q_OBJECT

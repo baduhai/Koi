@@ -10,7 +10,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "koi";
-  version = "0.5";
+  version = "0.5.1";
 
   src = fetchFromGitHub {
     owner = "baduhai";
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   };
 
   # See https://github.com/baduhai/Koi/blob/master/development/Nix%20OS/dev.nix
-  sourceRoot = "${src.name}/src";
+  sourceRoot = "${src.name}/";
   nativeBuildInputs = [
     cmake
     wrapQtAppsHook

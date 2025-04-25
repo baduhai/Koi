@@ -1,6 +1,6 @@
 #pragma once
 
-#include "headers/plugin.h"
+#include "src/headers/plugin.h"
 
 class Icons : Plugin {
 public:

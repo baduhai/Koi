@@ -12,13 +12,13 @@
 #include <QtGlobal>
 
 // Headers
-#include "plugins/colorscheme.h"
-#include "plugins/gtk.h"
-#include "plugins/icons.h"
-#include "plugins/kvantumstyle.h"
-#include "plugins/plasmastyle.h"
-#include "plugins/script.h"
-#include "plugins/wallpaper.h"
+#include "src/plugins/colorscheme.h"
+#include "src/plugins/gtk.h"
+#include "src/plugins/icons.h"
+#include "src/plugins/kvantumstyle.h"
+#include "src/plugins/plasmastyle.h"
+#include "src/plugins/script.h"
+#include "src/plugins/wallpaper.h"
 
 class Utils : public QObject {
   Q_OBJECT
