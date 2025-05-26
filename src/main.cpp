@@ -24,6 +24,6 @@ int main(int argc, char *argv[])
     {
         w.show();
     }
-    KoiDbusInterface dbusIf(&a);
+    KoiDbusInterface dbusIf(&a,&utils);
     return a.exec();
 }

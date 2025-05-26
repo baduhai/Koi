@@ -6,7 +6,7 @@ class KoiDbusInterface : public QObject {
     Q_CLASSINFO("Koi D-Bus Interface", "dev.baduhai.Koi")
 
     public:
-        KoiDbusInterface(QObject* parent);
+        KoiDbusInterface(QObject* ,Utils* );
         ~KoiDbusInterface();
 
     public Q_SLOTS:
@@ -15,5 +15,5 @@ class KoiDbusInterface : public QObject {
         void toggleMode();
 
     private:
-        Utils utils;
+        Utils* utils;
 };

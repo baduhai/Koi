@@ -2,13 +2,13 @@
 #include "headers/utils.h"
 #include "koiadaptor.h"
 
-KoiDbusInterface::KoiDbusInterface(QObject* parent) : QObject(parent) {
+KoiDbusInterface::KoiDbusInterface(QObject* parent,Utils* u) : QObject(parent) {
     new KoiDbusInterfaceAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/Koi", this);
     dbus.registerService("dev.baduhai.Koi");
-    utils.initialiseSettings();
-}
+    utils = u;
+    }
 
 KoiDbusInterface::~KoiDbusInterface() {
     QDBusConnection dbus = QDBusConnection::sessionBus();
@@ -18,13 +18,13 @@ KoiDbusInterface::~KoiDbusInterface() {
 
 
 void KoiDbusInterface::goLightMode() {
-    utils.goLight();
+    utils->goLight();
 }
 
 void KoiDbusInterface::goDarkMode() {
-    utils.goDark();
+    utils->goDark();
 }
 
 void KoiDbusInterface::toggleMode() {
-    utils.toggle();
+    utils->toggle();
 }
