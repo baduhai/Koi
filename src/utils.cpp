@@ -37,6 +37,21 @@ void Utils::notify(QString notifySummary, QString notifyBody,
   notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary,
                         body, actions, hints, timeout);
 }
+void Utils::startupCheck()
+{
+  if(settings->value("schedule").toBool()) // Check if schedule is enabled
+  {
+    if(settings->value("schedule-type").toString() == "time") // Check if time schedule is enabled
+    {
+      startupTimeCheck(); // Switch to the theme set for the current time
+    }
+    else // Auto sun switch
+    {
+      startupSunCheck(); // Switch to the theme set for the current sun status
+    }
+  }
+
+}
 void Utils::startupTimeCheck() // Switch to the theme set for the current time
 {
   QTime lightTime =

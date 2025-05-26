@@ -45,6 +45,7 @@ public:
 
   void notify(QString notifySummary = "", QString notifyBody = "",
               int timeoutms = 5000);
+  void startupCheck();
   void startupTimeCheck();
   void startupSunCheck();
 

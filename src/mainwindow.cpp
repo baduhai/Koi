@@ -20,16 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
   ui->mainStack->setCurrentIndex(0); // Always start window on main view
   refreshDirs();
   loadPrefs(); // Load prefs on startup
-
   if (utils.settings->value("schedule").toBool()) {
     scheduler = std::make_unique<Bosma::Scheduler>(2);
     if (utils.settings->value("schedule-type").toString() ==
         "time") {               // Scheduled switch
-      utils.startupTimeCheck(); // Switch themes on startup
       scheduleLight(*scheduler);
       scheduleDark(*scheduler);
     } else {                   // Auto sun switch
-      utils.startupSunCheck(); // Switch themes on startup
       scheduleSunEvent(*scheduler);
     }
   }
