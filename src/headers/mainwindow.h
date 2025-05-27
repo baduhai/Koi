@@ -25,11 +25,13 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
+  MainWindow(QWidget *parent = nullptr, Utils* utils = nullptr);
   void initTrayIcon();
   void initSettingsInterface();
   ~MainWindow();
 
+private:
+    bool isSettingLoaded;
 public slots:
 
 private slots:
@@ -42,6 +44,7 @@ private slots:
   void savePrefs();
   void toggleVisibility();
   int prefsSaved();
+
 
   void on_prefsBtn_clicked();
   void on_backBtn_clicked();

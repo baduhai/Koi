@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     if (utils.settings->value("start-hidden").toBool() == 0)
     {
+        w.initSettingsInterface();
         w.show();
     }
     utils.startupCheck();

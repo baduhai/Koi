@@ -4,10 +4,11 @@
 #include "libraries/SunRise.h"
 #include "ui/ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent,Utils* utils)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-  utils.initialiseSettings();
+  utils = utils;
+  isSettingLoaded = false;
   initTrayIcon();
 }
 void MainWindow::initTrayIcon()
@@ -23,6 +24,7 @@ void MainWindow::initTrayIcon()
 
 void MainWindow::initSettingsInterface()
 {
+  this->utils.initialiseSettings();
   ui->setupUi(this);
   ui->mainStack->setCurrentIndex(0);
   refreshDirs();
@@ -32,6 +34,7 @@ void MainWindow::initSettingsInterface()
   actionRes->setIcon(QIcon::fromTheme("view-refresh"));
   connect(actionRes, &QAction::triggered, this, &MainWindow::on_actionRestart_triggered);
   ui->resMsg->addAction(actionRes);
+  this->isSettingLoaded = true;
 }
 MainWindow::~MainWindow() {
     this->setVisible(0);
@@ -363,6 +366,10 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
   loadPrefs();
 }
 void MainWindow::toggleVisibility() {
+  if(this->isSettingLoaded == false) {
+    initSettingsInterface();
+  }
+
   if (this->isVisible() == 0) {
     this->setVisible(1);
     this->activateWindow();
