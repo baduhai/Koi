@@ -5,26 +5,32 @@
 #include "ui/ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    : QMainWindow(parent), ui(new Ui::MainWindow)
+{
+  utils.initialiseSettings();
+  initTrayIcon();
+}
+void MainWindow::initTrayIcon()
+{
   trayIcon = new QSystemTrayIcon(this);
-  QIcon icon =
-      QIcon::fromTheme("koi_tray", QIcon(":/resources/icons/koi_tray.png"));
+  QIcon icon = QIcon::fromTheme("koi_tray", QIcon(":/resources/icons/koi_tray.png"));
   this->trayIcon->setIcon(icon);
   this->trayIcon->setVisible(true);
   trayMenu = this->createMenu();
-  this->trayIcon->setContextMenu(trayMenu); // Set tray context menu
-  connect(trayIcon, &QSystemTrayIcon::activated, this,
-          &MainWindow::iconActivated); // System tray interaction
-  utils.initialiseSettings();
+  this->trayIcon->setContextMenu(trayMenu);
+  connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
+}
+
+void MainWindow::initSettingsInterface()
+{
   ui->setupUi(this);
-  ui->mainStack->setCurrentIndex(0); // Always start window on main view
+  ui->mainStack->setCurrentIndex(0);
   refreshDirs();
-  loadPrefs(); // Load prefs on startup
+  loadPrefs();
   ui->resMsg->hide();
   auto actionRes = new QAction("Restart", this);
   actionRes->setIcon(QIcon::fromTheme("view-refresh"));
-  connect(actionRes, &QAction::triggered, this,
-          &MainWindow::on_actionRestart_triggered);
+  connect(actionRes, &QAction::triggered, this, &MainWindow::on_actionRestart_triggered);
   ui->resMsg->addAction(actionRes);
 }
 MainWindow::~MainWindow() {
@@ -42,15 +48,20 @@ void MainWindow::closeEvent(QCloseEvent *event) { // Overide close event
 QMenu *MainWindow::createMenu() // Define context menu items for SysTray -
                                 // R-click to show context menu
 {
-  // Tray action menu
+  //Tray action menu
   auto actionMenuQuit = new QAction("&Quit", this); // Quit app
   connect(actionMenuQuit, &QAction::triggered, this, &QCoreApplication::quit);
-  auto actionMenuLight = new QAction("&Light", this); // Switch to light
-  connect(actionMenuLight, &QAction::triggered, this,
-          &MainWindow::on_lightBtn_clicked);        // Doesn't work.
-  auto actionMenuDark = new QAction("&Dark", this); // Switch to dark
-  connect(actionMenuDark, &QAction::triggered, this,
-          &MainWindow::on_darkBtn_clicked); // Doesn't work.
+
+  auto actionMenuLight = new QAction("&Light", this);
+  connect(actionMenuLight, &QAction::triggered, this, [this]() {
+      utils.goLight();
+  });
+
+  auto actionMenuDark = new QAction("&Dark", this);
+  connect(actionMenuDark, &QAction::triggered, this, [this]() {
+      utils.goDark();
+  });
+
   auto actionMenuToggle = new QAction("&Toggle Window", this);
   connect(actionMenuToggle, &QAction::triggered, this,
           &MainWindow::toggleVisibility);
