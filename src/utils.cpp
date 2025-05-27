@@ -42,23 +42,22 @@ void Utils::startupCheck()
   if(settings->value("schedule").toBool()) // Check if schedule is enabled
   {
     //Init scheduler object
-    Bosma::Scheduler s;
+    scheduler = std::make_unique<Bosma::Scheduler>(2);
     if(settings->value("schedule-type").toString() == "time") // Check if time schedule is enabled
     {
       //Startup time check
       startupTimeCheck(); // Switch to the theme set for the current time
       // Schedule light and dark events
-      scheduleLight(s); // Schedule light event
-      scheduleDark(s); // Schedule dark event
+      scheduleLight(*scheduler); // Schedule light event
+      scheduleDark(*scheduler); // Schedule dark event
     }
     else // Auto sun switch
     {
       startupSunCheck(); // Switch to the theme set for the current sun status
       //Schedule sun event
-      scheduleSunEvent(s); // Schedule sun event
+      scheduleSunEvent(*scheduler); // Schedule sun event
     }
   }
-
 }
 void Utils::startupTimeCheck() // Switch to the theme set for the current time
 {
@@ -85,11 +84,7 @@ void Utils::startupTimeCheck() // Switch to the theme set for the current time
   }
   else {
     QThread::msleep(1000);
-    //Throw an error if the time is not set correctly
-    notify("Error setting time",
-           "Koi tried to change your theme based on the time, but the time "
-           "settings are not set correctly.",
-           0);
+    goDark(); // Default to dark mode if the time is not set correctly
   }
 }
 

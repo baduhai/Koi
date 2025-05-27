@@ -110,7 +110,6 @@ private:
   QString lightTime;
   QString darkTime;
   Utils utils;
-  std::unique_ptr<Bosma::Scheduler> scheduler;
 
 protected:
 };

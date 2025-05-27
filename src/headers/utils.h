@@ -36,6 +36,8 @@ public:
   Utils();
 
   std::unique_ptr<QSettings> settings;
+  std::unique_ptr<Bosma::Scheduler> scheduler;
+
   void initialiseSettings();
 
   QStringList getPlasmaStyles(void);
