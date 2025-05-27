@@ -20,16 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
   ui->mainStack->setCurrentIndex(0); // Always start window on main view
   refreshDirs();
   loadPrefs(); // Load prefs on startup
-  if (utils.settings->value("schedule").toBool()) {
-    scheduler = std::make_unique<Bosma::Scheduler>(2);
-    if (utils.settings->value("schedule-type").toString() ==
-        "time") {               // Scheduled switch
-      scheduleLight(*scheduler);
-      scheduleDark(*scheduler);
-    } else {                   // Auto sun switch
-      scheduleSunEvent(*scheduler);
-    }
-  }
   ui->resMsg->hide();
   auto actionRes = new QAction("Restart", this);
   actionRes->setIcon(QIcon::fromTheme("view-refresh"));
@@ -451,78 +441,7 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other
   }
   return 1;
 }
-void MainWindow::scheduleLight(Bosma::Scheduler& s) {
-  int lightCronMin =
-      QTime::fromString(utils.settings->value("time-light").toString())
-          .minute();
-  int lightCronHr =
-      QTime::fromString(utils.settings->value("time-light").toString()).hour();
-  if (lightCronMin <= 0) {
-    lightCronMin = 0;
-  }
-  if (lightCronHr <= 0) {
-    lightCronHr = 0;
-  }
-  std::string lightCron = std::to_string(lightCronMin) + " " +
-                          std::to_string(lightCronHr) + " * * *";
-  s.cron(lightCron, [this]() { utils.goLight(); });
-}
-void MainWindow::scheduleDark(Bosma::Scheduler& s) {
-  int darkCronMin =
-      QTime::fromString(utils.settings->value("time-dark").toString()).minute();
-  int darkCronHr =
-      QTime::fromString(utils.settings->value("time-dark").toString()).hour();
-  if (darkCronMin <= 0) {
-    darkCronMin = 0;
-  }
-  if (darkCronHr <= 0) {
-    darkCronHr = 0;
-  }
-  std::string darkCron =
-      std::to_string(darkCronMin) + " " + std::to_string(darkCronHr) + " * * *";
-  s.cron(darkCron, [this]() { utils.goDark(); });
-}
 
-void MainWindow::scheduleSunEvent(Bosma::Scheduler& s) {
-  // Schedules a theme change for the next sunrise or sunfall
-  double latitude = utils.settings->value("latitude").toDouble();
-  double longitude = utils.settings->value("longitude").toDouble();
-
-  time_t t = time(NULL);
-
-  SunRise sr;
-  sr.calculate(latitude, longitude, t);
-
-  char buffer[20];
-  struct tm *timeinfo;
-
-  if ((!sr.hasRise || (sr.hasRise && sr.riseTime < sr.queryTime)) &&
-      (!sr.hasSet || (sr.hasSet && sr.setTime < sr.queryTime))) {
-    // No events found in the next SR_WINDOW/2 hours, check again later - may
-    // happen in polar regions
-    s.in(std::chrono::hours(SR_WINDOW / 2), [this, &s]() { scheduleSunEvent(s); });
-  } else if (sr.hasRise && sr.riseTime > sr.queryTime) {
-    timeinfo = localtime(&sr.riseTime);
-    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
-    // puts("Scheduling Light Theme for:");
-    // puts(buffer);
-    std::string sunEventCron = buffer;
-    s.at(sunEventCron, [this, &s]() {
-      utils.goLight();
-      scheduleSunEvent(s);
-    });
-  } else if (sr.hasSet && sr.setTime > sr.queryTime) {
-    timeinfo = localtime(&sr.setTime);
-    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
-    // puts("Scheduling Dark Theme for:");
-    // puts(buffer);
-    std::string sunEventCron = buffer;
-    s.at(sunEventCron, [this, &s]() {
-      utils.goDark();
-      scheduleSunEvent(s);
-    });
-  }
-}
 
 // Functionality of buttons - Related to program navigation, interaction and
 // saving settings

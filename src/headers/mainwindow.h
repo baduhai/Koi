@@ -40,9 +40,6 @@ private slots:
   void savePrefs();
   void toggleVisibility();
   int prefsSaved();
-  void scheduleLight(Bosma::Scheduler& s);
-  void scheduleDark(Bosma::Scheduler& s);
-  void scheduleSunEvent(Bosma::Scheduler& s);
 
   void on_prefsBtn_clicked();
   void on_backBtn_clicked();

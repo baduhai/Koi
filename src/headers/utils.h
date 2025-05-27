@@ -19,6 +19,8 @@
 #include "src/plugins/plasmastyle.h"
 #include "src/plugins/script.h"
 #include "src/plugins/wallpaper.h"
+// Other libraries
+#include "../libraries/Scheduler.h"
 
 class Utils : public QObject {
   Q_OBJECT
@@ -48,6 +50,9 @@ public:
   void startupCheck();
   void startupTimeCheck();
   void startupSunCheck();
+  void scheduleLight(Bosma::Scheduler& s);
+  void scheduleDark(Bosma::Scheduler& s);
+  void scheduleSunEvent(Bosma::Scheduler& s);
 
   void toggle();
   void goLight();
