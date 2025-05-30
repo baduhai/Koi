@@ -48,12 +48,14 @@ set(koi_SRC
     about.cpp
     license.cpp
     mainwindow.cpp
+    trayManager.cpp
     utils.cpp
     runguard.cpp
     # QObject headers needs to be added as sources to properly run MOC and UIC.
     headers/about.h
     headers/license.h
     headers/mainwindow.h
+    headers/trayManager.h
     headers/utils.h
     headers/runguard.h
     # DBus interface stuff

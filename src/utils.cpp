@@ -37,6 +37,28 @@ void Utils::notify(QString notifySummary, QString notifyBody,
   notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary,
                         body, actions, hints, timeout);
 }
+void Utils::startupCheck()
+{
+  if(settings->value("schedule").toBool()) // Check if schedule is enabled
+  {
+    //Init scheduler object
+    scheduler = std::make_unique<Bosma::Scheduler>(2);
+    if(settings->value("schedule-type").toString() == "time") // Check if time schedule is enabled
+    {
+      //Startup time check
+      startupTimeCheck(); // Switch to the theme set for the current time
+      // Schedule light and dark events
+      scheduleLight(*scheduler); // Schedule light event
+      scheduleDark(*scheduler); // Schedule dark event
+    }
+    else // Auto sun switch
+    {
+      startupSunCheck(); // Switch to the theme set for the current sun status
+      //Schedule sun event
+      scheduleSunEvent(*scheduler); // Schedule sun event
+    }
+  }
+}
 void Utils::startupTimeCheck() // Switch to the theme set for the current time
 {
   QTime lightTime =
@@ -44,23 +66,25 @@ void Utils::startupTimeCheck() // Switch to the theme set for the current time
   QTime darkTime =
       QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
   QTime now = QTime::currentTime();
-  if (now < lightTime && now < darkTime) {
+  if (now < lightTime && now <= darkTime) {
     QThread::msleep(1000); // Needed delay, or Koi may use the wrong color scheme.
-    goDark();
-  } else if (now == lightTime) // Highly unlikely
-  {
+    // Check if the option current is not already set to dark
+    if (settings->value("current").toString() != "Dark") {
+      // If not, switch to dark mode
+      goDark();
+    }
+  }
+  else if (now >= lightTime && now < darkTime) {
     QThread::msleep(1000);
-    goLight();
-  } else if (now > lightTime && now < darkTime) {
+    //Check if the option current is not already set to light
+    if (settings->value("current").toString() != "Light") {
+      // If not, switch to light mode
+      goLight();
+    }
+  }
+  else {
     QThread::msleep(1000);
-    goLight();
-  } else if (now == darkTime) // Highly unlikely
-  {
-    QThread::msleep(1000);
-    goDark();
-  } else {
-    QThread::msleep(1000);
-    goDark();
+    goDark(); // Default to dark mode if the time is not set correctly
   }
 }
 
@@ -76,10 +100,86 @@ void Utils::startupSunCheck() { // Switch to the theme set for the current sun
 
   if (sr.isVisible) {
     QThread::msleep(1000);
-    goLight();
+    if (settings->value("current").toString() != "Light") {
+      // If not, switch to light mode
+      goLight();
+    }
   } else {
     QThread::msleep(1000);
-    goDark();
+    if (settings->value("current").toString() != "Dark") {
+      // If not, switch to dark mode
+      goDark();
+    }
+  }
+}
+// Schedule functions
+// Schedule light and dark events
+void Utils::scheduleLight(Bosma::Scheduler& s) {
+  int lightCronMin =
+      QTime::fromString(settings->value("time-light").toString()).minute();
+  int lightCronHr =
+      QTime::fromString(settings->value("time-light").toString()).hour();
+  if (lightCronMin <= 0) {
+    lightCronMin = 0;
+  }
+  if (lightCronHr <= 0) {
+    lightCronHr = 0;
+  }
+  std::string lightCron = std::to_string(lightCronMin) + " " +
+                          std::to_string(lightCronHr) + " * * *";
+  s.cron(lightCron, [this]() { goLight(); });
+}
+
+void Utils::scheduleDark(Bosma::Scheduler& s) {
+  int darkCronMin =
+      QTime::fromString(settings->value("time-dark").toString()).minute();
+  int darkCronHr =
+      QTime::fromString(settings->value("time-dark").toString()).hour();
+  if (darkCronMin <= 0) {
+    darkCronMin = 0;
+  }
+  if (darkCronHr <= 0) {
+    darkCronHr = 0;
+  }
+  std::string darkCron =
+      std::to_string(darkCronMin) + " " + std::to_string(darkCronHr) + " * * *";
+  s.cron(darkCron, [this]() { goDark(); });
+}
+// Schedule sun event
+void Utils::scheduleSunEvent(Bosma::Scheduler& s) {
+  // Schedules a theme change for the next sunrise or sunfall
+  double latitude = settings->value("latitude").toDouble();
+  double longitude = settings->value("longitude").toDouble();
+
+  time_t t = time(NULL);
+
+  SunRise sr;
+  sr.calculate(latitude, longitude, t);
+
+  char buffer[20];
+  struct tm *timeinfo;
+
+  if ((!sr.hasRise || (sr.hasRise && sr.riseTime < sr.queryTime)) &&
+      (!sr.hasSet || (sr.hasSet && sr.setTime < sr.queryTime))) {
+    // No events found in the next SR_WINDOW/2 hours, check again later - may
+    // happen in polar regions
+    s.in(std::chrono::hours(SR_WINDOW / 2), [this, &s]() { scheduleSunEvent(s); });
+  } else if (sr.hasRise && sr.riseTime > sr.queryTime) {
+    timeinfo = localtime(&sr.riseTime);
+    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
+    std::string sunEventCron = buffer;
+    s.at(sunEventCron, [this, &s]() {
+      goLight();
+      scheduleSunEvent(s);
+    });
+  } else if (sr.hasSet && sr.setTime > sr.queryTime) {
+    timeinfo = localtime(&sr.setTime);
+    strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
+    std::string sunEventCron = buffer;
+    s.at(sunEventCron, [this, &s]() {
+      goDark();
+      scheduleSunEvent(s);
+    });
   }
 }
 
@@ -232,6 +332,7 @@ void Utils::goDarkScript() {
     }
   }
 }
+
 /* this updates the style of both the plasma shell and latte  dock if it is
  * available It also restart krunner to force the theme on it
  */

@@ -10,10 +10,7 @@
 
 // Headers
 #include "utils.h"
-
-namespace Bosma{
-class Scheduler;
-}
+#include "trayManager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,24 +22,27 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
+  MainWindow(QWidget *parent = nullptr, Utils* utils = nullptr);
+  void initTrayIcon();
+  void initSettingsInterface();
   ~MainWindow();
 
-public slots:
+private:
+    bool isSettingLoaded;
 
-private slots:
+    public slots:
+  // Toggles the visibility of the settings
+  void toggleVisibility();
+
+  private slots:
   void closeEvent(QCloseEvent *event);
 
-  void iconActivated(QSystemTrayIcon::ActivationReason);
 
   void refreshDirs();
   void loadPrefs();
   void savePrefs();
-  void toggleVisibility();
   int prefsSaved();
-  void scheduleLight(Bosma::Scheduler& s);
-  void scheduleDark(Bosma::Scheduler& s);
-  void scheduleSunEvent(Bosma::Scheduler& s);
+
 
   void on_prefsBtn_clicked();
   void on_backBtn_clicked();
@@ -92,7 +92,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
-  QSystemTrayIcon *trayIcon;
+  TrayManager *trayManager;
   QMenu *trayMenu;
   QMenu *createMenu();
   QString scheduleType;
@@ -112,8 +112,7 @@ private:
   QString darkKvantumStyle;
   QString lightTime;
   QString darkTime;
-  Utils utils;
-  std::unique_ptr<Bosma::Scheduler> scheduler;
+  Utils *utils;
 
 protected:
 };

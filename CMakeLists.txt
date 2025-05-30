@@ -49,12 +49,14 @@ set(koi_SRC
     # Main app stuff.
     src/about.cpp
     src/license.cpp
+    src/trayManager.cpp
     src/mainwindow.cpp
     src/utils.cpp
     src/runguard.cpp
     # QObject headers needs to be added as sources to properly run MOC and UIC.
     src/headers/about.h
     src/headers/license.h
+    src/headers/trayManager.h
     src/headers/mainwindow.h
     src/headers/utils.h
     src/headers/runguard.h

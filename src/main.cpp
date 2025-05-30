@@ -19,11 +19,13 @@ int main(int argc, char *argv[])
     Utils utils;
     utils.initialiseSettings();
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow w(nullptr,&utils);
     if (utils.settings->value("start-hidden").toBool() == 0)
     {
+        w.initSettingsInterface();
         w.show();
     }
-    KoiDbusInterface dbusIf(&a);
+    utils.startupCheck();
+    KoiDbusInterface dbusIf(&a,&utils);
     return a.exec();
 }
