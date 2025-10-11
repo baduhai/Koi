@@ -59,7 +59,7 @@ file(WRITE "src/plugins/gtk.cpp" "${GTK_CONTENT}")
 # Install files not being a part of INSTALL TARGETS section
 install(FILES  ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml     DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
 install(FILES  src/koi.desktop                                     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
-        RENAME dev.baduhai.Koi.desktop)
+        RENAME local.KoiDbusInterface.desktop)
 install(FILES  src/resources/dbus/services/dev.baduhai.Koi.service DESTINATION ${DBUS_SERVICES_INSTALL_DIR})
 install(FILES  src/resources/icons/koi.svg                         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
 install(FILES  src/resources/icons/koi_tray.svg                    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
