@@ -87,5 +87,7 @@ QStringList Aurorae::getThemes() {
 
   auroraeThemes.removeDuplicates();
   auroraeThemes.sort();
+  // Somehow we get an empty line. Disable it.
+  auroraeThemes.removeAll("");
   return auroraeThemes;
 }

@@ -221,8 +221,8 @@ void MainWindow::savePrefs() {
   utils->settings->setValue("PlasmaStyle/light", lightStyle);
   utils->settings->setValue("PlasmaStyle/dark", darkStyle);
 
-  // Auorae setting enabling
-  if (ui->colorCheckBox->isChecked() == 0) {
+  // Aurorae setting enabling
+  if (ui->auroraeCheckBox->isChecked() == 0) {
     utils->settings->setValue("Aurorae/enabled", false);
   } else {
     utils->settings->setValue("Aurorae/enabled", true);
