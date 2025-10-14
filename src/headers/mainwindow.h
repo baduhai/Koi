@@ -50,6 +50,7 @@ private slots:
   // void on_refreshBtn_clicked();
 
   void on_styleCheckBox_stateChanged(int arg1);
+  void on_auroraeCheckBox_stateChanged(int arg1);
   void on_colorCheckBox_stateChanged(int arg1);
   void on_iconCheckBox_stateChanged(int arg1);
   void on_gtkCheckBox_stateChanged(int arg1);
@@ -72,6 +73,8 @@ private slots:
   void on_darkScriptBtn_clicked();
   void on_lightDropStyle_currentTextChanged(const QString &arg1);
   void on_darkDropStyle_currentTextChanged(const QString &arg1);
+  void on_lightDropAuroraeStyle_currentTextChanged(const QString &arg1);
+  void on_darkDropAuroraeStyle_currentTextChanged(const QString &arg1);
   void on_lightDropColor_currentTextChanged(const QString &arg1);
   void on_darkDropColor_currentTextChanged(const QString &arg1);
   void on_lightDropGtk_currentTextChanged(const QString &arg1);
@@ -99,6 +102,8 @@ private:
   QString scheduleType;
   QString lightStyle;
   QString darkStyle;
+  QString lightAurorae;
+  QString darkAurorae;
   QString lightColor;
   QString darkColor;
   QString lightIcon;

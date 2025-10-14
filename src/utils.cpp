@@ -7,20 +7,19 @@ Utils::Utils() {}
 
 // Global settings stuff
 void Utils::initialiseSettings() {
-  settings =
-      std::make_unique<QSettings>(QDir::homePath() + "/.config/koirc",
-                    QSettings::IniFormat); // Setting config path and format
+  settings = std::make_unique<QSettings>(
+      QDir::homePath() + "/.config/koirc",
+      QSettings::IniFormat); // Setting config path and format
 }
 
 // Miscelaneous functions
 void Utils::notify(QString notifySummary, QString notifyBody,
                    int timeoutms) // Push notification through DBus
 {
-  if (!notifyInterface)
-  {
-    notifyInterface = new QDBusInterface("org.freedesktop.Notifications",
-                                       "/org/freedesktop/Notifications",
-                                       "org.freedesktop.Notifications", QDBusConnection::sessionBus());
+  if (!notifyInterface) {
+    notifyInterface = new QDBusInterface(
+        "org.freedesktop.Notifications", "/org/freedesktop/Notifications",
+        "org.freedesktop.Notifications", QDBusConnection::sessionBus());
   }
   QString app_name = "Koi"; // What program is the notification coming from?
   uint replaces_id =
@@ -37,24 +36,23 @@ void Utils::notify(QString notifySummary, QString notifyBody,
   notifyInterface->call("Notify", app_name, replaces_id, app_icon, summary,
                         body, actions, hints, timeout);
 }
-void Utils::startupCheck()
-{
-  if(settings->value("schedule").toBool()) // Check if schedule is enabled
+void Utils::startupCheck() {
+  if (settings->value("schedule").toBool()) // Check if schedule is enabled
   {
-    //Init scheduler object
+    // Init scheduler object
     scheduler = std::make_unique<Bosma::Scheduler>(2);
-    if(settings->value("schedule-type").toString() == "time") // Check if time schedule is enabled
+    if (settings->value("schedule-type").toString() ==
+        "time") // Check if time schedule is enabled
     {
-      //Startup time check
+      // Startup time check
       startupTimeCheck(); // Switch to the theme set for the current time
       // Schedule light and dark events
       scheduleLight(*scheduler); // Schedule light event
-      scheduleDark(*scheduler); // Schedule dark event
-    }
-    else // Auto sun switch
+      scheduleDark(*scheduler);  // Schedule dark event
+    } else                       // Auto sun switch
     {
       startupSunCheck(); // Switch to the theme set for the current sun status
-      //Schedule sun event
+      // Schedule sun event
       scheduleSunEvent(*scheduler); // Schedule sun event
     }
   }
@@ -67,22 +65,21 @@ void Utils::startupTimeCheck() // Switch to the theme set for the current time
       QTime::fromString(settings->value("time-dark").toString(), "hh:mm:ss");
   QTime now = QTime::currentTime();
   if (now < lightTime && now <= darkTime) {
-    QThread::msleep(1000); // Needed delay, or Koi may use the wrong color scheme.
+    QThread::msleep(
+        1000); // Needed delay, or Koi may use the wrong color scheme.
     // Check if the option current is not already set to dark
     if (settings->value("current").toString() != "Dark") {
       // If not, switch to dark mode
       goDark();
     }
-  }
-  else if (now >= lightTime && now < darkTime) {
+  } else if (now >= lightTime && now < darkTime) {
     QThread::msleep(1000);
-    //Check if the option current is not already set to light
+    // Check if the option current is not already set to light
     if (settings->value("current").toString() != "Light") {
       // If not, switch to light mode
       goLight();
     }
-  }
-  else {
+  } else {
     QThread::msleep(1000);
     goDark(); // Default to dark mode if the time is not set correctly
   }
@@ -114,7 +111,7 @@ void Utils::startupSunCheck() { // Switch to the theme set for the current sun
 }
 // Schedule functions
 // Schedule light and dark events
-void Utils::scheduleLight(Bosma::Scheduler& s) {
+void Utils::scheduleLight(Bosma::Scheduler &s) {
   int lightCronMin =
       QTime::fromString(settings->value("time-light").toString()).minute();
   int lightCronHr =
@@ -130,7 +127,7 @@ void Utils::scheduleLight(Bosma::Scheduler& s) {
   s.cron(lightCron, [this]() { goLight(); });
 }
 
-void Utils::scheduleDark(Bosma::Scheduler& s) {
+void Utils::scheduleDark(Bosma::Scheduler &s) {
   int darkCronMin =
       QTime::fromString(settings->value("time-dark").toString()).minute();
   int darkCronHr =
@@ -146,7 +143,7 @@ void Utils::scheduleDark(Bosma::Scheduler& s) {
   s.cron(darkCron, [this]() { goDark(); });
 }
 // Schedule sun event
-void Utils::scheduleSunEvent(Bosma::Scheduler& s) {
+void Utils::scheduleSunEvent(Bosma::Scheduler &s) {
   // Schedules a theme change for the next sunrise or sunfall
   double latitude = settings->value("latitude").toDouble();
   double longitude = settings->value("longitude").toDouble();
@@ -163,7 +160,8 @@ void Utils::scheduleSunEvent(Bosma::Scheduler& s) {
       (!sr.hasSet || (sr.hasSet && sr.setTime < sr.queryTime))) {
     // No events found in the next SR_WINDOW/2 hours, check again later - may
     // happen in polar regions
-    s.in(std::chrono::hours(SR_WINDOW / 2), [this, &s]() { scheduleSunEvent(s); });
+    s.in(std::chrono::hours(SR_WINDOW / 2),
+         [this, &s]() { scheduleSunEvent(s); });
   } else if (sr.hasRise && sr.riseTime > sr.queryTime) {
     timeinfo = localtime(&sr.riseTime);
     strftime(buffer, 20, "%Y-%m-%d %H:%M:%S", timeinfo);
@@ -185,6 +183,8 @@ void Utils::scheduleSunEvent(Bosma::Scheduler& s) {
 
 // Get stuff
 QStringList Utils::getPlasmaStyles(void) { return plasmastyle.getThemes(); }
+// Get all available color schemes
+QStringList Utils::getAuroraeSchemes(void) { return aurorae.getThemes(); }
 // Get all available color schemes
 QStringList Utils::getColorSchemes(void) { return colorscheme.getThemes(); }
 // Get all available icon themes
@@ -208,6 +208,7 @@ void Utils::toggle() {
 }
 void Utils::goLight() {
   goLightStyle();
+  goLightAurorae();
   goLightColors();
   goLightIcons();
   goLightGtk();
@@ -225,6 +226,7 @@ void Utils::goLight() {
 }
 void Utils::goDark() {
   goDarkStyle();
+  goDarkAurorae();
   goDarkColors();
   goDarkIcons();
   goDarkGtk();
@@ -248,6 +250,16 @@ void Utils::goLightStyle() {
 void Utils::goDarkStyle() {
   if (settings->value("PlasmaStyle/enabled").toBool()) {
     plasmastyle.setTheme(settings->value("PlasmaStyle/dark").toString());
+  }
+}
+void Utils::goLightAurorae() {
+  if (settings->value("Aurorae/enabled").toBool()) {
+    aurorae.setTheme(settings->value("Aurorae/light").toString());
+  }
+}
+void Utils::goDarkAurorae() {
+  if (settings->value("Aurorae/enabled").toBool()) {
+    aurorae.setTheme(settings->value("Aurorae/dark").toString());
   }
 }
 void Utils::goLightColors() {

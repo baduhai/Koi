@@ -107,6 +107,7 @@ set(koi_SRC
     # Libraries for additional stuff
     src/libraries/SunRise.cpp
     # All plugins
+    src/plugins/aurorae.cpp
     src/plugins/colorscheme.cpp
     src/plugins/gtk.cpp
     src/plugins/icons.cpp

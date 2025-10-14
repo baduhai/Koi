@@ -12,6 +12,7 @@
 #include <QtGlobal>
 
 // Headers
+#include "src/plugins/aurorae.h"
 #include "src/plugins/colorscheme.h"
 #include "src/plugins/gtk.h"
 #include "src/plugins/icons.h"
@@ -42,6 +43,7 @@ public:
   void initialiseSettings();
 
   QStringList getPlasmaStyles(void);
+  QStringList getAuroraeSchemes(void);
   QStringList getColorSchemes(void);
   QStringList getIconThemes(void);
   QStringList getCursorThemes(void);
@@ -54,15 +56,17 @@ public:
   void startupCheck();
   void startupTimeCheck();
   void startupSunCheck();
-  void scheduleLight(Bosma::Scheduler& s);
-  void scheduleDark(Bosma::Scheduler& s);
-  void scheduleSunEvent(Bosma::Scheduler& s);
+  void scheduleLight(Bosma::Scheduler &s);
+  void scheduleDark(Bosma::Scheduler &s);
+  void scheduleSunEvent(Bosma::Scheduler &s);
 
   void toggle();
   void goLight();
   void goDark();
   void goLightStyle();
   void goDarkStyle();
+  void goLightAurorae();
+  void goDarkAurorae();
   void goLightColors();
   void goDarkColors();
   void goLightIcons();
@@ -80,6 +84,7 @@ public:
   void restartProcess();
 
 private:
+  Aurorae aurorae;
   PlasmaStyle plasmastyle;
   ColorScheme colorscheme;
   Icons icons;
@@ -89,5 +94,5 @@ private:
   Script script;
   Konsole konsole;
 
-  QDBusInterface* notifyInterface = nullptr;
+  QDBusInterface *notifyInterface = nullptr;
 };

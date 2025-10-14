@@ -110,6 +110,17 @@ void MainWindow::loadPrefs() {
   ui->lightDropColor->setCurrentText(lightColorsPrefString);
   ui->darkDropColor->setCurrentText(darkColorsPrefString);
 
+  // Load Aurorae prefs
+  if (utils->settings->value("Aurorae/enabled").toBool()) {
+    ui->auroraeCheckBox->setChecked(true);
+  } else {
+    ui->auroraeCheckBox->setChecked(false);
+  }
+  ui->lightDropAuroraeStyle->setCurrentText(
+      utils->settings->value("Aurorae/light").toString());
+  ui->darkDropAuroraeStyle->setCurrentText(
+      utils->settings->value("Aurorae/dark").toString());
+
   // Load icon theme prefs
   if (utils->settings->value("IconTheme/enabled").toBool()) {
     ui->iconCheckBox->setChecked(true);
@@ -210,6 +221,16 @@ void MainWindow::savePrefs() {
   utils->settings->setValue("PlasmaStyle/light", lightStyle);
   utils->settings->setValue("PlasmaStyle/dark", darkStyle);
 
+  // Aurorae setting enabling
+  if (ui->auroraeCheckBox->isChecked() == 0) {
+    utils->settings->setValue("Aurorae/enabled", false);
+  } else {
+    utils->settings->setValue("Aurorae/enabled", true);
+  }
+  // Aurorae saving prefs
+  utils->settings->setValue("Aurorae/light", lightAurorae);
+  utils->settings->setValue("Aurorae/dark", darkAurorae);
+
   // Color scheme enabling
   if (ui->colorCheckBox->isChecked() == 0) {
     utils->settings->setValue("ColorScheme/enabled", false);
@@ -290,6 +311,12 @@ void MainWindow::refreshDirs() // Refresh function to find new themes
   ui->lightDropStyle->addItems(plasmaStyles);
   ui->darkDropStyle->clear();
   ui->darkDropStyle->addItems(plasmaStyles);
+  // Refresh aurorae themes
+  QStringList auroraeStyles = utils->getAuroraeSchemes();
+  ui->lightDropAuroraeStyle->clear();
+  ui->lightDropAuroraeStyle->addItems(auroraeStyles);
+  ui->darkDropAuroraeStyle->clear();
+  ui->darkDropAuroraeStyle->addItems(auroraeStyles);
   // Refresh color schemes
   QStringList colorSchemes = utils->getColorSchemes();
   ui->lightDropColor->clear();
@@ -348,6 +375,16 @@ int MainWindow::prefsSaved() // Lots of ifs, don't know how to do it any other
     return 0;
   }
   if (darkStyle != utils->settings->value("PlasmaStyle/dark").toString()) {
+    return 0;
+  }
+  if (ui->auroraeCheckBox->isChecked() !=
+      utils->settings->value("Aurorae/enabled").toBool()) {
+    return 0;
+  }
+  if (lightAurorae != utils->settings->value("Aurorae/light").toString()) {
+    return 0;
+  }
+  if (darkAurorae != utils->settings->value("Aurorae/dark").toString()) {
     return 0;
   }
   if (ui->colorCheckBox->isChecked() !=
@@ -504,6 +541,14 @@ void MainWindow::on_styleCheckBox_stateChanged(
   ui->darkDropStyle->setEnabled(styleEnabled);
   ui->lightDropStyle->setEnabled(styleEnabled);
 }
+void MainWindow::on_auroraeCheckBox_stateChanged(
+    int auroraeEnabled) // Color scheme checkbox logic
+{
+  ui->darkAuroraeStyle->setEnabled(auroraeEnabled);
+  ui->lightAuroraeStyle->setEnabled(auroraeEnabled);
+  ui->darkDropAuroraeStyle->setEnabled(auroraeEnabled);
+  ui->lightDropAuroraeStyle->setEnabled(auroraeEnabled);
+}
 void MainWindow::on_colorCheckBox_stateChanged(
     int colorEnabled) // Color scheme checkbox logic
 {
@@ -543,6 +588,16 @@ void MainWindow::on_darkDropStyle_currentTextChanged(
     const QString &darkStyleUN) // Set dark plasma style
 {
   darkStyle = darkStyleUN;
+}
+void MainWindow::on_lightDropAuroraeStyle_currentTextChanged(
+    const QString &newLightAurorae) // Set light color scheme
+{
+  lightAurorae = newLightAurorae;
+}
+void MainWindow::on_darkDropAuroraeStyle_currentTextChanged(
+    const QString &newDarkAurorae) // Set dark color scheme
+{
+  darkAurorae = newDarkAurorae;
 }
 void MainWindow::on_lightDropColor_currentTextChanged(
     const QString &lightColorUN) // Set light color scheme
