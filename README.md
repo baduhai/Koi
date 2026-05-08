@@ -267,6 +267,7 @@ ___
 
 # 3.  MAKE from SOURCE to BUILD Directory
   cmake -S "." -B "./build/"
+  For the .desktop to contain the absolute path, use -DCMAKE_INSTALL_PREFIX="/usr/local", DCMAKE_INSTALL_PREFIX="$HOME/.local"..., etc
 
 # 4.  BUILD Koi BINARY from SOURCE
   cmake --build "./build/" --parallel  # Remove [--parallel] Option on Weaker Hardware

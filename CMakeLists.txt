@@ -57,8 +57,23 @@ file(WRITE "src/plugins/gtk.cpp" "${GTK_CONTENT}")
 #
 
 # Install files not being a part of INSTALL TARGETS section
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/src/koi.desktop" DESKTOP_CONTENT)
+
+string(REPLACE
+    "Exec=koi"
+    "Exec=${CMAKE_INSTALL_PREFIX}/bin/koi"
+    DESKTOP_CONTENT
+    "${DESKTOP_CONTENT}"
+)
+
+file(WRITE
+    "${CMAKE_CURRENT_BINARY_DIR}/koi.desktop" # Into the build directory so that the src/ desktp file is intact
+    "${DESKTOP_CONTENT}"
+)
+
+
 install(FILES  ${CMAKE_CURRENT_BINARY_DIR}/dev.baduhai.Koi.xml     DESTINATION ${DBUS_INTERFACES_INSTALL_DIR})
-install(FILES  src/koi.desktop                                     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
+install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/koi.desktop"                                     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications
         RENAME local.KoiDbusInterface.desktop)
 install(FILES  src/resources/dbus/services/dev.baduhai.Koi.service DESTINATION ${DBUS_SERVICES_INSTALL_DIR})
 install(FILES  src/resources/icons/koi.svg                         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps)
