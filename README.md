@@ -258,25 +258,31 @@ ___
 ```
 # 1.  CLONE Koi Repository
 # a) 
-  git clone "https://github.com/baduhai/Koi.git"  # Using [git] Command
+  git clone 'https://github.com/baduhai/Koi.git'  # Using [git] Command
 # b)
-# gh repo clone "baduhai/Koi"                     # Using [gh]  Command
+# gh repo clone 'baduhai/Koi'  # Using [gh]  Command
 
 # 2.  CHANGE to Koi Directory
   cd ./Koi/
 
-# 3.  MAKE from SOURCE to BUILD Directory
-  cmake -S "." -B "./build/"
-  For the .desktop to contain the absolute path, use -DCMAKE_INSTALL_PREFIX="/usr/local", DCMAKE_INSTALL_PREFIX="$HOME/.local"..., etc
+# 3.  MAKE from SOURCE to BUILD Directory; Using CMake
+# a)  DEFAULT (SYSTEM-WIDE) Configuration Location:
+  cmake -S "." -B "./build/" -DCMAKE_INSTALL_PREFIX="/usr/local/"  # This is the DEFAULT Configuration Location
+# b)  STANDART (SYSTEM-WIDE) Configuration Location:
+# cmake -S "." -B "./build/" -DCMAKE_INSTALL_PREFIX="/usr/"  # This is the STANDART Configuration Location
+# c)  USER-SPECIFIC Configuration Location:
+# cmake -S "." -B "./build/" -DCMAKE_INSTALL_PREFIX="$HOME/.local/"  # This is the per-user USER-SPECIFIC Configuration Location
 
 # 4.  BUILD Koi BINARY from SOURCE
   cmake --build "./build/" --parallel  # Remove [--parallel] Option on Weaker Hardware
 
 # 5.  INSTALL Koi into the SYSTEM
-# a)
-  sudo cmake --install "./build/"  # This Will, by Default, Install Koi into [/usr/local/bin/] Directory
-# b)
+# a)  DEFAULT (SYSTEM-WIDE) Installation Location:
+  sudo cmake --install "./build/" --prefix="/usr/local/"  # This Will, by Default, Install Koi into [/usr/local/bin/] Directory
+# b)  STANDART (SYSTEM-WIDE) Installation Location:
 # sudo cmake --install "./build/" --prefix="/usr/"  # This Will Install Koi into [/usr/bin/] Directory
+# c)  USER-SPECIFIC Installation Location:
+#      cmake --install "./build/" --prefix="$HOME/.local/"  # This Will Install Koi into [/home/$USER/.local/bin/] Directory
 
 # (6.) 
 # sudo make uninstall -C "./build/"
