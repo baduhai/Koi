@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QProcess>
 #include <QSettings>
+#include <QString>
+#include <QStringList>
 #include <QTimer>
 #include <QtGlobal>
 
@@ -21,8 +23,6 @@
 #include "src/plugins/plasmastyle.h"
 #include "src/plugins/script.h"
 #include "src/plugins/wallpaper.h"
-// Other libraries
-#include "../libraries/Scheduler.h"
 
 class Utils : public QObject {
   Q_OBJECT
@@ -37,8 +37,10 @@ public:
 
   Utils();
 
+  static QStringList systemDataSearchPaths(const QString &subDir,
+                                           const QStringList &extraPaths = {});
+
   std::unique_ptr<QSettings> settings;
-  std::unique_ptr<Bosma::Scheduler> scheduler;
 
   void initialiseSettings();
 
@@ -56,9 +58,9 @@ public:
   void startupCheck();
   void startupTimeCheck();
   void startupSunCheck();
-  void scheduleLight(Bosma::Scheduler &s);
-  void scheduleDark(Bosma::Scheduler &s);
-  void scheduleSunEvent(Bosma::Scheduler &s);
+  void scheduleLight();
+  void scheduleDark();
+  void scheduleSunEvent();
 
   void toggle();
   void goLight();
@@ -84,6 +86,13 @@ public:
   void restartProcess();
 
 private:
+  enum class PendingSunAction {
+    None,
+    Recheck,
+    Light,
+    Dark,
+  };
+
   Aurorae aurorae;
   PlasmaStyle plasmastyle;
   ColorScheme colorscheme;
@@ -93,6 +102,11 @@ private:
   KvantumStyle kvantumStyle;
   Script script;
   Konsole konsole;
+
+  QTimer lightTimer;
+  QTimer darkTimer;
+  QTimer sunTimer;
+  PendingSunAction pendingSunAction = PendingSunAction::None;
 
   QDBusInterface *notifyInterface = nullptr;
 };

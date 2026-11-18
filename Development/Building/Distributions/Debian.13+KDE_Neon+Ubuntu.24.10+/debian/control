@@ -1,9 +1,9 @@
 Source: koi
 Section: kde
 Priority: optional
-Maintainer: Martin Stibor <martin.von.reichenberg@proton.me>
+Maintainer: Martin Stibor <martin.von.reichenberg@gmail.com>
 Build-Depends: debhelper (>= 9), g++, cmake, cmake-extras, extra-cmake-modules, libkf6config-dev, libkf6coreaddons-dev, libkf6dbusaddons-dev, libkf6widgetsaddons-dev, qt6-base-dev
-Standards-Version: 0.6
+Standards-Version: 0.7
 Vcs-Git: https://github.com/baduhai/Koi.git
 Homepage: https://github.com/baduhai/Koi/
 

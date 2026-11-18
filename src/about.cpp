@@ -24,17 +24,6 @@ About::About(QWidget *parent) : QDialog(parent), ui(new Ui::About) {
   kfVersion += "</li></ul>";
   ui->kfVersion->setText(kfVersion);
   ui->kfVersion->setTextFormat(Qt::RichText);
-  QString bosmaLabel =
-      "<ul><li><a href=\"https://github.com/Bosma/Scheduler\">Bosma "
-      "Scheduler</a></li></ul>";
-  ui->bosmaLib->setText(bosmaLabel);
-  ui->bosmaLib->setTextFormat(Qt::RichText);
-  ui->bosmaLib->setOpenExternalLinks(1);
-  QString ctplLabel =
-      "<ul><li><a href=\"https://github.com/vit-vit/CTPL\">CTPL</a></li></ul>";
-  ui->ctpLib->setText(ctplLabel);
-  ui->ctpLib->setTextFormat(Qt::RichText);
-  ui->ctpLib->setOpenExternalLinks(1);
   QString sunriseLabel =
       "<ul><li><a "
       "href=\"https://github.com/signetica/SunRise\">SunRise</a></li></ul>";

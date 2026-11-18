@@ -1,4 +1,5 @@
 #include "colorscheme.h"
+#include "../headers/utils.h"
 
 #include <QProcess>
 
@@ -19,43 +20,23 @@ void ColorScheme::setTheme(QString themeName) {
 }
 
 QStringList ColorScheme::getThemes() {
+  const QStringList searchPaths =
+  Utils::systemDataSearchPaths(QStringLiteral("color-schemes"));
+
   QStringList colorSchemesNames;
-  QDir colorsLocalDir(QDir::homePath() + "/.local/share/color-schemes");
-  QDir colorsSystemDir("/usr/share/color-schemes");
-  QDir colorsNixDir("/run/current-system/profile/share/color-schemes");
-  if (colorsLocalDir.exists()) {
-    colorsLocalDir.setNameFilters(QStringList() << "*.colors");
-    colorsLocalDir.setFilter(QDir::Files);
-    colorsLocalDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesLocal = colorsLocalDir.entryInfoList();
-    QStringList colorSchemesLocalNames;
-    for (int i = 0; i < colorSchemesLocal.size(); i++) {
-      colorSchemesLocalNames.append(colorSchemesLocal.at(i).baseName());
+  for (const QString &dirPath : searchPaths) {
+    QDir dir(dirPath);
+    dir.setNameFilters({QStringLiteral("*.colors")});
+    dir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+    dir.setSorting(QDir::Name);
+
+    const QList<QFileInfo> entries = dir.entryInfoList();
+    for (const QFileInfo &entry : entries) {
+      colorSchemesNames.append(entry.baseName());
     }
-    colorSchemesNames = colorSchemesNames + colorSchemesLocalNames;
   }
-  if (colorsSystemDir.exists()) {
-    colorsSystemDir.setNameFilters(QStringList() << "*.colors");
-    colorsSystemDir.setFilter(QDir::Files);
-    colorsSystemDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesSystem = colorsSystemDir.entryInfoList();
-    QStringList colorSchemesSystemNames;
-    for (int i = 0; i < colorSchemesSystem.size(); i++) {
-      colorSchemesSystemNames.append(colorSchemesSystem.at(i).baseName());
-    }
-    colorSchemesNames = colorSchemesNames + colorSchemesSystemNames;
-  }
-  if (colorsNixDir.exists()) {
-    colorsNixDir.setNameFilters(QStringList() << "*.colors");
-    colorsNixDir.setFilter(QDir::Files);
-    colorsNixDir.setSorting(QDir::Name);
-    QList<QFileInfo> colorSchemesNix = colorsNixDir.entryInfoList();
-    QStringList colorSchemesNixNames;
-    for (int i = 0; i < colorSchemesNix.size(); i++) {
-      colorSchemesNixNames.append(colorSchemesNix.at(i).baseName());
-    }
-    colorSchemesNames = colorSchemesNames + colorSchemesNixNames;
-  }
+
   colorSchemesNames.removeDuplicates();
+  colorSchemesNames.sort();
   return colorSchemesNames;
 }

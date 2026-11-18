@@ -16,7 +16,7 @@
 // by Cyrus Rahman, this work is subject to Stephen Schmitt's copyright:
 //
 // Copyright 2007 Stephen R. Schmitt  
-// Subsequent work Copyright 2020 Cyrus Rahman
+// Subsequent work Copyright 2020-2026 Cyrus Rahman
 // You may use or modify this source code in any way you find useful, provided
 // that you agree that the author(s) have no warranty, obligations or liability.  You
 // must determine the suitability of this source code for your use.
@@ -109,6 +109,7 @@ SunRise::testSunRiseSet(int k, double offsetDays, double latitude, double longit
   // refraction + sun semidiameter at horizon
   double z = cos(M_PI / 180 * 90.833);
 
+  // Combine corrections into a vertical unit sphere length.
   VHz[0] = s * sin(sp[0].declination) + c * cos(sp[0].declination) * cos(ha[0]) - z;
   VHz[2] = s * sin(sp[2].declination) + c * cos(sp[2].declination) * cos(ha[2]) - z;
 
@@ -117,19 +118,28 @@ SunRise::testSunRiseSet(int k, double offsetDays, double latitude, double longit
     
   VHz[1] = s * sin(sp[1].declination) + c * cos(sp[1].declination) * cos(ha[1]) - z;
 
+  // Use quadratic formula to invert the quadratic interpolation.
   double a, b, d, e, time;
   a = 2 * VHz[2] - 4 * VHz[1] + 2 * VHz[0];
   b = 4 * VHz[1] - 3 * VHz[0] - VHz[2];
   d = b * b - 4 * a * VHz[0];
 
-  if (d < 0)
-    goto noevent;			    // No event this hour.
-    
-  d = sqrt(d);
-  e = (-b + d) / (2 * a);
-  if ((e < 0) || (e > 1))
-    e = (-b - d) / (2 * a);
-  time = k + e + 1 / 120;	    // Time since k=0 of event (in hours).
+  // Switch to linear interpolation if a is too small.  This unusual situation
+  // can arise if the rise/set occurs at the midpoint of the test interval (ha[1])
+  // and will lead to a division by zero.
+  // (found by Claude.ai)
+  if (fabs(a) < 1e-6) {			    // Switch to linear interpolation.
+    e = -VHz[0] / (VHz[2] - VHz[0]);
+  } else {
+    if (d < 0)				    // This probably never happens.
+      goto noevent;
+
+    d = sqrt(d);
+    e = (-b + d) / (2 * a);
+    if ((e < 0) || (e > 1))
+      e = (-b - d) / (2 * a);
+  }
+  time = k + e + 1.0 / 120;	    // Round off. Time since k=0 of event (in hours).
 
   // The time we started searching + the time from the start of the search to the
   // event is the time of the event.  Add (time since k=0) - window/2 hours.
@@ -202,7 +212,7 @@ noevent:
 }
 
 // Sun position using fundamental arguments
-// (Van Flandern & Pulkkinen, 1979)
+// c.f. Van Flandern & Pulkkinen, 1979, accurate within 1' in interval 1979 +/- 300 years
 skyCoordinates
 SunRise::sun(double dayOffset) {
   double centuryOffset = dayOffset / 36525 + 1;	      // Centuries from 1900.0

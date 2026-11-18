@@ -9,6 +9,11 @@ start-hidden=0
 time-dark=
 time-light=
 
+[Aurorae]
+dark=
+enabled=false
+light=
+
 [ColorScheme]
 dark=
 enabled=false

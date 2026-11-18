@@ -267,25 +267,25 @@ ___
 
 # 3.  MAKE from SOURCE to BUILD Directory; Using CMake
 # a)  DEFAULT (SYSTEM-WIDE) Configuration Location:
-  cmake -S "." -B "./build/" -DCMAKE_INSTALL_PREFIX="/usr/local/"  # This is the DEFAULT Configuration Location
+  cmake -S "." -B "./build/" -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX="/usr/local"  # This is the DEFAULT Configuration Location
 # b)  STANDART (SYSTEM-WIDE) Configuration Location:
-# cmake -S "." -B "./build/" -DCMAKE_INSTALL_PREFIX="/usr/"  # This is the STANDART Configuration Location
+# cmake -S "." -B "./build/" -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX="/usr"  # This is the STANDART Configuration Location
 # c)  USER-SPECIFIC Configuration Location:
-# cmake -S "." -B "./build/" -DCMAKE_INSTALL_PREFIX="$HOME/.local/"  # This is the per-user USER-SPECIFIC Configuration Location
+# cmake -S "." -B "./build/" -G 'Unix Makefiles' -DCMAKE_INSTALL_PREFIX="$HOME/.local"  # This is the per-user USER-SPECIFIC Configuration Location
 
 # 4.  BUILD Koi BINARY from SOURCE
   cmake --build "./build/" --parallel  # Remove [--parallel] Option on Weaker Hardware
 
 # 5.  INSTALL Koi into the SYSTEM
 # a)  DEFAULT (SYSTEM-WIDE) Installation Location:
-  sudo cmake --install "./build/" --prefix="/usr/local/"  # This Will, by Default, Install Koi into [/usr/local/bin/] Directory
+  sudo cmake --install "./build/" --prefix="/usr/local"  # This Will, by Default, Install Koi into [/usr/local/bin/] Directory
 # b)  STANDART (SYSTEM-WIDE) Installation Location:
-# sudo cmake --install "./build/" --prefix="/usr/"  # This Will Install Koi into [/usr/bin/] Directory
+# sudo cmake --install "./build/" --prefix="/usr"  # This Will Install Koi into [/usr/bin/] Directory
 # c)  USER-SPECIFIC Installation Location:
-#      cmake --install "./build/" --prefix="$HOME/.local/"  # This Will Install Koi into [/home/$USER/.local/bin/] Directory
+#      cmake --install "./build/" --prefix="$HOME/.local"  # This Will Install Koi into [/home/$USER/.local/bin/] Directory
 
-# (6.) 
-# sudo make uninstall -C "./build/"
+# (6.) Uninstall installed files when Koi was compiled directly from SOURCE 
+# sudo cmake --build './build/' --target uninstall
 ```
 </details>
 
@@ -314,14 +314,14 @@ ___
 
 The following is a list of resources that was used as reference and inspiration for writing Koi.
 
-- [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
-- [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) - For teaching me how to implement a system tray icon with Qt.
-- [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) - For teaching me how to set current Qt color scheme.
-- [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) - For teaching me how to set the wallpaper on Plasma.
 - [SunRise](https://github.com/signetica/SunRise) - For scheduled sunrise/sunset light/dark theme switching.
-- [CTPL](https://github.com/vit-vit/CTPL) - Extra library for parallel job execution.
-- [Scheduler](https://github.com/Bosma/Scheduler) - For timed light/dark theme switching.
+- [Yin-Yang](https://github.com/daehruoydeef/Yin-Yang) - For UI layout and features inspiration.
 - [This blog post from Zren](https://zren.github.io/2020/04/28/how-to-change-plasma-icon-theme-in-the-terminal) - For teaching me how to set the icon theme.
+- [system-tray-icon-qt](https://github.com/C0D1UM/system-tray-icon-qt) [LEGACY] - For teaching me how to implement a system tray icon with Qt.
+- [plasma-theme-switcher](https://github.com/maldoinc/plasma-theme-switcher) [LEGACY] - For teaching me how to set current Qt color scheme.
+- [ksetwallpaper](https://github.com/pashazz/ksetwallpaper) [LEGACY] - For teaching me how to set the wallpaper on Plasma.
+- [CTPL](https://github.com/vit-vit/CTPL) [LEGACY] - Extra library for parallel job execution.
+- [Scheduler](https://github.com/Bosma/Scheduler) [LEGACY] - For timed light/dark theme switching.
 
 
 *Koi was written as a project to practice QT by a novice programmer, expect code to be written sloppily.*

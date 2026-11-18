@@ -1,5 +1,5 @@
-koi (0.6) whatever; urgency=low
+koi (0.7) whatever; urgency=medium
 
- * Update to the latest upstream stable version - 0.6
+ * Update to the latest upstream stable version - 0.7
 
- -- Martin von Reichenberg <martin.von.reichenberg.proton.me> Sat, 15 Sep 2025 12:32:26
+ -- Martin von Reichenberg <martin.von.reichenberg@gmail.com> Wed, 18 Nov 2026 00:06:26 +0100

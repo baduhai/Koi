@@ -1,4 +1,5 @@
 #include "icons.h"
+#include "../headers/utils.h"
 
 #include <QProcess>
 
@@ -22,27 +23,16 @@ void Icons::setTheme(QString iconTheme) {
 }
 
 QStringList Icons::getThemes() {
-  QDir iconsOldLocalDir(QDir::homePath() + "/.icons");
-  QDir iconsLocalDir(QDir::homePath() + "/.local/share/icons");
-  QDir iconsSystemDir("/usr/share/icons");
-  QDir iconsNixDir("/run/current-system/profile/share/icons");
+  const QStringList searchPaths = Utils::systemDataSearchPaths(
+    QStringLiteral("icons"),
+    {QDir::homePath() + QStringLiteral("/.icons")});
+
   QStringList iconThemes;
-  if (iconsOldLocalDir.exists()) {
-    iconThemes = iconThemes +
-                 iconsOldLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+  for (const QString &dirPath : searchPaths) {
+    const QDir dir(dirPath);
+    iconThemes.append(dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot));
   }
-  if (iconsLocalDir.exists()) {
-    iconThemes =
-        iconThemes + iconsLocalDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-  }
-  if (iconsSystemDir.exists()) {
-    iconThemes = iconThemes +
-                 iconsSystemDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-  }
-  if (iconsNixDir.exists()) {
-    iconThemes =
-        iconThemes + iconsNixDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-  }
+
   iconThemes.removeDuplicates();
   iconThemes.sort();
   return iconThemes;

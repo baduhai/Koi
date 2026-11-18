@@ -1,4 +1,5 @@
 #include "kvantumstyle.h"
+#include "../headers/utils.h"
 
 #include <QProcess>
 
@@ -8,25 +9,26 @@ void KvantumStyle::setTheme(QString kvantumStyle) {
 }
 
 QStringList KvantumStyle::getThemes() {
-  QDir kvantumStyleLocalDir(QDir::homePath() + "/.config/Kvantum");
-  QDir kvantumStyleSystemDir("/usr/share/Kvantum");
-  QDir kvantumStyleNixDir("/run/current-system/profile/share/Kvantum");
-  QDir kvantumStyleDirs[] = {kvantumStyleLocalDir, kvantumStyleSystemDir, kvantumStyleNixDir};
+  const QStringList searchPaths = Utils::systemDataSearchPaths(
+    QStringLiteral("Kvantum"),
+    {QStringLiteral("/var/run/current-system/sw/Kvantum")});
+
   QStringList kvantumStyles;
-  for (const auto& dir : kvantumStyleDirs) {
-    if (dir.exists()) {
-        //Navigate subdirectories
-        for (const auto& entry : dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot)) {
-            //Check inside the directory for all ".kconfig" files
-            QDir subDir(entry.absoluteFilePath());
-            for (const auto& subEntry : subDir.entryInfoList(QDir::Files)) {
-                if (subEntry.suffix() == "kvconfig") {
-                    kvantumStyles.append(subEntry.baseName());
-                }
-            }
-        }
+  for (const QString &dirPath : searchPaths) {
+    const QDir dir(dirPath);
+    // Navigate theme subdirectories
+    for (const QFileInfo &entry :
+      dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+      // Check inside the directory for all ".kvconfig" files
+      const QDir subDir(entry.absoluteFilePath());
+    for (const QFileInfo &subEntry : subDir.entryInfoList(QDir::Files)) {
+      if (subEntry.suffix() == QStringLiteral("kvconfig")) {
+        kvantumStyles.append(subEntry.baseName());
+      }
     }
+      }
   }
+
   kvantumStyles.removeDuplicates();
   kvantumStyles.sort();
   return kvantumStyles;

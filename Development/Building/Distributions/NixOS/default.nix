@@ -10,7 +10,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "koi";
-  version = "0.6";
+  version = "0.7";
 
   src = fetchFromGitHub {
     owner = "baduhai";
